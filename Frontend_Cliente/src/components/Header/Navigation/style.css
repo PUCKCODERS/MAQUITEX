@@ -3,11 +3,15 @@
 }
 .nav li .submenu {
   visibility: hidden;
+  z-index: 1000;
 }
 .nav li:hover .submenu {
   opacity: 1 !important;
   visibility: inherit;
   top: 100%;
+}
+.nav li .submenu li:hover button {
+  background: #fff !important;
 }
 
 .nav li .submenu li .submenu {
@@ -18,4 +22,12 @@
 .nav li .submenu li:hover .submenu {
   left: 100% !important;
   opacity: 1 !important;
+}
+
+.nav li .submenu li .submenu button {
+  background: #fff !important;
+}
+
+.nav li .submenu li .submenu button:hover {
+  color: #fff !important;
 }

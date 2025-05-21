@@ -45,15 +45,15 @@ const Navigation = () => {
                   </Button>
                 </Link>
 
-                <div className="submenu absolute border-1 border-[#082c55] !top-[120%] !left-[0%] min-w-[200px]  shadow-[3px_3px_3px_#274a72] opacity-0 transition-all">
+                <div className="submenu absolute !top-[135%] !left-[0%] min-w-[200px] bg-[#ebebeb] shadow-[3px_3px_3px_#274a72] opacity-0 transition-all z-10">
                   <ul>
                     <li className="list-none w-full relative ">
                       <Link to="/" className="w-full">
-                        <Button className="!text-[#082c55] hover:!text-[#fff] !bg-[#ebebeb] hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
+                        <Button className="!text-[#082c55] hover:!text-[#fff] hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
                           SINGER
                         </Button>
 
-                        <div className="submenu absolute border-1 border-[#082c55] !top-[-3%] !left-[100%] min-w-[200px] bg-white shadow-[3px_3px_3px_#274a72] opacity-0 transition-all">
+                        <div className="submenu absolute !top-[0%] !left-[100%] min-w-[200px] bg-white shadow-[3px_3px_3px_#274a72] opacity-0 transition-all">
                           <ul>
                             <li className="list-none w-full">
                               <Link to="/" className="w-full">
@@ -101,7 +101,7 @@ const Navigation = () => {
 
                     <li className="list-none w-full">
                       <Link to="/" className="w-full">
-                        <Button className="hover:!text-[#fff] !bg-[#ebebeb] hover:!bg-[#082c55] !text-[#082c55] !w-full !text-left !justify-start !rounded-none">
+                        <Button className="hover:!text-[#fff]  hover:!bg-[#082c55] !text-[#082c55] !w-full !text-left !justify-start !rounded-none">
                           SINGER
                         </Button>
                       </Link>
@@ -109,7 +109,7 @@ const Navigation = () => {
 
                     <li className="list-none w-full">
                       <Link to="/" className="w-full">
-                        <Button className="!text-[#082c55] hover:!text-[#fff] !bg-[#ebebeb] hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
+                        <Button className="!text-[#082c55] hover:!text-[#fff]  hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
                           SINGER
                         </Button>
                       </Link>
@@ -117,7 +117,7 @@ const Navigation = () => {
 
                     <li className="list-none w-full">
                       <Link to="/" className="w-full">
-                        <Button className="!text-[#082c55] hover:!text-[#fff] !bg-[#ebebeb] hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
+                        <Button className="!text-[#082c55] hover:!text-[#fff]  hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
                           SINGER
                         </Button>
                       </Link>
@@ -125,7 +125,7 @@ const Navigation = () => {
 
                     <li className="list-none w-full">
                       <Link to="/" className="w-full">
-                        <Button className="!text-[#082c55] hover:!text-[#fff] !bg-[#ebebeb] hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
+                        <Button className="!text-[#082c55] hover:!text-[#fff]  hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
                           SINGER
                         </Button>
                       </Link>
