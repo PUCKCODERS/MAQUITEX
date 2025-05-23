@@ -72,6 +72,24 @@ nav ul button {
   color: #000;
 }
 
+.smlBtn .swiper-button-prev,
+.smlBtn .swiper-button-next {
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  top: 55% !important;
+}
+.smlBtn .swiper-button-prev:hover,
+.smlBtn .swiper-button-next:hover {
+  background: #082c55 !important;
+  font-size: 18px !important;
+}
+
+.smlBtn .swiper-button-prev:hover::after,
+.smlBtn .swiper-button-next:hover::after {
+  color: #fff !important;
+}
+
 .homeCatSlider .swiper-button-prev,
 .homeCatSlider .swiper-button-next {
   width: 30px;
@@ -106,4 +124,26 @@ nav ul button {
 
 .homeCatSlider .item:hover img {
   transform: scale(1.2);
+}
+
+.MuiTabs-indicator {
+  background-color: #082c55 !important;
+}
+.MuiTab-textColorPrimary.Mui-selected {
+  color: #082c55 !important;
+}
+
+.productsSlider .swiper-wrapper {
+  padding: 15px;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.productsSlider .swiper-button-prev:hover,
+.productsSlider .swiper-button-next:hover {
+  background: #082c55 !important;
+}
+.productsSlider .swiper-button-prev:hover::after,
+.productsSlider .swiper-button-next:hover::after {
+  color: #fff !important;
 }
