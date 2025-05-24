@@ -2,11 +2,15 @@ import React from "react";
 import "../ProductItem/style.css";
 import { Link } from "react-router-dom";
 import Rating from "@mui/material/Rating";
+import Button from "@mui/material/Button";
+import { FaHeart } from "react-icons/fa";
+import { IoGitCompare } from "react-icons/io5";
+import { MdZoomOutMap } from "react-icons/md";
 
 const ProductItem = () => {
   return (
-    <div className="productItem !rounded-md !overflow-hidden !border-1 !border-gray-200 shadow-md">
-      <div className="imgWrapper !w-[100%] !h-[200px] !overflow-hidden !rounded-md relative">
+    <div className="productItem bg-white !rounded-md !overflow-hidden !border-1 !border-[#b1cdee] shadow-[5px_5px_5px_#274a72]">
+      <div className="group imgWrapper !w-[100%] !h-[200px] !overflow-hidden !rounded-md relative">
         <img
           src="https://latinamerica.brother.com/-/media/brother/product-catalog-media/images/2022/01/05/07/05/bm2800_2.png"
           className="!left-0 !top-0 !w-[300px] !h-[200px] !rounded-md"
@@ -14,6 +18,18 @@ const ProductItem = () => {
         <span className="discount flex items-center absolute top-[0px] left-[0px] !z-50 bg-[#e05e12] text-white !rounded-lg !p-1 text-[12px] font-[500]">
           10%
         </span>
+
+        <div className="actions absolute top-[-200px] right-[5px] z-50 flex items-center gap-2 flex-col !w-[30px] transition-all duration-300 group-hover:top-[15px]">
+          <Button className="!w-[35px] !h-[35px] !min-w-[35px] !rounded-full !bg-white !border-1 !border-[#f7adad]  hover:!bg-[#f3b8b8] ">
+            <FaHeart className="!text-[18px] !text-[#f58686] group-hover:text-white hover:!text-[#f10606]" />
+          </Button>
+          <Button className="!w-[35px] !h-[35px] !min-w-[35px] !rounded-full !bg-white !border-1 !border-[#b1cdee] hover:!bg-[#b1cdee] ">
+            <IoGitCompare className="!text-[18px] !text-[#556f8d] group-hover:text-white hover:!text-[#082c55]" />
+          </Button>
+          <Button className="!w-[35px] !h-[35px] !min-w-[35px] !rounded-full !bg-white !border-1 !border-[#b1cdee] hover:!bg-[#b1cdee]  ">
+            <MdZoomOutMap className="!text-[18px] !text-[#556f8d] group-hover:text-white hover:!text-[#082c55]" />
+          </Button>
+        </div>
       </div>
 
       <div className="info !p-3 !py-4 !bg-gray-100">

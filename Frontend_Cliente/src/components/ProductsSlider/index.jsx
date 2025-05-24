@@ -14,7 +14,7 @@ const ProductsSlider = (props) => {
         spaceBetween={10}
         navigation={true}
         modules={[Navigation]}
-        className=""
+        className="sliderHome"
       >
         <SwiperSlide>
           <ProductItem />
