@@ -7,7 +7,7 @@ import { Navigation, Autoplay } from "swiper/modules";
 
 const HomeSlider = () => {
   return (
-    <div className="homeSlider !py-4">
+    <div className="homeSlider !py-4 ">
       <div className="container">
         <Swiper
           spaceBetween={10}

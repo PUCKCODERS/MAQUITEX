@@ -16,7 +16,7 @@ const Navigation = () => {
 
   return (
     <>
-      <nav className="!py-2 ">
+      <nav className="!py-1 ">
         <div className="container flex items-center justify-end gap-9">
           <div className="col_1 w-[20%]">
             <Button
@@ -33,14 +33,14 @@ const Navigation = () => {
             <ul className="flex items-center gap-0 nav">
               <li className="list-none ">
                 <Link to="/" className="link transition ">
-                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] ">
+                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
                     INICIO
                   </Button>
                 </Link>
               </li>
               <li className="list-none !text-[#082c55] font-bold font-[bold] relative">
                 <Link to="/" className="link transition">
-                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] ">
+                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
                     MAQUINAS
                   </Button>
                 </Link>
@@ -135,42 +135,42 @@ const Navigation = () => {
               </li>
               <li className="list-none !text-[#082c55] font-bold font-[bold]">
                 <Link to="/" className="link transition">
-                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] ">
+                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
                     CORTE
                   </Button>
                 </Link>
               </li>
               <li className="list-none !text-[#082c55] font-bold font-[bold]">
                 <Link to="/" className="link transition">
-                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] ">
+                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
                     PLANCHADO
                   </Button>
                 </Link>
               </li>
               <li className="list-none !text-[#082c55] font-bold font-[bold]">
                 <Link to="/" className="link transition">
-                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] ">
+                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
                     ACCESORIOS
                   </Button>
                 </Link>
               </li>
               <li className="list-none !text-[#082c55] font-bold font-[bold]">
                 <Link to="/" className="link transition">
-                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] ">
+                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
                     REPUESTOS
                   </Button>
                 </Link>
               </li>
               <li className="list-none !text-[#082c55] font-bold font-[bold]">
                 <Link to="/" className="link transition">
-                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] ">
+                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
                     NOSOTROS
                   </Button>
                 </Link>
               </li>
               <li className="list-none !text-[#082c55] font-bold font-[bold]">
                 <Link to="/" className="link transition">
-                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] ">
+                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
                     CONTACTO
                   </Button>
                 </Link>
