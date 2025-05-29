@@ -58,7 +58,7 @@ const Home = () => {
         <div className="container">
           <div className="flex items-center justify-between">
             <div className="leftSec">
-              <h2 className="text-[20px] font-bold">PRODUCTOSs POPULARES</h2>
+              <h2 className="text-[20px] font-bold">PRODUCTOS POPULARES</h2>
               <p className="text-[12px] font-[400]">
                 NO TE PIERDAS LAS OFERTAS VIGENTES HASTA FINALES DE AÑO
               </p>
