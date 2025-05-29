@@ -10,6 +10,7 @@ const ProductsSlider = (props) => {
   return (
     <div className="productsSlider !py-3">
       <Swiper
+        loop={true}
         slidesPerView={props.items}
         spaceBetween={10}
         navigation={true}

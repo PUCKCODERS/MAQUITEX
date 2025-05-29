@@ -15,6 +15,9 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import BlogItem from "../../components/BlogItem";
 import Footer from "../../components/Footer";
+import HomeBannerV2 from "../../components/HomeSliderV2";
+import BannerBoxV2 from "../../components/bannerBoxV2";
+import AdsBannerSliderV2 from "../../components/AdsBannerSliderV2";
 
 const Home = () => {
   const [value, setValue] = React.useState(0);
@@ -26,6 +29,30 @@ const Home = () => {
   return (
     <>
       <HomeSlider />
+
+      <section className="!py-6">
+        <div className="container flex !gap-3">
+          <div className="part1 w-[70%]">
+            <HomeBannerV2 />
+          </div>
+
+          <div className="part2 w-[30%] flex items-center !gap-2 justify-between flex-col">
+            <BannerBoxV2
+              info="left"
+              image={
+                "https://polipapel.vteximg.com.br/arquivos/ids/174453-1000-1000/O76237.png?v=638191796905070000igua.jpg"
+              }
+            />
+            <BannerBoxV2
+              info="right"
+              image={
+                "https://polipapel.vteximg.com.br/arquivos/ids/174453-1000-1000/O76237.png?v=638191796905070000igua.jpg"
+              }
+            />
+          </div>
+        </div>
+      </section>
+
       <HomeCatSlider />
       <section className="!py-8 bg-white">
         <div className="container">
@@ -67,9 +94,9 @@ const Home = () => {
           <ProductsSlider items={6} />
         </div>
       </section>
-      <section className="!py-4 !pt-8 bg-gray-900">
+      <section className="!py-4 !pt-8 bg-white">
         <div className="container">
-          <div className="freeShipping !w-[80%] !m-auto !py-4 !p-4 border-2 border-white bg-gray-950 flex items-center justify-between !rounded-md !mb-7">
+          <div className="freeShipping !w-[80%] !m-auto !py-4 !p-4 border-2 border-gray-950 bg-gray-950 flex items-center justify-between !rounded-md !mb-7">
             <div className="col1 flex items-center gap-4">
               <FaTruckFast className="text-[50px] text-white" />
               <span className="text-[18px] font-bold text-white !text-uppercase">
@@ -86,7 +113,7 @@ const Home = () => {
             <p className="font-bold text-[20px] text-white">- SOLO $200</p>
           </div>
 
-          <AdsBannerSlider items={4} />
+          <AdsBannerSliderV2 items={4} />
         </div>
       </section>
       <section className="!py-5 !pt-4 bg-white">
@@ -131,7 +158,6 @@ const Home = () => {
         </div>
       </section>
       <Footer />
-      <br /> <br /> <br /> <br />
     </>
   );
 };

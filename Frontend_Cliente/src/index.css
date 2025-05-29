@@ -31,6 +31,49 @@ body {
   width: 95% !important;
   margin: auto;
 }
+
+.btn-org {
+  background: #7994b1 !important;
+  color: #fff !important;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  padding: 10px 20px !important;
+  border-radius: 5px !important;
+  border: 1px solid #7994b1 !important;
+  box-shadow: 5px 5px 7px #000 !important;
+  transition: all 0.3s ease !important;
+  text-transform: capitalize !important;
+}
+.btn-org:hover {
+  background: #274a72 !important;
+}
+
+.btn-org.btn-border {
+  background: #5c5c5c !important;
+  color: #fff !important;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  padding: 10px 20px !important;
+  border-radius: 5px !important;
+  border: 1px solid #5c5c5c !important;
+  box-shadow: 5px 5px 7px #000 !important;
+  transition: all 0.3s ease !important;
+  text-transform: capitalize !important;
+}
+.btn-org.btn-border:hover {
+  background: #000 !important;
+}
+
+.btn-lg {
+  font-size: 18px;
+  padding: 10px 20px !important;
+}
+
+.btn-sm {
+  font-size: 12px !important;
+  padding: 5px 20px !important;
+}
+
 header .top-strip {
   /*{ border-top: 1px solid #7994b1;
   border-bottom: 1px solid #7994b1;}*/
@@ -146,4 +189,57 @@ nav ul button {
 .productsSlider .swiper-button-prev:hover::after,
 .productsSlider .swiper-button-next:hover::after {
   color: #fff !important;
+}
+
+footer form input::placeholder {
+  font-size: 14px !important;
+}
+
+.css-imrjgg-MuiButtonBase-root-MuiCheckbox-root.Mui-checked,
+.css-imrjgg-MuiButtonBase-root-MuiCheckbox-root.Mui-checkedbox-indeterminate {
+  color: #556f8d !important;
+}
+
+.MuiFormControlLabel-label {
+  font-size: 14px !important;
+  color: #000 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #fff !important;
+}
+
+.homeSliderV2 .swiper-slide-active .info {
+  right: 0px !important;
+  opacity: 1;
+}
+
+.homeSliderV2 .swiper-slide-active .info h4 {
+  right: 0px !important;
+  opacity: 1;
+}
+.homeSliderV2 .swiper-slide-active .info h3 {
+  right: 0px !important;
+  opacity: 1;
+}
+.homeSliderV2 .swiper-slide-active .info h2 {
+  right: 0px !important;
+  opacity: 1;
+}
+.homeSliderV2 .swiper-slide-active .info .btn_ {
+  bottom: 0px !important;
+  opacity: 1;
+}
+
+.homeSliderV2 .info h4 {
+  transition-duration: 0.5s;
+}
+.homeSliderV2 .info h2 {
+  transition-duration: 1s;
+}
+.homeSliderV2 .info h3 {
+  transition-duration: 1.2s;
+}
+.homeSliderV2 .info .btn_ {
+  transition-duration: 1.3s;
 }
