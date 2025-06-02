@@ -95,21 +95,23 @@ const Home = () => {
       </section>
       <section className="!py-4 !pt-8 bg-white">
         <div className="container">
-          <div className="freeShipping !w-[80%] !m-auto !py-4 !p-4 border-2 border-gray-950 bg-gray-950 flex items-center justify-between !rounded-md !mb-7">
-            <div className="col1 flex items-center gap-4">
-              <FaTruckFast className="text-[50px] text-white" />
-              <span className="text-[18px] font-bold text-white !text-uppercase">
-                ENVIO GRATIS
-              </span>
-            </div>
+          <div className="freeShipping !w-[80%] !m-auto !py-4 !p-4 border-3 !border-gray-950 bg-gray-700 flex items-center justify-between !rounded-md !mb-7">
+            <div className="!w-[100%] border-3 !border-white !m-auto !py-4 !p-4 bg-gray-950 flex items-center justify-between !rounded-md">
+              <div className="col1 flex items-center gap-4">
+                <FaTruckFast className="text-[50px] text-white" />
+                <span className="text-[18px] font-bold text-white !text-uppercase">
+                  ENVIO GRATIS
+                </span>
+              </div>
 
-            <div className="col2">
-              <p className="!mb-0 font-[500] text-white text-[13px]">
-                POR TU PRIMERA COMPRA Y SUPERIOR A $200
-              </p>
-            </div>
+              <div className="col2">
+                <p className="!mb-0 font-[500] text-white text-[13px]">
+                  POR TU PRIMERA COMPRA Y SUPERIOR A $200
+                </p>
+              </div>
 
-            <p className="font-bold text-[20px] text-white">- SOLO $200</p>
+              <p className="font-bold text-[20px] text-white">- SOLO $200</p>
+            </div>
           </div>
 
           <AdsBannerSliderV2 items={4} />
