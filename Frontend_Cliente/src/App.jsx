@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
 import ProductListing from "./Pages/ProductListing";
+import ProductDetails from "./Pages/ProductDetails";
 
 function App() {
   return (
@@ -16,6 +17,11 @@ function App() {
             path={"/productListing"}
             exact={true}
             element={<ProductListing />}
+          />
+          <Route
+            path={"/product/:id"}
+            exact={true}
+            element={<ProductDetails />}
           />
         </Routes>
         <Footer />
