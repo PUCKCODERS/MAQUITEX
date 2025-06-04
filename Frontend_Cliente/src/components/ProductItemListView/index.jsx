@@ -45,18 +45,18 @@ const ProductItem = () => {
       </div>
 
       <div className="info !p-3 !py-4 !bg-white w-[75%]">
-        <h6 className="text-[15px] font-[500] text-[#556f8d]">
+        <h6 className="text-[15px] !font-[500] text-[#556f8d]">
           <Link to="/" className="link transition-all">
             COLOR SILVER
           </Link>
         </h6>
-        <h3 className="text-[18px] title !mt-3 font-[bold] font-bold !mb-1 text-[#556f8d]">
+        <h3 className="text-[18px] title !mt-3 font-[bold] font-bold !mb-1 !text-[#082c55]">
           <Link to="/" className="link transition-all">
             MAQUINA SINGER COLOR SILVER TAMAÑO SMALL
           </Link>
         </h3>
 
-        <p className="text-[14px] text-[#757575] font-[bold] !mb-3">
+        <p className="text-[14px] text-[#000] font-[bold] !mb-3">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem
           officiis eius at cumque quas, facilis doloribus maxime ratione, optio
           iusto sint sunt velit dolorum modi?
