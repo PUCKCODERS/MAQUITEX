@@ -16,6 +16,11 @@ body {
   overflow-x: hidden !important;
 }
 
+p {
+  font-size: 14px;
+  line-height: 25px;
+}
+
 ::-webkit-scrollbar {
   width: 8px !important;
   height: 8px !important;
@@ -298,6 +303,9 @@ footer form input::placeholder {
 .zoomProductSliderThumbs .swiper-slide {
   height: auto !important;
 }
+.zoomProductSliderThumbs .swiper-wrapper {
+  padding-top: 31px !important;
+}
 
 .zoomProductSliderThumbs .swiper-button-next {
   bottom: 0px !important;
@@ -309,6 +317,10 @@ footer form input::placeholder {
   background: #dbdbdb !important;
 }
 
+.zoomProductSliderThumbs .swiper-button-next::after {
+  transform: rotate(90deg);
+}
+
 .zoomProductSliderThumbs .swiper-button-prev {
   top: 20px !important;
   left: 0 !important;
@@ -316,6 +328,9 @@ footer form input::placeholder {
   height: 30px !important;
   border-radius: 0px !important;
   background: #dbdbdb !important;
+}
+.zoomProductSliderThumbs .swiper-button-prev::after {
+  transform: rotate(90deg);
 }
 
 .zoomProductSliderThumbs .swiper-button-prev:hover,
@@ -325,4 +340,28 @@ footer form input::placeholder {
 .zoomProductSliderThumbs .swiper-button-prev:hover::after,
 .zoomProductSliderThumbs .swiper-button-next:hover::after {
   color: #fff !important;
+}
+
+.productContent .actions button {
+  min-width: 40px !important;
+  min-height: 30px !important;
+  border: 1px solid #082c55 !important;
+  color: #082c55;
+  transition: all 0.3s ease !important;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.iiz div {
+  width: 100% !important;
+}
+
+.iiz div:first-child {
+  border-radius: 10px !important;
+  overflow: hidden !important;
 }
