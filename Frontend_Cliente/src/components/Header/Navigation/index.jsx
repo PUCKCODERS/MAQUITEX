@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
 import React, { useState } from "react";
 import { ImMenu } from "react-icons/im";
 import { RxTriangleDown } from "react-icons/rx";
@@ -178,8 +178,8 @@ const Navigation = () => {
             </ul>
           </div>
 
-          <div className="col_3 w-[20%]">
-            <p className="text-[13px] text-[#000] font-[600] flex items-center gap-3 mb-0 mt-0">
+          <div className="col_3 w-[20%] !ml-3">
+            <p className="text-[13px] text-[#000] font-[600] flex items-center !gap-2 !mb-0 !mt-0">
               <FaTruckFast className="text-[30px] text-[#000] !ml-6" />
               ENVIO GRATIS
             </p>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../ProductItem/style.css";
 import { Link } from "react-router-dom";
 import Rating from "@mui/material/Rating";
@@ -6,10 +6,11 @@ import Button from "@mui/material/Button";
 import { FaHeart } from "react-icons/fa";
 import { IoGitCompare } from "react-icons/io5";
 import { MdZoomOutMap } from "react-icons/md";
-import Tooltip from "@mui/material/Tooltip";
 import { GiShoppingCart } from "react-icons/gi";
+import { MyContext } from "../../App"; // Adjust the import path as necessary
 
 const ProductItem = () => {
+  const context = useContext(MyContext);
   return (
     <div className="productItem bg-white !rounded-md !overflow-hidden !border-1 !border-[#b1cdee] shadow-[5px_5px_5px_#274a72] flex items-center">
       <div className="group imgWrapper !w-[25%] !top-0 !overflow-hidden !rounded-md relative">
@@ -38,7 +39,10 @@ const ProductItem = () => {
           <Button className="!w-[35px] !h-[35px] !min-w-[35px] !text-[18px] !rounded-full !text-white !bg-[#082c55] !border-1 !border-[#b1cdee] hover:!bg-white hover:!text-[#082c55]">
             <IoGitCompare className="" />
           </Button>
-          <Button className="!w-[35px] !h-[35px] !min-w-[35px] !text-[18px] !rounded-full !text-white !bg-[#082c55] !border-1 !border-[#b1cdee] hover:!bg-white hover:!text-[#082c55]">
+          <Button
+            className="!w-[35px] !h-[35px] !min-w-[35px] !text-[18px] !rounded-full !text-white !bg-[#082c55] !border-1 !border-[#b1cdee] hover:!bg-white hover:!text-[#082c55]"
+            onClick={() => context.setOpenProductDetailsModal(true)}
+          >
             <MdZoomOutMap className="" />
           </Button>
         </div>
