@@ -24,12 +24,12 @@ const Navigation = () => {
               onClick={openCategoryPanel}
             >
               <ImMenu className="text-[18px] !mb-1" />
-              CATEGORÍAS{" "}
+              CATEGORÍAS
               <RxTriangleDown className="text-[18px] !mb-1 !ml-auto !font-bold !cursor-pointer" />
             </Button>
           </div>
 
-          <div className="col_2 w-[60%] !mr-3">
+          <div className="col_2 w-[60%] !mr-1">
             <ul className="flex items-center gap-0 nav">
               <li className="list-none ">
                 <Link to="/" className="link transition ">
@@ -45,10 +45,10 @@ const Navigation = () => {
                   </Button>
                 </Link>
 
-                <div className="submenu absolute !top-[135%] !left-[0%] min-w-[200px] bg-[#ebebeb] shadow-[3px_3px_3px_#274a72] opacity-0 transition-all z-10">
+                <div className="submenu absolute !top-[135%] !left-[0%] min-w-[200px] bg-[#ebebeb] shadow-[3px_3px_3px_#274a72] opacity-0 transition-all z-10 ">
                   <ul>
-                    <li className="list-none w-full relative ">
-                      <Link to="/" className="w-full">
+                    <li className="list-none w-full relative">
+                      <Link to="/" className="w-full !mb-1">
                         <Button className="!text-[#082c55] hover:!text-[#fff] hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
                           SINGER
                         </Button>
@@ -179,8 +179,8 @@ const Navigation = () => {
           </div>
 
           <div className="col_3 w-[20%] !ml-3">
-            <p className="text-[13px] text-[#000] font-[600] flex items-center !gap-2 !mb-0 !mt-0">
-              <FaTruckFast className="text-[30px] text-[#000] !ml-6" />
+            <p className="!text-[13px] text-[#000] font-[600] flex items-center !gap-2 !mb-0 !mt-0">
+              <FaTruckFast className="!text-[30px] text-[#000] !ml-6" />
               ENVIO GRATIS
             </p>
           </div>
