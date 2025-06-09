@@ -7,7 +7,7 @@ const CartPanel = () => {
   return (
     <>
       <div className="scroll w-full max-h-[300px] overflow-y-scroll overflow-x-hidden !py-3 !px-4">
-        <div className="cartItem w-full flex items-center !gap-4 border-b border-[#d1d1d1] !pb-4">
+        <div className="cartItem w-full flex items-center !gap-4 border-b border-[#d1d1d1] !pb-4 !mb-2">
           <div className="img w-[25%] overflow-hidden h-[80px] rounded-md shadow-[5px_5px_5px_#274a72]">
             <Link to="/product/45875" className="block group">
               <img
@@ -34,7 +34,7 @@ const CartPanel = () => {
           </div>
         </div>
 
-        <div className="cartItem w-full flex items-center !gap-4 border-b border-[#d1d1d1] !pb-4">
+        <div className="cartItem w-full flex items-center !gap-4 border-b border-[#d1d1d1] !pb-4 !mb-2">
           <div className="img w-[25%] overflow-hidden h-[80px] rounded-md shadow-[5px_5px_5px_#274a72]">
             <Link to="/product/45875" className="block group">
               <img
@@ -61,7 +61,7 @@ const CartPanel = () => {
           </div>
         </div>
 
-        <div className="cartItem w-full flex items-center !gap-4 border-b border-[#d1d1d1] !pb-4">
+        <div className="cartItem w-full flex items-center !gap-4 border-b border-[#d1d1d1] !pb-4 !mb-2">
           <div className="img w-[25%] overflow-hidden h-[80px] rounded-md shadow-[5px_5px_5px_#274a72]">
             <Link to="/product/45875" className="block group">
               <img
@@ -88,7 +88,7 @@ const CartPanel = () => {
           </div>
         </div>
 
-        <div className="cartItem w-full flex items-center !gap-4 border-b border-[#d1d1d1] !pb-4">
+        <div className="cartItem w-full flex items-center !gap-4 border-b border-[#d1d1d1] !pb-4 !mb-2">
           <div className="img w-[25%] overflow-hidden h-[80px] rounded-md shadow-[5px_5px_5px_#274a72]">
             <Link to="/product/45875" className="block group">
               <img
@@ -115,7 +115,7 @@ const CartPanel = () => {
           </div>
         </div>
 
-        <div className="cartItem w-full flex items-center !gap-4 border-b border-[#d1d1d1] !pb-4">
+        <div className="cartItem w-full flex items-center !gap-4 border-b border-[#d1d1d1] !pb-4 !mb-2">
           <div className="img w-[25%] overflow-hidden h-[80px] rounded-md shadow-[5px_5px_5px_#274a72]">
             <Link to="/product/45875" className="block group">
               <img
