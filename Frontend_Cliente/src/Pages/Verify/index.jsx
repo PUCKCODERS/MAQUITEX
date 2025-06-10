@@ -28,7 +28,7 @@ const Verify = () => {
           </h3>
 
           <p className="text-center text-black font-[600] !mt-0 !mb-4">
-            ENVIAR A :
+            ENVIADO A :
             <span className=" !ml-3 !text-[#274a72]">
               jlc.rodriguez316@gmail.com
             </span>
@@ -39,7 +39,7 @@ const Verify = () => {
 
             <div className="flex items-center justify-center !mt-5 !px-3">
               <Button type="submit" className="w-full btn-org btn-lg">
-                ENVIAR CODIGO
+                CONFIRMAR CODIGO
               </Button>
             </div>
           </form>

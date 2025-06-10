@@ -137,6 +137,13 @@ nav ul button {
   text-transform: capitalize !important;
 }
 
+.scroll::-webkit-scrollbar {
+  width: 4px !important;
+}
+.scroll::-webkit-scrollbar-thumb {
+  background: #ccc !important;
+}
+
 .sliderHome,
 .mySwiper {
   overflow: inherit !important;
