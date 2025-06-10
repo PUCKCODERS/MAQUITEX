@@ -54,7 +54,7 @@ h6 {
   padding: 10px 20px !important;
   border-radius: 5px !important;
   border: 1px solid #7994b1 !important;
-  box-shadow: 5px 5px 7px #000 !important;
+  box-shadow: 3px 3px 3px #000 !important;
   transition: all 0.3s ease !important;
   text-transform: capitalize !important;
 }
@@ -70,7 +70,7 @@ h6 {
   padding: 10px 20px !important;
   border-radius: 5px !important;
   border: 1px solid #5c5c5c !important;
-  box-shadow: 5px 5px 7px #000 !important;
+  box-shadow: 3px 3px 3px #000 !important;
   transition: all 0.3s ease !important;
   text-transform: capitalize !important;
 }
@@ -415,4 +415,34 @@ input[type="number"]::-webkit-outer-spin-button {
 .otpPage .container {
   height: 90vh;
   display: flex;
+}
+
+#account-menu .MuiPaper-root {
+  width: 200px !important;
+}
+
+.myAccountTabs li a {
+  position: relative;
+  display: block;
+}
+.myAccountTabs li a:before {
+  content: "";
+  width: 3px;
+  height: 50%;
+  position: absolute;
+  top: 50%;
+  left: 0px;
+  background-color: #274a72;
+  transition: all 0.3s ease-in-out;
+  opacity: 0;
+}
+
+.myAccountTabs li a.active::before {
+  height: 100%;
+  opacity: 1;
+  top: 0px;
+}
+
+.myAccountTabs li a.active button svg {
+  opacity: 1 !important;
 }
