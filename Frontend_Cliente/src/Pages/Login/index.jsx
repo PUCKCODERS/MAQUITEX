@@ -9,6 +9,10 @@ import { MyContext } from "../../App";
 
 const Login = () => {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
+  const [formFields, setFormFields] = useState({
+    email: "",
+    password: "",
+  });
 
   const context = useContext(MyContext);
   const histoty = useNavigate();
