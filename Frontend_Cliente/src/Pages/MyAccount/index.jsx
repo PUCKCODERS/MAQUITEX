@@ -4,7 +4,7 @@ import AccountSidebar from "../../components/AccountSidebar";
 
 const MyAccount = () => {
   return (
-    <section className="!py-10 w-full">
+    <section className="!py-5 w-full">
       <div className="container flex !gap-5">
         <div className="col1 w-[25%]">
           <AccountSidebar />

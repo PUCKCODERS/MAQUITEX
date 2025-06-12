@@ -75,13 +75,12 @@ const ProductItem = () => {
           <span className="price text-[#0a7fec] text-[17px] font-[600]">
             $69.00
           </span>
-        </div>
 
-        <div className="!mt-3">
-          <Button className="btn-org-small flex !gap-2">
-            AGREGAR
-            <GiShoppingCart className="text-[25px] scale-x-[-1]" />
-          </Button>
+          <div className="!mt-0 ">
+            <Button className="btn-org btn-sm !text-[15px] !gap-2">
+              AGREGAR <GiShoppingCart class="text-[25px] scale-x-[-1]" />
+            </Button>
+          </div>
         </div>
       </div>
     </div>
