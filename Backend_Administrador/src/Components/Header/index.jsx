@@ -95,12 +95,9 @@ const Header = () => {
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            <MenuItem onClick={handleCloseMyAcc} className="!bg-[#082c55]">
+            <MenuItem onClick={handleCloseMyAcc} className="!bg-[#fff]">
               <div className="flex items-center !gap-3">
-                <div
-                  className="!rounded-full !w-[35px] !h-[35px] overflow-hidden cursor-pointer !shadow-[0_0_0_3px_#fff]
-"
-                >
+                <div className="!rounded-full !w-[35px] !h-[35px] overflow-hidden cursor-pointer border border-[#082c55]">
                   <img
                     src="../../../imagenes/user.jpg"
                     className="!w-full !h-full object-cover "
@@ -108,10 +105,10 @@ const Header = () => {
                 </div>
 
                 <div className="info">
-                  <h3 className="text-[15px] font-bold font-[bold] leading-5 text-[#fff]">
+                  <h3 className="text-[15px] font-bold font-[bold] leading-5 text-[#082c55]">
                     JONATHAN RODRIGUEZ
                   </h3>
-                  <p className="text-[12px] font-[400] text-[#fff] opacity-70">
+                  <p className="text-[12px] font-[400] text-[#082c55] opacity-70">
                     jlc.rodriguez@gmail.com.ec
                   </p>
                 </div>
