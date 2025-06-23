@@ -27,28 +27,28 @@ import TableRow from "@mui/material/TableRow";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const columns = [
-  { id: "name", label: "Name", minWidth: 170 },
-  { id: "code", label: "ISO\u00a0Code", minWidth: 100 },
+  { id: "id", label: "ID", minWidth: 80 },
+  { id: "product", label: "PRODUCTO", minWidth: 150 },
+  { id: "category", label: "CATEGORIA", minWidth: 100 },
   {
-    id: "population",
-    label: "Population",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
+    id: "subcategory",
+    label: "SUB CATEGORIA",
+    minWidth: 150,
   },
   {
-    id: "size",
-    label: "Size\u00a0(km\u00b2)",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
+    id: "price",
+    label: "PRECIO",
+    minWidth: 100,
   },
   {
-    id: "density",
-    label: "Density",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toFixed(2),
+    id: "sales",
+    label: "VENTAS",
+    minWidth: 80,
+  },
+  {
+    id: "action",
+    label: "OPCIONES",
+    minWidth: 120,
   },
 ];
 
@@ -157,7 +157,7 @@ const Dashboard = () => {
                   VENTAS
                 </th>
                 <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
-                  ACCION
+                  OPCIONES
                 </th>
               </tr>
             </thead>
