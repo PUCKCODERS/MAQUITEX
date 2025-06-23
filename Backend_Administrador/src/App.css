@@ -1,7 +1,45 @@
 body {
-  font-family: "Raleway", serif;
+  font-family: "Montserrat", serif;
+  background: rgb(221, 221, 221) !important;
 }
 
 .ReactCollapse--collapse {
   transition: height 300ms;
+}
+
+::-webkit-scrollbar {
+  width: 10px !important;
+  height: 10px !important;
+  background: #526b86 !important;
+}
+::-webkit-scrollbar-thumb {
+  background: #000;
+}
+
+.btn-blue {
+  background: #526b86 !important;
+  color: #fff !important;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+  padding: 10px 20px !important;
+  border-radius: 5px !important;
+  border: 1px solid #7994b1 !important;
+  box-shadow: 3px 3px 3px #000 !important;
+  transition: all 0.3s ease !important;
+  text-transform: capitalize !important;
+}
+
+.btn-blue:hover {
+  background: #082c55 !important;
+  color: #fff !important;
+}
+
+.custom-pagination .MuiPaginationItem-root {
+  color: #fff !important;
+  border-color: 5px solid #000 !important;
+}
+
+.custom-pagination .Mui-selected {
+  background-color: #fff !important;
+  color: #082c55 !important;
 }

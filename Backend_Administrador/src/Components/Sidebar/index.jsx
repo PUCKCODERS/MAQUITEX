@@ -10,6 +10,7 @@ import { GiExitDoor } from "react-icons/gi";
 import { RiSlideshowFill } from "react-icons/ri";
 import { GoTriangleDown } from "react-icons/go";
 import { Collapse } from "react-collapse";
+import { FaClipboardList } from "react-icons/fa";
 
 const Sidebar = () => {
   const [submenuIndex, setSubmenuIndex] = useState(null);
@@ -32,27 +33,31 @@ const Sidebar = () => {
         </div>
 
         <ul className="!mt-4 ">
-          <li className="">
-            <Button className="w-full !text-[#000] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300">
-              <AiFillAppstore className="!text-[20px] " />
-              <span>PANEL</span>
-            </Button>
+          <li>
+            <Link to="/">
+              <Button className="w-full !text-[#082c55] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300 ">
+                <AiFillAppstore className="!text-[20px] " />
+                <span>PANEL</span>
+              </Button>
+            </Link>
           </li>
           <li>
-            <Button
-              className="w-full !text-[#000] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300"
-              onClick={() => isOpenSubMenu(1)}
-            >
-              <RiSlideshowFill className="!text-[20px] " />{" "}
-              <span>ESTADISTICAS</span>
-              <span className="!ml-auto !text-[20px] !w-[30px] !h-[30px] flex items-center justify-center">
-                <GoTriangleDown
-                  className={`transition-all ${
-                    submenuIndex === 1 ? "rotate-180" : ""
-                  }`}
-                />
-              </span>
-            </Button>
+            <Link to="/">
+              <Button
+                className="w-full !text-[#082c55] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300"
+                onClick={() => isOpenSubMenu(1)}
+              >
+                <RiSlideshowFill className="!text-[20px] " />{" "}
+                <span>ESTADISTICAS</span>
+                <span className="!ml-auto !text-[20px] !w-[30px] !h-[30px] flex items-center justify-center">
+                  <GoTriangleDown
+                    className={`transition-all ${
+                      submenuIndex === 1 ? "rotate-180" : ""
+                    }`}
+                  />
+                </span>
+              </Button>
+            </Link>
 
             <Collapse isOpened={submenuIndex === 1 ? true : false}>
               <ul className="!w-full">
@@ -72,16 +77,18 @@ const Sidebar = () => {
             </Collapse>
           </li>
           <li>
-            <Button className="w-full !text-[#000] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300">
-              <FaUsers className="!text-[20px]" /> <span>USUARIOS</span>
-            </Button>
+            <Link to="/users">
+              <Button className="w-full !text-[#082c55] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300">
+                <FaUsers className="!text-[20px]" /> <span>USUARIOS</span>
+              </Button>
+            </Link>
           </li>
           <li>
             <Button
-              className="w-full !text-[#000] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300"
+              className="w-full !text-[#082c55] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300"
               onClick={() => isOpenSubMenu(2)}
             >
-              <RiSlideshowFill className="!text-[20px] " />{" "}
+              <GiSewingMachine className="!text-[20px] " />{" "}
               <span>PRODUCTOS</span>
               <span className="!ml-auto !text-[20px] !w-[30px] !h-[30px] flex items-center justify-center">
                 <GoTriangleDown
@@ -95,26 +102,30 @@ const Sidebar = () => {
             <Collapse isOpened={submenuIndex === 2 ? true : false}>
               <ul className="!w-full">
                 <li className="!w-full">
-                  <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
-                    <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
-                    AÑADIR PRODUCTO
-                  </Button>
+                  <Link to="/products/upload">
+                    <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
+                      <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
+                      AÑADIR PRODUCTO
+                    </Button>
+                  </Link>
                 </li>
                 <li className="!w-full">
-                  <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
-                    <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
-                    LISTA PRODUCTOS
-                  </Button>
+                  <Link to="/products">
+                    <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
+                      <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
+                      LISTA PRODUCTOS
+                    </Button>
+                  </Link>
                 </li>
               </ul>
             </Collapse>
           </li>
           <li>
             <Button
-              className="w-full !text-[#000] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300"
+              className="w-full !text-[#082c55] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300"
               onClick={() => isOpenSubMenu(3)}
             >
-              <RiSlideshowFill className="!text-[20px] " />{" "}
+              <AiFillDatabase className="!text-[20px] " />{" "}
               <span>CATEGORIAS</span>
               <span className="!ml-auto !text-[20px] !w-[30px] !h-[30px] flex items-center justify-center">
                 <GoTriangleDown
@@ -128,41 +139,48 @@ const Sidebar = () => {
             <Collapse isOpened={submenuIndex === 3 ? true : false}>
               <ul className="!w-full">
                 <li className="!w-full">
-                  <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
-                    <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
-                    AÑADIR CATEGORIA
-                  </Button>
+                  <Link to="/category/add">
+                    <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
+                      <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
+                      AÑADIR CATEGORIA
+                    </Button>
+                  </Link>
                 </li>
                 <li className="!w-full">
-                  <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
-                    <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
-                    LISTA CATEGORIAS
-                  </Button>
+                  <Link to="/category">
+                    <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
+                      <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
+                      LISTA CATEGORIAS
+                    </Button>
+                  </Link>
                 </li>
                 <li className="!w-full">
-                  <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
-                    <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
-                    AÑADIR SUBCATEGORIA
-                  </Button>
+                  <Link to="/category/subCat/add">
+                    <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
+                      <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
+                      AÑADIR SUBCATEGORIA
+                    </Button>
+                  </Link>
                 </li>
                 <li className="!w-full">
-                  <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
-                    <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
-                    LISTA SUBCATEGORIAS
-                  </Button>
+                  <Link to="/category/subCat">
+                    <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
+                      <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
+                      LISTA SUBCATEGORIAS
+                    </Button>
+                  </Link>
                 </li>
               </ul>
             </Collapse>
           </li>
           <li>
-            <Button className="w-full !text-[#000] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300">
-              <AiFillReconciliation className="!text-[20px] " />{" "}
-              <span>PEDIDOS</span>
+            <Button className="w-full !text-[#082c55] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300">
+              <FaClipboardList className="!text-[20px] " /> <span>PEDIDOS</span>
             </Button>
           </li>
 
           <li>
-            <Button className="w-full !text-[#000] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300">
+            <Button className="w-full !text-[#082c55] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300">
               <GiExitDoor className="!text-[20px] " />{" "}
               <span>CERRAR SESION</span>
             </Button>
