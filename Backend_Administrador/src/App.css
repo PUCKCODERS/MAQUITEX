@@ -36,10 +36,15 @@ body {
 
 .custom-pagination .MuiPaginationItem-root {
   color: #fff !important;
-  border-color: 5px solid #000 !important;
+  border-color: #082c55 !important;
 }
 
 .custom-pagination .Mui-selected {
-  background-color: #fff !important;
-  color: #082c55 !important;
+  background-color: #526b86 !important;
+  color: #fff !important;
+}
+
+th.MuiTableCell-root {
+  background-color: var(--color-gray-800) !important;
+  color: #fff !important;
 }

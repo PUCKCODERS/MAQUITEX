@@ -27,7 +27,6 @@ import TableRow from "@mui/material/TableRow";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const columns = [
-  { id: "id", label: "ID", minWidth: 80 },
   { id: "product", label: "PRODUCTO", minWidth: 150 },
   { id: "category", label: "CATEGORIA", minWidth: 100 },
   {
@@ -393,7 +392,7 @@ const Dashboard = () => {
 
       <div className="card !my-4 shadow-md sm:rounded-lg dark:bg-gray-700">
         <div className="flex !bg-gray-950 items-center justify-between !px-5 !py-5 border-b dark:border-gray-700">
-          <h2 className="text-white text-[20px] font-[500] ">
+          <h2 className="text-white text-[20px] !font-[500] ">
             PRODUCTOS
             <span className="font-[400] text-[14px] !ml-3">
               (MATERIAL UI DESCRIPCION)
@@ -403,8 +402,12 @@ const Dashboard = () => {
 
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
-            <TableHead>
+            <TableHead className="!bg-gray-950">
               <TableRow>
+                <TableCell>
+                  <Checkbox {...label} size="small" />
+                </TableCell>
+
                 {columns.map((column) => (
                   <TableCell
                     key={column.id}
@@ -417,29 +420,281 @@ const Dashboard = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={row.code}
-                    >
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
+              <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <Checkbox {...label} size="small" className="!text-white" />
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <div className="flex items-center !gap-4 w-[300px] ">
+                    <div className="img w-[65px] h-[65px] rounded-md overflow-hidden group">
+                      <Link to="/product/45745">
+                        <img
+                          src="https://dcdn-us.mitiendanube.com/stores/937/060/products/whatsapp-image-2024-05-08-at-16-49-38-e8501bf0a251c9748817152035761232-1024-1024.jpeg"
+                          className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+                        />
+                      </Link>
+                    </div>
+
+                    <div className="info w-[75%]">
+                      <h3 className="!font-bold !font-[bold] text-[12px] leading-4">
+                        <Link
+                          to="/product/45745"
+                          className="!text-white hover:!text-[white] !cursor-pointer"
+                        >
+                          MÁQUINA DE COSER INDUSTRIAL DE COLUMNA ZOJE ZJ
+                          9610SA-D3-M-3 MÁQUINA DE COSER INDUSTRIAL
+                        </Link>
+                      </h3>
+
+                      <p className="text-[12px] font-[bold] !text-white !mt-1">
+                        MÁQUINA
+                      </p>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  ELECTRONICO
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  MAQUINA
+                </TableCell>
+
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <div class="flex !gap-1 flex-col">
+                    <span class="oldPrice line-through leading-3 text-[15px] font-[500]">
+                      $69.99
+                    </span>
+                    <span class="price text-[white] text-[15px] font-[600]">
+                      $99.00
+                    </span>
+                  </div>
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <p className="text-[15px] w-[100px]">
+                    <span className="font-[600]">369 </span>
+                    VENTAS
+                  </p>
+                  <Progress value={40} type="success" />
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <div className="flex items-center !gap-1">
+                    <Tooltip title="EDITAR PRODUCTO" placement="top">
+                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                        <GrEdit className=" !text-[20px] " />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip title="VER DETALLES" placement="top">
+                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                        <ImEye className="!text-[20px]" />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip title="ELIMINAR PRODUCTO" placement="top">
+                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                        <FaTrashAlt className="!text-[20px]" />
+                      </Button>
+                    </Tooltip>
+                  </div>
+                </TableCell>
+              </TableRow>
+
+              <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <Checkbox {...label} size="small" className="!text-white" />
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <div className="flex items-center !gap-4 w-[300px] ">
+                    <div className="img w-[65px] h-[65px] rounded-md overflow-hidden group">
+                      <Link to="/product/45745">
+                        <img
+                          src="https://dcdn-us.mitiendanube.com/stores/937/060/products/whatsapp-image-2024-05-08-at-16-49-38-e8501bf0a251c9748817152035761232-1024-1024.jpeg"
+                          className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+                        />
+                      </Link>
+                    </div>
+
+                    <div className="info w-[75%]">
+                      <h3 className="!font-bold !font-[bold] text-[12px] leading-4">
+                        <Link
+                          to="/product/45745"
+                          className="!text-white hover:!text-[white] !cursor-pointer"
+                        >
+                          MÁQUINA DE COSER INDUSTRIAL DE COLUMNA ZOJE ZJ
+                          9610SA-D3-M-3 MÁQUINA DE COSER INDUSTRIAL
+                        </Link>
+                      </h3>
+
+                      <p className="text-[12px] font-[bold] !text-white !mt-1">
+                        MÁQUINA
+                      </p>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  ELECTRONICO
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  MAQUINA
+                </TableCell>
+
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <div class="flex !gap-1 flex-col">
+                    <span class="oldPrice line-through leading-3 text-[15px] font-[500]">
+                      $69.99
+                    </span>
+                    <span class="price text-[white] text-[15px] font-[600]">
+                      $99.00
+                    </span>
+                  </div>
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <p className="text-[15px] w-[100px]">
+                    <span className="font-[600]">369 </span>
+                    VENTAS
+                  </p>
+                  <Progress value={40} type="success" />
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <div className="flex items-center !gap-1">
+                    <Tooltip title="EDITAR PRODUCTO" placement="top">
+                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                        <GrEdit className=" !text-[20px] " />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip title="VER DETALLES" placement="top">
+                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                        <ImEye className="!text-[20px]" />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip title="ELIMINAR PRODUCTO" placement="top">
+                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                        <FaTrashAlt className="!text-[20px]" />
+                      </Button>
+                    </Tooltip>
+                  </div>
+                </TableCell>
+              </TableRow>
+
+              <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <Checkbox {...label} size="small" className="!text-white" />
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <div className="flex items-center !gap-4 w-[300px] ">
+                    <div className="img w-[65px] h-[65px] rounded-md overflow-hidden group">
+                      <Link to="/product/45745">
+                        <img
+                          src="https://dcdn-us.mitiendanube.com/stores/937/060/products/whatsapp-image-2024-05-08-at-16-49-38-e8501bf0a251c9748817152035761232-1024-1024.jpeg"
+                          className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+                        />
+                      </Link>
+                    </div>
+
+                    <div className="info w-[75%]">
+                      <h3 className="!font-bold !font-[bold] text-[12px] leading-4">
+                        <Link
+                          to="/product/45745"
+                          className="!text-white hover:!text-[white] !cursor-pointer"
+                        >
+                          MÁQUINA DE COSER INDUSTRIAL DE COLUMNA ZOJE ZJ
+                          9610SA-D3-M-3 MÁQUINA DE COSER INDUSTRIAL
+                        </Link>
+                      </h3>
+
+                      <p className="text-[12px] font-[bold] !text-white !mt-1">
+                        MÁQUINA
+                      </p>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  ELECTRONICO
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  MAQUINA
+                </TableCell>
+
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <div class="flex !gap-1 flex-col">
+                    <span class="oldPrice line-through leading-3 text-[15px] font-[500]">
+                      $69.99
+                    </span>
+                    <span class="price text-[white] text-[15px] font-[600]">
+                      $99.00
+                    </span>
+                  </div>
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <p className="text-[15px] w-[100px]">
+                    <span className="font-[600]">369 </span>
+                    VENTAS
+                  </p>
+                  <Progress value={40} type="success" />
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <div className="flex items-center !gap-1">
+                    <Tooltip title="EDITAR PRODUCTO" placement="top">
+                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                        <GrEdit className=" !text-[20px] " />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip title="VER DETALLES" placement="top">
+                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                        <ImEye className="!text-[20px]" />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip title="ELIMINAR PRODUCTO" placement="top">
+                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                        <FaTrashAlt className="!text-[20px]" />
+                      </Button>
+                    </Tooltip>
+                  </div>
+                </TableCell>
+              </TableRow>
             </TableBody>
           </Table>
         </TableContainer>
@@ -451,6 +706,7 @@ const Dashboard = () => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          className="!bg-gray-950 !text-white !border-t !border-gray-500"
         />
       </div>
 
