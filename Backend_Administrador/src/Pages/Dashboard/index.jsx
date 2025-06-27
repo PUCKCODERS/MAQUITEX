@@ -9,6 +9,7 @@ import { GrEdit } from "react-icons/gr";
 import { ImEye } from "react-icons/im";
 import { FaTrashAlt } from "react-icons/fa";
 import Badge from "../../components/Badge";
+import { PiExportFill } from "react-icons/pi";
 
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
@@ -23,6 +24,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -56,24 +60,6 @@ function createData(name, code, population, size) {
   return { name, code, population, size, density };
 }
 
-const rows = [
-  createData("India", "IN", 1324171354, 3287263),
-  createData("China", "CN", 1403500365, 9596961),
-  createData("Italy", "IT", 60483973, 301340),
-  createData("United States", "US", 327167434, 9833520),
-  createData("Canada", "CA", 37602103, 9984670),
-  createData("Australia", "AU", 25475400, 7692024),
-  createData("Germany", "DE", 83019200, 357578),
-  createData("Ireland", "IE", 4857000, 70273),
-  createData("Mexico", "MX", 126577691, 1972550),
-  createData("Japan", "JP", 126317000, 377973),
-  createData("France", "FR", 67022000, 640679),
-  createData("United Kingdom", "GB", 67545757, 242495),
-  createData("Russia", "RU", 146793744, 17098246),
-  createData("Nigeria", "NG", 200962417, 923768),
-  createData("Brazil", "BR", 210147125, 8515767),
-];
-
 const Dashboard = () => {
   const [isOpenOrderdProduct, setIsOpenOrderdProduct] = useState(null);
 
@@ -87,6 +73,12 @@ const Dashboard = () => {
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const [categoryFilterVal, setcategoryFilterVal] = React.useState("");
+
+  const handleChangePageCatFilter = (event) => {
+    setcategoryFilterVal(event.target.value);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -121,13 +113,59 @@ const Dashboard = () => {
 
       <div className="card !my-4 shadow-md sm:rounded-lg dark:bg-gray-700">
         <div className="flex !bg-gray-950 items-center justify-between !px-5 !py-5 border-b dark:border-gray-700">
-          <h2 className="text-white text-[20px] font-[500] ">
+          <h2 className="!text-white text-[20px] font-[500] ">
             PRODUCTOS
             <span className="font-[400] text-[14px] !ml-3">
               (PEQUEÑA DESCRIPCION)
             </span>
           </h2>
         </div>
+
+        <div className="flex items-center w-full !text-white !bg-gray-800 !pl-5 !pr-5 !py-4 !border-b !border-gray-500 justify-between">
+          <div className="col !w-[20%]">
+            <h4 className="font-[bold] !text-[15px] !mb-2">CATEGORIA</h4>
+            <Select
+              className="w-full !text-white !font-[bold] !font-bold !bg-gray-600 !border-0 !rounded-md !shadow-none !border-b !border-gray-500"
+              size="small"
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              value={categoryFilterVal}
+              onChange={handleChangePageCatFilter}
+              label="CATEGORIA"
+            >
+              <MenuItem
+                value=""
+                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
+              >
+                <em>NINGUNO</em>
+              </MenuItem>
+              <MenuItem
+                value={10}
+                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
+              >
+                MAQUINAS
+              </MenuItem>
+              <MenuItem
+                value={20}
+                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
+              >
+                REPUESTOS
+              </MenuItem>
+              <MenuItem
+                value={30}
+                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
+              >
+                ACCESORIOS
+              </MenuItem>
+            </Select>
+          </div>
+
+          <div className="!w-[35%] !ml-auto flex items-center !gap-3">
+            <Button className="btn btn-sm flex items-center ">EXPORTAR</Button>
+            <Button className="btn btn-sm">AGREGAR PRODUCTO</Button>
+          </div>
+        </div>
+
         <div class="relative overflow-x-auto !mt-2  dark:!bg-gray-800">
           <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-700 text-white">
@@ -385,7 +423,7 @@ const Dashboard = () => {
           </table>
         </div>
 
-        <div className="flex items-center justify-end !pt-5 !pb-5 !px-4 !bg-gray-950 !border-t !border-gray-500">
+        <div className="flex items-center justify-end !pt-5 !pb-5 !px-4 !bg-gray-100 !border-t !border-gray-500">
           <Pagination count={10} className="custom-pagination" />
         </div>
       </div>
@@ -398,6 +436,51 @@ const Dashboard = () => {
               (MATERIAL UI DESCRIPCION)
             </span>
           </h2>
+        </div>
+
+        <div className="flex items-center w-full !text-white !bg-gray-800 !pl-5 !pr-5 !py-4 !border-b !border-gray-500 justify-between">
+          <div className="col !w-[20%]">
+            <h4 className="font-[bold] !text-[15px] !mb-2">CATEGORIA</h4>
+            <Select
+              className="w-full !text-white !font-[bold] !font-bold !bg-gray-600 !border-0 !rounded-md !shadow-none !border-b !border-gray-500"
+              size="small"
+              labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              value={categoryFilterVal}
+              onChange={handleChangePageCatFilter}
+              label="CATEGORIA"
+            >
+              <MenuItem
+                value=""
+                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
+              >
+                <em>NINGUNO</em>
+              </MenuItem>
+              <MenuItem
+                value={10}
+                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
+              >
+                MAQUINAS
+              </MenuItem>
+              <MenuItem
+                value={20}
+                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
+              >
+                REPUESTOS
+              </MenuItem>
+              <MenuItem
+                value={30}
+                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
+              >
+                ACCESORIOS
+              </MenuItem>
+            </Select>
+          </div>
+
+          <div className="!w-[35%] !ml-auto flex items-center !gap-3">
+            <Button className="btn btn-sm flex items-center ">EXPORTAR</Button>
+            <Button className="btn btn-sm">AGREGAR PRODUCTO</Button>
+          </div>
         </div>
 
         <TableContainer sx={{ maxHeight: 440 }}>
@@ -701,12 +784,12 @@ const Dashboard = () => {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={rows.length}
+          count={10}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          className="!bg-gray-950 !text-white !border-t !border-gray-500"
+          className="!bg-gray-100 !text-balck !border-t !border-gray-500"
         />
       </div>
 
