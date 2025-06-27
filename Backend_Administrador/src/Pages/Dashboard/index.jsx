@@ -128,7 +128,7 @@ const Dashboard = () => {
             </span>
           </h2>
         </div>
-        <div class="relative overflow-x-auto !mt-5  dark:!bg-gray-800">
+        <div class="relative overflow-x-auto !mt-2  dark:!bg-gray-800">
           <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-700 text-white">
               <tr>
@@ -405,7 +405,7 @@ const Dashboard = () => {
             <TableHead className="!bg-gray-950">
               <TableRow>
                 <TableCell>
-                  <Checkbox {...label} size="small" />
+                  <Checkbox {...label} size="small" className="!text-white" />
                 </TableCell>
 
                 {columns.map((column) => (
@@ -716,7 +716,7 @@ const Dashboard = () => {
             PEDIDOS RECIENTES
           </h2>
         </div>
-        <div class="relative overflow-x-auto !mt-5  dark:!bg-gray-800">
+        <div class="relative overflow-x-auto !mt-1  dark:!bg-gray-800">
           <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-700 text-white">
               <tr>

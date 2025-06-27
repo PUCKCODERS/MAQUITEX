@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import { ImMenu } from "react-icons/im";
+import { ImMenu2 } from "react-icons/im";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import IconButton from "@mui/material/IconButton";
@@ -10,6 +11,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import { FaUser } from "react-icons/fa";
 import { GiExitDoor } from "react-icons/gi";
+import { MyContext } from "../../App";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -32,11 +34,24 @@ const Header = () => {
     setAnchorMyAcc(null);
   };
 
+  const context = useContext(MyContext);
+
   return (
-    <header className="!w-full !h-[auto] !py-2 !pl-64 shadow-md !pr-7 !bg-[#fff]  flex items-center justify-between">
+    <header
+      className={`!w-full !h-[auto] !py-2 ${
+        context.isSidebarOpen === true ? "!pl-64" : "!pl-5"
+      } shadow-md !pr-7 !bg-[#fff]  flex items-center justify-between transition-all duration-300`}
+    >
       <div className="part1">
-        <Button className="!w-[40px] !h-[40px] !rounded-full !min-w-[40px] text-[#082c55]">
-          <ImMenu className="text-[18px] text-[#082c55]" />
+        <Button
+          className="!w-[40px] !h-[40px] !rounded-full !min-w-[40px] text-[#082c55]"
+          onClick={() => context.setisSidebarOpen(!context.isSidebarOpen)}
+        >
+          {context.isSidebarOpen === true ? (
+            <ImMenu className="text-[18px] text-[#082c55]" />
+          ) : (
+            <ImMenu2 className="!text-[25px] text-[#082c55] scale-x-[-1] " />
+          )}
         </Button>
       </div>
 

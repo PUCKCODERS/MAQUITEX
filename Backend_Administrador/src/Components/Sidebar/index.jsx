@@ -1,5 +1,5 @@
 import Button from "@mui/material/Button";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { AiFillAppstore } from "react-icons/ai";
 import { FaUsers } from "react-icons/fa";
@@ -11,6 +11,7 @@ import { RiSlideshowFill } from "react-icons/ri";
 import { GoTriangleDown } from "react-icons/go";
 import { Collapse } from "react-collapse";
 import { FaClipboardList } from "react-icons/fa";
+import { MyContext } from "../../App";
 
 const Sidebar = () => {
   const [submenuIndex, setSubmenuIndex] = useState(null);
@@ -20,9 +21,15 @@ const Sidebar = () => {
     } else setSubmenuIndex(index);
   };
 
+  const context = useContext(MyContext);
+
   return (
     <>
-      <div className="sidebar fixed !top-0 !left-0 !bg-[#fff] border-r border-[rgba(0,0,0,0.32)] w-[18%] h-full !py-2 !px-4">
+      <div
+        className={`sidebar fixed !top-0 !left-0 !bg-[#fff] border-r border-[rgba(0,0,0,0.32)]  h-full !py-2 !px-4 !w-[${
+          context.isSidebarOpen === true ? "20%" : "0px"
+        }]`}
+      >
         <div className="!py-2 !w-full">
           <Link to="/">
             <img
