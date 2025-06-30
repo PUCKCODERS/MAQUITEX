@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, PureComponent } from "react";
 import DashboardBoxes from "../../Components/DashboardBoxes";
 import { FaRegSmileWink } from "react-icons/fa";
 import Button from "@mui/material/Button";
@@ -14,7 +14,6 @@ import { PiExportFill } from "react-icons/pi";
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Progress from "../../Components/ProgressBar";
-import Tooltip from "@mui/material/Tooltip";
 import Pagination from "@mui/material/Pagination";
 
 import Table from "@mui/material/Table";
@@ -27,6 +26,17 @@ import TableRow from "@mui/material/TableRow";
 
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -55,10 +65,10 @@ const columns = [
   },
 ];
 
-function createData(name, code, population, size) {
+/*function createData(name, code, population, size) {
   const density = population / size;
   return { name, code, population, size, density };
-}
+}*/
 
 const Dashboard = () => {
   const [isOpenOrderdProduct, setIsOpenOrderdProduct] = useState(null);
@@ -73,8 +83,81 @@ const Dashboard = () => {
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
   const [categoryFilterVal, setcategoryFilterVal] = React.useState("");
+  const [chart1Data /*{setChart1Data}*/] = useState([
+    {
+      name: "ENERO",
+      USUARIOS: 4000,
+      VENTAS: 2400,
+      amt: 2400,
+    },
+    {
+      name: "FEBRERO",
+      USUARIOS: 3000,
+      VENTAS: 1398,
+      amt: 2210,
+    },
+    {
+      name: "MARZO",
+      USUARIOS: 2000,
+      VENTAS: 9800,
+      amt: 2290,
+    },
+    {
+      name: "ABRIL",
+      USUARIOS: 2780,
+      VENTAS: 3908,
+      amt: 2000,
+    },
+    {
+      name: "MAYO",
+      USUARIOS: 1890,
+      VENTAS: 4800,
+      amt: 2181,
+    },
+    {
+      name: "JUNIO",
+      USUARIOS: 2390,
+      VENTAS: 3800,
+      amt: 2500,
+    },
+    {
+      name: "JULIO",
+      USUARIOS: 3490,
+      VENTAS: 4300,
+      amt: 2100,
+    },
+    {
+      name: "AGOSTO",
+      USUARIOS: 2000,
+      VENTAS: 2400,
+      amt: 2400,
+    },
+    {
+      name: "SEPTIEMBRE",
+      USUARIOS: 2780,
+      VENTAS: 3908,
+      amt: 2000,
+    },
+    {
+      name: "OCTUBRE",
+      USUARIOS: 1890,
+      VENTAS: 4800,
+      amt: 2181,
+    },
+    {
+      name: "NOVIEMBRE",
+      USUARIOS: 2390,
+      VENTAS: 3800,
+      amt: 2500,
+    },
+    {
+      name: "DICIEMBRE",
+      USUARIOS: 3490,
+      VENTAS: 4300,
+      amt: 2100,
+    },
+  ]);
 
   const handleChangePageCatFilter = (event) => {
     setcategoryFilterVal(event.target.value);
@@ -160,7 +243,7 @@ const Dashboard = () => {
             </Select>
           </div>
 
-          <div className="!w-[35%] !ml-auto flex items-center !gap-3">
+          <div className="!w-[37%] !ml-auto flex items-center !gap-3">
             <Button className="btn btn-sm flex items-center ">EXPORTAR</Button>
             <Button className="btn btn-sm">AGREGAR PRODUCTO</Button>
           </div>
@@ -254,21 +337,15 @@ const Dashboard = () => {
 
                 <td className="!px-6 !py-2">
                   <div className="flex items-center !gap-1">
-                    <Tooltip title="EDITAR PRODUCTO" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <GrEdit className=" !text-[20px] " />
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title="VER DETALLES" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <ImEye className="!text-[20px]" />
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title="ELIMINAR PRODUCTO" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <FaTrashAlt className="!text-[20px]" />
-                      </Button>
-                    </Tooltip>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <GrEdit className=" !text-[20px] " />
+                    </Button>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <ImEye className="!text-[20px]" />
+                    </Button>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <FaTrashAlt className="!text-[20px]" />
+                    </Button>
                   </div>
                 </td>
               </tr>
@@ -327,21 +404,15 @@ const Dashboard = () => {
 
                 <td className="!px-6 !py-2">
                   <div className="flex items-center !gap-1">
-                    <Tooltip title="EDITAR PRODUCTO" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <GrEdit className=" !text-[20px] " />
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title="VER DETALLES" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <ImEye className="!text-[20px]" />
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title="ELIMINAR PRODUCTO" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <FaTrashAlt className="!text-[20px]" />
-                      </Button>
-                    </Tooltip>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <GrEdit className=" !text-[20px] " />
+                    </Button>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <ImEye className="!text-[20px]" />
+                    </Button>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <FaTrashAlt className="!text-[20px]" />
+                    </Button>
                   </div>
                 </td>
               </tr>
@@ -401,21 +472,15 @@ const Dashboard = () => {
 
                 <td className="!px-6 !py-2">
                   <div className="flex items-center !gap-1">
-                    <Tooltip title="EDITAR PRODUCTO" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <GrEdit className=" !text-[20px] " />
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title="VER DETALLES" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <ImEye className="!text-[20px]" />
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title="ELIMINAR PRODUCTO" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <FaTrashAlt className="!text-[20px]" />
-                      </Button>
-                    </Tooltip>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <GrEdit className=" !text-[20px] " />
+                    </Button>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <ImEye className="!text-[20px]" />
+                    </Button>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <FaTrashAlt className="!text-[20px]" />
+                    </Button>
                   </div>
                 </td>
               </tr>
@@ -576,21 +641,15 @@ const Dashboard = () => {
                   className="!text-white"
                 >
                   <div className="flex items-center !gap-1">
-                    <Tooltip title="EDITAR PRODUCTO" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <GrEdit className=" !text-[20px] " />
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title="VER DETALLES" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <ImEye className="!text-[20px]" />
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title="ELIMINAR PRODUCTO" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <FaTrashAlt className="!text-[20px]" />
-                      </Button>
-                    </Tooltip>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <GrEdit className=" !text-[20px] " />
+                    </Button>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <ImEye className="!text-[20px]" />
+                    </Button>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <FaTrashAlt className="!text-[20px]" />
+                    </Button>
                   </div>
                 </TableCell>
               </TableRow>
@@ -668,21 +727,15 @@ const Dashboard = () => {
                   className="!text-white"
                 >
                   <div className="flex items-center !gap-1">
-                    <Tooltip title="EDITAR PRODUCTO" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <GrEdit className=" !text-[20px] " />
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title="VER DETALLES" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <ImEye className="!text-[20px]" />
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title="ELIMINAR PRODUCTO" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <FaTrashAlt className="!text-[20px]" />
-                      </Button>
-                    </Tooltip>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <GrEdit className=" !text-[20px] " />
+                    </Button>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <ImEye className="!text-[20px]" />
+                    </Button>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <FaTrashAlt className="!text-[20px]" />
+                    </Button>
                   </div>
                 </TableCell>
               </TableRow>
@@ -760,21 +813,15 @@ const Dashboard = () => {
                   className="!text-white"
                 >
                   <div className="flex items-center !gap-1">
-                    <Tooltip title="EDITAR PRODUCTO" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <GrEdit className=" !text-[20px] " />
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title="VER DETALLES" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <ImEye className="!text-[20px]" />
-                      </Button>
-                    </Tooltip>
-                    <Tooltip title="ELIMINAR PRODUCTO" placement="top">
-                      <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                        <FaTrashAlt className="!text-[20px]" />
-                      </Button>
-                    </Tooltip>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <GrEdit className=" !text-[20px] " />
+                    </Button>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <ImEye className="!text-[20px]" />
+                    </Button>
+                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                      <FaTrashAlt className="!text-[20px]" />
+                    </Button>
                   </div>
                 </TableCell>
               </TableRow>
@@ -1120,6 +1167,57 @@ const Dashboard = () => {
             </tbody>
           </table>
         </div>
+      </div>
+
+      <div className="card !my-4 shadow-md sm:rounded-lg dark:!bg-gray-800">
+        <div class="flex !bg-gray-950 items-center justify-between !px-5 !py-5 !mb-5 border-b dark:border-gray-700">
+          <h2 class="text-white text-[20px] !font-[500] ">
+            TASA DE CLIENTES REPETIDOS
+          </h2>
+        </div>
+
+        <div class="flex items-center !px-5 !py-5 !mb-5 !pt-0 !gap-8">
+          <span className="flex items-center !text-white !text-[15px] !font-bold !gap-3">
+            <span className="block w-[10px] h-[10px] rounded-full !bg-[#8884d8]"></span>
+            TOTAL DE USUARIOS
+          </span>
+
+          <span className="flex items-center !text-white !text-[15px] !font-bold !gap-3">
+            <span className="block w-[10px] h-[10px] rounded-full !bg-[#82ca9d] "></span>
+            TOTAL DE VENTAS
+          </span>
+        </div>
+
+        <LineChart
+          width={1000}
+          height={500}
+          data={chart1Data}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+          <YAxis tick={{ fontSize: 12 }} />
+          <Tooltip />
+          <Legend />
+          <Line
+            type="monotone"
+            dataKey="USUARIOS"
+            strokeWidth={3}
+            stroke="#8884d8"
+            activeDot={{ r: 8 }}
+          />
+          <Line
+            type="monotone"
+            dataKey="VENTAS"
+            stroke="#82ca9d"
+            strokeWidth={3}
+          />
+        </LineChart>
       </div>
     </>
   );
