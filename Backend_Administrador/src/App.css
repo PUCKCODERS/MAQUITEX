@@ -58,3 +58,11 @@ th.MuiTableCell-root {
   background-color: var(--color-gray-700) !important;
   color: #fff !important;
 }
+
+a.active {
+  background: transparent !important;
+}
+
+.MuiButton-icon svg {
+  font-size: 25px !important;
+}
