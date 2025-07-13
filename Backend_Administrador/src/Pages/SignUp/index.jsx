@@ -11,7 +11,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { ImEye } from "react-icons/im";
 import { ImEyeBlocked } from "react-icons/im";
 
-const Login = () => {
+const SignUp = () => {
   const [loadingGoogle, setLoadingGoogle] = React.useState(false);
   const [loadingFb, setLoadingFb] = React.useState(false);
 
@@ -61,11 +61,9 @@ const Login = () => {
           <img src="../../../imagenes/logoMaquina1.png" className="m-auto " />
         </div>
 
-        <h1 className="!text-center !text-gray-800 !text-[25px] !font-bold !mt-4">
-          ¡BIENVENIDOS DE NUEVO! <br />
-          <span className="text-blue-800">
-            INICIE SESIÓN CON SUS CREDENCIALES.
-          </span>
+        <h1 className="!text-center !text-gray-800 !text-[23px] !font-bold !mt-4">
+          ¡ÚNETE HOY! CONSIGUE BENEFICIOS ESPECIALES <br />
+          <span className="text-blue-800">Y MANTENTE INFORMADO</span>
         </h1>
 
         <div className="flex items-center justify-center w-full !mt-5 !gap-4">
@@ -107,6 +105,15 @@ const Login = () => {
         <br />
 
         <form className="w-full !px-8 !mt-3">
+          <div className="form-group !mb-4 w-full">
+            <h4 className="text-[15px] font-bold !mb-1">NOMBRE COMPLETO</h4>
+            <input
+              type="text"
+              className="w-full h-[50px] border-2 !border-gray-400 rounded-md
+               focus:!border-gray-950 focus:outline-none !px-3 "
+            />
+          </div>
+
           <div className="form-group !mb-4 w-full">
             <h4 className="text-[15px] font-bold !mb-1">CORREO ELECTRÓNICO</h4>
             <input
@@ -153,11 +160,11 @@ const Login = () => {
             </Link>
           </div>
 
-          <Button className="btn-lg !w-full">INICIAR SESIÓN</Button>
+          <Button className="btn-lg !w-full">REGISTRARSE</Button>
         </form>
       </div>
     </section>
   );
 };
 
-export default Login;
+export default SignUp;
