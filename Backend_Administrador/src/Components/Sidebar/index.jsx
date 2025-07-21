@@ -49,13 +49,13 @@ const Sidebar = () => {
             </Link>
           </li>
           <li>
-            <Link to="/">
+            <Link>
               <Button
                 className="w-full !text-[#082c55] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300"
                 onClick={() => isOpenSubMenu(1)}
               >
-                <RiSlideshowFill className="!text-[20px] " />{" "}
-                <span>ESTADISTICAS</span>
+                <RiSlideshowFill className="!text-[20px] " />
+                <span>SLIDES DE INICIO</span>
                 <span className="!ml-auto !text-[20px] !w-[30px] !h-[30px] flex items-center justify-center">
                   <GoTriangleDown
                     className={`transition-all ${
@@ -69,16 +69,26 @@ const Sidebar = () => {
             <Collapse isOpened={submenuIndex === 1 ? true : false}>
               <ul className="!w-full">
                 <li className="!w-full">
-                  <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
+                  <Button
+                    className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3"
+                    onClick={() =>
+                      context.setIsOpentFullScreenPanel({
+                        open: true,
+                        model: "NUEVO SLIDE DE INICIO",
+                      })
+                    }
+                  >
                     <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
-                    AÑADIR BANNER
+                    AÑADIR SLIDE
                   </Button>
                 </li>
                 <li className="!w-full">
-                  <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
-                    <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
-                    LISTA BANNERS
-                  </Button>
+                  <Link to="/homeSlider/list">
+                    <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
+                      <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
+                      LISTA SLIDES
+                    </Button>
+                  </Link>
                 </li>
               </ul>
             </Collapse>
@@ -109,12 +119,18 @@ const Sidebar = () => {
             <Collapse isOpened={submenuIndex === 2 ? true : false}>
               <ul className="!w-full">
                 <li className="!w-full">
-                  <Link to="/products/upload">
-                    <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
-                      <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
-                      AÑADIR PRODUCTO
-                    </Button>
-                  </Link>
+                  <Button
+                    className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3"
+                    onClick={() =>
+                      context.setIsOpentFullScreenPanel({
+                        open: true,
+                        model: "NUEVO PRODUCTO",
+                      })
+                    }
+                  >
+                    <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
+                    AÑADIR PRODUCTO
+                  </Button>
                 </li>
                 <li className="!w-full">
                   <Link to="/products">
@@ -146,15 +162,21 @@ const Sidebar = () => {
             <Collapse isOpened={submenuIndex === 3 ? true : false}>
               <ul className="!w-full">
                 <li className="!w-full">
-                  <Link to="/category/add">
-                    <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
-                      <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
-                      AÑADIR CATEGORIA
-                    </Button>
-                  </Link>
+                  <Button
+                    className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3"
+                    onClick={() =>
+                      context.setIsOpentFullScreenPanel({
+                        open: true,
+                        model: "NUEVA CATEGORÍA",
+                      })
+                    }
+                  >
+                    <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
+                    AÑADIR CATEGORIA
+                  </Button>
                 </li>
                 <li className="!w-full">
-                  <Link to="/category">
+                  <Link to="/category/list">
                     <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
                       <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
                       LISTA CATEGORIAS
@@ -162,15 +184,21 @@ const Sidebar = () => {
                   </Link>
                 </li>
                 <li className="!w-full">
-                  <Link to="/category/subCat/add">
-                    <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
-                      <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
-                      AÑADIR SUBCATEGORIA
-                    </Button>
-                  </Link>
+                  <Button
+                    className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3"
+                    onClick={() =>
+                      context.setIsOpentFullScreenPanel({
+                        open: true,
+                        model: "NUEVA SUBCATEGORÍA",
+                      })
+                    }
+                  >
+                    <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
+                    AÑADIR SUBCATEGORIA
+                  </Button>
                 </li>
                 <li className="!w-full">
-                  <Link to="/category/subCat">
+                  <Link to="/subCategory/List">
                     <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
                       <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
                       LISTA SUBCATEGORIAS
@@ -181,9 +209,12 @@ const Sidebar = () => {
             </Collapse>
           </li>
           <li>
-            <Button className="w-full !text-[#082c55] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300">
-              <FaClipboardList className="!text-[20px] " /> <span>PEDIDOS</span>
-            </Button>
+            <Link to="/orders">
+              <Button className="w-full !text-[#082c55] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300">
+                <FaClipboardList className="!text-[20px] " />{" "}
+                <span>PEDIDOS</span>
+              </Button>
+            </Link>
           </li>
 
           <li>

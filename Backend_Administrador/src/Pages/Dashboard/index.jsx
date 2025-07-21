@@ -1,4 +1,4 @@
-import React, { useState, PureComponent } from "react";
+import React, { useState, PureComponent, useContext } from "react";
 import DashboardBoxes from "../../Components/DashboardBoxes";
 import { FaRegSmileWink } from "react-icons/fa";
 import Button from "@mui/material/Button";
@@ -37,6 +37,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { MyContext } from "../../App";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -159,6 +160,8 @@ const Dashboard = () => {
     },
   ]);
 
+  const context = useContext(MyContext);
+
   const handleChangePageCatFilter = (event) => {
     setcategoryFilterVal(event.target.value);
   };
@@ -185,7 +188,15 @@ const Dashboard = () => {
             INMEDIATAMENTE.
           </p>
           <br />
-          <Button className="btn-blue !gap-3 ">
+          <Button
+            className="btn-blue !gap-3"
+            onClick={() =>
+              context.setIsOpentFullScreenPanel({
+                open: true,
+                model: "NUEVO PRODUCTO",
+              })
+            }
+          >
             <BiPlusMedical /> AGREGAR PRODUCTO
           </Button>
         </div>
@@ -243,9 +254,19 @@ const Dashboard = () => {
             </Select>
           </div>
 
-          <div className="!w-[37%] !ml-auto flex items-center !gap-3">
+          <div className="col !w-[37%] !ml-auto flex items-center !gap-3">
             <Button className="btn btn-sm flex items-center ">EXPORTAR</Button>
-            <Button className="btn btn-sm">AGREGAR PRODUCTO</Button>
+            <Button
+              className="btn btn-sm"
+              onClick={() =>
+                context.setIsOpentFullScreenPanel({
+                  open: true,
+                  model: "NUEVO PRODUCTO",
+                })
+              }
+            >
+              AGREGAR PRODUCTO
+            </Button>
           </div>
         </div>
 
@@ -544,7 +565,17 @@ const Dashboard = () => {
 
           <div className="!w-[35%] !ml-auto flex items-center !gap-3">
             <Button className="btn btn-sm flex items-center ">EXPORTAR</Button>
-            <Button className="btn btn-sm">AGREGAR PRODUCTO</Button>
+            <Button
+              className="btn btn-sm"
+              onClick={() =>
+                context.setIsOpentFullScreenPanel({
+                  open: true,
+                  model: "NUEVO PRODUCTO",
+                })
+              }
+            >
+              AGREGAR PRODUCTO
+            </Button>
           </div>
         </div>
 
