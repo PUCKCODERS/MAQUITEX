@@ -14,6 +14,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { MdEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
+import { BsFillCalendar2DateFill } from "react-icons/bs";
 
 import SearchBox from "../../Components/SearchBox";
 import { MyContext } from "../../App";
@@ -32,6 +33,11 @@ const columns = [
     id: "userPh",
     label: "TELEFONO",
     minWidth: 100,
+  },
+  {
+    id: "createdDate",
+    label: "CREADO",
+    minWidth: 130,
   },
 ];
 
@@ -94,7 +100,7 @@ export const Users = () => {
                 </TableCell>
                 <TableCell style={{ minWidth: columns.minWidth }}>
                   <div className="flex items-center !gap-4 w-[70px] ">
-                    <div className="img w-[65px] h-[65px] rounded-md overflow-hidden group">
+                    <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
                       <Link to="/product/45745">
                         <img
                           src="../../../imagenes/user.jpg"
@@ -124,7 +130,164 @@ export const Users = () => {
                   className="!text-white"
                 >
                   <span className="flex items-center !gap-2">
-                    <FaPhoneAlt /> jlc.rodriguez316@gmail.com
+                    <FaPhoneAlt /> 0968873896
+                  </span>
+                </TableCell>
+
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <span className="flex items-center !gap-2">
+                    <BsFillCalendar2DateFill /> 09-08-08
+                  </span>
+                </TableCell>
+              </TableRow>
+
+              <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <Checkbox {...label} size="small" className="!text-white" />
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <div className="flex items-center !gap-4 w-[70px] ">
+                    <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
+                      <Link to="/product/45745">
+                        <img
+                          src="../../../imagenes/user.jpg"
+                          className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+                        />
+                      </Link>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  JONATHAN RODRIGUEZ
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <span className="flex items-center !gap-2">
+                    <MdEmail /> jlc.rodriguez316@gmail.com
+                  </span>
+                </TableCell>
+
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <span className="flex items-center !gap-2">
+                    <FaPhoneAlt /> 0968873896
+                  </span>
+                </TableCell>
+
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <span className="flex items-center !gap-2">
+                    <BsFillCalendar2DateFill /> 09-08-08
+                  </span>
+                </TableCell>
+              </TableRow>
+              <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <Checkbox {...label} size="small" className="!text-white" />
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <div className="flex items-center !gap-4 w-[70px] ">
+                    <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
+                      <Link to="/product/45745">
+                        <img
+                          src="../../../imagenes/user.jpg"
+                          className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+                        />
+                      </Link>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  JONATHAN RODRIGUEZ
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <span className="flex items-center !gap-2">
+                    <MdEmail /> jlc.rodriguez316@gmail.com
+                  </span>
+                </TableCell>
+
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <span className="flex items-center !gap-2">
+                    <FaPhoneAlt /> 0968873896
+                  </span>
+                </TableCell>
+
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <span className="flex items-center !gap-2">
+                    <BsFillCalendar2DateFill /> 09-08-08
+                  </span>
+                </TableCell>
+              </TableRow>
+              <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <Checkbox {...label} size="small" className="!text-white" />
+                </TableCell>
+                <TableCell style={{ minWidth: columns.minWidth }}>
+                  <div className="flex items-center !gap-4 w-[70px] ">
+                    <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
+                      <Link to="/product/45745">
+                        <img
+                          src="../../../imagenes/user.jpg"
+                          className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+                        />
+                      </Link>
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  JONATHAN RODRIGUEZ
+                </TableCell>
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <span className="flex items-center !gap-2">
+                    <MdEmail /> jlc.rodriguez316@gmail.com
+                  </span>
+                </TableCell>
+
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <span className="flex items-center !gap-2">
+                    <FaPhoneAlt /> 0968873896
+                  </span>
+                </TableCell>
+
+                <TableCell
+                  style={{ minWidth: columns.minWidth }}
+                  className="!text-white"
+                >
+                  <span className="flex items-center !gap-2">
+                    <BsFillCalendar2DateFill /> 09-08-08
                   </span>
                 </TableCell>
               </TableRow>
