@@ -42,12 +42,12 @@ export async function registerUserController(request, response) {
     await user.save();
 
     // Send verification email
-    await sendEmailFun({
-      sendTo: email,
-      subject: "VERIFICAR CORREO ELECTRÓNICO DESDE LA APLICACION DE MAQUITEXT",
-      text: "",
-      html: VerificationEmail(name, verifyCode),
-    });
+    await sendEmailFun(
+      email,
+      "VERIFICAR CORREO ELECTRÓNICO DESDE LA APLICACION DE MAQUITEXT",
+      "",
+      VerificationEmail(name, verifyCode)
+    );
 
     const token = jwt.sign(
       {
