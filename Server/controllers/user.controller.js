@@ -6,6 +6,16 @@ import VerificationEmail from "../utils/verifyEmailTemplate.js";
 import generatedAccessToken from "../utils/generatedAccessToken.js";
 import generatedRefreshToken from "../utils/generatedRefreshToken.js";
 
+import { v2 as cloudinary } from "cloudinary";
+import fs from "fs";
+
+cloudinary.config({
+  cloud_name: process.env.cloudinary_Config_Cloud_Name,
+  api_key: process.env.cloudinary_Config_api_key,
+  api_secret: process.env.cloudinary_Config_api_secret,
+  secure: true,
+});
+
 export async function registerUserController(request, response) {
   try {
     let user;
@@ -205,6 +215,144 @@ export async function logoutController(request, response) {
       message: "SESIÓN CERRADA EXITOSAMENTE",
       error: false,
       success: true,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+var imagesArr = [];
+export async function userAvatarController(request, response) {
+  try {
+    imagesArr = [];
+
+    const userId = request.userId;
+    const image = request.files;
+
+    const user = await UserModel.findOne({ _id: userId });
+
+    const imgUrl = user.avatar;
+
+    const urlArr = imgUrl.split("/");
+    const avatar_image = urlArr[urlArr.length - 1];
+
+    const imageName = avatar_image.split(".")[0];
+
+    if (imageName) {
+      const res = await cloudinary.uploader.destroy(
+        imageName,
+        (error, result) => {}
+      );
+    }
+
+    const options = {
+      use_filename: true,
+      unique_filename: false,
+      overwrite: false,
+    };
+
+    for (let i = 0; i < image?.length; i++) {
+      const img = await cloudinary.uploader.upload(
+        image[i].path,
+        options,
+        function (error, result) {
+          imagesArr.push(result.secure_url);
+          fs.unlinkSync(`uploads/${request.files[i].filename}`);
+        }
+      );
+    }
+
+    user.avatar = imagesArr[0];
+    await user.save();
+
+    return response.status(200).json({
+      _id: userId,
+      avatar: imagesArr[0],
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function removeImageFromCloudinary(request, response) {
+  const imgUrl = request.query.img;
+
+  const urlArr = imgUrl.split("/");
+  const image = urlArr[urlArr.length - 1];
+
+  const imageName = image.split(".")[0];
+
+  if (imageName) {
+    const res = await cloudinary.uploader.destroy(
+      imageName,
+      (error, result) => {}
+    );
+
+    if (res) {
+      response.status(200).send(res);
+    }
+  }
+}
+
+export async function updateUserDetails(request, response) {
+  try {
+    const userId = request.userId;
+    const { name, email, mobile, password } = request.body;
+    const userExist = await UserModel.findById(userId);
+
+    if (!userExist)
+      return response.status(400).send("NO SE PUEDE ACTUALIZAR EL USUARIO");
+    let verifyCode = "";
+
+    if (email !== userExist.email) {
+      verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
+    }
+
+    let hashPassword = "";
+
+    if (password) {
+      const salt = await bcryptjs.genSalt(10);
+      hashPassword = await bcryptjs.hash(password, salt);
+    } else {
+      hashPassword = userExist.password;
+    }
+
+    const updateUser = await UserModel.findByIdAndUpdate(
+      userId,
+      {
+        name: name,
+        mobile: mobile,
+        email: email,
+        verify_email: email !== userExist.email ? false : true,
+        password: hashPassword,
+        otp: verifyCode !== "" ? verifyCode : null,
+        otpExpires: verifyCode !== "" ? Date.now() + 600000 : "",
+      },
+      { new: true }
+    );
+
+    if (email !== userExist.email) {
+      await sendEmailFun({
+        sendTo: email,
+        subject: "VERIFICAR CORREO ELECTRÓNICO DESDE LA APLICACIÓN MAQUITEXT",
+        text: "",
+        html: VerificationEmail(name, verifyCode),
+      });
+    }
+
+    return response.json({
+      message: "ACTUALIZACIÓN DE USUARIO EXITOSA",
+      error: false,
+      success: true,
+      user: updateUser,
     });
   } catch (error) {
     return response.status(500).json({
