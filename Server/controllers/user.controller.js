@@ -151,6 +151,15 @@ export async function loginUserController(request, response) {
       });
     }
 
+    if (user.verify_email !== true) {
+      return response.status(400).json({
+        message:
+          "SU CORREO ELECTRÓNICO AÚN NO ESTÁ VERIFICADO. POR FAVOR, VERIFIQUE SU CORREO ELECTRÓNICO PRIMERO",
+        error: true,
+        success: false,
+      });
+    }
+
     const checkPassword = await bcryptjs.compare(password, user.password);
 
     if (!checkPassword) {
@@ -354,6 +363,48 @@ export async function updateUserDetails(request, response) {
       success: true,
       user: updateUser,
     });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function forgotPasswordController(request, response) {
+  try {
+    const { email } = request.body;
+
+    const user = await UserModel.findOne({ email: email });
+
+    if (!user) {
+      return response.status(400).json({
+        message: "CORREO ELECTRÓNICO NO DISPONIBLE",
+        error: true,
+        success: false,
+      });
+    } else {
+      let verifyCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+      user.otp = verifyCode;
+      user.otpExpires = Date.now() + 600000;
+
+      await user.save();
+
+      await sendEmailFun(
+        email,
+        "VERIFICAR CORREO ELECTRÓNICO DESDE LA APLICACIÓN MAQUITEXT",
+        "",
+        VerificationEmail(user.name, verifyCode)
+      );
+
+      return response.json({
+        message: "REVISA TU CORREO ELECTRÓNICO",
+        error: false,
+        success: true,
+      });
+    }
   } catch (error) {
     return response.status(500).json({
       message: error.message || error,
