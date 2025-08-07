@@ -3,11 +3,13 @@ import {
   forgotPasswordController,
   loginUserController,
   logoutController,
+  refreshToken,
   registerUserController,
   removeImageFromCloudinary,
   resetpassword,
   updateUserDetails,
   userAvatarController,
+  userDetails,
   verifyEmailController,
   verifyForgotPasswordOtp,
 } from "../controllers/user.controller.js";
@@ -30,4 +32,6 @@ userRouter.put("/:id", auth, updateUserDetails);
 userRouter.post("/forgot-password", forgotPasswordController);
 userRouter.post("/verify-forgot-password-otp", verifyForgotPasswordOtp);
 userRouter.post("/reset-password", resetpassword);
+userRouter.post("/refresh-token", refreshToken);
+userRouter.get("/user-details", auth, userDetails);
 export default userRouter;
