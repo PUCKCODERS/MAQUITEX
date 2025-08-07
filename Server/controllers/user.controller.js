@@ -459,10 +459,58 @@ export async function verifyForgotPasswordOtp(request, response) {
 
     await user.save();
 
-    return response.status(400).json({
+    return response.status(200).json({
       message: "VERIFICAR OTP EXITOSAMENTE",
       error: true,
       success: false,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function resetpassword(request, response) {
+  try {
+    const { email, newPassword, confirmPassword } = request.body;
+    if (!email || !newPassword || !confirmPassword) {
+      return response.status(400).json({
+        message:
+          "PROPORCIONE LOS CAMPOS OBLIGATORIOS CORREO ELECTRÓNICO, NUEVA CONTRASEÑA, CONFIRMAR CONTRASEÑA",
+      });
+    }
+
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+      return response.status(400).json({
+        message: "EL CORREO ELECTRÓNICO NO ESTÁ DISPONIBLE",
+        error: true,
+        success: false,
+      });
+    }
+
+    if (newPassword !== confirmPassword) {
+      return response.status(400).json({
+        message: "NUEVA CONTRASEÑA Y CONFIRMAR CONTRASEÑA, DEBEN SER IGUALES",
+        error: true,
+        success: false,
+      });
+    }
+
+    const salt = await bcryptjs.genSalt(10);
+    const hashPassword = await bcryptjs.hash(confirmPassword, salt);
+
+    user.password = hashPassword;
+    await user.save();
+
+    return response.json({
+      message: "CONTRASEÑA ACTUALIZADA EXITOSAMENTE",
+      error: false,
+      success: true,
     });
   } catch (error) {
     return response.status(500).json({
