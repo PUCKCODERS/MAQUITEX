@@ -243,6 +243,15 @@ export async function userAvatarController(request, response) {
     const image = request.files;
 
     const user = await UserModel.findOne({ _id: userId });
+    // Si falla quitar esto
+    if (!user) {
+      return response.status(500).json({
+        message: "USUARIO NO ENCONTRADO",
+        error: true,
+        success: false,
+      });
+    }
+    // hasta aqui
 
     const imgUrl = user.avatar;
 
