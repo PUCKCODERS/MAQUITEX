@@ -162,3 +162,131 @@ export async function getSubCategoriesCount(request, response) {
     });
   }
 }
+
+export async function getCategory(request, response) {
+  try {
+    const category = await CategoryModel.findById(request.params.id);
+
+    if (!category) {
+      response.status(500).json({
+        message: "NO SE ENCONTRÓ LA CATEGORÍA CON EL ID PROPORCIONADO",
+        error: true,
+        success: false,
+      });
+    }
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      category: category,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function removeImageFromCloudinary(request, response) {
+  const imgUrl = request.query.img;
+
+  const urlArr = imgUrl.split("/");
+  const image = urlArr[urlArr.length - 1];
+
+  const imageName = image.split(".")[0];
+
+  if (imageName) {
+    const res = await cloudinary.uploader.destroy(
+      imageName,
+      (error, result) => {}
+    );
+
+    if (res) {
+      response.status(200).send(res);
+    }
+  }
+}
+
+export async function deleteCategory(request, response) {
+  const category = await CategoryModel.findById(request.params.id);
+  const images = category.images;
+  let img = "";
+
+  for (img of images) {
+    const imgUrl = img;
+    const urlArr = imgUrl.split("/");
+    const image = urlArr[urlArr.length - 1];
+
+    const imageName = image.split(".")[0];
+
+    if (imageName) {
+      cloudinary.uploader.destroy(imageName, (error, result) => {});
+    }
+  }
+
+  const subCategory = await CategoryModel.find({
+    parentId: request.params.id,
+  });
+
+  for (let i = 0; i < subCategory.length; i++) {
+    const thirdsubCategory = await CategoryModel.find({
+      parentId: subCategory[i]._id,
+    });
+
+    for (let i = 0; i < thirdsubCategory.length; i++) {
+      const deleteThirdSubCat = await CategoryModel.findByIdAndDelete(
+        thirdsubCategory[i]._id
+      );
+    }
+
+    const deletedSubCat = await CategoryModel.findByIdAndDelete(
+      subCategory[i]._id
+    );
+  }
+
+  const deletedCat = await CategoryModel.findByIdAndDelete(request.params.id);
+  if (!deletedCat) {
+    response.status(400).json({
+      message: "CATEGORÍA NO ENCONTRADA",
+      success: false,
+    });
+  }
+
+  response.status(200).json({
+    success: true,
+    error: false,
+    message: "CATEGORÍA BORRADA",
+  });
+}
+
+export async function updatedCategory(request, response) {
+  const category = await CategoryModel.findByIdAndUpdate(
+    request.params.id,
+    {
+      name: request.body.name,
+      images: imagesArr.length > 0 ? imagesArr[0] : request.body.images,
+      color: request.body.color,
+      parentId: request.body.parentId,
+      parentCatName: request.body.parentCatName,
+    },
+    { new: true }
+  );
+
+  if (!category) {
+    return response.status(500).json({
+      message: "LA CATEGORÍA NO SE PUEDE ACTUALIZAR",
+      success: false,
+      error: true,
+    });
+  }
+
+  imagesArr = [];
+
+  response.status(200).json({
+    error: false,
+    success: true,
+    category: category,
+  });
+}
