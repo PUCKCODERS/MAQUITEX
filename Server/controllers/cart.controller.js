@@ -150,7 +150,7 @@ export const deleteCartItemQtyController = async (request, response) => {
 
     user.shopping_cart = updatedUserCart;
 
-    await user.save;
+    await user.save();
 
     return response.json({
       message: "ITEM ELIMINADO",
