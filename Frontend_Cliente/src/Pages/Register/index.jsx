@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 
-const Login = () => {
+const Register = () => {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
 
   return (
@@ -92,4 +92,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
