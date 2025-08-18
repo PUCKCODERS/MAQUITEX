@@ -54,7 +54,8 @@ function App() {
           fontWeight: "bold",
         },
       });
-    } else if (status === "error") {
+    }
+    if (status === "error") {
       toast.error(msg, {
         duration: 3000,
         position: "top-center",
