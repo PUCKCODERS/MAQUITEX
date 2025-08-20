@@ -6,20 +6,75 @@ import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { MyContext } from "../../App";
+import { postData } from "../../utils/api";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [isPasswordShow, setIsPasswordShow] = useState(false);
-  const [formFields, setFormFields] = useState({
+  const [formFields, setFormsFields] = useState({
     email: "",
     password: "",
   });
 
   const context = useContext(MyContext);
-  const histoty = useNavigate();
+  const history = useNavigate();
 
   const forgotPassword = () => {
     context.openAlertBox("success", "VERIFICACION ENVIADA A TU CORREO");
-    histoty("/verify");
+    history("/verify");
+  };
+
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setFormsFields(() => {
+      return {
+        ...formFields,
+        [name]: value,
+      };
+    });
+  };
+
+  const valideValue = Object.values(formFields).every((el) => el);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+
+    if (formFields.email === "") {
+      context.alertBox("error", "POR FAVOR INTRODUZCA SU CORREO ELECTRÓNICO");
+      return false;
+    }
+
+    if (formFields.password === "") {
+      context.alertBox("error", "POR FAVOR INTRODUZCA SU CONTRASEÑA");
+      return false;
+    }
+
+    postData("/api/user/login", formFields).then((res) => {
+      console.log(res);
+
+      if (res?.error !== true) {
+        setIsLoading(false);
+        context.alertBox("success", res?.message);
+
+        setFormsFields({
+          email: "",
+          password: "",
+        });
+
+        localStorage.setItem("accesstoken", res?.data?.accesstoken);
+        localStorage.setItem("refreshToken", res?.data?.refreshToken);
+
+        context.setIsLogin(true);
+
+        history("/");
+      } else {
+        context.alertBox("error", res?.message);
+        setIsLoading(false);
+      }
+    });
   };
 
   return (
@@ -30,15 +85,18 @@ const Login = () => {
             INICIA SESIÓN EN TU CUENTA
           </h3>
 
-          <form className="w-full !mt-5">
+          <form className="w-full !mt-5" onSubmit={handleSubmit}>
             <div className="form-group w-full !mb-5">
               <TextField
                 type="email"
                 id="email"
+                name="email"
+                value={formFields.email}
+                disabled={isLoading === true ? true : false}
                 label="CORREO ELECTRÓNICO *"
                 variant="outlined"
                 className="w-full"
-                name="name"
+                onChange={onChangeInput}
               />
             </div>
 
@@ -50,6 +108,9 @@ const Login = () => {
                 variant="outlined"
                 className="w-full"
                 name="password"
+                value={formFields.password}
+                disabled={isLoading === true ? true : false}
+                onChange={onChangeInput}
               />
               <Button
                 className="!absolute !top-[10px] !right-[10px] z-50 !w-[35px] !h-[35px] !min-w-[35px] !rounded-full !text-[#274a72]"
@@ -74,10 +135,16 @@ const Login = () => {
 
             <div className="flex items-center w-full !mt-3 !mb-3">
               <Button
+                type="submit"
+                disabled={!valideValue}
                 variant="contained"
-                className="btn-org btn-lg !w-full !mb-3"
+                className="btn-org btn-lg w-full flex !gap-3"
               >
-                INICIAR SESIÓN
+                {isLoading === true ? (
+                  <CircularProgress color="inherit" />
+                ) : (
+                  "INICIAR SESIÓN"
+                )}
               </Button>
             </div>
 

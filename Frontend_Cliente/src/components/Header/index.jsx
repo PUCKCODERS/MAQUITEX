@@ -16,6 +16,7 @@ import { GiExitDoor } from "react-icons/gi";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
+import { fetchDataFromApi } from "../../utils/api";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -29,6 +30,9 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  const context = useContext(MyContext);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -36,7 +40,21 @@ const Header = () => {
     setAnchorEl(null);
   };
 
-  const context = useContext(MyContext);
+  const logout = () => {
+    setAnchorEl(null);
+
+    fetchDataFromApi(
+      `/api/user/logout?token=${localStorage.getItem("accesstoken")}`,
+      { withCredentials: true }
+    ).then((res) => {
+      console.log(res);
+      if (res?.error === false) {
+        context.setIsLogin(false);
+        localStorage.removeItem("accesstoken");
+        localStorage.removeItem("refreshToken");
+      }
+    });
+  };
 
   return (
     <header className="bg-white">
@@ -118,10 +136,10 @@ const Header = () => {
 
                     <div className="info flex flex-col">
                       <h4 className="leading-6 text-[8px] capitalize !mb-0  text-left justify-start font-[500] text-[#274a72]">
-                        JONATHAN RODRIGUEZ
+                        {context?.userData?.name}
                       </h4>
                       <span className="text-[7px] capitalize text-left justify-start font-[400] text-[#979797]">
-                        jlc.rodriguez316@gmail.com
+                        {context?.userData?.email}
                       </span>
                     </div>
                   </Button>
@@ -191,7 +209,7 @@ const Header = () => {
                       </MenuItem>
                     </Link>
                     <MenuItem
-                      onClick={handleClose}
+                      onClick={logout}
                       className="flex !gap-2 !py-2 !text-[#274a72] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
                     >
                       <GiExitDoor className="text-[20px]" />

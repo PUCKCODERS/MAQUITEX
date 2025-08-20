@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
 import ProductListing from "./Pages/ProductListing";
 import ProductDetails from "./Pages/ProductDetails";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 
 import Button from "@mui/material/Button";
@@ -23,6 +23,7 @@ import Checkout from "./Pages/Checkout";
 import MyAccount from "./Pages/MyAccount";
 import MyList from "./Pages/MyList";
 import Orders from "./Pages/Orders";
+import { fetchDataFromApi } from "./utils/api";
 
 const MyContext = createContext();
 
@@ -31,6 +32,7 @@ function App() {
   const [maxWidth /*,{setMaxWidth}*/] = useState("lg");
   const [fullWidth /*,{setFullWidth}*/] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   const [openCartPanel, setOpenCartPanel] = useState(false);
 
@@ -41,6 +43,21 @@ function App() {
   const toggleCartPanel = (newOpen) => () => {
     setOpenCartPanel(newOpen);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("accesstoken");
+
+    if (token !== undefined && token !== null && token !== "") {
+      setIsLogin(true);
+
+      fetchDataFromApi(`/api/user/user-details?token=${token}`).then((res) => {
+        console.log(res);
+        setUserData(res.data);
+      });
+    } else {
+      setIsLogin(false);
+    }
+  }, [isLogin]);
 
   const openAlertBox = (status, msg) => {
     if (status === "success") {
@@ -105,6 +122,8 @@ function App() {
     isLogin,
     setIsLogin,
     alertBox,
+    setUserData,
+    userData,
   };
 
   return (
