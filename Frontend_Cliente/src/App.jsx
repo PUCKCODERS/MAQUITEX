@@ -30,7 +30,7 @@ function App() {
   const [openProductDetailsModal, setOpenProductDetailsModal] = useState(false);
   const [maxWidth /*,{setMaxWidth}*/] = useState("lg");
   const [fullWidth /*,{setFullWidth}*/] = useState(true);
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
 
   const [openCartPanel, setOpenCartPanel] = useState(false);
 
@@ -69,6 +69,33 @@ function App() {
     }
   };
 
+  const alertBox = (type, msg) => {
+    if (type === "success") {
+      toast.success(msg, {
+        duration: 3000,
+        position: "top-center",
+        style: {
+          background: "#274a72",
+          color: "#fff",
+          fontSize: "14px",
+          fontWeight: "bold",
+        },
+      });
+    }
+    if (type === "error") {
+      toast.error(msg, {
+        duration: 3000,
+        position: "top-center",
+        style: {
+          background: "#274a72",
+          color: "#fff",
+          fontSize: "14px",
+          fontWeight: "bold",
+        },
+      });
+    }
+  };
+
   const values = {
     setOpenProductDetailsModal,
     setOpenCartPanel,
@@ -77,6 +104,7 @@ function App() {
     openAlertBox,
     isLogin,
     setIsLogin,
+    alertBox,
   };
 
   return (
@@ -143,6 +171,8 @@ function App() {
           </div>
         </DialogContent>
       </Dialog>
+
+      <Toaster />
     </>
   );
 }

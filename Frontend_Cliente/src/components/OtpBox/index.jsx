@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const OtpBox = ({ length, onchange }) => {
+const OtpBox = ({ length, onChange }) => {
   const [otp, setOtp] = useState(new Array(length).fill(""));
 
   const handleChange = (element, index) => {
@@ -10,7 +10,7 @@ const OtpBox = ({ length, onchange }) => {
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
-    onchange(newOtp.join(""));
+    onChange(newOtp.join(""));
 
     if (value && index < length - 1) {
       document.getElementById(`otp-input-${index + 1}`).focus();
