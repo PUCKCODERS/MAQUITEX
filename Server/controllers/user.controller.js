@@ -403,7 +403,7 @@ export async function forgotPasswordController(request, response) {
 
       await sendEmailFun(
         email,
-        "VERIFICAR CORREO ELECTRÓNICO DESDE LA APLICACIÓN MAQUITEXT",
+        "VERIFICAR CÓDIGO DESDE LA APLICACIÓN MAQUITEXT",
         "",
         VerificationEmail(user.name, verifyCode)
       );
@@ -439,7 +439,7 @@ export async function verifyForgotPasswordOtp(request, response) {
 
     if (!email || !otp) {
       return response.status(400).json({
-        message: "PROPORCIONE EL CAMPO REQUERIDO CORREO ELECTRÓNICO, OTP",
+        message: "PROPORCIONE EL CAMPO REQUERIDO CORREO ELECTRÓNICO, CÓDIGO",
         error: true,
         success: false,
       });
@@ -447,7 +447,7 @@ export async function verifyForgotPasswordOtp(request, response) {
 
     if (otp !== user.otp) {
       return response.status(400).json({
-        message: "OTP NO VÁLIDO",
+        message: "CÓDIGO NO VÁLIDO",
         error: true,
         success: false,
       });
@@ -457,7 +457,7 @@ export async function verifyForgotPasswordOtp(request, response) {
 
     if (user.otpExpires < currentTime) {
       return response.status(400).json({
-        message: "EL OTP HA EXPIRADO",
+        message: "EL CÓDIGO HA EXPIRADO",
         error: true,
         success: false,
       });
@@ -469,9 +469,9 @@ export async function verifyForgotPasswordOtp(request, response) {
     await user.save();
 
     return response.status(200).json({
-      message: "VERIFICAR OTP EXITOSAMENTE",
-      error: true,
-      success: false,
+      message: "VERIFICADO, CÓDIGO EXITOSO",
+      error: false,
+      success: true,
     });
   } catch (error) {
     return response.status(500).json({

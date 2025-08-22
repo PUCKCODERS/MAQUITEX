@@ -21,8 +21,29 @@ const Login = () => {
   const history = useNavigate();
 
   const forgotPassword = () => {
-    context.openAlertBox("success", "VERIFICACION ENVIADA A TU CORREO");
-    history("/verify");
+    if (formFields.email === "") {
+      context.alertBox("error", "POR FAVOR INTRODUZCA SU CORREO ELECTRÓNICO");
+      return false;
+    } else {
+      context.alertBox(
+        "success",
+        `POR FAVOR INTRODUZCA EL CODIGO ENVIADO A : ${formFields.email}`
+      );
+      localStorage.setItem("userEmail", formFields.email);
+      localStorage.setItem("actionType", "forgot-password");
+
+      postData("/api/user/forgot-password", {
+        email: formFields.email,
+      }).then((res) => {
+        if (res?.error === false) {
+          context.alertBox("success", res?.message);
+
+          history("/verify");
+        } else {
+          context.alertBox("error", res?.message);
+        }
+      });
+    }
   };
 
   const onChangeInput = (e) => {
