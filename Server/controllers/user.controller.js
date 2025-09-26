@@ -170,7 +170,7 @@ export async function loginUserController(request, response) {
       });
     }
 
-    const accesstoken = await generatedAccessToken(user._id);
+    const accessToken = await generatedAccessToken(user._id);
     const refreshToken = await generatedRefreshToken(user._id);
 
     const updateUser = await UserModel.findByIdAndUpdate(user?._id, {
@@ -182,7 +182,7 @@ export async function loginUserController(request, response) {
       secure: true,
       sameSite: "None",
     };
-    response.cookie("accessToken", accesstoken, cookiesOption);
+    response.cookie("accessToken", accessToken, cookiesOption);
     response.cookie("refreshToken", refreshToken, cookiesOption);
 
     return response.json({
@@ -190,7 +190,7 @@ export async function loginUserController(request, response) {
       error: false,
       success: true,
       data: {
-        accesstoken,
+        accessToken,
         refreshToken,
       },
     });
@@ -573,7 +573,7 @@ export async function refreshToken(request, response) {
       error: false,
       success: true,
       data: {
-        accesstoken: newAccessToken,
+        accessToken: newAccessToken,
       },
     });
   } catch (error) {

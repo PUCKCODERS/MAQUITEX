@@ -45,7 +45,7 @@ function App() {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("accesstoken");
+    const token = localStorage.getItem("accessToken");
 
     if (token !== undefined && token !== null && token !== "") {
       setIsLogin(true);
