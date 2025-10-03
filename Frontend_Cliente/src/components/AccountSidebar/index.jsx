@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { RiFileUploadFill } from "react-icons/ri";
 import { BsFilePersonFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
@@ -15,6 +15,12 @@ const AccountSidebar = () => {
   const [uploading, setUploading] = useState(false);
 
   const context = useContext(MyContext);
+
+  useEffect(() => {
+    const userAvatar = [];
+    userAvatar.push(context?.userData?.avatar);
+    setPreviews(userAvatar);
+  }, [context?.userData]);
 
   let img_arr = [];
   let uniqueArray = [];
@@ -101,10 +107,10 @@ const AccountSidebar = () => {
           </div>
         </div>
         <h3 className="font-bold font-[bold] text-[15px]">
-          JONATHAN RODRIGUEZ
+          {context?.userData?.name}
         </h3>
         <h6 className="text-[12px] font-[500] text-[#979797]">
-          jlc.rodriguez316@gmail.com
+          {context?.userData?.email}
         </h6>
       </div>
 
