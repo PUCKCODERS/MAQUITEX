@@ -49,6 +49,9 @@ export const editData = async (url, updatedData) => {
     },
   };
 
-  const { res } = await axios.put(apiUrl + url, updatedData, params);
-  return res;
+  var response;
+  await axios.put(apiUrl + url, updatedData, params).then((res) => {
+    response = res;
+  });
+  return response;
 };

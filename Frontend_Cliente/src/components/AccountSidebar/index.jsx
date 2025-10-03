@@ -29,7 +29,7 @@ const AccountSidebar = () => {
       setUploading(true);
       console.log(files);
 
-      for (let i = 0; i < files.length; i++) {
+      for (var i = 0; i < files.length; i++) {
         if (
           (files[i] &&
             (files[i].type === "image/jpeg" ||
@@ -50,9 +50,12 @@ const AccountSidebar = () => {
         }
       }
 
-      console.log(formdata);
       editData("/api/user/user-avatar", formdata).then((res) => {
-        console.log(res);
+        setUploading(false);
+        let avatar = [];
+        console.log(res?.data?.avatar);
+        avatar.push(res?.data?.avatar);
+        setPreviews(avatar);
       });
     } catch (error) {
       console.log(error);
@@ -69,10 +72,18 @@ const AccountSidebar = () => {
           {uploading === true ? (
             <CircularProgress color="inherit" />
           ) : (
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHIvGIB9KQ40pD-BLWPOEVi68LpBpe7pT0GQ&s"
-              className="w-full h-full object-cover"
-            />
+            <>
+              {previews?.length !== 0 &&
+                previews?.map((img, index) => {
+                  return (
+                    <img
+                      src={img}
+                      key={index}
+                      className="w-full h-full object-cover"
+                    />
+                  );
+                })}
+            </>
           )}
 
           <div
