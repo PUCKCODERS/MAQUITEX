@@ -490,9 +490,11 @@ export async function verifyForgotPasswordOtp(request, response) {
 
 export async function resetpassword(request, response) {
   try {
-    const { email, newPassword, confirmPassword } = request.body;
+    const { email, oldPassword, newPassword, confirmPassword } = request.body;
     if (!email || !newPassword || !confirmPassword) {
       return response.status(400).json({
+        error: true,
+        success: false,
         message:
           "PROPORCIONE LOS CAMPOS OBLIGATORIOS CORREO ELECTRÓNICO, NUEVA CONTRASEÑA, CONFIRMAR CONTRASEÑA",
       });
@@ -503,6 +505,15 @@ export async function resetpassword(request, response) {
     if (!user) {
       return response.status(400).json({
         message: "EL CORREO ELECTRÓNICO NO ESTÁ DISPONIBLE",
+        error: true,
+        success: false,
+      });
+    }
+
+    const checkPassword = await bcryptjs.compare(oldPassword, user.password);
+    if (!checkPassword) {
+      return response.status(400).json({
+        message: "SU ANTIGUA CONTRASEÑA ES INCORRECTA",
         error: true,
         success: false,
       });
