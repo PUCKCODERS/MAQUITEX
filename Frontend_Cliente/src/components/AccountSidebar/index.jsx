@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 import { Button } from "@mui/material";
 import { MyContext } from "../../App";
 import CircularProgress from "@mui/material/CircularProgress";
-import { editData } from "../../utils/api";
+import { uploadImage } from "../../utils/api";
 
 const AccountSidebar = () => {
   const [previews, setPreviews] = useState([]);
@@ -18,22 +18,25 @@ const AccountSidebar = () => {
 
   useEffect(() => {
     const userAvatar = [];
-    userAvatar.push(context?.userData?.avatar);
-    setPreviews(userAvatar);
+
+    if (
+      context?.userData?.avatar !== "" &&
+      context?.userData?.avatar !== undefined
+    ) {
+      userAvatar.push(context?.userData?.avatar);
+      setPreviews(userAvatar);
+    }
   }, [context?.userData]);
 
-  let img_arr = [];
-  let uniqueArray = [];
   let selectedImages = [];
 
   const formdata = new FormData();
 
-  const onChangeFile = async (e, apiEndPoint) => {
+  const onChangeFile = async (e /*apiEndPoint*/) => {
     try {
       setPreviews([]);
       const files = e.target.files;
       setUploading(true);
-      console.log(files);
 
       for (var i = 0; i < files.length; i++) {
         if (
@@ -56,10 +59,9 @@ const AccountSidebar = () => {
         }
       }
 
-      editData("/api/user/user-avatar", formdata).then((res) => {
+      uploadImage("/api/user/user-avatar", formdata).then((res) => {
         setUploading(false);
         let avatar = [];
-        console.log(res?.data?.avatar);
         avatar.push(res?.data?.avatar);
         setPreviews(avatar);
       });
@@ -79,7 +81,7 @@ const AccountSidebar = () => {
             <CircularProgress color="inherit" />
           ) : (
             <>
-              {previews?.length !== 0 &&
+              {previews?.length !== 0 ? (
                 previews?.map((img, index) => {
                   return (
                     <img
@@ -88,7 +90,10 @@ const AccountSidebar = () => {
                       className="w-full h-full object-cover"
                     />
                   );
-                })}
+                })
+              ) : (
+                <img src={"/user.jpg"} className="w-full h-full object-cover" />
+              )}
             </>
           )}
 

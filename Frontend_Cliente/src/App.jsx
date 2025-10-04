@@ -52,6 +52,19 @@ function App() {
 
       fetchDataFromApi(`/api/user/user-details`).then((res) => {
         setUserData(res.data);
+        console.log(res.response?.data?.error);
+        if (res?.response?.data?.error === true) {
+          if (res?.response?.data?.message === "NO HAS INICIADO SESIÓN") {
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+
+            alertBox(
+              "error",
+              "SU SESIÓN HA EXPIRADO, POR FAVOR INICIE SESIÓN DE NUEVO"
+            );
+            setIsLogin(false);
+          }
+        }
       });
     } else {
       setIsLogin(false);

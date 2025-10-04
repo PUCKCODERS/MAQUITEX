@@ -370,7 +370,13 @@ export async function updateUserDetails(request, response) {
       message: "ACTUALIZACIÓN DE USUARIO EXITOSA",
       error: false,
       success: true,
-      user: updateUser,
+      user: {
+        name: updateUser?.name,
+        _id: updateUser?._id,
+        email: updateUser?.email,
+        mobile: updateUser?.mobile,
+        avatar: updateUser?.avatar,
+      },
     });
   } catch (error) {
     return response.status(500).json({
