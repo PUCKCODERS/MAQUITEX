@@ -459,9 +459,12 @@ export async function verifyForgotPasswordOtp(request, response) {
       });
     }
 
-    const currentTime = new Date().toISOString();
+    const now = Date.now();
+    const otpExpiresTime = user.otpExpires
+      ? new Date(user.otpExpires).getTime()
+      : 0;
 
-    if (user.otpExpires < currentTime) {
+    if (otpExpiresTime < now) {
       return response.status(400).json({
         message: "EL CÓDIGO HA EXPIRADO",
         error: true,
@@ -510,13 +513,16 @@ export async function resetpassword(request, response) {
       });
     }
 
-    const checkPassword = await bcryptjs.compare(oldPassword, user.password);
-    if (!checkPassword) {
-      return response.status(400).json({
-        message: "SU ANTIGUA CONTRASEÑA ES INCORRECTA",
-        error: true,
-        success: false,
-      });
+    if (oldPassword) {
+      const checkPassword = await bcryptjs.compare(oldPassword, user.password);
+      if (!checkPassword) {
+        return response.status(400).json({
+          message: "SU ANTIGUA CONTRASEÑA ES INCORRECTA",
+          error: true,
+          success: false,
+        });
+      }
+    } else {
     }
 
     if (newPassword !== confirmPassword) {
@@ -531,6 +537,8 @@ export async function resetpassword(request, response) {
     const hashPassword = await bcryptjs.hash(confirmPassword, salt);
 
     user.password = hashPassword;
+    user.otp = "";
+    user.otpExpires = "";
     await user.save();
 
     return response.json({
