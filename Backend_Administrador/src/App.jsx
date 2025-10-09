@@ -1,5 +1,5 @@
 import "./App.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "./Pages/Dashboard";
 import Header from "./Components/Header";
@@ -29,6 +29,9 @@ import ForgotPassword from "./Pages/ForgotPassword";
 import VerifyAccount from "./Pages/VerifyAccount";
 import ChangePassword from "./Pages/ChangePassword";
 
+import toast, { Toaster } from "react-hot-toast";
+import { fetchDataFromApi } from "./utils/api";
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -37,7 +40,8 @@ const MyContext = createContext();
 
 function App() {
   const [isSidebarOpen, setisSidebarOpen] = useState(true);
-  const [isLogin, setIslogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+  const [userData, setUserData] = useState(null);
 
   const [isOpentFullScreenPanel, setIsOpentFullScreenPanel] = useState({
     open: false,
@@ -281,13 +285,85 @@ function App() {
     },
   ]);
 
+  const openAlertBox = (status, msg) => {
+    if (status === "success") {
+      toast.success(msg, {
+        duration: 3000,
+        position: "top-center",
+        style: {
+          background: "#274a72",
+          color: "#fff",
+          fontSize: "14px",
+          fontWeight: "bold",
+        },
+      });
+    }
+    if (status === "error") {
+      toast.error(msg, {
+        duration: 3000,
+        position: "top-center",
+        style: {
+          background: "#274a72",
+          color: "#fff",
+          fontSize: "14px",
+          fontWeight: "bold",
+        },
+      });
+    }
+  };
+
+  const alertBox = (type, msg) => {
+    if (type === "success") {
+      toast.success(msg, {
+        duration: 3000,
+        position: "top-center",
+        style: {
+          background: "#274a72",
+          color: "#fff",
+          fontSize: "14px",
+          fontWeight: "bold",
+        },
+      });
+    }
+    if (type === "error") {
+      toast.error(msg, {
+        duration: 3000,
+        position: "top-center",
+        style: {
+          background: "#274a72",
+          color: "#fff",
+          fontSize: "14px",
+          fontWeight: "bold",
+        },
+      });
+    }
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+
+    if (token !== undefined && token !== null && token !== "") {
+      setIsLogin(true);
+
+      fetchDataFromApi(`/api/user/user-details`).then((res) => {
+        setUserData(res.data);
+      });
+    } else {
+      setIsLogin(false);
+    }
+  }, [isLogin]);
+
   const values = {
     isSidebarOpen,
     setisSidebarOpen,
     isLogin,
-    setIslogin,
+    setIsLogin,
     isOpentFullScreenPanel,
     setIsOpentFullScreenPanel,
+    alertBox,
+    openAlertBox,
+    setUserData,
+    userData,
   };
 
   return (
@@ -340,6 +416,7 @@ function App() {
             <AddSubCategory />
           )}
         </Dialog>
+        <Toaster />
       </MyContext.Provider>
     </>
   );

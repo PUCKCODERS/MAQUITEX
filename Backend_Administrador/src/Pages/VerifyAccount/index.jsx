@@ -1,15 +1,65 @@
 import Button from "@mui/material/Button";
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-
 import { FiLogIn } from "react-icons/fi";
 import { MdAssignmentInd } from "react-icons/md";
 import OtpBox from "../../Components/OtpBox";
+import { useContext } from "react";
+import { MyContext } from "../../App";
+import { postData } from "../../utils/api";
+import { useNavigate } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const VerifyAccount = () => {
-  const [setOtp] = useState("");
+  const [otp, setOtp] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleOtpChange = (value) => {
     setOtp(value);
+  };
+
+  const history = useNavigate();
+  const context = useContext(MyContext);
+
+  const verityOTP = (e) => {
+    e.preventDefault();
+
+    if (otp !== "") {
+      setIsLoading(true);
+      const actionType = localStorage.getItem("actionType");
+
+      if (actionType !== "forgot-password") {
+        postData("/api/user/verifyEmail", {
+          email: localStorage.getItem("userEmail"),
+          otp: otp,
+        }).then((res) => {
+          if (res?.error === false) {
+            context.alertBox("success", res?.message);
+            localStorage.removeItem("userEmail");
+            setIsLoading(false);
+            history("/login");
+          } else {
+            context.alertBox("error", res?.message);
+            setIsLoading(false);
+          }
+        });
+      } else {
+        postData("/api/user/verify-forgot-password-otp", {
+          email: localStorage.getItem("userEmail"),
+          otp: otp,
+        }).then((res) => {
+          if (res?.error === false) {
+            context.alertBox("success", res?.message);
+            history("/change-password");
+          } else {
+            context.alertBox("error", res?.message);
+            setIsLoading(false);
+          }
+        });
+      }
+    } else {
+      context.alertBox("error", "PORFAVOR INGRESE EL CÓDIGO");
+    }
   };
 
   return (
@@ -57,21 +107,28 @@ const VerifyAccount = () => {
         </h1>
 
         <p className="text-center text-black font-[600] !mt-0 !mb-4 text-[15px]">
-          ENVIAR A: &nbsp;
+          ENVIADO A: &nbsp;
           <span className="!ml-3 !text-[#274a72] font-bold">
-            jlc.rodriguez316@gmail.com
+            {localStorage.getItem("userEmail")}
           </span>
         </p>
         <br />
 
-        <div className="text-center flex items-center justify-center flex-col">
-          <OtpBox length={6} onChange={handleOtpChange} />
-        </div>
+        <form onSubmit={verityOTP}>
+          <div className="text-center flex items-center justify-center flex-col">
+            <OtpBox length={6} onchange={handleOtpChange} />
+          </div>
+          <div className="w-[300px] m-auto !mt-4">
+            <Button type="submit" className="btn-blue w-full">
+              {isLoading === true ? (
+                <CircularProgress color="inherit" />
+              ) : (
+                "CONFIRMAR CÓDIGO"
+              )}
+            </Button>
+          </div>
+        </form>
         <br />
-
-        <div className="w-[300px] m-auto ">
-          <Button className="btn-blue w-full">CONFIRMAR CODIGO</Button>
-        </div>
       </div>
     </section>
   );

@@ -1,6 +1,6 @@
 import Button from "@mui/material/Button";
-import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { FiLogIn } from "react-icons/fi";
 import { MdAssignmentInd } from "react-icons/md";
@@ -10,12 +10,24 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { ImEye } from "react-icons/im";
 import { ImEyeBlocked } from "react-icons/im";
+import { postData } from "../../utils/api";
+import CircularProgress from "@mui/material/CircularProgress";
+import { MyContext } from "../../App.jsx";
 
 const Login = () => {
   const [loadingGoogle, setLoadingGoogle] = React.useState(false);
   const [loadingFb, setLoadingFb] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isPasswordShow, setIsPasswordShow] = useState(false);
+
+  const [formFields, setFormsFields] = useState({
+    email: "",
+    password: "",
+  });
+
+  const context = useContext(MyContext);
+  const history = useNavigate();
 
   function handleClickGoogle() {
     setLoadingGoogle(true);
@@ -24,6 +36,84 @@ const Login = () => {
   function handleClickfb() {
     setLoadingFb(true);
   }
+
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setFormsFields(() => {
+      return {
+        ...formFields,
+        [name]: value,
+      };
+    });
+  };
+
+  const valideValue = Object.values(formFields).every((el) => el);
+
+  const forgotPassword = () => {
+    if (formFields.email === "") {
+      context.alertBox("error", "POR FAVOR INTRODUZCA SU CORREO ELECTRÓNICO");
+      return false;
+    } else {
+      context.alertBox(
+        "success",
+        `POR FAVOR INTRODUZCA EL CODIGO ENVIADO A : ${formFields.email}`
+      );
+      localStorage.setItem("userEmail", formFields.email);
+      localStorage.setItem("actionType", "forgot-password");
+
+      postData("/api/user/forgot-password", {
+        email: formFields.email,
+      }).then((res) => {
+        if (res?.error === false) {
+          context.alertBox("success", res?.message);
+
+          history("/verify-account");
+        } else {
+          context.alertBox("error", res?.message);
+        }
+      });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+
+    if (formFields.email === "") {
+      context.alertBox("error", "POR FAVOR INTRODUZCA SU CORREO ELECTRÓNICO");
+      return false;
+    }
+
+    if (formFields.password === "") {
+      context.alertBox("error", "POR FAVOR INTRODUZCA SU CONTRASEÑA");
+      return false;
+    }
+
+    postData("/api/user/login", formFields, { withCredentials: true }).then(
+      (res) => {
+        if (res?.error !== true) {
+          setIsLoading(false);
+          context.alertBox("success", res?.message);
+
+          setFormsFields({
+            email: "",
+            password: "",
+          });
+
+          localStorage.setItem("accessToken", res?.data?.accessToken);
+          localStorage.setItem("refreshToken", res?.data?.refreshToken);
+
+          context.setIsLogin(true);
+
+          history("/");
+        } else {
+          context.alertBox("error", res?.message);
+          setIsLoading(false);
+        }
+      }
+    );
+  };
 
   return (
     <section className="!bg-[#fff] !w-full ">
@@ -106,13 +196,17 @@ const Login = () => {
 
         <br />
 
-        <form className="w-full !px-8 !mt-3">
+        <form className="w-full !px-8 !mt-3" onSubmit={handleSubmit}>
           <div className="form-group !mb-4 w-full">
             <h4 className="text-[15px] font-bold !mb-1">CORREO ELECTRÓNICO</h4>
             <input
               type="email"
               className="w-full h-[50px] border-2 !border-gray-400 rounded-md
                focus:!border-gray-950 focus:outline-none !px-3 "
+              name="email"
+              value={formFields.email}
+              disabled={isLoading === true ? true : false}
+              onChange={onChangeInput}
             />
           </div>
 
@@ -123,6 +217,10 @@ const Login = () => {
                 type={isPasswordShow === false ? "password" : "text"}
                 className="w-full h-[50px] border-2 !border-gray-400 rounded-md
                focus:!border-gray-950 focus:outline-none !px-3 "
+                name="password"
+                value={formFields.password}
+                disabled={isLoading === true ? true : false}
+                onChange={onChangeInput}
               />
 
               <Button
@@ -144,16 +242,27 @@ const Login = () => {
               label="RECORDARME"
             />
 
-            <Link
+            <a
+              onClick={forgotPassword}
               to="/forgot-password"
               className="text-blue-950 font-[600] !text-[15px] hover:underline hover:!text-gray-950
-              transition-all duration-300"
+              transition-all duration-300 !cursor-pointer"
             >
               HAS OLVIDADO TU CONTRASEÑA ?
-            </Link>
+            </a>
           </div>
 
-          <Button className="btn-lg !w-full">INICIAR SESIÓN</Button>
+          <Button
+            type="submit"
+            disabled={!valideValue}
+            className="btn-lg !w-full"
+          >
+            {isLoading === true ? (
+              <CircularProgress color="inherit" />
+            ) : (
+              "INICIAR SESIÓN"
+            )}
+          </Button>
         </form>
       </div>
     </section>

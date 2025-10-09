@@ -12,6 +12,8 @@ import Divider from "@mui/material/Divider";
 import { FaUser } from "react-icons/fa";
 import { GiExitDoor } from "react-icons/gi";
 import { MyContext } from "../../App";
+import { Link } from "react-router-dom";
+import { fetchDataFromApi } from "../../utils/api";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -35,6 +37,21 @@ const Header = () => {
   };
 
   const context = useContext(MyContext);
+
+  const logout = () => {
+    setAnchorMyAcc(null);
+
+    fetchDataFromApi(
+      `/api/user/logout?token=${localStorage.getItem("accessToken")}`,
+      { withCredentials: true }
+    ).then((res) => {
+      if (res?.error === false) {
+        context.setIsLogin(false);
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+      }
+    });
+  };
 
   return (
     <header
@@ -122,10 +139,10 @@ const Header = () => {
 
                   <div className="info">
                     <h3 className="text-[15px] font-bold font-[bold] leading-5 text-[#082c55]">
-                      JONATHAN RODRIGUEZ
+                      {context?.userData?.name}
                     </h3>
                     <p className="text-[12px] font-[400] text-[#082c55] opacity-70">
-                      jlc.rodriguez@gmail.com.ec
+                      {context?.userData?.email}
                     </p>
                   </div>
                 </div>
@@ -143,7 +160,7 @@ const Header = () => {
               </MenuItem>
 
               <MenuItem
-                onClick={handleCloseMyAcc}
+                onClick={logout}
                 className="flex items-center !text-[#082c55] hover:!text-[#fff] hover:!bg-[#082c55] !gap-3 transition-all !duration-400"
               >
                 <GiExitDoor className="text-[25px] " />
@@ -154,9 +171,12 @@ const Header = () => {
             </Menu>
           </div>
         ) : (
-          <Button className="btn-blue btn-sm !rounded-full !text-[14px] !font-bold !px-5 !py-2">
+          <Link
+            className="btn-blue btn-sm !rounded-full !text-[14px] !font-bold !px-5 !py-2"
+            to="/login"
+          >
             INICIAR SESION
-          </Button>
+          </Link>
         )}
       </div>
     </header>

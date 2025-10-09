@@ -32,7 +32,7 @@ export async function registerUserController(request, response) {
     user = await UserModel.findOne({ email: email });
     if (user) {
       return response.json({
-        message: "USUARIO YA REGISTRADO CON ES EMAIL",
+        message: "USUARIO YA REGISTRADO CON ESTE EMAIL",
         error: true,
         success: false,
       });

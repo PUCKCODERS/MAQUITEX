@@ -1,6 +1,6 @@
 import Button from "@mui/material/Button";
-import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useContext, useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { FiLogIn } from "react-icons/fi";
 import { MdAssignmentInd } from "react-icons/md";
@@ -10,10 +10,75 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import { ImEye } from "react-icons/im";
 import { ImEyeBlocked } from "react-icons/im";
+import { postData } from "../../utils/api.js";
+import { MyContext } from "../../App";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const ChangePassword = () => {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
   const [isPasswordShow2, setIsPasswordShow2] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [formFields, setFormsFields] = useState({
+    email: localStorage.getItem("userEmail"),
+    newPassword: "",
+    confirmPassword: "",
+  });
+
+  const context = useContext(MyContext);
+  const history = useNavigate();
+
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setFormsFields(() => {
+      return {
+        ...formFields,
+        [name]: value,
+      };
+    });
+  };
+
+  const valideValue = Object.values(formFields).every((el) => el);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    setIsLoading(true);
+
+    if (formFields.newPassword === "") {
+      context.alertBox("error", "POR FAVOR INGRESE EL NUEVA CONTRASEÑA");
+      setIsLoading(false);
+      return false;
+    }
+
+    if (formFields.confirmPassword === "") {
+      context.alertBox("error", "POR FAVOR CONFIRME EL NUEVA CONTRASEÑA");
+      setIsLoading(false);
+      return false;
+    }
+
+    if (formFields.confirmPassword !== formFields.newPassword) {
+      context.alertBox(
+        "error",
+        "CONTRASEÑA Y CONFIRMAR CONTRASEÑA NO COINCIDE"
+      );
+      setIsLoading(false);
+      return false;
+    }
+
+    postData(`/api/user/reset-password`, formFields).then((res) => {
+      console.log(res);
+      if (res?.error === false) {
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("actionType");
+        context.alertBox("success", res?.message);
+        setIsLoading(false);
+        history("/login");
+      } else {
+        context.alertBox("error", res?.message);
+      }
+    });
+  };
 
   return (
     <section className="!bg-[#fff] !w-full ">
@@ -60,7 +125,7 @@ const ChangePassword = () => {
 
         <br />
 
-        <form className="w-full !px-8 !mt-3">
+        <form className="w-full !px-8 !mt-3" onSubmit={handleSubmit}>
           <div className="form-group !mb-4 w-full">
             <h4 className="text-[15px] font-bold !mb-1">NUEVA CONTRASEÑA</h4>
             <div className="relative w-full">
@@ -68,11 +133,17 @@ const ChangePassword = () => {
                 type={isPasswordShow === false ? "password" : "text"}
                 className="w-full h-[50px] border-2 !border-gray-400 rounded-md
                focus:!border-gray-950 focus:outline-none !px-3 "
+                name="newPassword"
+                value={formFields.newPassword}
+                disabled={isLoading === true ? true : false}
+                onChange={onChangeInput}
               />
 
               <Button
                 className="!absolute top-[7px] right-[10px] z-50 !rounded-full !w-[35px] !h-[35px] !min-w-[35px]"
-                onClick={() => setIsPasswordShow(!isPasswordShow)}
+                onClick={() => {
+                  setIsPasswordShow(!isPasswordShow);
+                }}
               >
                 {isPasswordShow === false ? (
                   <ImEye className="!text-[20px] !text-gray-950" />
@@ -92,11 +163,17 @@ const ChangePassword = () => {
                 type={isPasswordShow2 === false ? "password" : "text"}
                 className="w-full h-[50px] border-2 !border-gray-400 rounded-md
                focus:!border-gray-950 focus:outline-none !px-3 "
+                name="confirmPassword"
+                value={formFields.confirmPassword}
+                disabled={isLoading === true ? true : false}
+                onChange={onChangeInput}
               />
 
               <Button
                 className="!absolute top-[7px] right-[10px] z-50 !rounded-full !w-[35px] !h-[35px] !min-w-[35px]"
-                onClick={() => setIsPasswordShow2(!isPasswordShow2)}
+                onClick={() => {
+                  setIsPasswordShow2(!isPasswordShow2);
+                }}
               >
                 {isPasswordShow2 === false ? (
                   <ImEye className="!text-[20px] !text-gray-950" />
@@ -107,7 +184,17 @@ const ChangePassword = () => {
             </div>
           </div>
 
-          <Button className="btn-lg !w-full">CAMBIAR CONTRASEÑA</Button>
+          <Button
+            type="submit"
+            disabled={!valideValue}
+            className="btn-lg !w-full"
+          >
+            {isLoading === true ? (
+              <CircularProgress color="inherit" />
+            ) : (
+              "CAMBIAR CONTRASEÑA"
+            )}
+          </Button>
         </form>
       </div>
     </section>
