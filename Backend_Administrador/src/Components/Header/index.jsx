@@ -149,15 +149,17 @@ const Header = () => {
               </MenuItem>
               <Divider />
 
-              <MenuItem
-                onClick={handleCloseMyAcc}
-                className="flex items-center !text-[#082c55] hover:!text-[#fff] hover:!bg-[#082c55] !gap-3 transition-all !duration-400"
-              >
-                <FaUser className="text-[25px] " />
-                <span className="text-[15px]  font-bold font-[bold] ">
-                  PERFIL
-                </span>
-              </MenuItem>
+              <Link to="/profile">
+                <MenuItem
+                  onClick={handleCloseMyAcc}
+                  className="flex items-center !text-[#082c55] hover:!text-[#fff] hover:!bg-[#082c55] !gap-3 transition-all !duration-400"
+                >
+                  <FaUser className="text-[25px] " />
+                  <span className="text-[15px]  font-bold font-[bold] ">
+                    PERFIL
+                  </span>
+                </MenuItem>
+              </Link>
 
               <MenuItem
                 onClick={logout}

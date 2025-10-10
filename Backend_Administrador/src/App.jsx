@@ -31,6 +31,7 @@ import ChangePassword from "./Pages/ChangePassword";
 
 import toast, { Toaster } from "react-hot-toast";
 import { fetchDataFromApi } from "./utils/api";
+import Profile from "./Pages/Profile";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -277,6 +278,33 @@ function App() {
                 } transition-all duration-300`}
               >
                 <Orders />
+              </div>
+            </div>
+          </section>
+        </>
+      ),
+    },
+    {
+      path: "/profile",
+      exact: true,
+      element: (
+        <>
+          <section className="main">
+            <Header />
+            <div className="contentMain flex">
+              <div
+                className={`overflow-hidden sidebarWrapper ${
+                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                } transition-all duration-300`}
+              >
+                <Sidebar />
+              </div>
+              <div
+                className={`contentRight !py-4 !px-5 ${
+                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
+                } transition-all duration-300`}
+              >
+                <Profile />
               </div>
             </div>
           </section>
