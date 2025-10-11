@@ -94,15 +94,25 @@ const MyAccount = () => {
 
     editData(`/api/user/${userId}`, formFields, { withCredentials: true }).then(
       (res) => {
-        console.log(res);
         if (res?.error !== true) {
           setIsLoading(false);
           context.alertBox("success", res?.data?.message);
 
-          setFormsFields({
-            name: "",
-            email: "",
-            mobile: "",
+          const updatedUser = res?.data?.user;
+          if (updatedUser) {
+            setFormsFields({
+              name: updatedUser.name,
+              email: updatedUser.email,
+              mobile: updatedUser.mobile,
+            });
+            context.setUserData(updatedUser);
+          }
+
+          setChangePassword({
+            email: updatedUser?.email || "",
+            oldPassword: "",
+            newPassword: "",
+            confirmPassword: "",
           });
         } else {
           context.alertBox("error", res?.data?.message);

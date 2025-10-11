@@ -61,6 +61,8 @@ function App() {
               "error",
               "SU SESIÓN HA EXPIRADO, POR FAVOR INICIE SESIÓN DE NUEVO"
             );
+
+            window.location.href = "/login";
             setIsLogin(false);
           }
         }

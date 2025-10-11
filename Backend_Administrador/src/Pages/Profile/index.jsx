@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
+import { Collapse } from "react-collapse";
 
 const Profile = () => {
   const [previews, setPreviews] = useState([]);
@@ -39,7 +40,7 @@ const Profile = () => {
     const token = localStorage.getItem("accessToken");
 
     if (token === null) {
-      history("/");
+      history("/login");
     }
   }, [context?.isLogin]);
 
@@ -63,19 +64,18 @@ const Profile = () => {
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    setFormsFields(() => {
-      return {
-        ...formFields,
-        [name]: value,
-      };
-    });
 
-    setChangePassword(() => {
-      return {
-        ...formFields,
+    if (["oldPassword", "newPassword", "confirmPassword"].includes(name)) {
+      setChangePassword((prev) => ({
+        ...prev,
         [name]: value,
-      };
-    });
+      }));
+    } else {
+      setFormsFields((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const valideValue = Object.values(formFields).every((el) => el);
@@ -102,15 +102,25 @@ const Profile = () => {
 
     editData(`/api/user/${userId}`, formFields, { withCredentials: true }).then(
       (res) => {
-        console.log(res);
         if (res?.error !== true) {
           setIsLoading(false);
           context.alertBox("success", res?.data?.message);
 
-          setFormsFields({
-            name: "",
-            email: "",
-            mobile: "",
+          const updatedUser = res?.data?.user;
+          if (updatedUser) {
+            setFormsFields({
+              name: updatedUser.name,
+              email: updatedUser.email,
+              mobile: updatedUser.mobile,
+            });
+            context.setUserData(updatedUser);
+          }
+
+          setChangePassword({
+            email: updatedUser?.email || "",
+            oldPassword: "",
+            newPassword: "",
+            confirmPassword: "",
           });
         } else {
           context.alertBox("error", res?.data?.message);
@@ -222,7 +232,7 @@ const Profile = () => {
     <>
       <div className="card !my-4 !pt-5 !w-[65%] !shadow-md sm:rounded-lg bg-white !px-5 !pb-5">
         <div className="flex items-center justify-between">
-          <h2 className="text-[#082c55] text-[20px] !font-[500] ">
+          <h2 className="text-[#082c55] text-[20px] font-bold font-[bold]  ">
             PERFIL USUARIO
           </h2>
 
@@ -318,6 +328,10 @@ const Profile = () => {
             </div>
           </div>
 
+          <div className="flex items-center justify-center !p-5 border border-dashed border-[#082c55] bg-[#526b86] hover:bg-[#082c55] text-[#fff] hover:text-[#fff] !mt-5 cursor-pointer">
+            <span className="text-[16px]  font-[500]">AÑADIR DIRECCIÓN</span>
+          </div>
+
           <div className="flex items-center !gap-4 !mt-5 cursor-pointer">
             <Button
               type="submit"
@@ -333,6 +347,75 @@ const Profile = () => {
           </div>
         </form>
       </div>
+
+      <Collapse isOpened={isChangePasswordFormShow}>
+        <div className="card w-[65%] bg-white !p-5 shadow-md rounded-md">
+          <div className="flex items-center !pb-3">
+            <h2 className="!pb-0 font-bold font-[bold] text-[20px]">
+              CAMBIAR LA CONTRASEÑA
+            </h2>
+          </div>
+          <hr className="!text-[#b8b8b8]" />
+
+          <form className="!mt-8" onSubmit={handleSubmitChangePassword}>
+            <div className="flex items-center !gap-5">
+              <div className="w-[50%]">
+                <TextField
+                  label="CONTRASEÑA ANTERIOR"
+                  variant="outlined"
+                  size="small"
+                  className="w-full"
+                  name="oldPassword"
+                  value={changePassword.oldPassword}
+                  disabled={isLoading2 === true ? true : false}
+                  onChange={onChangeInput}
+                />
+              </div>
+
+              <div className="w-[50%]">
+                <TextField
+                  type="text"
+                  label="NUEVA CONTRASEÑA"
+                  variant="outlined"
+                  size="small"
+                  className="w-full"
+                  name="newPassword"
+                  value={changePassword.newPassword}
+                  onChange={onChangeInput}
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center !mt-4 !gap-5">
+              <div className="w-[50%]">
+                <TextField
+                  label="CONFIRMAR CONTRASEÑA"
+                  variant="outlined"
+                  size="small"
+                  className="w-full"
+                  name="confirmPassword"
+                  value={changePassword.confirmPassword}
+                  onChange={onChangeInput}
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center !gap-4 !mt-5 cursor-pointer">
+              <Button
+                type="submit"
+                disabled={!valideValue2}
+                className="btn-org btn-lg w-[100%] "
+              >
+                {isLoading2 === true ? (
+                  <CircularProgress color="inherit" />
+                ) : (
+                  "CAMBIAR CONTRASEÑA"
+                )}
+              </Button>
+            </div>
+          </form>
+        </div>
+      </Collapse>
     </>
   );
 };
