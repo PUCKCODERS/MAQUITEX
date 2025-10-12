@@ -32,6 +32,7 @@ import ChangePassword from "./Pages/ChangePassword";
 import toast, { Toaster } from "react-hot-toast";
 import { fetchDataFromApi } from "./utils/api";
 import Profile from "./Pages/Profile";
+import AddAddress from "./Pages/Address/addAddress.jsx";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -452,6 +453,9 @@ function App() {
           )}
           {isOpentFullScreenPanel?.model === "NUEVA SUBCATEGORÍA" && (
             <AddSubCategory />
+          )}
+          {isOpentFullScreenPanel?.model === "NUEVA DIRECCIÓN" && (
+            <AddAddress />
           )}
         </Dialog>
         <Toaster />

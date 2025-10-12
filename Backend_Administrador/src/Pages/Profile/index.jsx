@@ -328,7 +328,15 @@ const Profile = () => {
             </div>
           </div>
 
-          <div className="flex items-center justify-center !p-5 border border-dashed border-[#082c55] bg-[#526b86] hover:bg-[#082c55] text-[#fff] hover:text-[#fff] !mt-5 cursor-pointer">
+          <div
+            className="flex items-center justify-center !p-5 border border-dashed border-[#082c55] bg-[#526b86] hover:bg-[#082c55] text-[#fff] hover:text-[#fff] !mt-5 cursor-pointer"
+            onClick={() =>
+              context.setIsOpentFullScreenPanel({
+                open: true,
+                model: "NUEVA DIRECCIÓN",
+              })
+            }
+          >
             <span className="text-[16px]  font-[500]">AÑADIR DIRECCIÓN</span>
           </div>
 
