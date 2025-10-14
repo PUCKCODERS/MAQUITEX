@@ -3,18 +3,34 @@ import UserModel from "../models/user.model.js";
 
 export const addAddressController = async (request, response) => {
   try {
-    const { address_line1, city, state, pincode, country, mobile, status } =
-      request.body;
+    const {
+      address_line1,
+      city,
+      state,
+      pincode,
+      country,
+      mobile,
+      status,
+      userId,
+    } = request.body;
 
-    const userId = request.userId;
+    console.log(userId);
 
-    if (!address_line1 || city || state || pincode || country || mobile) {
+    /*if (
+      !address_line1 ||
+      city ||
+      state ||
+      pincode ||
+      country ||
+      mobile ||
+      userId
+    ) {
       return response.status(500).json({
         message: "POR FAVOR PROPORCIONE TODOS LOS CAMPOS",
         error: true,
         success: false,
       });
-    }
+    }*/
 
     const address = new AddressModel({
       address_line1,
@@ -23,7 +39,7 @@ export const addAddressController = async (request, response) => {
       pincode,
       country,
       mobile,
-      status,
+      status: Boolean(status),
       userId,
     });
 

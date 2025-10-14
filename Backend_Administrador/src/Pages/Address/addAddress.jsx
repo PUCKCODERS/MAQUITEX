@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import { FaFileUpload } from "react-icons/fa";
 import { PhoneInput } from "react-international-phone";
@@ -7,6 +7,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { postData } from "../../utils/api";
 import { MyContext } from "../../App";
+import { useEffect } from "react";
 
 const AddAddress = () => {
   const [phone, setPhone] = useState("");
@@ -23,13 +24,13 @@ const AddAddress = () => {
     country: "",
     mobile: "",
     status: "",
-    userId: context?.userData?._id,
+    userId: "",
   });
 
   useEffect(() => {
     setFormsFields((prevState) => ({
       ...prevState,
-      userId: formFields.userId,
+      userId: context?.userData?._id,
     }));
   }, [context?.userData]);
 
@@ -68,20 +69,16 @@ const AddAddress = () => {
       return false;
     }
 
+    if (formFields.country === "") {
+      context.alertBox("error", "POR FAVOR INTRODUZCA SU PAÍS");
+      return false;
+    }
+
     if (formFields.pincode === "") {
       context.alertBox("error", "POR FAVOR INTRODUZCA SU CÓDIGO POSTAL");
       return false;
     }
 
-    if (formFields.country === "") {
-      context.alertBox("error", "POR FAVOR INTRODUZCA SU PAÍS");
-      return false;
-    }
-
-    if (formFields.country === "") {
-      context.alertBox("error", "POR FAVOR INTRODUZCA SU PAÍS");
-      return false;
-    }
     if (phone === "") {
       context.alertBox("error", "POR FAVOR INTRODUZCA SU NÚMERO DE TELÉFONO");
       return false;
