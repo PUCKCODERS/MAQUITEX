@@ -35,10 +35,11 @@ const AddAddress = () => {
   }, [context?.userData]);
 
   const handleChangeStatus = (event) => {
+    const value = event.target.value === "true"; //esto agrege para que se convirtiera en booleano
     setStatus(event.target.value);
     setFormsFields((prevState) => ({
       ...prevState,
-      status: event.target.value,
+      status: value,
     }));
   };
 
@@ -93,9 +94,9 @@ const AddAddress = () => {
         setIsLoading(false);
         context.alertBox("success", res?.data?.message);
 
-        if (typeof context?.setIsOpenFullScreenPanel === "function") {
-          context.setIsOpenFullScreenPanel(false);
-        }
+        context?.setIsOpenFullScreenPanel({
+          open: false,
+        });
       } else {
         context.alertBox("error", res?.data?.message);
         setIsLoading(false);
