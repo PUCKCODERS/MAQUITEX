@@ -93,9 +93,9 @@ const AddAddress = () => {
         setIsLoading(false);
         context.alertBox("success", res?.data?.message);
 
-        context?.setIsOpenFullScreenPanel({
-          open: false,
-        });
+        if (typeof context?.setIsOpenFullScreenPanel === "function") {
+          context.setIsOpenFullScreenPanel(false);
+        }
       } else {
         context.alertBox("error", res?.data?.message);
         setIsLoading(false);

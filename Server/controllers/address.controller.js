@@ -14,23 +14,16 @@ export const addAddressController = async (request, response) => {
       userId,
     } = request.body;
 
-    console.log(userId);
+    console.log("userId recibido:", userId);
 
-    /*if (
-      !address_line1 ||
-      city ||
-      state ||
-      pincode ||
-      country ||
-      mobile ||
-      userId
-    ) {
-      return response.status(500).json({
-        message: "POR FAVOR PROPORCIONE TODOS LOS CAMPOS",
+    // Validación simple y segura del userId
+    if (!userId || typeof userId !== "string") {
+      return response.status(400).json({
+        message: "El userId no es válido o no se recibió.",
         error: true,
         success: false,
       });
-    }*/
+    }
 
     const address = new AddressModel({
       address_line1,
@@ -40,12 +33,12 @@ export const addAddressController = async (request, response) => {
       country,
       mobile,
       status: Boolean(status),
-      userId,
+      userId: userId || "",
     });
 
     const savedAddress = await address.save();
 
-    const updateCartUser = await UserModel.updateOne(
+    await UserModel.updateOne(
       { _id: userId },
       { $push: { address_details: savedAddress?._id } }
     );
@@ -57,6 +50,7 @@ export const addAddressController = async (request, response) => {
       success: true,
     });
   } catch (error) {
+    console.error("Error en addAddressController:", error);
     return response.status(500).json({
       message: error.message || error,
       error: true,
