@@ -2,12 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../App";
 import { RiFileUploadFill } from "react-icons/ri";
 import CircularProgress from "@mui/material/CircularProgress";
-import { editData, postData, uploadImage } from "../../utils/api";
+import {
+  editData,
+  fetchDataFromApi,
+  postData,
+  uploadImage,
+} from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 import { Button, TextField } from "@mui/material";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { Collapse } from "react-collapse";
+import Checkbox from "@mui/material/Checkbox";
+
+const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const Profile = () => {
   const [previews, setPreviews] = useState([]);
@@ -46,6 +54,12 @@ const Profile = () => {
 
   useEffect(() => {
     if (context?.userData?._id !== "" && context?.userData?._id !== undefined) {
+      fetchDataFromApi(`/api/address/get?${context?.userData?._id}`).then(
+        (res) => {
+          console.log(res);
+        }
+      );
+
       setUserId(context?.userData?._id);
       setFormsFields({
         name: context?.userData?.name,
@@ -329,7 +343,7 @@ const Profile = () => {
           </div>
 
           <div
-            className="flex items-center justify-center !p-5 border border-dashed border-[#082c55] bg-[#526b86] hover:bg-[#082c55] text-[#fff] hover:text-[#fff] !mt-5 cursor-pointer"
+            className="flex items-center justify-center !p-5 rounded-md border border-dashed border-[#082c55] bg-[#526b86] hover:bg-[#082c55] text-[#fff] hover:text-[#fff] !mt-5 cursor-pointer"
             onClick={() =>
               context.setIsOpentFullScreenPanel({
                 open: true,
@@ -339,6 +353,10 @@ const Profile = () => {
           >
             <span className="text-[16px]  font-[500]">AÑADIR DIRECCIÓN</span>
           </div>
+
+          <label className="addressBox w-full flex items-center justify-center bg-[#f1f1f1] !p-3 rounded-md cursor-pointer">
+            <Checkbox {...label} />
+          </label>
 
           <div className="flex items-center !gap-4 !mt-5 cursor-pointer">
             <Button
