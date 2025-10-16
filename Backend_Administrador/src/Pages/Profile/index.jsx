@@ -351,7 +351,7 @@ const Profile = () => {
               })
             }
           >
-            <span className="text-[16px]  font-[500]">AÑADIR DIRECCIÓNS</span>
+            <span className="text-[16px]  font-[500]">AÑADIR DIRECCIÓN</span>
           </div>
 
           <label className="addressBox w-full flex items-center justify-center bg-[#f1f1f1] !p-3 rounded-md cursor-pointer">
