@@ -35,11 +35,10 @@ const AddAddress = () => {
   }, [context?.userData]);
 
   const handleChangeStatus = (event) => {
-    const value = event.target.value === "true"; //esto agrege para que se convirtiera en booleano
     setStatus(event.target.value);
     setFormsFields((prevState) => ({
       ...prevState,
-      status: value,
+      status: event.target.value,
     }));
   };
 
@@ -204,13 +203,13 @@ const AddAddress = () => {
             >
               <MenuItem
                 className="!text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55]"
-                value={10}
+                value={true}
               >
                 VERDADERO
               </MenuItem>
               <MenuItem
                 className="!text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55]"
-                value={20}
+                value={false}
               >
                 FALSO
               </MenuItem>

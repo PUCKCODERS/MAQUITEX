@@ -53,7 +53,6 @@ export async function registerUserController(request, response) {
 
     await user.save();
 
-    // Send verification email
     await sendEmailFun(
       email,
       "VERIFICAR CORREO ELECTRÓNICO DESDE LA APLICACION DE MAQUITEXT",
