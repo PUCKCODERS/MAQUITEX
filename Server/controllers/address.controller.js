@@ -51,15 +51,15 @@ export const getAddressController = async (request, response) => {
   try {
     const address = await AddressModel.find({ userId: request?.query?.userId });
 
-    if (!address) {
-      return response.status({
+    if (!address || address.length === 0) {
+      return response.status(404).json({
         error: true,
         success: false,
         message: "DIRECCIÓN NO ENCONTRADA",
       });
     }
 
-    return response.status({
+    return response.status(200).json({
       error: false,
       success: true,
       address: address,

@@ -54,11 +54,11 @@ const Profile = () => {
 
   useEffect(() => {
     if (context?.userData?._id !== "" && context?.userData?._id !== undefined) {
-      fetchDataFromApi(`/api/address/get?${context?.userData?._id}`).then(
-        (res) => {
-          console.log(res);
-        }
-      );
+      fetchDataFromApi(
+        `/api/address/get?userId=${context?.userData?._id}`
+      ).then((res) => {
+        console.log(res);
+      });
 
       setUserId(context?.userData?._id);
       setFormsFields({
