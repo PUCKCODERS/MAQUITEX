@@ -9,19 +9,19 @@ import {
   uploadImage,
 } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
-import { Button, TextField } from "@mui/material";
+import { Button, Radio, TextField } from "@mui/material";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { Collapse } from "react-collapse";
-import Checkbox from "@mui/material/Checkbox";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const Profile = () => {
   const [previews, setPreviews] = useState([]);
   const [uploading, setUploading] = useState(false);
-  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState([]);
 
+  const [phone, setPhone] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isLoading2, setIsLoading2] = useState(false);
   const [userId, setUserId] = useState("");
@@ -44,6 +44,12 @@ const Profile = () => {
   const context = useContext(MyContext);
   const history = useNavigate();
 
+  const [selectedValue, setSelectedValue] = useState("");
+
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
 
@@ -57,7 +63,8 @@ const Profile = () => {
       fetchDataFromApi(
         `/api/address/get?userId=${context?.userData?._id}`
       ).then((res) => {
-        console.log(res);
+        setAddress(res.data);
+        context?.setAddress(res.data);
       });
 
       setUserId(context?.userData?._id);
@@ -343,7 +350,7 @@ const Profile = () => {
           </div>
 
           <div
-            className="flex items-center justify-center !p-5 rounded-md border border-dashed border-[#082c55] bg-[#526b86] hover:bg-[#082c55] text-[#fff] hover:text-[#fff] !mt-5 cursor-pointer"
+            className="flex items-center justify-center !p-5 rounded-md border  border-[#082c55] bg-[#526b86] hover:bg-[#082c55] text-[#fff] hover:text-[#fff] !mt-5 cursor-pointer "
             onClick={() =>
               context.setIsOpentFullScreenPanel({
                 open: true,
@@ -354,9 +361,48 @@ const Profile = () => {
             <span className="text-[16px]  font-[500]">AÑADIR DIRECCIÓN</span>
           </div>
 
-          <label className="addressBox w-full flex items-center justify-center bg-[#f1f1f1] !p-3 rounded-md cursor-pointer">
-            <Checkbox {...label} />
-          </label>
+          <div className="flex !gap-2 flex-col !mt-4">
+            {address?.length > 0 &&
+              address?.map((address, index) => {
+                return (
+                  <>
+                    <label className="addressBox w-full flex items-center justify-center border-1 border-[#bdbdbd] bg-[#f1f1f1] !p-3 rounded-md cursor-pointer shadow-[3px_3px_3px_#000]">
+                      <Radio
+                        {...label}
+                        name="address"
+                        checked={
+                          selectedValue ===
+                          address?.address_line1 +
+                            address?.city +
+                            address?.country +
+                            address?.state +
+                            address?.pincode
+                        }
+                        value={
+                          address?.address_line1 +
+                          address?.city +
+                          address?.country +
+                          address?.state +
+                          address?.pincode
+                        }
+                        onChange={handleChange}
+                      />
+                      <span className="text-[12px]">
+                        {address?.address_line1 +
+                          " " +
+                          address?.city +
+                          " " +
+                          address?.country +
+                          " " +
+                          address?.state +
+                          " " +
+                          address?.pincode}
+                      </span>
+                    </label>
+                  </>
+                );
+              })}
+          </div>
 
           <div className="flex items-center !gap-4 !mt-5 cursor-pointer">
             <Button

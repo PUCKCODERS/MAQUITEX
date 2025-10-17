@@ -5,7 +5,7 @@ import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import { postData } from "../../utils/api";
+import { fetchDataFromApi, postData } from "../../utils/api";
 import { MyContext } from "../../App";
 import { useEffect } from "react";
 
@@ -25,6 +25,7 @@ const AddAddress = () => {
     mobile: "",
     status: "",
     userId: "",
+    selected: false,
   });
 
   useEffect(() => {
@@ -95,6 +96,12 @@ const AddAddress = () => {
 
         context?.setIsOpenFullScreenPanel({
           open: false,
+        });
+
+        fetchDataFromApi(
+          `/api/address/get?userId=${context?.userData?._id}`
+        ).then((res) => {
+          context?.setAddress(res.data);
         });
       } else {
         context.alertBox("error", res?.data?.message);

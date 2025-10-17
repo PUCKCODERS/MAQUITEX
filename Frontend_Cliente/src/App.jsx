@@ -33,6 +33,7 @@ function App() {
   const [fullWidth /*,{setFullWidth}*/] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [address, setAddress] = useState([]);
 
   const [openCartPanel, setOpenCartPanel] = useState(false);
 
@@ -137,6 +138,8 @@ function App() {
     alertBox,
     setUserData,
     userData,
+    setAddress,
+    address,
   };
 
   return (

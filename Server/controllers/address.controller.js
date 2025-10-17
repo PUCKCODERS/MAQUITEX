@@ -12,6 +12,7 @@ export const addAddressController = async (request, response) => {
       mobile,
       status,
       userId,
+      selected,
     } = request.body;
 
     const address = new AddressModel({
@@ -23,6 +24,7 @@ export const addAddressController = async (request, response) => {
       mobile,
       status,
       userId,
+      selected,
     });
 
     const savedAddress = await address.save();
@@ -57,13 +59,27 @@ export const getAddressController = async (request, response) => {
         success: false,
         message: "DIRECCIÓN NO ENCONTRADA",
       });
+    } else {
+      const updatetUser = await UserModel.updateOne(
+        { _id: request?.query?.userId },
+        {
+          $push: {
+            address: address?._id,
+          },
+        }
+      );
+      return response.status(200).json({
+        error: false,
+        success: true,
+        data: address,
+      });
     }
 
-    return response.status(200).json({
+    /*return response.status(200).json({
       error: false,
       success: true,
       address: address,
-    });
+    });*/
   } catch (error) {
     return response.status(500).json({
       message: error.message || error,
