@@ -74,12 +74,6 @@ export const getAddressController = async (request, response) => {
         data: address,
       });
     }
-
-    /*return response.status(200).json({
-      error: false,
-      success: true,
-      address: address,
-    });*/
   } catch (error) {
     return response.status(500).json({
       message: error.message || error,
@@ -88,3 +82,44 @@ export const getAddressController = async (request, response) => {
     });
   }
 };
+
+/*export const selectAddressController = async (request, response) => {
+  try {
+    const userId = request.userId;
+
+    const address = await AddressModel.find({
+      _id: request.params._id,
+      userId: userId,
+    });
+    const updateAddress = await AddressModel.find({
+      userId: userId,
+    });
+
+    if (!address) {
+      return response.status(500).json({
+        message: error.message || error,
+        error: true,
+        success: false,
+      });
+    } else {
+      const updateAddress = await AddressModel.findByIdAndUpdate(
+        request.params.id,
+        {
+          selected: request?.body?.selected,
+        },
+        { new: true }
+      );
+      return response.json({
+        error: false,
+        success: true,
+        address: updateAddress,
+      });
+    }
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+};*/

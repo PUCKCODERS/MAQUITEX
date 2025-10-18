@@ -48,6 +48,15 @@ const Profile = () => {
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
+    /*if (event.target.checked === true) {
+      editData(`/api/address/selectAddress/${event.target.value}`, {
+        selected: true,
+      });
+    } else {
+      editData(`/api/address/selectAddress/${event.target.value}`, {
+        selected: false,
+      });
+    }*/
   };
 
   useEffect(() => {
@@ -370,21 +379,8 @@ const Profile = () => {
                       <Radio
                         {...label}
                         name="address"
-                        checked={
-                          selectedValue ===
-                          address?.address_line1 +
-                            address?.city +
-                            address?.country +
-                            address?.state +
-                            address?.pincode
-                        }
-                        value={
-                          address?.address_line1 +
-                          address?.city +
-                          address?.country +
-                          address?.state +
-                          address?.pincode
-                        }
+                        checked={selectedValue === address?._id}
+                        value={address?._id}
                         onChange={handleChange}
                       />
                       <span className="text-[12px]">
