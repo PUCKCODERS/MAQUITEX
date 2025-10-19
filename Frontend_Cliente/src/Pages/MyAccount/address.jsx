@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import AccountSidebar from "../../components/AccountSidebar";
 import Radio from "@mui/material/Radio";
 import { PhoneInput } from "react-international-phone";
@@ -15,8 +15,9 @@ import TextField from "@mui/material/TextField";
 import { GiSave } from "react-icons/gi";
 import { Button } from "@mui/material";
 import { deleteData, fetchDataFromApi, postData } from "../../utils/api";
-import { useEffect } from "react";
 import { FaTrashAlt } from "react-icons/fa";
+import { ImCancelCircle } from "react-icons/im";
+import { FcDeleteDatabase } from "react-icons/fc"; // 🔹 AGREGADO ÍCONO NUEVO
 
 const label = { inputProps: { "aria-label": "Radio demo" } };
 
@@ -27,6 +28,7 @@ const Address = () => {
   const [status, setStatus] = useState(false);
   const [isOpenModel, setisOpenModel] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("");
 
   const [formFields, setFormsFields] = useState({
     address_line1: "",
@@ -40,7 +42,8 @@ const Address = () => {
     selected: false,
   });
 
-  const [selectedValue, setSelectedValue] = useState("");
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [addressToDelete, setAddressToDelete] = useState(null);
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -85,13 +88,23 @@ const Address = () => {
   };
 
   const removeAddress = (id) => {
-    deleteData(`/api/address/${id}`).then(() => {
-      fetchDataFromApi(
-        `/api/address/get?userId=${context?.userData?._id}`
-      ).then((res) => {
-        setAddress(res.data);
+    setAddressToDelete(id);
+    setIsConfirmOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (addressToDelete) {
+      deleteData(`/api/address/${addressToDelete}`).then(() => {
+        fetchDataFromApi(
+          `/api/address/get?userId=${context?.userData?._id}`
+        ).then((res) => {
+          setAddress(res.data);
+          setIsConfirmOpen(false);
+          setAddressToDelete(null);
+          context.alertBox("success", "DIRECCIÓN ELIMINADA CORRECTAMENTE");
+        });
       });
-    });
+    }
   };
 
   const handleSubmit = (e) => {
@@ -220,6 +233,46 @@ const Address = () => {
         </div>
       </section>
 
+      <Dialog
+        open={isConfirmOpen}
+        onClose={() => setIsConfirmOpen(false)}
+        PaperProps={{
+          style: {
+            borderRadius: "15px",
+            padding: "20px",
+            textAlign: "center",
+            width: "360px",
+          },
+        }}
+      >
+        <div className="flex flex-col items-center justify-center">
+          <FcDeleteDatabase className="text-[120px] !mb-2" />
+          <DialogTitle
+            className="!text-[20px] text-[#082c55] !font-bold !pb-1 !text-center"
+            sx={{ lineHeight: 1.2 }}
+          >
+            ¿DESEA ELIMINAR ESTA DIRECCIÓN Y SUS DATOS ?
+          </DialogTitle>
+          <p className="text-gray-800 text-[16px] !mb-4">
+            ESTA ACCIÓN NO SE PUEDE DESHACER
+          </p>
+        </div>
+        <div className="flex justify-center !gap-3 !pb-2">
+          <Button
+            onClick={confirmDelete}
+            className="!bg-[#1976d2] hover:!bg-[#0d47a1] !text-white !font-bold !px-4 !py-2"
+          >
+            Sí, eliminar
+          </Button>
+          <Button
+            onClick={() => setIsConfirmOpen(false)}
+            className="!bg-[#d32f2f] hover:!bg-[#9a0007] !text-white !font-bold !px-4 !py-2"
+          >
+            Cancelar
+          </Button>
+        </div>
+      </Dialog>
+
       <Dialog open={isOpenModel}>
         <DialogTitle className="text-[#082c55] !text-[25px] font-[bold]">
           AGREGAR DIRECCIÓN
@@ -338,7 +391,7 @@ const Address = () => {
               className=" hover:!text-[#fff] !bg-[#5c5c5c] hover:!bg-[#000] btn-org btn-lg w-full flex !gap-2 items-center !mt-3"
               onClick={handleClose}
             >
-              <GiSave className="text-[25px] " />
+              <ImCancelCircle className="text-[25px] " />
               CANCELAR
             </Button>
           </div>
