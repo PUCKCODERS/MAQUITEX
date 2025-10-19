@@ -45,7 +45,7 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [userData, setUserData] = useState(null);
 
-  const [isOpentFullScreenPanel, setIsOpentFullScreenPanel] = useState({
+  const [isOpentFullScreenPanel, setIsOpenFullScreenPanel] = useState({
     open: false,
     model: "",
   });
@@ -398,7 +398,7 @@ function App() {
     isLogin,
     setIsLogin,
     isOpentFullScreenPanel,
-    setIsOpentFullScreenPanel,
+    setIsOpenFullScreenPanel,
     alertBox,
     openAlertBox,
     setUserData,
@@ -414,7 +414,7 @@ function App() {
           fullScreen
           open={isOpentFullScreenPanel.open}
           onClose={() =>
-            setIsOpentFullScreenPanel({
+            setIsOpenFullScreenPanel({
               open: false,
             })
           }
@@ -428,7 +428,7 @@ function App() {
                 edge="start"
                 color="inherit"
                 onClick={() =>
-                  setIsOpentFullScreenPanel({
+                  setIsOpenFullScreenPanel({
                     open: false,
                   })
                 }

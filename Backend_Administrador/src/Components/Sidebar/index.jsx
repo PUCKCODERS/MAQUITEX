@@ -72,7 +72,7 @@ const Sidebar = () => {
                   <Button
                     className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3"
                     onClick={() =>
-                      context.setIsOpentFullScreenPanel({
+                      context.setIsOpenFullScreenPanel({
                         open: true,
                         model: "NUEVO SLIDE DE INICIO",
                       })
@@ -122,7 +122,7 @@ const Sidebar = () => {
                   <Button
                     className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3"
                     onClick={() =>
-                      context.setIsOpentFullScreenPanel({
+                      context.setIsOpenFullScreenPanel({
                         open: true,
                         model: "NUEVO PRODUCTO",
                       })
@@ -165,7 +165,7 @@ const Sidebar = () => {
                   <Button
                     className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3"
                     onClick={() =>
-                      context.setIsOpentFullScreenPanel({
+                      context.setIsOpenFullScreenPanel({
                         open: true,
                         model: "NUEVA CATEGORÍA",
                       })
@@ -187,7 +187,7 @@ const Sidebar = () => {
                   <Button
                     className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3"
                     onClick={() =>
-                      context.setIsOpentFullScreenPanel({
+                      context.setIsOpenFullScreenPanel({
                         open: true,
                         model: "NUEVA SUBCATEGORÍA",
                       })

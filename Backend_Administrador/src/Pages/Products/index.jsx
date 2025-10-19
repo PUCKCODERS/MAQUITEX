@@ -84,7 +84,7 @@ export const Products = () => {
           <Button
             className="btn btn-sm"
             onClick={() =>
-              context.setIsOpentFullScreenPanel({
+              context.setIsOpenFullScreenPanel({
                 open: true,
                 model: "NUEVO PRODUCTO",
               })

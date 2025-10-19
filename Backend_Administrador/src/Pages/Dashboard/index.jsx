@@ -191,7 +191,7 @@ const Dashboard = () => {
           <Button
             className="btn-blue !gap-3"
             onClick={() =>
-              context.setIsOpentFullScreenPanel({
+              context.setIsOpenFullScreenPanel({
                 open: true,
                 model: "NUEVO PRODUCTO",
               })
@@ -259,7 +259,7 @@ const Dashboard = () => {
             <Button
               className="btn btn-sm"
               onClick={() =>
-                context.setIsOpentFullScreenPanel({
+                context.setIsOpenFullScreenPanel({
                   open: true,
                   model: "NUEVO PRODUCTO",
                 })
@@ -568,7 +568,7 @@ const Dashboard = () => {
             <Button
               className="btn btn-sm"
               onClick={() =>
-                context.setIsOpentFullScreenPanel({
+                context.setIsOpenFullScreenPanel({
                   open: true,
                   model: "NUEVO PRODUCTO",
                 })

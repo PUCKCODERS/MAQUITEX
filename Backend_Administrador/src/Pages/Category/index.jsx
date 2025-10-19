@@ -56,7 +56,7 @@ export const CategoryList = () => {
           <Button
             className="btn btn-sm"
             onClick={() =>
-              context.setIsOpentFullScreenPanel({
+              context.setIsOpenFullScreenPanel({
                 open: true,
                 model: "NUEVA CATEGORÍA",
               })

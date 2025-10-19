@@ -59,7 +59,7 @@ export const HomeSliderBanners = () => {
           <Button
             className="btn btn-sm"
             onClick={() =>
-              context.setIsOpentFullScreenPanel({
+              context.setIsOpenFullScreenPanel({
                 open: true,
                 model: "NUEVO SLIDE DE INICIO",
               })
