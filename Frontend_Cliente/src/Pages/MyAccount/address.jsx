@@ -14,8 +14,9 @@ import TextField from "@mui/material/TextField";
 
 import { GiSave } from "react-icons/gi";
 import { Button } from "@mui/material";
-import { fetchDataFromApi, postData } from "../../utils/api";
+import { deleteData, fetchDataFromApi, postData } from "../../utils/api";
 import { useEffect } from "react";
+import { FaTrashAlt } from "react-icons/fa";
 
 const label = { inputProps: { "aria-label": "Radio demo" } };
 
@@ -80,6 +81,16 @@ const Address = () => {
     const { name, value } = e.target;
     setFormsFields(() => {
       return { ...formFields, [name]: value };
+    });
+  };
+
+  const removeAddress = (id) => {
+    deleteData(`/api/address/${id}`).then(() => {
+      fetchDataFromApi(
+        `/api/address/get?userId=${context?.userData?._id}`
+      ).then((res) => {
+        setAddress(res.data);
+      });
     });
   };
 
@@ -168,28 +179,36 @@ const Address = () => {
                   address?.map((address /*index*/) => {
                     return (
                       <>
-                        <label className="addressBox w-full flex items-center justify-center border-1 border-[#bdbdbd] bg-[#f1f1f1] !p-3 rounded-md cursor-pointer shadow-[3px_3px_3px_#000]">
-                          <Radio
-                            {...label}
-                            name="address"
-                            checked={selectedValue === address?._id}
-                            value={address?._id}
-                            onChange={handleChange}
-                          />
-                          <span className="text-[12px]">
-                            {address?.address_line1 +
-                              " " +
-                              address?.city +
-                              " " +
-                              address?.country +
-                              " " +
-                              address?.state +
-                              " " +
-                              address?.pincode}
-                          </span>
+                        <div className="group relative addressBox w-full flex items-center justify-center border-1 border-[#bdbdbd] bg-[#f1f1f1] !p-3 rounded-md cursor-pointer shadow-[3px_3px_3px_#000]">
+                          <label className="!mr-auto">
+                            <Radio
+                              {...label}
+                              name="address"
+                              checked={selectedValue === address?._id}
+                              value={address?._id}
+                              onChange={handleChange}
+                            />
+                            <span className="text-[12px]">
+                              {address?.address_line1 +
+                                " " +
+                                address?.city +
+                                " " +
+                                address?.country +
+                                " " +
+                                address?.state +
+                                " " +
+                                address?.pincode}
+                            </span>
+                          </label>
 
-                          <span></span>
-                        </label>
+                          <span
+                            onClick={() => removeAddress(address?._id)}
+                            className="hidden group-hover:flex items-center justify-center w-[30px] h-[30px] rounded-full border-1 
+                          hover:bg-[#082c55] text-[#082c55] hover:text-white z-50 !ml-auto transition-all "
+                          >
+                            <FaTrashAlt />
+                          </span>
+                        </div>
                       </>
                     );
                   })}
@@ -272,6 +291,7 @@ const Address = () => {
               <PhoneInput
                 defaultCountry="ec"
                 value={phone}
+                disabled={isLoading === true ? true : false}
                 onChange={(phone) => {
                   setPhone(phone);
                   setFormsFields((prevState) => ({
