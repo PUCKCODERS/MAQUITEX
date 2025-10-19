@@ -88,7 +88,6 @@ const Address = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    alert();
     setIsLoading(true);
 
     if (formFields.address_line1 === "") {
