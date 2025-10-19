@@ -131,7 +131,9 @@ const Address = () => {
 
         fetchDataFromApi(
           `/api/address/get?userId=${context?.userData?._id}`
-        ).then((res) => {});
+        ).then((res) => {
+          setAddress(res.data);
+        });
       } else {
         context.alertBox("error", res?.data?.message);
         setIsLoading(false);
