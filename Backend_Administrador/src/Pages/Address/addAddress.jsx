@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
-import { FaFileUpload } from "react-icons/fa";
+import { GiSave } from "react-icons/gi";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import Select from "@mui/material/Select";
@@ -186,12 +186,11 @@ const AddAddress = () => {
               disabled={isLoading === true ? true : false}
               onChange={(phone) => {
                 setPhone(phone);
-                {
-                  setFormsFields((prevState) => ({
-                    ...prevState,
-                    mobile: phone,
-                  }));
-                }
+
+                setFormsFields((prevState) => ({
+                  ...prevState,
+                  mobile: phone,
+                }));
               }}
             />
           </div>
@@ -201,10 +200,10 @@ const AddAddress = () => {
               ESTADO
             </h3>
             <Select
-              labelId="demo-simple-select-filled-label"
-              id="demo-simple-select-filled"
               value={status}
               onChange={handleChangeStatus}
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
               size="small"
               className="w-full !text-[#082c55] !font-bold"
             >
@@ -226,8 +225,11 @@ const AddAddress = () => {
 
         <br />
         <div className="w-[325px]">
-          <Button type="submit" className="btn-blue btn-lg w-full !gap-2">
-            <FaFileUpload className="text-[25px] text-white" />
+          <Button
+            type="submit"
+            className="btn-blue btn-lg w-full !font-bold hover:!text-[#fff] !gap-2"
+          >
+            <GiSave className="text-[25px] " />
             PUBLICAR Y VER
           </Button>
         </div>

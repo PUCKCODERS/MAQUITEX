@@ -9,6 +9,7 @@ import { Button } from "@mui/material";
 import { MyContext } from "../../App";
 import CircularProgress from "@mui/material/CircularProgress";
 import { uploadImage } from "../../utils/api";
+import { MdMapsHomeWork } from "react-icons/md";
 
 const AccountSidebar = () => {
   const [previews, setPreviews] = useState([]);
@@ -125,6 +126,14 @@ const AccountSidebar = () => {
             <Button className="w-full !text-left !justify-start !py-2 !px-5 !capitalize !text-[#274a72] hover:!text-[#fff] hover:!bg-[#274a72] !rounded-none flex items-center !gap-2">
               <BsFilePersonFill className="text-[25px]" />
               MI PERFIL
+            </Button>
+          </NavLink>
+        </li>
+        <li className="w-full">
+          <NavLink to="/address" exact={true} activeClassName="isActive">
+            <Button className="w-full !text-left !justify-start !py-2 !px-5 !capitalize !text-[#274a72] hover:!text-[#fff] hover:!bg-[#274a72] !rounded-none flex items-center !gap-2">
+              <MdMapsHomeWork className="text-[25px]" />
+              DIRECCIÓN
             </Button>
           </NavLink>
         </li>

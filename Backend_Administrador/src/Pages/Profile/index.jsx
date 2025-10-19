@@ -372,7 +372,7 @@ const Profile = () => {
 
           <div className="flex !gap-2 flex-col !mt-4">
             {address?.length > 0 &&
-              address?.map((address, index) => {
+              address?.map((address /*index*/) => {
                 return (
                   <>
                     <label className="addressBox w-full flex items-center justify-center border-1 border-[#bdbdbd] bg-[#f1f1f1] !p-3 rounded-md cursor-pointer shadow-[3px_3px_3px_#000]">

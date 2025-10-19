@@ -6,6 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { editData, postData } from "../../utils/api";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Collapse } from "react-collapse";
+import { Radio } from "@mui/material";
+import { PhoneInput } from "react-international-phone";
+import "react-international-phone/style.css";
 
 const MyAccount = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -13,6 +16,8 @@ const MyAccount = () => {
   const [userId, setUserId] = useState("");
   const [isChangePasswordFormShow, setisChangePasswordFormShow] =
     useState(false);
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState([]);
 
   const [formFields, setFormsFields] = useState({
     name: "",
@@ -46,6 +51,9 @@ const MyAccount = () => {
         email: context?.userData?.email,
         mobile: context?.userData?.mobile,
       });
+
+      const ph = `"${context?.userData?.mobile}"`;
+      setPhone(ph);
 
       setChangePassword({
         email: context?.userData?.email,
@@ -223,15 +231,16 @@ const MyAccount = () => {
 
               <div className="flex items-center !mt-4 !gap-5">
                 <div className="w-[50%]">
-                  <TextField
-                    label="NUMERO CELULAR"
-                    variant="outlined"
-                    size="small"
-                    className="w-full"
-                    name="mobile"
-                    value={formFields.mobile}
+                  <PhoneInput
+                    defaultCountry="ec"
+                    value={phone}
                     disabled={isLoading === true ? true : false}
-                    onChange={onChangeInput}
+                    onChange={(phone) => {
+                      setPhone(phone);
+                      setFormsFields({
+                        mobile: phone,
+                      });
+                    }}
                   />
                 </div>
               </div>
@@ -250,6 +259,48 @@ const MyAccount = () => {
                 </Button>
               </div>
             </form>
+          </div>
+
+          <div
+            className="flex items-center justify-center !p-5 rounded-md border  border-[#082c55] bg-[#526b86] hover:bg-[#082c55] text-[#fff] hover:text-[#fff] !mt-5 cursor-pointer "
+            onClick={() =>
+              context.setIsOpentFullScreenPanel({
+                open: true,
+                model: "NUEVA DIRECCIÓN",
+              })
+            }
+          >
+            <span className="text-[16px]  font-[500]">AÑADIR DIRECCIÓN</span>
+          </div>
+
+          <div className="flex !gap-2 flex-col !mt-4">
+            {address?.length > 0 &&
+              address?.map((address /*index*/) => {
+                return (
+                  <>
+                    <label className="addressBox w-full flex items-center justify-center border-1 border-[#bdbdbd] bg-[#f1f1f1] !p-3 rounded-md cursor-pointer shadow-[3px_3px_3px_#000]">
+                      <Radio
+                        {...label}
+                        name="address"
+                        checked={selectedValue === address?._id}
+                        value={address?._id}
+                        onChange={handleChange}
+                      />
+                      <span className="text-[12px]">
+                        {address?.address_line1 +
+                          " " +
+                          address?.city +
+                          " " +
+                          address?.country +
+                          " " +
+                          address?.state +
+                          " " +
+                          address?.pincode}
+                      </span>
+                    </label>
+                  </>
+                );
+              })}
           </div>
 
           <Collapse isOpened={isChangePasswordFormShow}>
