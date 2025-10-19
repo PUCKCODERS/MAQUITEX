@@ -85,14 +85,12 @@ const AddAddress = () => {
       return false;
     }
 
-    console.log(formFields);
-
     postData(`/api/address/add`, formFields, {
       withCredentials: true,
     }).then((res) => {
       if (res?.error !== true) {
         setIsLoading(false);
-        context.alertBox("success", res?.data?.message);
+        context.alertBox("success", res?.message);
 
         context?.setIsOpenFullScreenPanel({
           open: false,
@@ -104,7 +102,7 @@ const AddAddress = () => {
           context?.setAddress(res.data);
         });
       } else {
-        context.alertBox("error", res?.data?.message);
+        context.alertBox("error", res?.message);
         setIsLoading(false);
       }
     });

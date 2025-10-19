@@ -51,8 +51,6 @@ const Address = () => {
         ...prevState,
         userId: context?.userData?._id,
       }));
-
-      console.log(context?.userData?._id);
     }
   }, [context?.userData]);
 
@@ -125,8 +123,7 @@ const Address = () => {
     }).then((res) => {
       if (res?.error !== true) {
         setIsLoading(false);
-        context.alertBox("success", res?.data?.message);
-
+        context.alertBox("success", res?.message);
         setisOpenModel(false);
 
         fetchDataFromApi(
@@ -135,7 +132,7 @@ const Address = () => {
           setAddress(res.data);
         });
       } else {
-        context.alertBox("error", res?.data?.message);
+        context.alertBox("error", res?.message);
         setIsLoading(false);
       }
     });
@@ -190,6 +187,8 @@ const Address = () => {
                               " " +
                               address?.pincode}
                           </span>
+
+                          <span></span>
                         </label>
                       </>
                     );
@@ -267,7 +266,6 @@ const Address = () => {
                 value={formFields.pincode}
               />
             </div>
-            {console.log(formFields)}
           </div>
           <div className="flex items-center !gap-5 !pb-5">
             <div className="col w-[50%] shadow-md rounded-md">
