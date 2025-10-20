@@ -19,7 +19,7 @@ const ChangePassword = () => {
   const [isPasswordShow2, setIsPasswordShow2] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const [formFields, setFormsFields] = useState({
+  const [formFields, setFormFields] = useState({
     email: localStorage.getItem("userEmail"),
     newPassword: "",
     confirmPassword: "",
@@ -30,7 +30,7 @@ const ChangePassword = () => {
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    setFormsFields(() => {
+    setFormFields(() => {
       return {
         ...formFields,
         [name]: value,

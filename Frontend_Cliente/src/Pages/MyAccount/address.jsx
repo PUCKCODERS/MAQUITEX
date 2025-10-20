@@ -30,7 +30,7 @@ const Address = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
 
-  const [formFields, setFormsFields] = useState({
+  const [formFields, setFormFields] = useState({
     address_line1: "",
     city: "",
     state: "",
@@ -51,7 +51,7 @@ const Address = () => {
 
   useEffect(() => {
     if (context?.userData?._id !== undefined) {
-      setFormsFields((prevState) => ({
+      setFormFields((prevState) => ({
         ...prevState,
         userId: context?.userData?._id,
       }));
@@ -74,7 +74,7 @@ const Address = () => {
 
   const handleChangeStatus = (event) => {
     setStatus(event.target.value);
-    setFormsFields((prevState) => ({
+    setFormFields((prevState) => ({
       ...prevState,
       status: event.target.value,
     }));
@@ -82,7 +82,7 @@ const Address = () => {
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    setFormsFields(() => {
+    setFormFields(() => {
       return { ...formFields, [name]: value };
     });
   };
@@ -347,7 +347,7 @@ const Address = () => {
                 disabled={isLoading === true ? true : false}
                 onChange={(phone) => {
                   setPhone(phone);
-                  setFormsFields((prevState) => ({
+                  setFormFields((prevState) => ({
                     ...prevState,
                     mobile: phone,
                   }));

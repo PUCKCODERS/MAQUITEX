@@ -16,7 +16,7 @@ const AddAddress = () => {
   const [status, setStatus] = React.useState(false);
   const context = useContext(MyContext);
 
-  const [formFields, setFormsFields] = useState({
+  const [formFields, setFormFields] = useState({
     address_line1: "",
     city: "",
     state: "",
@@ -29,7 +29,7 @@ const AddAddress = () => {
   });
 
   useEffect(() => {
-    setFormsFields((prevState) => ({
+    setFormFields((prevState) => ({
       ...prevState,
       userId: context?.userData?._id,
     }));
@@ -37,7 +37,7 @@ const AddAddress = () => {
 
   const handleChangeStatus = (event) => {
     setStatus(event.target.value);
-    setFormsFields((prevState) => ({
+    setFormFields((prevState) => ({
       ...prevState,
       status: event.target.value,
     }));
@@ -45,7 +45,7 @@ const AddAddress = () => {
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    setFormsFields(() => {
+    setFormFields(() => {
       return { ...formFields, [name]: value };
     });
   };
@@ -185,7 +185,7 @@ const AddAddress = () => {
               onChange={(phone) => {
                 setPhone(phone);
 
-                setFormsFields((prevState) => ({
+                setFormFields((prevState) => ({
                   ...prevState,
                   mobile: phone,
                 }));

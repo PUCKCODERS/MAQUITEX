@@ -28,7 +28,7 @@ const Profile = () => {
   const [isChangePasswordFormShow, setisChangePasswordFormShow] =
     useState(false);
 
-  const [formFields, setFormsFields] = useState({
+  const [formFields, setFormFields] = useState({
     name: "",
     email: "",
     mobile: "",
@@ -77,7 +77,7 @@ const Profile = () => {
       });
 
       setUserId(context?.userData?._id);
-      setFormsFields({
+      setFormFields({
         name: context?.userData?.name,
         email: context?.userData?.email,
         mobile: context?.userData?.mobile,
@@ -101,7 +101,7 @@ const Profile = () => {
         [name]: value,
       }));
     } else {
-      setFormsFields((prev) => ({
+      setFormFields((prev) => ({
         ...prev,
         [name]: value,
       }));
@@ -138,7 +138,7 @@ const Profile = () => {
 
           const updatedUser = res?.data?.user;
           if (updatedUser) {
-            setFormsFields({
+            setFormFields({
               name: updatedUser.name,
               email: updatedUser.email,
               mobile: updatedUser.mobile,
@@ -350,7 +350,7 @@ const Profile = () => {
                 disabled={isLoading === true ? true : false}
                 onChange={(phone) => {
                   setPhone(phone);
-                  setFormsFields({
+                  setFormFields({
                     mobile: phone,
                   });
                 }}

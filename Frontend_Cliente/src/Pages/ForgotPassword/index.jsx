@@ -14,7 +14,7 @@ const ForgotPassword = () => {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
   const [isPasswordShow2, setIsPasswordShow2] = useState(false);
 
-  const [formFields, setFormsFields] = useState({
+  const [formFields, setFormFields] = useState({
     email: localStorage.getItem("userEmail"),
     newPassword: "",
     confirmPassword: "",
@@ -25,7 +25,7 @@ const ForgotPassword = () => {
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    setFormsFields(() => {
+    setFormFields(() => {
       return {
         ...formFields,
         [name]: value,

@@ -12,7 +12,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isPasswordShow, setIsPasswordShow] = useState(false);
-  const [formFields, setFormsFields] = useState({
+  const [formFields, setFormFields] = useState({
     email: "",
     password: "",
   });
@@ -48,7 +48,7 @@ const Login = () => {
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    setFormsFields(() => {
+    setFormFields(() => {
       return {
         ...formFields,
         [name]: value,
@@ -80,7 +80,7 @@ const Login = () => {
         setIsLoading(false);
         context.alertBox("success", res?.message);
 
-        setFormsFields({
+        setFormFields({
           email: "",
           password: "",
         });
