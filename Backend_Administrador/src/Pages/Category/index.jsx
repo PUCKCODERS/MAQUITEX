@@ -17,7 +17,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
 import { MyContext } from "../../App";
-import { fetchDataFromApi } from "../../utils/api";
+import { deleteData, fetchDataFromApi } from "../../utils/api";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
@@ -39,18 +39,25 @@ export const CategoryList = () => {
 
   useEffect(() => {
     fetchDataFromApi("/api/category").then((res) => {
-      console.log(res?.data);
       setCatData(res?.data);
     });
-  }, []);
+  }, [context?.isOpenFullScreenPanel]);
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(+event.target.value);
-    setPage(0);
+  const deleteCat = (id) => {
+    deleteData(`/api/category/${id}`).then(() => {
+      fetchDataFromApi("/api/category").then((res) => {
+        setCatData(res?.data);
+      });
+    });
   };
 
   return (
@@ -101,7 +108,7 @@ export const CategoryList = () => {
             </TableHead>
             <TableBody>
               {catData?.length !== 0 &&
-                catData?.map((item, index) => {
+                catData?.map((item /*, index*/) => {
                   return (
                     <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
                       <TableCell>
@@ -147,7 +154,10 @@ export const CategoryList = () => {
                             <GrEdit className=" !text-[20px] " />
                           </Button>
 
-                          <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                          <Button
+                            className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                            onClick={() => deleteCat(item?._id)}
+                          >
                             <FaTrashAlt className="!text-[20px]" />
                           </Button>
                         </div>

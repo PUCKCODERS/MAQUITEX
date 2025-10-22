@@ -4,7 +4,7 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { IoClose } from "react-icons/io5";
 import Button from "@mui/material/Button";
 import { FaFileUpload } from "react-icons/fa";
-import { deleteImages, fetchDataFromApi, postData } from "../../utils/api";
+import { deleteImages, editData, fetchDataFromApi } from "../../utils/api";
 import { MyContext } from "../../App";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -20,7 +20,7 @@ const EditCategory = () => {
   const context = useContext(MyContext);
 
   useEffect(() => {
-    const id = context?.isOpentFullScreenPanel?.id;
+    const id = context?.isOpenFullScreenPanel?.id;
 
     fetchDataFromApi(`/api/category/${id}`).then((res) => {
       console.log(res?.category);
@@ -37,6 +37,8 @@ const EditCategory = () => {
         [name]: value,
       };
     });
+
+    formFields.images = previews;
   };
 
   const setPreviewsFun = (previewsArr) => {
@@ -47,13 +49,13 @@ const EditCategory = () => {
   const removeImg = (image, index) => {
     var imageArr = [];
     imageArr = previews;
-    deleteImages(`/api/category/deleteImage?img=${image}`).then((res) => {
+    deleteImages(`/api/category/deleteImage?img=${image}`).then(() => {
       imageArr.splice(index, 1);
 
       setPreviews([]);
       setTimeout(() => {
         setPreviews(imageArr);
-        formFields.images = previewsArr;
+        /* formFields.images = previewsArr;*/
       }, 100);
     });
   };
@@ -80,9 +82,12 @@ const EditCategory = () => {
       return false;
     }
 
-    postData("/api/category/create", formFields).then((res) => {
-      console.log(res);
+    console.log(formFields);
 
+    editData(
+      `/api/category/${context?.isOpenFullScreenPanel?.id}`,
+      formFields
+    ).then(() => {
       setTimeout(() => {
         setIsLoading(false);
         context.setIsOpenFullScreenPanel({

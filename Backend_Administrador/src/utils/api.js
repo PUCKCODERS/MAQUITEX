@@ -96,3 +96,14 @@ export const deleteImages = async (url) => {
   const { res } = await axios.delete(apiUrl + url, params);
   return res;
 };
+
+export const deleteData = async (url) => {
+  const params = {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      "Content-Type": "application/json",
+    },
+  };
+  const { res } = await axios.delete(apiUrl + url, params);
+  return res;
+};

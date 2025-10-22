@@ -37,13 +37,13 @@ const AddCategory = () => {
   const removeImg = (image, index) => {
     var imageArr = [];
     imageArr = previews;
-    deleteImages(`/api/category/deleteImage?img=${image}`).then((res) => {
+    deleteImages(`/api/category/deleteImage?img=${image}`).then(() => {
       imageArr.splice(index, 1);
 
       setPreviews([]);
       setTimeout(() => {
         setPreviews(imageArr);
-        formFields.images = previewsArr;
+        /*formFields.images = previewsArr;*/
       }, 100);
     });
   };

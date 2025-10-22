@@ -45,9 +45,9 @@ function App() {
   const [isSidebarOpen, setisSidebarOpen] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
   const [userData, setUserData] = useState(null);
-  const [addres, setAddress] = useState([]);
+  /*const [addres, setAddress] = useState([]);*/
 
-  const [isOpentFullScreenPanel, setIsOpenFullScreenPanel] = useState({
+  const [isOpenFullScreenPanel, setIsOpenFullScreenPanel] = useState({
     open: false,
     id: "",
   });
@@ -399,7 +399,7 @@ function App() {
     setisSidebarOpen,
     isLogin,
     setIsLogin,
-    isOpentFullScreenPanel,
+    isOpenFullScreenPanel,
     setIsOpenFullScreenPanel,
     alertBox,
     openAlertBox,
@@ -414,7 +414,7 @@ function App() {
 
         <Dialog
           fullScreen
-          open={isOpentFullScreenPanel.open}
+          open={isOpenFullScreenPanel.open}
           onClose={() =>
             setIsOpenFullScreenPanel({
               open: false,
@@ -440,26 +440,24 @@ function App() {
               </IconButton>
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                 <span className="text-[#fff] !ml-4 font-bold font-[bold] text-[25px]">
-                  {isOpentFullScreenPanel?.model}
+                  {isOpenFullScreenPanel?.model}
                 </span>
               </Typography>
             </Toolbar>
           </AppBar>
 
-          {isOpentFullScreenPanel?.model === "NUEVO PRODUCTO" && <AddProduct />}
-          {isOpentFullScreenPanel?.model === "NUEVO SLIDE DE INICIO" && (
+          {isOpenFullScreenPanel?.model === "NUEVO PRODUCTO" && <AddProduct />}
+          {isOpenFullScreenPanel?.model === "NUEVO SLIDE DE INICIO" && (
             <AddHomeSlide />
           )}
-          {isOpentFullScreenPanel?.model === "NUEVA CATEGORÍA" && (
+          {isOpenFullScreenPanel?.model === "NUEVA CATEGORÍA" && (
             <AddCategory />
           )}
-          {isOpentFullScreenPanel?.model === "NUEVA SUBCATEGORÍA" && (
+          {isOpenFullScreenPanel?.model === "NUEVA SUBCATEGORÍA" && (
             <AddSubCategory />
           )}
-          {isOpentFullScreenPanel?.model === "NUEVA DIRECCIÓN" && (
-            <AddAddress />
-          )}
-          {isOpentFullScreenPanel?.model === "EDITAR CATEGORÍA" && (
+          {isOpenFullScreenPanel?.model === "NUEVA DIRECCIÓN" && <AddAddress />}
+          {isOpenFullScreenPanel?.model === "EDITAR CATEGORÍA" && (
             <EditCategory />
           )}
         </Dialog>
