@@ -1,14 +1,14 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import UploadBox from "../../Components/UploadBox";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { IoClose } from "react-icons/io5";
 import Button from "@mui/material/Button";
 import { FaFileUpload } from "react-icons/fa";
-import { deleteImages, postData } from "../../utils/api";
+import { deleteImages, fetchDataFromApi, postData } from "../../utils/api";
 import { MyContext } from "../../App";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const AddCategory = () => {
+const EditCategory = () => {
   const [formFields, setFormFields] = useState({
     name: "",
     images: [],
@@ -18,6 +18,16 @@ const AddCategory = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const context = useContext(MyContext);
+
+  useEffect(() => {
+    const id = context?.isOpentFullScreenPanel?.id;
+
+    fetchDataFromApi(`/api/category/${id}`).then((res) => {
+      console.log(res?.category);
+      formFields.name = res?.category?.name;
+      setPreviews(res?.category?.images);
+    });
+  }, []);
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
@@ -155,4 +165,4 @@ const AddCategory = () => {
   );
 };
 
-export default AddCategory;
+export default EditCategory;

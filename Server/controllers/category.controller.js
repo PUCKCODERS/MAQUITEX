@@ -67,7 +67,7 @@ export async function createCategory(request, response) {
 
     imagesArr = [];
 
-    return response.status(500).json({
+    return response.status(200).json({
       message: "CATEGORÍA CREADA",
       error: false,
       success: true,

@@ -33,6 +33,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { fetchDataFromApi } from "./utils/api";
 import Profile from "./Pages/Profile";
 import AddAddress from "./Pages/Address/addAddress.jsx";
+import EditCategory from "./Pages/Category/editCategory.jsx";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -44,10 +45,11 @@ function App() {
   const [isSidebarOpen, setisSidebarOpen] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [addres, setAddress] = useState([]);
 
   const [isOpentFullScreenPanel, setIsOpenFullScreenPanel] = useState({
     open: false,
-    model: "",
+    id: "",
   });
 
   const router = createBrowserRouter([
@@ -456,6 +458,9 @@ function App() {
           )}
           {isOpentFullScreenPanel?.model === "NUEVA DIRECCIÓN" && (
             <AddAddress />
+          )}
+          {isOpentFullScreenPanel?.model === "EDITAR CATEGORÍA" && (
+            <EditCategory />
           )}
         </Dialog>
         <Toaster />

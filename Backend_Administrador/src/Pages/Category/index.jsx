@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from "@mui/material";
 
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
-import Progress from "../../Components/ProgressBar";
+
 import { GrEdit } from "react-icons/gr";
 import { ImEye } from "react-icons/im";
 import { FaTrashAlt } from "react-icons/fa";
@@ -17,6 +17,9 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
 import { MyContext } from "../../App";
+import { fetchDataFromApi } from "../../utils/api";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -30,7 +33,16 @@ export const CategoryList = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
+  const [catData, setCatData] = useState([]);
+
   const context = useContext(MyContext);
+
+  useEffect(() => {
+    fetchDataFromApi("/api/category").then((res) => {
+      console.log(res?.data);
+      setCatData(res?.data);
+    });
+  }, []);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -88,43 +100,61 @@ export const CategoryList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
-                <TableCell>
-                  <Checkbox {...label} size="small" className="!text-white" />
-                </TableCell>
-                <TableCell width={100}>
-                  <div className="flex items-center !gap-4 w-[80px]">
-                    <div className="img w-full rounded-md overflow-hidden border border-[#fff] !bg-white group">
-                      <Link to="/product/45745">
-                        <img
-                          src="https://latinamerica.brother.com/-/media/brother/product-catalog-media/images/2022/01/05/07/05/bm2800_2.png"
-                          className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+              {catData?.length !== 0 &&
+                catData?.map((item, index) => {
+                  return (
+                    <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
+                      <TableCell>
+                        <Checkbox
+                          {...label}
+                          size="small"
+                          className="!text-white"
                         />
-                      </Link>
-                    </div>
-                  </div>
-                </TableCell>
+                      </TableCell>
+                      <TableCell width={100}>
+                        <div className="flex items-center !gap-4 w-[80px]">
+                          <div className="img w-full rounded-md overflow-hidden !bg-Transparent group">
+                            <Link to="/product/45745" data-discover="true">
+                              <LazyLoadImage
+                                alt={"image"}
+                                effect="blur"
+                                className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+                                src={item.images[0]}
+                              />
+                            </Link>
+                          </div>
+                        </div>
+                      </TableCell>
 
-                <TableCell width={100}>
-                  <span className="!text-[15px] !font-bold !font-[bold] !inline-block !rounded-md !p-1 !px-2 !bg-gray-100">
-                    MAQUINAS
-                  </span>
-                </TableCell>
+                      <TableCell width={100}>
+                        <span className="!text-[15px] !font-bold !font-[bold] !inline-block !rounded-md !p-1 !px-2 !bg-gray-100">
+                          {item?.name}
+                        </span>
+                      </TableCell>
 
-                <TableCell width={100} className="!text-white">
-                  <div className="flex items-center !gap-1">
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <GrEdit className=" !text-[20px] " />
-                    </Button>
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <ImEye className="!text-[20px]" />
-                    </Button>
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <FaTrashAlt className="!text-[20px]" />
-                    </Button>
-                  </div>
-                </TableCell>
-              </TableRow>
+                      <TableCell width={100} className="!text-white">
+                        <div className="flex items-center !gap-3">
+                          <Button
+                            className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                            onClick={() =>
+                              context.setIsOpenFullScreenPanel({
+                                open: true,
+                                model: "EDITAR CATEGORÍA",
+                                id: item?._id,
+                              })
+                            }
+                          >
+                            <GrEdit className=" !text-[20px] " />
+                          </Button>
+
+                          <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                            <FaTrashAlt className="!text-[20px]" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
             </TableBody>
           </Table>
         </TableContainer>
