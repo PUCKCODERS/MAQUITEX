@@ -192,6 +192,8 @@ export async function getCategory(request, response) {
 export async function removeImageFromCloudinary(request, response) {
   const imgUrl = request.query.img;
 
+  console.log(imgUrl);
+
   const urlArr = imgUrl.split("/");
   const image = urlArr[urlArr.length - 1];
 
@@ -204,7 +206,11 @@ export async function removeImageFromCloudinary(request, response) {
     );
 
     if (res) {
-      response.status(200).send(res);
+      return response.status(200).json({
+        error: false,
+        success: true,
+        message: "IMAGEN ELIMINADA EXITOSAMENTE",
+      });
     }
   }
 }
