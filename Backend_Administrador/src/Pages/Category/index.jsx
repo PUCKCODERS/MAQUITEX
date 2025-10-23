@@ -16,6 +16,10 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import { FcDeleteDatabase } from "react-icons/fc";
+
 import { MyContext } from "../../App";
 import { deleteData, fetchDataFromApi } from "../../utils/api";
 import { LazyLoadImage } from "react-lazy-load-image-component";
@@ -34,6 +38,8 @@ export const CategoryList = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const [catData, setCatData] = useState([]);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [catToDelete, setCatToDelete] = useState(null);
 
   const context = useContext(MyContext);
 
@@ -53,11 +59,21 @@ export const CategoryList = () => {
   };
 
   const deleteCat = (id) => {
-    deleteData(`/api/category/${id}`).then(() => {
-      fetchDataFromApi("/api/category").then((res) => {
-        setCatData(res?.data);
+    setCatToDelete(id);
+    setIsConfirmOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (catToDelete) {
+      deleteData(`/api/category/${catToDelete}`).then(() => {
+        fetchDataFromApi("/api/category").then((res) => {
+          setCatData(res?.data);
+          setIsConfirmOpen(false);
+          setCatToDelete(null);
+          context.alertBox("success", "CATEGORÍA ELIMINADA CORRECTAMENTE");
+        });
       });
-    });
+    }
   };
 
   return (
@@ -179,6 +195,46 @@ export const CategoryList = () => {
           className="!bg-gray-100 !text-balck !border-t !border-gray-500"
         />
       </div>
+
+      <Dialog
+        open={isConfirmOpen}
+        onClose={() => setIsConfirmOpen(false)}
+        PaperProps={{
+          style: {
+            borderRadius: "15px",
+            padding: "20px",
+            textAlign: "center",
+            width: "!360px",
+          },
+        }}
+      >
+        <div className="flex flex-col items-center justify-center">
+          <FcDeleteDatabase className="text-[120px] !mb-2" />
+          <DialogTitle
+            className="!text-[20px] text-[#082c55] !font-bold !pb-1 !text-center"
+            sx={{ lineHeight: 1.2 }}
+          >
+            ¿DESEA ELIMINAR ESTA CATEGORÍA ?
+          </DialogTitle>
+          <p className="text-gray-800 text-[16px] !mb-4">
+            ESTA ACCIÓN NO SE PUEDE DESHACER
+          </p>
+        </div>
+        <div className="flex justify-center !gap-3 !pb-2">
+          <Button
+            onClick={confirmDelete}
+            className="!bg-[#1976d2] hover:!bg-[#0d47a1] !text-white !font-bold !px-4 !py-2"
+          >
+            Sí, eliminar
+          </Button>
+          <Button
+            onClick={() => setIsConfirmOpen(false)}
+            className="!bg-[#d32f2f] hover:!bg-[#9a0007] !text-white !font-bold !px-4 !py-2"
+          >
+            Cancelar
+          </Button>
+        </div>
+      </Dialog>
     </>
   );
 };
