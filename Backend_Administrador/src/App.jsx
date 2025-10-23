@@ -45,7 +45,8 @@ function App() {
   const [isSidebarOpen, setisSidebarOpen] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
   const [userData, setUserData] = useState(null);
-  /*const [addres, setAddress] = useState([]);*/
+  const [addres, setAddress] = useState([]);
+  const [catData, setCatData] = useState([]);
 
   const [isOpenFullScreenPanel, setIsOpenFullScreenPanel] = useState({
     open: false,
@@ -394,6 +395,12 @@ function App() {
     }
   }, [isLogin]);
 
+  useEffect(() => {
+    fetchDataFromApi("/api/category").then((res) => {
+      setCatData(res?.data);
+    });
+  }, []);
+
   const values = {
     isSidebarOpen,
     setisSidebarOpen,
@@ -405,6 +412,10 @@ function App() {
     openAlertBox,
     setUserData,
     userData,
+    addres,
+    setAddress,
+    catData,
+    setCatData,
   };
 
   return (

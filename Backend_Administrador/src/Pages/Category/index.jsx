@@ -34,10 +34,10 @@ const columns = [
 ];
 
 export const CategoryList = () => {
+  const [categoryFilterVal, setcategoryFilterVal] = React.useState("");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  const [catData, setCatData] = useState([]);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [catToDelete, setCatToDelete] = useState(null);
 
@@ -45,9 +45,13 @@ export const CategoryList = () => {
 
   useEffect(() => {
     fetchDataFromApi("/api/category").then((res) => {
-      setCatData(res?.data);
+      context?.setCatData(res?.data);
     });
   }, [context?.isOpenFullScreenPanel]);
+
+  const handleChangeCatFilter = (event) => {
+    setcategoryFilterVal(event.target.value);
+  };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
@@ -67,7 +71,7 @@ export const CategoryList = () => {
     if (catToDelete) {
       deleteData(`/api/category/${catToDelete}`).then(() => {
         fetchDataFromApi("/api/category").then((res) => {
-          setCatData(res?.data);
+          context?.setCatData(res?.data);
           setIsConfirmOpen(false);
           setCatToDelete(null);
           context.alertBox("success", "CATEGORÍA ELIMINADA CORRECTAMENTE");
@@ -123,10 +127,13 @@ export const CategoryList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {catData?.length !== 0 &&
-                catData?.map((item /*, index*/) => {
+              {context?.catData?.length !== 0 &&
+                context?.catData?.map((item, index) => {
                   return (
-                    <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
+                    <TableRow
+                      key={index}
+                      className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200"
+                    >
                       <TableCell>
                         <Checkbox
                           {...label}
