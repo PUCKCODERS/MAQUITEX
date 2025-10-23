@@ -11,7 +11,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 const AddCategory = () => {
   const [formFields, setFormFields] = useState({
     name: "",
-    images: [],
+    parentCatName: null,
+    parentId: null,
   });
 
   const [previews, setPreviews] = useState([]);
@@ -70,9 +71,7 @@ const AddCategory = () => {
       return false;
     }
 
-    postData("/api/category/create", formFields).then((res) => {
-      console.log(res);
-
+    postData("/api/category/create", formFields).then(() => {
       setTimeout(() => {
         setIsLoading(false);
         context.setIsOpenFullScreenPanel({
