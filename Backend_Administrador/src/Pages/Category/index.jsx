@@ -34,7 +34,6 @@ const columns = [
 ];
 
 export const CategoryList = () => {
-  const [categoryFilterVal, setcategoryFilterVal] = React.useState("");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -48,10 +47,6 @@ export const CategoryList = () => {
       context?.setCatData(res?.data);
     });
   }, [context?.isOpenFullScreenPanel]);
-
-  const handleChangeCatFilter = (event) => {
-    setcategoryFilterVal(event.target.value);
-  };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);

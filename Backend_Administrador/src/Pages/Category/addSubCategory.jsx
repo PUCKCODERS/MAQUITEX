@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import UploadBox from "../../Components/UploadBox";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
@@ -7,9 +7,12 @@ import Button from "@mui/material/Button";
 import { FaFileUpload } from "react-icons/fa";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import { MyContext } from "../../App";
 
 const AddSubCategory = () => {
   const [productCat, setProductCat] = useState("");
+
+  const context = useContext(MyContext);
 
   const handleChangeProductCat = (event) => {
     setProductCat(event.target.value);
@@ -32,30 +35,18 @@ const AddSubCategory = () => {
               label="Category"
               onChange={handleChangeProductCat}
             >
-              <MenuItem
-                value={""}
-                className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-              >
-                NINGUNO
-              </MenuItem>
-              <MenuItem
-                value={10}
-                className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-              >
-                MAQUINAS
-              </MenuItem>
-              <MenuItem
-                value={20}
-                className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-              >
-                REPUESTOS
-              </MenuItem>
-              <MenuItem
-                value={30}
-                className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-              >
-                ACCESORIOS
-              </MenuItem>
+              {context?.catData?.length !== 0 &&
+                context?.catData?.map((item, index) => {
+                  return (
+                    <MenuItem
+                      key={index}
+                      value={10}
+                      className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                    >
+                      {item?.name}
+                    </MenuItem>
+                  );
+                })}
             </Select>
           </div>
 
