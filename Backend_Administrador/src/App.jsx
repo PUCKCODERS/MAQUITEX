@@ -21,7 +21,7 @@ import HomeSliderBanners from "./Pages/HomeSliderBanners";
 import AddHomeSlide from "./Pages/HomeSliderBanners/addHomeSlide";
 import CategoryList from "./Pages/Category";
 import AddCategory from "./Pages/Category/addCategory";
-import SubCategoryList from "./Pages/Category/subCategory";
+import SubCategoryList from "./Pages/Category/subCategory.jsx";
 import AddSubCategory from "./Pages/Category/addSubCategory";
 import Users from "./Pages/Users";
 import Orders from "./Pages/Orders";
