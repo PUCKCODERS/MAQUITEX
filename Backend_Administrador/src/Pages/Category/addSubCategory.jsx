@@ -71,7 +71,7 @@ const AddSubCategory = () => {
 
     setFormFields2(() => {
       return {
-        ...formFields,
+        ...formFields2,
         [name]: value,
       };
     });
@@ -219,7 +219,7 @@ const AddSubCategory = () => {
               onChange={handleChangeProductCat2}
             >
               {context?.catData?.length !== 0 &&
-                context?.catData?.map((item, index) => {
+                context?.catData?.map((item /*, index*/) => {
                   return (
                     item?.children?.length !== 0 &&
                     item?.children?.map((item2, index) => {

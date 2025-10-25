@@ -291,6 +291,7 @@ export async function updatedCategory(request, response) {
   imagesArr = [];
 
   response.status(200).json({
+    message: "CATEGORÍA ACTUALIZADA",
     error: false,
     success: true,
     category: category,
