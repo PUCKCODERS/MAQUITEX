@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Button } from "@mui/material";
 import { FaCartPlus } from "react-icons/fa";
 
@@ -17,6 +17,7 @@ import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { MyContext } from "../../App";
 import Chip from "@mui/material/Chip";
+import { fetchDataFromApi } from "../../utils/api";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -32,6 +33,12 @@ export const SubCategoryList = () => {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   const context = useContext(MyContext);
+
+  useEffect(() => {
+    fetchDataFromApi("/api/category").then((res) => {
+      context?.setCatData(res?.data);
+    });
+  }, [context?.isOpenFullScreenPanel]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -89,61 +96,70 @@ export const SubCategoryList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
-                <TableCell>
-                  <Checkbox {...label} size="small" className="!text-white" />
-                </TableCell>
-                <TableCell width={100}>
-                  <div className="flex items-center !gap-4 w-[80px]">
-                    <div className="img w-full rounded-md overflow-hidden border border-[#fff] !bg-white group">
-                      <Link to="/product/45745">
-                        <img
-                          src="https://latinamerica.brother.com/-/media/brother/product-catalog-media/images/2022/01/05/07/05/bm2800_2.png"
-                          className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+              {context?.catData?.length !== 0 &&
+                context?.catData?.map((item, index) => {
+                  return (
+                    <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
+                      <TableCell>
+                        <Checkbox
+                          {...label}
+                          size="small"
+                          className="!text-white"
                         />
-                      </Link>
-                    </div>
-                  </div>
-                </TableCell>
+                      </TableCell>
+                      <TableCell width={100}>
+                        <div className="flex items-center !gap-4 w-[80px]">
+                          <div className="img w-full rounded-md overflow-hidden border border-[#fff] !bg-white group">
+                            <Link to="/product/45745">
+                              <img
+                                src="https://latinamerica.brother.com/-/media/brother/product-catalog-media/images/2022/01/05/07/05/bm2800_2.png"
+                                className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+                              />
+                            </Link>
+                          </div>
+                        </div>
+                      </TableCell>
 
-                <TableCell>
-                  <Chip
-                    label="MAQUINAS"
-                    className="!text-[15px] !font-bold !font-[bold] !inline-block !rounded-md !p-1 !px-2 !bg-gray-100"
-                  />
-                </TableCell>
+                      <TableCell>
+                        <Chip
+                          label="MAQUINAS"
+                          className="!text-[15px] !font-bold !font-[bold] !inline-block !rounded-md !p-1 !px-2 !bg-gray-100"
+                        />
+                      </TableCell>
 
-                <TableCell>
-                  <div className="flex items-center !gap-3">
-                    <Chip
-                      label="SINGER"
-                      className="!text-[12px] !text-white !font-bold !font-[bold] !border !border-white !rounded-md !p-1 !px-1 !bg-[#082c55]"
-                    />
-                    <Chip
-                      label="OVERLOCK"
-                      className="!text-[12px] !text-white !font-bold !font-[bold] !border !border-white !rounded-md !p-1 !px-1 !bg-[#082c55]"
-                    />
-                    <Chip
-                      label="OTROS"
-                      className="!text-[12px] !text-white !font-bold !font-[bold] !border !border-white !rounded-md !p-1 !px-1 !bg-[#082c55]"
-                    />
-                  </div>
-                </TableCell>
+                      <TableCell>
+                        <div className="flex items-center !gap-3">
+                          <Chip
+                            label="SINGER"
+                            className="!text-[12px] !text-white !font-bold !font-[bold] !border !border-white !rounded-md !p-1 !px-1 !bg-[#082c55]"
+                          />
+                          <Chip
+                            label="OVERLOCK"
+                            className="!text-[12px] !text-white !font-bold !font-[bold] !border !border-white !rounded-md !p-1 !px-1 !bg-[#082c55]"
+                          />
+                          <Chip
+                            label="OTROS"
+                            className="!text-[12px] !text-white !font-bold !font-[bold] !border !border-white !rounded-md !p-1 !px-1 !bg-[#082c55]"
+                          />
+                        </div>
+                      </TableCell>
 
-                <TableCell width={100} className="!text-white">
-                  <div className="flex items-center !gap-1">
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <GrEdit className=" !text-[20px] " />
-                    </Button>
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <ImEye className="!text-[20px]" />
-                    </Button>
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <FaTrashAlt className="!text-[20px]" />
-                    </Button>
-                  </div>
-                </TableCell>
-              </TableRow>
+                      <TableCell width={100} className="!text-white">
+                        <div className="flex items-center !gap-1">
+                          <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                            <GrEdit className=" !text-[20px] " />
+                          </Button>
+                          <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                            <ImEye className="!text-[20px]" />
+                          </Button>
+                          <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                            <FaTrashAlt className="!text-[20px]" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
             </TableBody>
           </Table>
         </TableContainer>

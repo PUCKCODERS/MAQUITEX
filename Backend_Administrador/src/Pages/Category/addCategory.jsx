@@ -11,8 +11,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 const AddCategory = () => {
   const [formFields, setFormFields] = useState({
     name: "",
-    parentCatName: null,
-    parentId: null,
+    images: [],
   });
 
   const [previews, setPreviews] = useState([]);
@@ -77,6 +76,7 @@ const AddCategory = () => {
         context.setIsOpenFullScreenPanel({
           open: false,
         });
+        context?.getCat();
       }, 2000);
     });
   };

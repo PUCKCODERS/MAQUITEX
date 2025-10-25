@@ -396,10 +396,14 @@ function App() {
   }, [isLogin]);
 
   useEffect(() => {
+    getCat();
+  }, []);
+
+  const getCat = () => {
     fetchDataFromApi("/api/category").then((res) => {
       setCatData(res?.data);
     });
-  }, []);
+  };
 
   const values = {
     isSidebarOpen,
@@ -416,6 +420,7 @@ function App() {
     setAddress,
     catData,
     setCatData,
+    getCat,
   };
 
   return (
