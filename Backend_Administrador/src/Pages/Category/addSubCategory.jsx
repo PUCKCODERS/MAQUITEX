@@ -10,6 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { MyContext } from "../../App";
 import CircularProgress from "@mui/material/CircularProgress";
 import { postData } from "../../utils/api";
+import { GiSave } from "react-icons/gi";
 
 const AddSubCategory = () => {
   const [productCat, setProductCat] = useState("");
@@ -192,8 +193,8 @@ const AddSubCategory = () => {
               <CircularProgress color="inherit" />
             ) : (
               <>
-                <FaFileUpload className="text-[25px] text-white" />
-                PUBLICAR Y VER
+                <GiSave className="text-[25px] text-white" />
+                CREAR Y PUBLICAR
               </>
             )}
           </Button>
@@ -207,7 +208,7 @@ const AddSubCategory = () => {
         <div className="grid grid-cols-2 !mb-3 !gap-5">
           <div className="col">
             <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-              CATEGORÍA PRINCIPAL
+              SUBCATEGORÍA
             </h3>
             <Select
               labelId="demo-simple-select-label"
@@ -241,7 +242,7 @@ const AddSubCategory = () => {
 
           <div className="col">
             <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-              NOMBRE DE SUBCATEGORÍA
+              NOMBRE DE TERCER NIVEL
             </h3>
             <input
               type="text"
@@ -262,8 +263,8 @@ const AddSubCategory = () => {
               <CircularProgress color="inherit" />
             ) : (
               <>
-                <FaFileUpload className="text-[25px] text-white" />
-                PUBLICAR Y VER
+                <GiSave className="text-[25px] text-white" />
+                CREAR Y PUBLICAR
               </>
             )}
           </Button>

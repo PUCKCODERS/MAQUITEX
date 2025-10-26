@@ -7,6 +7,7 @@ import { FaFileUpload } from "react-icons/fa";
 import { deleteImages, editData, fetchDataFromApi } from "../../utils/api";
 import { MyContext } from "../../App";
 import CircularProgress from "@mui/material/CircularProgress";
+import { GiSave } from "react-icons/gi";
 
 const EditCategory = () => {
   const [formFields, setFormFields] = useState({
@@ -159,8 +160,8 @@ const EditCategory = () => {
               <CircularProgress color="inherit" />
             ) : (
               <>
-                <FaFileUpload className="text-[25px] text-white" />
-                PUBLICAR Y VER
+                <GiSave className="text-[25px] text-white" />
+                CREAR Y PUBLICAR
               </>
             )}
           </Button>
