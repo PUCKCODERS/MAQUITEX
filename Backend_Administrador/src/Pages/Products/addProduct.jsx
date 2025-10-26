@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -10,14 +10,39 @@ import "react-lazy-load-image-component/src/effects/blur.css";
 import { IoClose } from "react-icons/io5";
 import Button from "@mui/material/Button";
 import { FaFileUpload } from "react-icons/fa";
+import { MyContext } from "../../App";
 
 const AddProduct = () => {
+  const [formFields, setFormFields] = useState({
+    name: "",
+    description: "",
+    images: [],
+    brand: "",
+    price: "",
+    oldPrice: "",
+    catName: "",
+    catId: "",
+    subCatId: "",
+    subCat: "",
+    thirdsubCat: "",
+    thirdsubCatId: "",
+    countInStock: "",
+    rating: "",
+    isFeatured: false,
+    discount: "",
+    productRam: [],
+    size: [],
+    productWeight: [],
+  });
+
   const [productCat, setProductCat] = React.useState("");
   const [productSubCat, setProductSubCat] = React.useState("");
   const [productFeatured, setProductFeatured] = React.useState("");
   const [productRams, setProductRams] = React.useState("");
   const [productWeight, setProductWeight] = React.useState("");
   const [productSize, setProductSize] = React.useState("");
+
+  const context = useContext(MyContext);
 
   const handleChangeProductCat = (event) => {
     setProductCat(event.target.value);
@@ -43,6 +68,16 @@ const AddProduct = () => {
     setProductSize(event.target.value);
   };
 
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setFormFields(() => {
+      return {
+        ...formFields,
+        [name]: value,
+      };
+    });
+  };
+
   return (
     <section className="!p-5 !bg-gray-200">
       <form className="form !py-3 !p-8 ">
@@ -55,6 +90,9 @@ const AddProduct = () => {
               <input
                 type="text"
                 className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+                name="name"
+                value={formFields.name}
+                onChange={onChangeInput}
               />
             </div>
           </div>
@@ -67,6 +105,9 @@ const AddProduct = () => {
               <textarea
                 type="text"
                 className="w-full h-[140px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+                name="description"
+                value={formFields.description}
+                onChange={onChangeInput}
               />
             </div>
           </div>
@@ -76,80 +117,62 @@ const AddProduct = () => {
               <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
                 CATEGORIA
               </h3>
-              <Select
-                labelId="demo-simple-select-label"
-                id="productCatDrop"
-                size="small"
-                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                value={productCat}
-                label="Category"
-                onChange={handleChangeProductCat}
-              >
-                <MenuItem
-                  value={""}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+              {context?.catData?.length !== 0 && (
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="productCatDrop"
+                  size="small"
+                  className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                  value={productCat}
+                  label="Category"
+                  onChange={handleChangeProductCat}
                 >
-                  NINGUNO
-                </MenuItem>
-                <MenuItem
-                  value={10}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  MAQUINAS
-                </MenuItem>
-                <MenuItem
-                  value={20}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  REPUESTOS
-                </MenuItem>
-                <MenuItem
-                  value={30}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  ACCESORIOS
-                </MenuItem>
-              </Select>
+                  {context?.catData?.map((cat, index) => {
+                    return (
+                      <MenuItem
+                        value={cat?._id}
+                        className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                      >
+                        {cat?.name}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              )}
             </div>
 
             <div className="col">
               <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
                 SUB CATEGORIA
               </h3>
-              <Select
-                labelId="demo-simple-select-label"
-                id="productCatDrop"
-                size="small"
-                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                value={productSubCat}
-                label="Category"
-                onChange={handleChangeProductSubCat}
-              >
-                <MenuItem
-                  value={""}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+
+              {context?.catData?.length !== 0 && (
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="productCatDrop"
+                  size="small"
+                  className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                  value={productSubCat}
+                  label="Sub Category"
+                  onChange={handleChangeProductSubCat}
                 >
-                  NINGUNO
-                </MenuItem>
-                <MenuItem
-                  value={10}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  SINGER
-                </MenuItem>
-                <MenuItem
-                  value={20}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  OVERLOCK
-                </MenuItem>
-                <MenuItem
-                  value={30}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  OTROS
-                </MenuItem>
-              </Select>
+                  {context?.catData?.map((cat, index) => {
+                    return (
+                      cat?.children?.length !== 0 &&
+                      cat?.children?.map((subCat, index_) => {
+                        return (
+                          <MenuItem
+                            value={subCat?._id}
+                            className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                          >
+                            {subCat?.name}
+                          </MenuItem>
+                        );
+                      })
+                    );
+                  })}
+                </Select>
+              )}
             </div>
 
             <div className="col">
@@ -159,6 +182,9 @@ const AddProduct = () => {
               <input
                 type="number"
                 className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+                name="price"
+                value={formFields.price}
+                onChange={onChangeInput}
               />
             </div>
 
@@ -169,6 +195,9 @@ const AddProduct = () => {
               <input
                 type="number"
                 className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+                name="oldPrice"
+                value={formFields.oldPrice}
+                onChange={onChangeInput}
               />
             </div>
           </div>
@@ -209,6 +238,9 @@ const AddProduct = () => {
               <input
                 type="number"
                 className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+                name="countInStock"
+                value={formFields.countInStock}
+                onChange={onChangeInput}
               />
             </div>
 
@@ -219,6 +251,9 @@ const AddProduct = () => {
               <input
                 type="text"
                 className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+                name="brand"
+                value={formFields.brand}
+                onChange={onChangeInput}
               />
             </div>
 
@@ -229,6 +264,9 @@ const AddProduct = () => {
               <input
                 type="number"
                 className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+                name="discount"
+                value={formFields.discount}
+                onChange={onChangeInput}
               />
             </div>
           </div>
