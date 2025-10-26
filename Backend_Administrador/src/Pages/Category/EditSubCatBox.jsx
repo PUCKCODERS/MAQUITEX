@@ -185,32 +185,32 @@ export const EditSubCatBox = (props) => {
             borderRadius: "15px",
             padding: "20px",
             textAlign: "center",
-            width: "360px",
+            width: "!360px",
           },
         }}
       >
         <div className="flex flex-col items-center justify-center">
-          <FcDeleteDatabase className="text-[60px] mb-2" />
+          <FcDeleteDatabase className="text-[120px] !mb-2" />
           <DialogTitle
-            className="!text-[20px] text-[#082c55] font-bold !pb-1 !text-center"
+            className="!text-[20px] text-[#082c55] !font-bold !pb-1 !text-center"
             sx={{ lineHeight: 1.2 }}
           >
-            ¿Desea eliminar esta categoría?
+            ¿DESEA ELIMINAR ESTA SUBCATEGORÍA ?
           </DialogTitle>
-          <p className="text-gray-600 text-[14px] mb-4">
-            Esta acción no se podrá deshacer.
+          <p className="text-gray-800 text-[16px] !mb-4">
+            ESTA ACCIÓN NO SE PUEDE DESHACER
           </p>
         </div>
-        <div className="flex justify-center gap-3 !pb-2">
+        <div className="flex justify-center !gap-3 !pb-2">
           <Button
             onClick={confirmDelete}
-            className="!bg-[#1976d2] hover:!bg-[#0d47a1] !text-white !px-4 !py-2"
+            className="!bg-[#1976d2] hover:!bg-[#0d47a1] !text-white !font-bold !px-4 !py-2"
           >
             Sí, eliminar
           </Button>
           <Button
             onClick={() => setIsConfirmOpen(false)}
-            className="!bg-[#d32f2f] hover:!bg-[#9a0007] !text-white !px-4 !py-2"
+            className="!bg-[#d32f2f] hover:!bg-[#9a0007] !text-white !font-bold !px-4 !py-2"
           >
             Cancelar
           </Button>
