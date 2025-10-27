@@ -8,21 +8,13 @@ import { createContext, useState } from "react";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
 import Products from "./Pages/Products";
-import AddProduct from "./Pages/Products/addProduct";
 
-import Dialog from "@mui/material/Dialog";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import { IoClose } from "react-icons/io5";
-import Slide from "@mui/material/Slide";
 import HomeSliderBanners from "./Pages/HomeSliderBanners";
-import AddHomeSlide from "./Pages/HomeSliderBanners/addHomeSlide";
+
 import CategoryList from "./Pages/Category";
-import AddCategory from "./Pages/Category/addCategory";
+
 import SubCategoryList from "./Pages/Category/subCatList.jsx";
-import AddSubCategory from "./Pages/Category/addSubCategory";
+
 import Users from "./Pages/Users";
 import Orders from "./Pages/Orders";
 import ForgotPassword from "./Pages/ForgotPassword";
@@ -32,12 +24,6 @@ import ChangePassword from "./Pages/ChangePassword";
 import toast, { Toaster } from "react-hot-toast";
 import { fetchDataFromApi } from "./utils/api";
 import Profile from "./Pages/Profile";
-import AddAddress from "./Pages/Address/addAddress.jsx";
-import EditCategory from "./Pages/Category/editCategory.jsx";
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
 
 const MyContext = createContext();
 
@@ -428,55 +414,6 @@ function App() {
       <MyContext.Provider value={values}>
         <RouterProvider router={router} />
 
-        <Dialog
-          fullScreen
-          open={isOpenFullScreenPanel.open}
-          onClose={() =>
-            setIsOpenFullScreenPanel({
-              open: false,
-            })
-          }
-          slots={{
-            transition: Transition,
-          }}
-        >
-          <AppBar sx={{ position: "relative" }}>
-            <Toolbar>
-              <IconButton
-                edge="start"
-                color="inherit"
-                onClick={() =>
-                  setIsOpenFullScreenPanel({
-                    open: false,
-                  })
-                }
-                aria-label="close"
-              >
-                <IoClose className="!w-[30px] !h-[30px] !min-w-[30px] !ml-3 !rounded-full  !text-[#fff] !absolute !bg-[#030712] hover:!text-[#030712] hover:!bg-[#fff] !shadow-[0px_0px_0px_3px_#fff] hover:!shadow-[0px_0px_0px_3px_#030712]" />
-              </IconButton>
-              <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                <span className="text-[#fff] !ml-4 font-bold font-[bold] text-[25px]">
-                  {isOpenFullScreenPanel?.model}
-                </span>
-              </Typography>
-            </Toolbar>
-          </AppBar>
-
-          {isOpenFullScreenPanel?.model === "NUEVO PRODUCTO" && <AddProduct />}
-          {isOpenFullScreenPanel?.model === "NUEVO SLIDE DE INICIO" && (
-            <AddHomeSlide />
-          )}
-          {isOpenFullScreenPanel?.model === "NUEVA CATEGORÍA" && (
-            <AddCategory />
-          )}
-          {isOpenFullScreenPanel?.model === "NUEVA SUBCATEGORÍA" && (
-            <AddSubCategory />
-          )}
-          {isOpenFullScreenPanel?.model === "NUEVA DIRECCIÓN" && <AddAddress />}
-          {isOpenFullScreenPanel?.model === "EDITAR CATEGORÍA" && (
-            <EditCategory />
-          )}
-        </Dialog>
         <Toaster />
       </MyContext.Provider>
     </>

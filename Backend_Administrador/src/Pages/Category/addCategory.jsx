@@ -3,7 +3,7 @@ import UploadBox from "../../Components/UploadBox";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { IoClose } from "react-icons/io5";
 import Button from "@mui/material/Button";
-import { FaFileUpload } from "react-icons/fa";
+
 import { deleteImages, postData } from "../../utils/api";
 import { MyContext } from "../../App";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -44,7 +44,7 @@ const AddCategory = () => {
       setPreviews([]);
       setTimeout(() => {
         setPreviews(imageArr);
-        /*formFields.images = previewsArr;*/
+        formFields.images = imageArr;
       }, 100);
     });
   };
