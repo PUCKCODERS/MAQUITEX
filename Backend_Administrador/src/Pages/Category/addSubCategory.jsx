@@ -11,6 +11,7 @@ import { MyContext } from "../../App";
 import CircularProgress from "@mui/material/CircularProgress";
 import { postData } from "../../utils/api";
 import { GiSave } from "react-icons/gi";
+import { useNavigate } from "react-router-dom";
 
 const AddSubCategory = () => {
   const [productCat, setProductCat] = useState("");
@@ -31,6 +32,7 @@ const AddSubCategory = () => {
   });
 
   const context = useContext(MyContext);
+  const history = useNavigate();
 
   const handleChangeProductCat = (event) => {
     setProductCat(event.target.value);
@@ -102,6 +104,7 @@ const AddSubCategory = () => {
           open: false,
         });
         context?.getCat();
+        history("/subCategory/list");
       }, 2000);
     });
   };
@@ -130,6 +133,7 @@ const AddSubCategory = () => {
           open: false,
         });
         context?.getCat();
+        history("/subCategory/list");
       }, 2000);
     });
   };

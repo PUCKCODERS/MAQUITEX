@@ -56,22 +56,27 @@ const UploadBox = (props) => {
      bg-gray-200 cursor-pointer hover:bg-gray-300 flex items-center justify-center flex-col relative"
     >
       {uploading === true ? (
-        <CircularProgress />
+        <>
+          <CircularProgress />
+          <h4 className="text-center">CARGANDO.....</h4>
+        </>
       ) : (
         <>
-          <FaPhotoFilm className="text-[50px] opacity-35 pointer-events-none" />
-          <h4 className="text-[14px] text-[#082c55] pointer-events-none">
-            CARGA DE IMAGEN
-          </h4>
+          <div>
+            <FaPhotoFilm className="text-[50px] opacity-35 pointer-events-none" />
+            <h4 className="text-[14px] text-[#082c55] pointer-events-none">
+              CARGA DE IMAGEN
+            </h4>
 
-          <input
-            type="file"
-            accept="image/*"
-            multiple={props.multiple !== undefined ? props.multiple : false}
-            className="absolute top-0 left-0 w-full h-full z-50 opacity-0"
-            onChange={(e) => onChangeFile(e, props?.url)}
-            name="images"
-          />
+            <input
+              type="file"
+              accept="image/*"
+              multiple={props.multiple !== undefined ? props.multiple : false}
+              className="absolute top-0 left-0 w-full h-full z-50 opacity-0"
+              onChange={(e) => onChangeFile(e, props?.url)}
+              name="images"
+            />
+          </div>
         </>
       )}
     </div>

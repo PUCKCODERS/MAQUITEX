@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -11,12 +11,12 @@ import { IoClose } from "react-icons/io5";
 import Button from "@mui/material/Button";
 import { FaFileUpload } from "react-icons/fa";
 import { MyContext } from "../../App";
-import { deleteImages, postData } from "../../utils/api";
+import { deleteImages, fetchDataFromApi, postData } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import { GiSave } from "react-icons/gi";
 
-const AddProduct = () => {
+const EditProduct = () => {
   const [formFields, setFormFields] = useState({
     name: "",
     description: "",
@@ -53,6 +53,14 @@ const AddProduct = () => {
   const history = useNavigate();
 
   const context = useContext(MyContext);
+
+  useEffect(() => {
+    fetchDataFromApi(`/api/product/${context?.isOpenFullScreenPanel?.id}`).then(
+      () => {
+        console.log(context?.isOpenFullScreenPanel?.id);
+      }
+    );
+  }, []);
 
   const handleChangeProductCat = (event) => {
     setProductCat(event.target.value);
@@ -733,4 +741,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;
