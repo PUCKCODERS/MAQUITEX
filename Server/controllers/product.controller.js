@@ -694,12 +694,24 @@ export async function removeImageFromCloudinary(request, response) {
 
 export async function updateProduct(request, response) {
   try {
+    const existingProduct = await ProductModel.findById(request.params.id);
+
+    if (!existingProduct) {
+      return response.status(404).json({
+        message: "EL PRODUCTO NO SE ENCUENTRA",
+        status: false,
+      });
+    }
+
+    const updatedImages =
+      imagesArr.length > 0 ? imagesArr : existingProduct.images;
+
     const product = await ProductModel.findByIdAndUpdate(
       request.params.id,
       {
         name: request.body.name,
         description: request.body.description,
-        images: imagesArr,
+        images: updatedImages,
         brand: request.body.brand,
         price: request.body.price,
         oldPrice: request.body.oldPrice,
