@@ -11,7 +11,7 @@ import { IoClose } from "react-icons/io5";
 import Button from "@mui/material/Button";
 import { FaFileUpload } from "react-icons/fa";
 import { MyContext } from "../../App";
-import { deleteImages, fetchDataFromApi, postData } from "../../utils/api";
+import { deleteImages, editData, fetchDataFromApi } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import { GiSave } from "react-icons/gi";
@@ -56,8 +56,39 @@ const EditProduct = () => {
 
   useEffect(() => {
     fetchDataFromApi(`/api/product/${context?.isOpenFullScreenPanel?.id}`).then(
-      () => {
-        console.log(context?.isOpenFullScreenPanel?.id);
+      (res) => {
+        setFormFields({
+          name: res?.product?.name,
+          description: res?.product?.description,
+          images: res?.product?.images,
+          brand: res?.product?.brand,
+          price: res?.product?.price,
+          oldPrice: res?.product?.oldPrice,
+          category: res?.product?.category,
+          catName: res?.product?.catName,
+          catId: res?.product?.catId,
+          subCatId: res?.product?.subCatId,
+          subCat: res?.product?.subCat,
+          thirdsubCat: res?.product?.thirdsubCat,
+          thirdsubCatId: res?.product?.thirdsubCatId,
+          countInStock: res?.product?.countInStock,
+          rating: res?.product?.rating,
+          isFeatured: res?.product?.isFeatured,
+          discount: res?.product?.discount,
+          productRam: res?.product?.productRam,
+          size: res?.product?.size,
+          productWeight: res?.product?.productWeight,
+        });
+
+        setProductCat(res?.product?.catId);
+        setProductSubCat(res?.product?.subCatId);
+        setProductThirdLavelCat(res?.product?.thirdsubCatId);
+        setProductFeatured(res?.product?.isFeatured);
+        setProductRams(res?.product?.productRam);
+        setProductSize(res?.product?.size);
+        setProductWeight(res?.product?.productWeight);
+
+        setPreviews(res?.product?.images);
       }
     );
   }, []);
@@ -236,9 +267,13 @@ const EditProduct = () => {
 
     setIsLoading(true);
 
-    postData("/api/product/create", formFields).then((res) => {
-      if (res?.error === false) {
-        context.alertBox("success", res?.message);
+    editData(
+      `/api/product/updateProduct/${context?.isOpenFullScreenPanel?.id}`,
+      formFields
+    ).then((res) => {
+      console.log(res);
+      if (res?.data.error === false) {
+        context.alertBox("success", res?.data?.message);
         setTimeout(() => {
           setIsLoading(false);
           context.setIsOpenFullScreenPanel({
@@ -248,7 +283,7 @@ const EditProduct = () => {
         }, 1000);
       } else {
         setIsLoading(false);
-        context.alertBox("error", res?.message);
+        context.alertBox("error", res?.data?.message);
       }
     });
   };
@@ -302,10 +337,11 @@ const EditProduct = () => {
                   label="Category"
                   onChange={handleChangeProductCat}
                 >
-                  {context?.catData?.map((cat /*, index*/) => {
+                  {context?.catData?.map((cat, index) => {
                     return (
                       <MenuItem
                         value={cat?._id}
+                        key={index}
                         onClick={() => selectCatByName(cat?.name)}
                         className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
                       >
@@ -335,10 +371,11 @@ const EditProduct = () => {
                   {context?.catData?.map((cat /*, index*/) => {
                     return (
                       cat?.children?.length !== 0 &&
-                      cat?.children?.map((subCat /*, index*/) => {
+                      cat?.children?.map((subCat, index) => {
                         return (
                           <MenuItem
                             value={subCat?._id}
+                            key={index}
                             onClick={() => selectSubCatByName(subCat?.name)}
                             className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
                           >
@@ -679,9 +716,8 @@ const EditProduct = () => {
                 CALIFICACIÓN
               </h3>
               <Rating
-                name="half-rating"
-                defaultValue={1}
-                precision={0.5}
+                name="rating"
+                value={formFields.rating}
                 onChange={onChangeRating}
               />
             </div>
