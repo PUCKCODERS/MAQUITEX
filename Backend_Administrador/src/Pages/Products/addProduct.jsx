@@ -43,7 +43,7 @@ const AddProduct = () => {
   const [productCat, setProductCat] = React.useState("");
   const [productSubCat, setProductSubCat] = React.useState("");
   const [productFeatured, setProductFeatured] = React.useState("");
-  const [productRams, setProductRams] = React.useState([]);
+  const [productRam, setProductRam] = React.useState([]);
   const [productWeight, setProductWeight] = React.useState([]);
   const [productSize, setProductSize] = React.useState([]);
   const [productThirdLavelCat, setProductThirdLavelCat] = useState("");
@@ -87,11 +87,11 @@ const AddProduct = () => {
     formFields.isFeatured = event.target.value;
   };
 
-  const handleChangeProductRams = (event) => {
+  const handleChangeProductRam = (event) => {
     const {
       target: { value },
     } = event;
-    setProductRams(typeof value === "string" ? value.split(",") : value);
+    setProductRam(typeof value === "string" ? value.split(",") : value);
 
     formFields.productRam = value;
   };
@@ -490,9 +490,9 @@ const AddProduct = () => {
                 id="productCatDrop"
                 size="small"
                 className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                value={productRams}
+                value={productRam}
                 label="Category"
-                onChange={handleChangeProductRams}
+                onChange={handleChangeProductRam}
               >
                 <MenuItem
                   value={"NEGRO"}
@@ -573,31 +573,32 @@ const AddProduct = () => {
                 onChange={handleChangeProductWeight}
               >
                 <MenuItem
-                  value={10}
+                  value={"2 KG"}
                   className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
                 >
                   2 KG
                 </MenuItem>
                 <MenuItem
-                  value={20}
+                  value={"4 KG"}
                   className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
                 >
                   4 KG
                 </MenuItem>
                 <MenuItem
-                  value={30}
+                  value={"6 KG"}
                   className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
                 >
                   6 KG
                 </MenuItem>
+
                 <MenuItem
-                  value={40}
+                  value={"8 KG"}
                   className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
                 >
                   8 KG
                 </MenuItem>
                 <MenuItem
-                  value={50}
+                  value={"10 KG"}
                   className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
                 >
                   10 KG
