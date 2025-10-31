@@ -24,11 +24,13 @@ export const EditSubCatBox = (props) => {
   const context = useContext(MyContext);
 
   useEffect(() => {
-    formFields.name = props?.name;
-    formFields.parentId = props?.selectedCat;
-    formFields.parentCatName = props?.selectedCatName;
-    setSelectVal(props?.selectedCat);
-  }, []);
+    setFormFields({
+      name: props?.name || "",
+      parentId: props?.selectedCat || null,
+      parentCatName: props?.selectedCatName || null,
+    });
+    setSelectVal(props?.selectedCat || "");
+  }, [props?.id, props?.name, props?.selectedCat, props?.selectedCatName]);
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
