@@ -27,21 +27,15 @@ productRouter.post("/create", auth, createProduct);
 productRouter.get("/getAllProducts", getAllProducts);
 productRouter.get("/getAllProductsByCatId/:id", getAllProductsByCatId);
 productRouter.get("/getAllProductsByCatName", getAllProductsByCatName);
+productRouter.get("/getAllProductsBySubCatId/:id", getAllProductsBySubCatId);
+productRouter.get("/getAllProductsBySubCatName", getAllProductsBySubCatName);
 productRouter.get(
-  "/getAllProductsBySubCatId/:id",
+  "/getAllProductsByThirdLavelCat/:id",
   getAllProductsByThirdLavelCatId
 );
 productRouter.get(
-  "/getAllProductsBySubCatName",
-  getAllProductsByThirdLavelCatName
-);
-productRouter.get(
-  "/getAllProductsByThirdLavelCat/:id",
-  getAllProductsBySubCatId
-);
-productRouter.get(
   "/getAllProductsByThirdLavelCatName",
-  getAllProductsBySubCatName
+  getAllProductsByThirdLavelCatName
 );
 productRouter.get("/getAllProductsByPrice", getAllProductsByPrice);
 productRouter.get("/getAllProductsByRating", getAllProductsByRating);

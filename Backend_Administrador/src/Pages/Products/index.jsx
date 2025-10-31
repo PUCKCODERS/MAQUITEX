@@ -53,10 +53,12 @@ const columns = [
 ];
 
 export const Products = () => {
-  const [categoryFilterVal, setCategoryFilterVal] = React.useState("");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [productData, setProductData] = useState([]);
+  const [productCat, setProductCat] = React.useState("");
+  const [productSubCat, setProductSubCat] = React.useState("");
+  const [productThirdLavelCat, setProductThirdLavelCat] = useState("");
 
   const context = useContext(MyContext);
 
@@ -72,8 +74,37 @@ export const Products = () => {
     });
   };
 
-  const handleChangePageCatFilter = (event) => {
-    setCategoryFilterVal(event.target.value);
+  const handleChangeProductCat = (event) => {
+    setProductCat(event.target.value);
+    fetchDataFromApi(
+      `/api/product/getAllProductsByCatId/${event.target.value}`
+    ).then((res) => {
+      if (res?.error === false) {
+        setProductData(res?.products);
+      }
+    });
+  };
+
+  const handleChangeProductSubCat = (event) => {
+    setProductSubCat(event.target.value);
+    fetchDataFromApi(
+      `/api/product/getAllProductsBySubCatId/${event.target.value}`
+    ).then((res) => {
+      if (res?.error === false) {
+        setProductData(res?.products);
+      }
+    });
+  };
+
+  const handleChangeProductThirdLavelSubCat = (event) => {
+    setProductThirdLavelCat(event.target.value);
+    fetchDataFromApi(
+      `/api/product/getAllProductsByThirdLavelCat/${event.target.value}`
+    ).then((res) => {
+      if (res?.error === false) {
+        setProductData(res?.products);
+      }
+    });
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -119,43 +150,104 @@ export const Products = () => {
       </div>
 
       <div className="card !my-4 !pt-5 shadow-md sm:rounded-lg dark:bg-gray-800">
-        <div className="flex items-center w-full !text-white !bg-gray-800 !pl-5 !pr-5 !py-4 !border-b !border-gray-500 justify-between">
-          <div className="col !w-[20%]">
-            <h4 className="font-[bold] !text-[15px] !mb-2">CATEGORIA</h4>
-            <Select
-              className="w-full !text-white !font-[bold] !font-bold !bg-gray-600 !border-0 !rounded-md !shadow-none !border-b !border-gray-500"
-              size="small"
-              labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"
-              value={categoryFilterVal}
-              onChange={handleChangePageCatFilter}
-              label="CATEGORIA"
-            >
-              <MenuItem
-                value=""
-                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
+        <div className="flex items-center w-full !text-white !bg-gray-800 !pl-5 !pr-5 !py-4 !border-b !border-gray-500 justify-between !gap-4">
+          <div className="col !w-[25%]">
+            <h4 className="font-[bold] !text-[15px] !mb-2">CATEGORÍA</h4>
+            {context?.catData?.length !== 0 && (
+              <Select
+                style={{ zoom: "80%" }}
+                labelId="demo-simple-select-label"
+                id="productCatDrop"
+                size="small"
+                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                value={productCat}
+                label="Category"
+                onChange={handleChangeProductCat}
               >
-                <em>NINGUNO</em>
-              </MenuItem>
-              <MenuItem
-                value={10}
-                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
+                {context?.catData?.map((cat /*, index*/) => {
+                  return (
+                    <MenuItem
+                      value={cat?._id}
+                      className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                    >
+                      {cat?.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            )}
+          </div>
+
+          <div className="col !w-[25%]">
+            <h4 className="font-[bold] !text-[15px] !mb-2">SUBCATEGORÍA</h4>
+            {context?.catData?.length !== 0 && (
+              <Select
+                style={{ zoom: "80%" }}
+                labelId="demo-simple-select-label"
+                id="productCatDrop"
+                size="small"
+                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                value={productSubCat}
+                label="Sub Category"
+                onChange={handleChangeProductSubCat}
               >
-                MAQUINAS
-              </MenuItem>
-              <MenuItem
-                value={20}
-                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
+                {context?.catData?.map((cat /*, index*/) => {
+                  return (
+                    cat?.children?.length !== 0 &&
+                    cat?.children?.map((subCat /*, index*/) => {
+                      return (
+                        <MenuItem
+                          value={subCat?._id}
+                          className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                        >
+                          {subCat?.name}
+                        </MenuItem>
+                      );
+                    })
+                  );
+                })}
+              </Select>
+            )}
+          </div>
+
+          <div className="col !w-[25%]">
+            <h4 className="font-[bold] !text-[15px] !mb-2">
+              CATEGORÍA TERCER NIVEL
+            </h4>
+            {context?.catData?.length !== 0 && (
+              <Select
+                style={{ zoom: "80%" }}
+                labelId="demo-simple-select-label"
+                id="productCatDrop"
+                size="small"
+                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                value={productThirdLavelCat}
+                label="Sub Category"
+                onChange={handleChangeProductThirdLavelSubCat}
               >
-                REPUESTOS
-              </MenuItem>
-              <MenuItem
-                value={30}
-                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
-              >
-                ACCESORIOS
-              </MenuItem>
-            </Select>
+                {context?.catData?.map((cat) => {
+                  return (
+                    cat?.children?.length !== 0 &&
+                    cat?.children?.map((subCat) => {
+                      return (
+                        subCat?.children?.length !== 0 &&
+                        subCat?.children?.map((thirdLavelCat, index) => {
+                          return (
+                            <MenuItem
+                              value={thirdLavelCat?._id}
+                              key={index}
+                              className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                            >
+                              {thirdLavelCat?.name}
+                            </MenuItem>
+                          );
+                        })
+                      );
+                    })
+                  );
+                })}
+              </Select>
+            )}
           </div>
 
           <div className="col !w-[20%] ml-auto">
@@ -272,21 +364,23 @@ export const Products = () => {
                           className="!text-white"
                         >
                           <div className="flex items-center !gap-1">
-                            <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                              <GrEdit
-                                className=" !text-[20px] "
-                                onClick={() =>
-                                  context.setIsOpenFullScreenPanel({
-                                    open: true,
-                                    model: "EDITAR PRODUCTO",
-                                    id: product?._id,
-                                  })
-                                }
-                              />
+                            <Button
+                              className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                              onClick={() =>
+                                context.setIsOpenFullScreenPanel({
+                                  open: true,
+                                  model: "EDITAR PRODUCTO",
+                                  id: product?._id,
+                                })
+                              }
+                            >
+                              <GrEdit className=" !text-[20px] " />
                             </Button>
-                            <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                              <ImEye className="!text-[20px]" />
-                            </Button>
+                            <Link to={`/product/${product?._id}`}>
+                              <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                                <ImEye className="!text-[20px]" />
+                              </Button>
+                            </Link>
                             <Button
                               className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
                               onClick={() => deleteProduct(product?._id)}
