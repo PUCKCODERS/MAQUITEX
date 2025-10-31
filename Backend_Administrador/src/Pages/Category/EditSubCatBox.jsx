@@ -62,6 +62,7 @@ export const EditSubCatBox = (props) => {
         context.alertBox("success", res?.message);
         context?.getCat();
         setIsLoading(false);
+        setEditMode(false);
       }, 1000);
     });
   };

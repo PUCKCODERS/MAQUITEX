@@ -25,6 +25,10 @@ import { deleteData, fetchDataFromApi } from "../../utils/api";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import { FcDeleteDatabase } from "react-icons/fc";
+
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const columns = [
@@ -59,6 +63,10 @@ export const Products = () => {
   const [productCat, setProductCat] = React.useState("");
   const [productSubCat, setProductSubCat] = React.useState("");
   const [productThirdLavelCat, setProductThirdLavelCat] = useState("");
+
+  // 👇 NUEVOS ESTADOS para confirmación
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [productToDelete, setProductToDelete] = useState(null);
 
   const context = useContext(MyContext);
 
@@ -112,11 +120,22 @@ export const Products = () => {
     setPage(0);
   };
 
+  // 👇 NUEVO: Abre confirmación antes de eliminar
   const deleteProduct = (id) => {
-    deleteData(`/api/product/${id}`).then(() => {
-      getProducts();
-      context.alertBox("success", "PRODUCTO ELIMINADO EXITOSAMENTE");
-    });
+    setProductToDelete(id);
+    setIsConfirmOpen(true);
+  };
+
+  // 👇 NUEVO: Confirmación real
+  const confirmDelete = () => {
+    if (productToDelete) {
+      deleteData(`/api/product/${productToDelete}`).then(() => {
+        getProducts();
+        setIsConfirmOpen(false);
+        setProductToDelete(null);
+        context.alertBox("success", "PRODUCTO ELIMINADO EXITOSAMENTE");
+      });
+    }
   };
 
   const handleChangePage = (event, newPage) => {
@@ -406,6 +425,47 @@ export const Products = () => {
           className="!bg-gray-100 !text-balck !border-t !border-gray-500"
         />
       </div>
+
+      {/* 👇 MISMO DIALOG DE CONFIRMACIÓN */}
+      <Dialog
+        open={isConfirmOpen}
+        onClose={() => setIsConfirmOpen(false)}
+        PaperProps={{
+          style: {
+            borderRadius: "15px",
+            padding: "20px",
+            textAlign: "center",
+            width: "!360px",
+          },
+        }}
+      >
+        <div className="flex flex-col items-center justify-center">
+          <FcDeleteDatabase className="text-[120px] !mb-2" />
+          <DialogTitle
+            className="!text-[20px] text-[#082c55] !font-bold !pb-1 !text-center"
+            sx={{ lineHeight: 1.2 }}
+          >
+            ¿DESEA ELIMINAR ESTE PRODUCTO?
+          </DialogTitle>
+          <p className="text-gray-800 text-[16px] !mb-4">
+            ESTA ACCIÓN NO SE PUEDE DESHACER
+          </p>
+        </div>
+        <div className="flex justify-center !gap-3 !pb-2">
+          <Button
+            onClick={confirmDelete}
+            className="!bg-[#1976d2] hover:!bg-[#0d47a1] !text-white !font-bold !px-4 !py-2"
+          >
+            Sí, eliminar
+          </Button>
+          <Button
+            onClick={() => setIsConfirmOpen(false)}
+            className="!bg-[#d32f2f] hover:!bg-[#9a0007] !text-white !font-bold !px-4 !py-2"
+          >
+            Cancelar
+          </Button>
+        </div>
+      </Dialog>
     </>
   );
 };
