@@ -171,8 +171,15 @@ const EditProduct = () => {
   };
 
   const setPreviewsFun = (previewsArr) => {
-    setPreviews(previewsArr);
-    formFields.images = previewsArr;
+    const imgArr = previews;
+    for (let i = 0; i < previewsArr.length; i++) {
+      imgArr.push(previewsArr[i]);
+    }
+    setPreviews([]);
+    setTimeout(() => {
+      setPreviews(imgArr);
+      formFields.images = imgArr;
+    }, 10);
   };
 
   const removeImg = (image, index) => {
@@ -666,43 +673,43 @@ const EditProduct = () => {
                 onChange={handleChangeProductSize}
               >
                 <MenuItem
-                  value={"1"}
+                  value={"1 METRO"}
                   className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
                 >
                   1 METRO
                 </MenuItem>
                 <MenuItem
-                  value={"5"}
+                  value={"5 METROS"}
                   className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
                 >
                   5 METROS
                 </MenuItem>
                 <MenuItem
-                  value={"10"}
+                  value={"10 METROS"}
                   className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
                 >
                   10 METROS
                 </MenuItem>
                 <MenuItem
-                  value={"20"}
+                  value={"20 METROS"}
                   className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
                 >
                   20 METROS
                 </MenuItem>
                 <MenuItem
-                  value={"Pequeña"}
+                  value={"Pequeña / Portátil: 38 × 18 × 28 cm"}
                   className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
                 >
                   Pequeña / Portátil: 38 × 18 × 28 cm
                 </MenuItem>
                 <MenuItem
-                  value={"Mediana"}
+                  value={"Mediana / Estándar: 45 × 20 × 32 cm"}
                   className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
                 >
                   Mediana / Estándar: 45 × 20 × 32 cm
                 </MenuItem>
                 <MenuItem
-                  value={"Pequeña"}
+                  value={"Grande / Industrial: 52 × 25 × 38 cm"}
                   className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
                 >
                   Grande / Industrial: 52 × 25 × 38 cm

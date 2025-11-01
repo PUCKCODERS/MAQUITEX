@@ -64,7 +64,6 @@ export const Products = () => {
   const [productSubCat, setProductSubCat] = React.useState("");
   const [productThirdLavelCat, setProductThirdLavelCat] = useState("");
 
-  // 👇 NUEVOS ESTADOS para confirmación
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [productToDelete, setProductToDelete] = useState(null);
 
@@ -120,13 +119,11 @@ export const Products = () => {
     setPage(0);
   };
 
-  // 👇 NUEVO: Abre confirmación antes de eliminar
   const deleteProduct = (id) => {
     setProductToDelete(id);
     setIsConfirmOpen(true);
   };
 
-  // 👇 NUEVO: Confirmación real
   const confirmDelete = () => {
     if (productToDelete) {
       deleteData(`/api/product/${productToDelete}`).then(() => {
@@ -395,11 +392,12 @@ export const Products = () => {
                             >
                               <GrEdit className=" !text-[20px] " />
                             </Button>
-                            <Link to={`/product/${product?._id}`}>
-                              <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                            <Link href={`/product/${product?._id}`} passHref>
+                              <Button className="!-[35px] !h-[35px] !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
                                 <ImEye className="!text-[20px]" />
                               </Button>
                             </Link>
+
                             <Button
                               className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
                               onClick={() => deleteProduct(product?._id)}
@@ -426,7 +424,6 @@ export const Products = () => {
         />
       </div>
 
-      {/* 👇 MISMO DIALOG DE CONFIRMACIÓN */}
       <Dialog
         open={isConfirmOpen}
         onClose={() => setIsConfirmOpen(false)}

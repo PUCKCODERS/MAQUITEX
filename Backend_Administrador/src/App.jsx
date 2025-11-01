@@ -8,6 +8,7 @@ import { createContext, useState } from "react";
 import Login from "./Pages/Login";
 import SignUp from "./Pages/SignUp";
 import Products from "./Pages/Products";
+import ProductDetails from "./Pages/Products/productDetails.jsx";
 
 import HomeSliderBanners from "./Pages/HomeSliderBanners";
 
@@ -295,6 +296,33 @@ function App() {
                 } transition-all duration-300`}
               >
                 <Profile />
+              </div>
+            </div>
+          </section>
+        </>
+      ),
+    },
+    {
+      path: "/product/:id",
+      exact: true,
+      element: (
+        <>
+          <section className="main">
+            <Header />
+            <div className="contentMain flex">
+              <div
+                className={`overflow-hidden sidebarWrapper ${
+                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                } transition-all duration-300`}
+              >
+                <Sidebar />
+              </div>
+              <div
+                className={`contentRight !py-4 !px-5 ${
+                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
+                } transition-all duration-300`}
+              >
+                <ProductDetails />
               </div>
             </div>
           </section>
