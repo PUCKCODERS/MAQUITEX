@@ -68,8 +68,8 @@ export const Products = () => {
   const [productSubCat, setProductSubCat] = React.useState("");
   const [productThirdLavelCat, setProductThirdLavelCat] = useState("");
   const [sortedIds, setSortedIds] = useState([]);
-
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isMultiConfirmOpen, setIsMultiConfirmOpen] = useState(false);
   const [productToDelete, setProductToDelete] = useState(null);
 
   const context = useContext(MyContext);
@@ -96,7 +96,7 @@ export const Products = () => {
     }
   };
 
-  const handleCheckboxChange = (e, id, index) => {
+  const handleCheckboxChange = (e, id /*, index*/) => {
     const updatedItems = productData.map((item) =>
       item._id === id ? { ...item, checked: !item.checked } : item
     );
@@ -171,12 +171,17 @@ export const Products = () => {
       context.alertBox("error", "SELECCIONE LOS ELEMENTOS QUE DESEA ELIMINAR");
       return;
     }
+    setIsMultiConfirmOpen(true);
+  };
 
+  const confirmDeleteMultiple = async () => {
     try {
       await deleteMultipleData(`/api/product/deleteMultiple`, {
         ids: sortedIds,
       });
       getProducts();
+      setSortedIds([]);
+      setIsMultiConfirmOpen(false);
       context.alertBox("success", "PRODUCTOS ELIMINADOS");
     } catch (error) {
       console.error(error);
@@ -209,11 +214,11 @@ export const Products = () => {
           </span>
         </h2>
 
-        <div className="col !w-[35%] !ml-auto flex items-center justify-end !gap-3">
-          {sortedIds?.length !== 0 && (
+        <div className="col !w-[35%] !ml-auto flex items-center justify-end !gap-1">
+          {sortedIds?.length > 0 && (
             <Button
               variant="contained"
-              className="btn-sm  !bg-red-700"
+              className="!bg-red-700 hover:!bg-red-800 !font-bold transition-all duration-300"
               onClick={deleteMultipleProduct}
             >
               ELIMINAR
@@ -541,6 +546,46 @@ export const Products = () => {
           </Button>
           <Button
             onClick={() => setIsConfirmOpen(false)}
+            className="!bg-[#d32f2f] hover:!bg-[#9a0007] !text-white !font-bold !px-4 !py-2"
+          >
+            Cancelar
+          </Button>
+        </div>
+      </Dialog>
+
+      <Dialog
+        open={isMultiConfirmOpen}
+        onClose={() => setIsMultiConfirmOpen(false)}
+        PaperProps={{
+          style: {
+            borderRadius: "15px",
+            padding: "20px",
+            textAlign: "center",
+            width: "!360px",
+          },
+        }}
+      >
+        <div className="flex flex-col items-center justify-center">
+          <FcDeleteDatabase className="text-[120px] !mb-2" />
+          <DialogTitle
+            className="!text-[20px] text-[#082c55] !font-bold !pb-1 !text-center"
+            sx={{ lineHeight: 1.2 }}
+          >
+            ¿DESEA ELIMINAR TODOS LOS PRODUCTOS SELECCIONADOS?
+          </DialogTitle>
+          <p className="text-gray-800 text-[16px] !mb-4">
+            ESTA ACCIÓN NO SE PUEDE DESHACER
+          </p>
+        </div>
+        <div className="flex justify-center !gap-3 !pb-2">
+          <Button
+            onClick={confirmDeleteMultiple}
+            className="!bg-[#1976d2] hover:!bg-[#0d47a1] !text-white !font-bold !px-4 !py-2"
+          >
+            Sí, eliminar
+          </Button>
+          <Button
+            onClick={() => setIsMultiConfirmOpen(false)}
             className="!bg-[#d32f2f] hover:!bg-[#9a0007] !text-white !font-bold !px-4 !py-2"
           >
             Cancelar
