@@ -21,7 +21,11 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import SearchBox from "../../Components/SearchBox";
 import { MyContext } from "../../App";
-import { deleteData, fetchDataFromApi } from "../../utils/api";
+import {
+  deleteData,
+  deleteMultipleData,
+  fetchDataFromApi,
+} from "../../utils/api";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
@@ -63,6 +67,7 @@ export const Products = () => {
   const [productCat, setProductCat] = React.useState("");
   const [productSubCat, setProductSubCat] = React.useState("");
   const [productThirdLavelCat, setProductThirdLavelCat] = useState("");
+  const [sortedIds, setSortedIds] = useState([]);
 
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [productToDelete, setProductToDelete] = useState(null);
@@ -73,10 +78,47 @@ export const Products = () => {
     getProducts();
   }, [context?.isOpenFullScreenPanel]);
 
-  const getProducts = () => {
+  const handleSelectAll = (e) => {
+    const isChecked = e.target.checked;
+
+    const updatedItems = productData.map((item) => ({
+      ...item,
+      checked: isChecked,
+    }));
+    setProductData(updatedItems);
+
+    if (isChecked) {
+      const ids = updatedItems.map((item) => item._id).sort((a, b) => a - b);
+
+      setSortedIds(ids);
+    } else {
+      setSortedIds([]);
+    }
+  };
+
+  const handleCheckboxChange = (e, id, index) => {
+    const updatedItems = productData.map((item) =>
+      item._id === id ? { ...item, checked: !item.checked } : item
+    );
+
+    setProductData(updatedItems);
+
+    const selectedIds = updatedItems
+      .filter((item) => item.checked)
+      .map((item) => item._id)
+      .sort((a, b) => a - b);
+    setSortedIds(selectedIds);
+  };
+
+  const getProducts = async () => {
     fetchDataFromApi("/api/product/getAllProducts").then((res) => {
+      let productArr = [];
       if (res?.error === false) {
-        setProductData(res?.products);
+        for (let i = 0; i < res?.products?.length; i++) {
+          productArr[i] = res?.products[i];
+          productArr[i].checked = false;
+        }
+        setProductData(productArr);
       }
     });
   };
@@ -124,6 +166,25 @@ export const Products = () => {
     setIsConfirmOpen(true);
   };
 
+  const deleteMultipleProduct = () => {
+    if (sortedIds.length === 0) {
+      context.alertBox("error", "SELECCIONE LOS ELEMENTOS QUE DESEA ELIMINAR");
+      return;
+    }
+
+    try {
+      deleteMultipleData(`/api/product/deleteMultiple`, {
+        data: { ids: sortedIds },
+      }).then(() => {
+        getProducts();
+        context.alertBox("success", "PRODUCTO ELIMINADO");
+      });
+    } catch (error) {
+      console.error(error);
+      context.alertBox("error", "ERROR AL ELIMINAR ELEMENTOS");
+    }
+  };
+
   const confirmDelete = () => {
     if (productToDelete) {
       deleteData(`/api/product/${productToDelete}`).then(() => {
@@ -150,6 +211,16 @@ export const Products = () => {
         </h2>
 
         <div className="col !w-[35%] !ml-auto flex items-center justify-end !gap-3">
+          {sortedIds?.length !== 0 && (
+            <Button
+              variant="contained"
+              className="btn-sm"
+              onClick={deleteMultipleProduct}
+            >
+              ELIMINAR
+            </Button>
+          )}
+
           <Button className="btn btn-sm flex items-center ">EXPORTAR</Button>
           <Button
             className="btn btn-sm"
@@ -276,7 +347,17 @@ export const Products = () => {
             <TableHead className="!bg-gray-950">
               <TableRow>
                 <TableCell>
-                  <Checkbox {...label} size="small" className="!text-white" />
+                  <Checkbox
+                    {...label}
+                    size="small"
+                    className="!text-white"
+                    onChange={handleSelectAll}
+                    checked={
+                      productData?.length > 0
+                        ? productData.every((item) => item.checked)
+                        : false
+                    }
+                  />
                 </TableCell>
 
                 {columns.map((column) => (
@@ -305,6 +386,10 @@ export const Products = () => {
                             {...label}
                             size="small"
                             className="!text-white"
+                            checked={product.checked === true ? true : false}
+                            onChange={(e) =>
+                              handleCheckboxChange(e, product._id, index)
+                            }
                           />
                         </TableCell>
                         <TableCell style={{ minWidth: columns.minWidth }}>
