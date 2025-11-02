@@ -28,6 +28,7 @@ import {
 } from "../../utils/api";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -71,6 +72,7 @@ export const Products = () => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [isMultiConfirmOpen, setIsMultiConfirmOpen] = useState(false);
   const [productToDelete, setProductToDelete] = useState(null);
+  const [isLoading, setIsloading] = useState(false);
 
   const context = useContext(MyContext);
 
@@ -111,6 +113,7 @@ export const Products = () => {
   };
 
   const getProducts = async () => {
+    setIsloading(true);
     fetchDataFromApi("/api/product/getAllProducts").then((res) => {
       let productArr = [];
       if (res?.error === false) {
@@ -118,40 +121,61 @@ export const Products = () => {
           productArr[i] = res?.products[i];
           productArr[i].checked = false;
         }
-        setProductData(productArr);
+        setTimeout(() => {
+          setProductData(productArr);
+          setIsloading(false);
+        }, 300);
       }
     });
   };
 
   const handleChangeProductCat = (event) => {
     setProductCat(event.target.value);
+    setProductSubCat("");
+    setProductThirdLavelCat("");
+    setIsloading(true);
     fetchDataFromApi(
       `/api/product/getAllProductsByCatId/${event.target.value}`
     ).then((res) => {
       if (res?.error === false) {
         setProductData(res?.products);
+        setTimeout(() => {
+          setIsloading(false);
+        }, 300);
       }
     });
   };
 
   const handleChangeProductSubCat = (event) => {
     setProductSubCat(event.target.value);
+    setProductCat("");
+    setProductThirdLavelCat("");
+    setIsloading(true);
     fetchDataFromApi(
       `/api/product/getAllProductsBySubCatId/${event.target.value}`
     ).then((res) => {
       if (res?.error === false) {
         setProductData(res?.products);
+        setTimeout(() => {
+          setIsloading(false);
+        }, 300);
       }
     });
   };
 
   const handleChangeProductThirdLavelSubCat = (event) => {
     setProductThirdLavelCat(event.target.value);
+    setProductCat("");
+    setProductSubCat("");
+    setIsloading(true);
     fetchDataFromApi(
       `/api/product/getAllProductsByThirdLavelCat/${event.target.value}`
     ).then((res) => {
       if (res?.error === false) {
         setProductData(res?.products);
+        setTimeout(() => {
+          setIsloading(false);
+        }, 300);
       }
     });
   };
@@ -206,7 +230,7 @@ export const Products = () => {
 
   return (
     <>
-      <div className="flex !bg-gray-700 items-center justify-between !px-5 !py-5 !mt-3 sm:rounded-lg border-b dark:border-gray-700">
+      <div className="flex !bg-gray-700 items-center justify-between !px-5 !py-5 !mt-3 sm:rounded-lg border-b dark:border-gray-700 ">
         <h2 className="text-white text-[20px] !font-[500] ">
           PRODUCTOS
           <span className="font-[400] text-[14px] !ml-3">
@@ -214,17 +238,16 @@ export const Products = () => {
           </span>
         </h2>
 
-        <div className="col !w-[35%] !ml-auto flex items-center justify-end !gap-1">
+        <div className="col !w-[55%] !ml-auto flex items-center justify-end !gap-2">
           {sortedIds?.length > 0 && (
             <Button
               variant="contained"
-              className="!bg-red-700 hover:!bg-red-800 !font-bold transition-all duration-300"
+              className="btn btn-sm !bg-red-800 hover:!bg-red-950 !font-bold transition-all duration-300"
               onClick={deleteMultipleProduct}
             >
               ELIMINAR
             </Button>
           )}
-
           <Button className="btn btn-sm flex items-center">EXPORTAR</Button>
           <Button
             className="btn btn-sm "
@@ -376,7 +399,8 @@ export const Products = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {productData?.length !== 0 &&
+              {isLoading === false ? (
+                productData?.length !== 0 &&
                 productData
                   ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   ?.map((product, index) => {
@@ -497,7 +521,18 @@ export const Products = () => {
                         </TableCell>
                       </TableRow>
                     );
-                  })}
+                  })
+              ) : (
+                <>
+                  <TableRow>
+                    <TableCell colspan={8}>
+                      <div className="flex items-center justify-center w-full min-h-[400px]">
+                        <CircularProgress className="!text-white" />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                </>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
