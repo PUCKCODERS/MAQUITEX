@@ -653,27 +653,30 @@ export async function deleteMultipleProduct(request, response) {
       .json({ error: true, success: false, message: "ENTRADA NO VÁLIDA" });
   }
 
-  for (let i = 0; i < ids?.length; i++) {
-    const product = await ProductModel.findById(ids[i]);
+  try {
+    for (let i = 0; i < ids.length; i++) {
+      const product = await ProductModel.findById(ids[i]);
+      if (!product) continue;
 
-    const images = product.images;
-    let img = "";
-
-    for (img of images) {
-      const imgUrl = img;
-      const urlArr = imgUrl.split("/");
-      const image = urlArr[urlArr.length - 1];
-
-      const imageName = image.split(".")[0];
-
-      if (imageName) {
-        cloudinary.uploader.destroy(imageName, (error, result) => {});
+      const images = product.images || [];
+      for (const img of images) {
+        try {
+          const urlArr = img.split("/");
+          const image = urlArr[urlArr.length - 1];
+          const imageName = image.split(".")[0];
+          if (imageName) {
+            await cloudinary.uploader.destroy(imageName).catch(() => {});
+          }
+        } catch (err) {}
       }
     }
-  }
-
-  try {
     await ProductModel.deleteMany({ _id: { $in: ids } });
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      message: "PRODUCTOS ELIMINADOS",
+    });
   } catch (error) {
     return response.status(500).json({
       message: error.message || error,

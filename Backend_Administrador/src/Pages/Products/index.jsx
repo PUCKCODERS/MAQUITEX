@@ -166,19 +166,18 @@ export const Products = () => {
     setIsConfirmOpen(true);
   };
 
-  const deleteMultipleProduct = () => {
+  const deleteMultipleProduct = async () => {
     if (sortedIds.length === 0) {
       context.alertBox("error", "SELECCIONE LOS ELEMENTOS QUE DESEA ELIMINAR");
       return;
     }
 
     try {
-      deleteMultipleData(`/api/product/deleteMultiple`, {
-        data: { ids: sortedIds },
-      }).then(() => {
-        getProducts();
-        context.alertBox("success", "PRODUCTO ELIMINADO");
+      await deleteMultipleData(`/api/product/deleteMultiple`, {
+        ids: sortedIds,
       });
+      getProducts();
+      context.alertBox("success", "PRODUCTOS ELIMINADOS");
     } catch (error) {
       console.error(error);
       context.alertBox("error", "ERROR AL ELIMINAR ELEMENTOS");
@@ -214,16 +213,16 @@ export const Products = () => {
           {sortedIds?.length !== 0 && (
             <Button
               variant="contained"
-              className="btn-sm"
+              className="btn-sm  !bg-red-700"
               onClick={deleteMultipleProduct}
             >
               ELIMINAR
             </Button>
           )}
 
-          <Button className="btn btn-sm flex items-center ">EXPORTAR</Button>
+          <Button className="btn btn-sm flex items-center">EXPORTAR</Button>
           <Button
-            className="btn btn-sm"
+            className="btn btn-sm "
             onClick={() =>
               context.setIsOpenFullScreenPanel({
                 open: true,

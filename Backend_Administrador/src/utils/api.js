@@ -108,13 +108,22 @@ export const deleteData = async (url) => {
   return res;
 };
 
-export const deleteMultipleData = async (url) => {
-  const params = {
+export const deleteMultipleData = async (url, dataToDelete) => {
+  const config = {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       "Content-Type": "application/json",
     },
+    data: dataToDelete,
   };
-  const { res } = await axios.delete(apiUrl + url, params);
-  return res;
+
+  try {
+    const response = await axios.delete(apiUrl + url, config);
+    return response.data;
+  } catch (error) {
+    console.error("Error al eliminar múltiples datos:", error);
+    return error.response
+      ? error.response.data
+      : { error: true, message: error.message };
+  }
 };
