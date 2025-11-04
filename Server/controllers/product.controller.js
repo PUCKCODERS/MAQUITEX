@@ -1,4 +1,5 @@
 import ProductModel from "../models/product.modal.js";
+import ProductRamsModel from "../models/productRams.js";
 
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
@@ -10,6 +11,7 @@ cloudinary.config({
   secure: true,
 });
 
+// PARA PRODUCTO EN GENERAL
 var imagesArr = [];
 export async function uploadImages(request, response) {
   try {
@@ -84,7 +86,7 @@ export async function createProduct(request, response) {
 
     imagesArr = [];
 
-    response.status(200).json({
+    return response.status(200).json({
       message: "PRODUCTO CREADO CON ÉXITO",
       error: false,
       success: true,
@@ -788,6 +790,124 @@ export async function updateProduct(request, response) {
       message: "EL PRODUCTO ESTÁ ACTUALIZADO",
       error: false,
       success: true,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function updateProductRams(request, response) {
+  try {
+    const productRams = await ProductRamsModel.findByIdAndUpdate(
+      request.params.id,
+      {
+        name: request.body.name,
+      },
+      { new: true }
+    );
+
+    if (!productRams) {
+      return response.status(404).json({
+        message: "EL COLOR NO SE PUEDE ACTUALIZAR",
+        status: false,
+      });
+    }
+
+    return response.status(200).json({
+      message: "EL COLOR ESTÁ ACTUALIZADO",
+      error: false,
+      success: true,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+// PARA COLOR
+export async function createProductRams(request, response) {
+  try {
+    let productRams = new ProductRamsModel({
+      name: request.body.name,
+    });
+
+    productRams = await productRams.save();
+    if (!productRams) {
+      response.status(500).json({
+        error: true,
+        success: false,
+        message: "COLOR NO CREADO",
+      });
+    }
+
+    return response.status(200).json({
+      message: "COLOR CREADO CON ÉXITO",
+      error: false,
+      success: true,
+      product: productRams,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function deleteProductRams(request, response) {
+  const productRams = await ProductRamsModel.findById(request.params.id);
+
+  if (!productRams) {
+    return response.status(404).json({
+      message: "COLOR NO ENCONTRADO",
+      error: true,
+      success: false,
+    });
+  }
+
+  const deleteProductRams = await ProductRamsModel.findByIdAndDelete(
+    request.params.id
+  );
+
+  if (!deleteProductRams) {
+    response.status(404).json({
+      message: "COLOR NO ELIMINADO",
+      success: false,
+      error: true,
+    });
+  }
+
+  return response.status(200).json({
+    success: true,
+    error: false,
+    message: "COLOR ELIMINADO",
+  });
+}
+
+export async function deleteMultipleProductRams(request, response) {
+  const { ids } = request.body;
+
+  if (!ids || !Array.isArray(ids)) {
+    return response
+      .status(400)
+      .json({ error: true, success: false, message: "ENTRADA NO VÁLIDA" });
+  }
+
+  try {
+    await ProductRamsModel.deleteMany({ _id: { $in: ids } });
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      message: "COLORES ELIMINADOS",
     });
   } catch (error) {
     return response.status(500).json({

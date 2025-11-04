@@ -3,8 +3,10 @@ import auth from "../middlewares/auth.js";
 import upload from "../middlewares/multer.js";
 import {
   createProduct,
+  createProductRams,
   deleteMultipleProduct,
   deleteProduct,
+  deleteProductRams,
   getAllFeaturedProducts,
   getAllProducts,
   getAllProductsByCatId,
@@ -19,13 +21,16 @@ import {
   getProductsCount,
   removeImageFromCloudinary,
   updateProduct,
+  updateProductRams,
   uploadImages,
 } from "../controllers/product.controller.js";
 
 const productRouter = Router();
 productRouter.post("/uploadImages", auth, upload.array("images"), uploadImages);
 productRouter.post("/create", auth, createProduct);
+productRouter.post("/productRams/create", auth, createProductRams);
 productRouter.put("/updateProduct/:id", auth, updateProduct);
+productRouter.put("/productRams/:id", auth, updateProductRams);
 productRouter.get("/getAllProducts", getAllProducts);
 productRouter.get("/getAllProductsByCatId/:id", getAllProductsByCatId);
 productRouter.get("/getAllProductsByCatName", getAllProductsByCatName);
@@ -46,6 +51,7 @@ productRouter.get("/getAllFeaturedProducts", getAllFeaturedProducts);
 productRouter.delete("/deleteImage", auth, removeImageFromCloudinary);
 productRouter.delete("/deleteMultiple", deleteMultipleProduct);
 productRouter.delete("/:id", deleteProduct);
+productRouter.delete("/productRams/:id", deleteProductRams);
 productRouter.get("/:id", getProduct);
 
 export default productRouter;
