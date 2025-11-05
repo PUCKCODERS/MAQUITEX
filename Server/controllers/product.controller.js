@@ -70,7 +70,7 @@ export async function createProduct(request, response) {
       rating: request.body.rating,
       isFeatured: request.body.isFeatured,
       discount: request.body.discount,
-      productRam: request.body.productRam,
+      productRams: request.body.productRams,
       size: request.body.size,
       productWeight: request.body.productWeight,
     });
@@ -908,6 +908,31 @@ export async function deleteMultipleProductRams(request, response) {
       error: false,
       success: true,
       message: "COLORES ELIMINADOS",
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function getProductRams(request, response) {
+  try {
+    const productRams = await ProductRamsModel.find();
+
+    if (!productRams) {
+      return response.status(500).json({
+        error: true,
+        success: false,
+      });
+    }
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      data: productRams,
     });
   } catch (error) {
     return response.status(500).json({

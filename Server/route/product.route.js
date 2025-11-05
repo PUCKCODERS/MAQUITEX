@@ -5,6 +5,7 @@ import {
   createProduct,
   createProductRams,
   deleteMultipleProduct,
+  deleteMultipleProductRams,
   deleteProduct,
   deleteProductRams,
   getAllFeaturedProducts,
@@ -18,6 +19,7 @@ import {
   getAllProductsByThirdLavelCatId,
   getAllProductsByThirdLavelCatName,
   getProduct,
+  getProductRams,
   getProductsCount,
   removeImageFromCloudinary,
   updateProduct,
@@ -48,10 +50,12 @@ productRouter.get("/getAllProductsByPrice", getAllProductsByPrice);
 productRouter.get("/getAllProductsByRating", getAllProductsByRating);
 productRouter.get("/getAllProductsCount", getProductsCount);
 productRouter.get("/getAllFeaturedProducts", getAllFeaturedProducts);
+productRouter.get("/productRams", getProductRams);
 productRouter.delete("/deleteImage", auth, removeImageFromCloudinary);
 productRouter.delete("/deleteMultiple", deleteMultipleProduct);
 productRouter.delete("/:id", deleteProduct);
 productRouter.delete("/productRams/:id", deleteProductRams);
+productRouter.delete("/deleteMultipleRams", deleteMultipleProductRams);
 productRouter.get("/:id", getProduct);
 
 export default productRouter;
