@@ -178,8 +178,8 @@ const Dashboard = () => {
   return (
     <>
       <div className="w-full !bg-white !py-2 !px-5 border border-[#082c55] flex items-center !gap-8 !mb-5 justify-between rounded-md !shadow-[5px_5px_5px_#082c55]">
-        <div className="info">
-          <h1 className="text-[35px] !font-bold !font-[bold] leading-10 !mb-3">
+        <div className="info ">
+          <h1 className="text-[35px] !font-bold !font-[bold] leading-10 !mb-3 ">
             BUENOS DIAS,
             <br /> JONATHAN
           </h1>

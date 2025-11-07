@@ -26,7 +26,7 @@ const Sidebar = () => {
   return (
     <>
       <div
-        className={`sidebar fixed !top-0 !left-0 !bg-[#fff] border-r border-[rgba(0,0,0,0.32)]  h-full !py-2 !px-4 !w-[${
+        className={`sidebar fixed !top-0 !left-0 z-[50] !bg-[#fff] border-r border-[rgba(0,0,0,0.32)]  h-full !py-2 !px-4 !w-[${
           context.isSidebarOpen === true ? "20%" : "0px"
         }]`}
       >
@@ -137,6 +137,14 @@ const Sidebar = () => {
                     <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
                       <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
                       LISTA PRODUCTOS
+                    </Button>
+                  </Link>
+                </li>
+                <li className="!w-full">
+                  <Link to="/product/addRams">
+                    <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
+                      <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
+                      AÑADIR COLOR DE PRODUCTO
                     </Button>
                   </Link>
                 </li>

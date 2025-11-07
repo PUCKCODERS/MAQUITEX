@@ -20,6 +20,7 @@ import {
   getAllProductsByThirdLavelCatName,
   getProduct,
   getProductRams,
+  getProductRamsById,
   getProductsCount,
   removeImageFromCloudinary,
   updateProduct,
@@ -57,5 +58,6 @@ productRouter.delete("/:id", deleteProduct);
 productRouter.delete("/productRams/:id", deleteProductRams);
 productRouter.delete("/deleteMultipleRams", deleteMultipleProductRams);
 productRouter.get("/:id", getProduct);
+productRouter.get("/productRams/:id", getProductRamsById);
 
 export default productRouter;

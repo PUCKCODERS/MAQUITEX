@@ -7,7 +7,12 @@ import { FaTrashAlt } from "react-icons/fa";
 import { useState } from "react";
 import { useContext } from "react";
 import { MyContext } from "../../App";
-import { deleteData, fetchDataFromApi, postData } from "../../utils/api";
+import {
+  deleteData,
+  editData,
+  fetchDataFromApi,
+  postData,
+} from "../../utils/api";
 import { useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 
@@ -17,6 +22,7 @@ const AddRams = () => {
   const [name, setName] = useState();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [editId, setEditId] = useState("");
 
   const context = useContext(MyContext);
 
@@ -42,26 +48,53 @@ const AddRams = () => {
       return false;
     }
 
-    postData(`/api/product/productRams/create`, {
-      name: name,
-    }).then((res) => {
-      if (res?.error === false) {
-        context.alertBox("success", res?.message);
-        setTimeout(() => {
-          setIsLoading(false);
-          getData();
-          setData("");
-        }, [300]);
-      } else {
-        context.alertBox("error", res?.message);
-      }
-    });
+    if (editId === "") {
+      postData(`/api/product/productRams/create`, {
+        name: name,
+      }).then((res) => {
+        if (res?.error === false) {
+          context.alertBox("success", res?.message);
+          setTimeout(() => {
+            setIsLoading(false);
+            getData();
+            setData("");
+          }, [300]);
+        } else {
+          context.alertBox("error", res?.message);
+        }
+      });
+    }
+
+    if (editId !== "") {
+      editData(`/api/product/productRams/${editId}`, {
+        name: name,
+      }).then((res) => {
+        if (res?.data?.error === false) {
+          context.alertBox("success", res?.data?.message);
+          setTimeout(() => {
+            setIsLoading(false);
+            getData();
+            setData("");
+          }, [300]);
+        } else {
+          context.alertBox("error", res?.data?.message);
+        }
+      });
+    }
   };
 
   const deleteItem = (id) => {
     deleteData(`/api/product/productRams/${id}`).then(() => {
       getData();
       context.alertBox("success", "COLOR ELIMINADO");
+    });
+  };
+
+  const editItem = (id) => {
+    fetchDataFromApi(`/api/product/productRams/${id}`).then((res) => {
+      console.log(res);
+      setName(res?.data?.name);
+      setEditId(res?.data?._id);
     });
   };
 
@@ -148,10 +181,17 @@ const AddRams = () => {
                           />
                         </div>
                       </td>
-                      <td className="!px-0 !py-2 text-white">{item?.name}</td>
+                      <td className="!px-0 !py-2 text-white">
+                        <span className="text-bold text-[20px]">
+                          {item?.name}
+                        </span>
+                      </td>
                       <td className="!px-6 !py-2">
                         <div className="flex items-center !gap-2">
-                          <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                          <Button
+                            className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                            onClick={() => editItem(item?._id)}
+                          >
                             <GrEdit className=" !text-[20px] " />
                           </Button>
                           <Button

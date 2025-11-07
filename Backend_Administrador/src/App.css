@@ -235,3 +235,7 @@ input[type="email"]:disabled {
 .smlBtn .swiper-button-next:hover::after {
   color: #fff !important;
 }
+
+.contentRight {
+  margin-top: 60px !important;
+}

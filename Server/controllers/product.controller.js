@@ -942,3 +942,28 @@ export async function getProductRams(request, response) {
     });
   }
 }
+
+export async function getProductRamsById(request, response) {
+  try {
+    const productRams = await ProductRamsModel.findById(request.params.id);
+
+    if (!productRams) {
+      return response.status(500).json({
+        error: true,
+        success: false,
+      });
+    }
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      data: productRams,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
