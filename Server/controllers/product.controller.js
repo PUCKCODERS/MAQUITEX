@@ -1,5 +1,7 @@
 import ProductModel from "../models/product.modal.js";
 import ProductRamsModel from "../models/productRams.js";
+import ProductWeightModel from "../models/productWeight.js";
+import ProductSizeModel from "../models/productSize.js";
 
 import { v2 as cloudinary } from "cloudinary";
 import fs from "fs";
@@ -800,37 +802,6 @@ export async function updateProduct(request, response) {
   }
 }
 
-export async function updateProductRams(request, response) {
-  try {
-    const productRams = await ProductRamsModel.findByIdAndUpdate(
-      request.params.id,
-      {
-        name: request.body.name,
-      },
-      { new: true }
-    );
-
-    if (!productRams) {
-      return response.status(404).json({
-        message: "EL COLOR NO SE PUEDE ACTUALIZAR",
-        status: false,
-      });
-    }
-
-    return response.status(200).json({
-      message: "EL COLOR ESTÁ ACTUALIZADO",
-      error: false,
-      success: true,
-    });
-  } catch (error) {
-    return response.status(500).json({
-      message: error.message || error,
-      error: true,
-      success: false,
-    });
-  }
-}
-
 // PARA COLOR
 export async function createProductRams(request, response) {
   try {
@@ -958,6 +929,370 @@ export async function getProductRamsById(request, response) {
       error: false,
       success: true,
       data: productRams,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+export async function updateProductRams(request, response) {
+  try {
+    const productRams = await ProductRamsModel.findByIdAndUpdate(
+      request.params.id,
+      {
+        name: request.body.name,
+      },
+      { new: true }
+    );
+
+    if (!productRams) {
+      return response.status(404).json({
+        message: "EL COLOR NO SE PUEDE ACTUALIZAR",
+        status: false,
+      });
+    }
+
+    return response.status(200).json({
+      message: "EL COLOR ESTÁ ACTUALIZADO",
+      error: false,
+      success: true,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+// PARA PESO
+export async function createProductWeight(request, response) {
+  try {
+    let productWeight = new ProductWeightModel({
+      name: request.body.name,
+    });
+
+    productWeight = await productWeight.save();
+    if (!productWeight) {
+      response.status(500).json({
+        error: true,
+        success: false,
+        message: "PESO NO CREADO",
+      });
+    }
+
+    return response.status(200).json({
+      message: "PESO CREADO CON ÉXITO",
+      error: false,
+      success: true,
+      product: productWeight,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function deleteProductWeight(request, response) {
+  const productWeight = await ProductWeightModel.findById(request.params.id);
+
+  if (!productWeight) {
+    return response.status(404).json({
+      message: "PESO NO ENCONTRADO",
+      error: true,
+      success: false,
+    });
+  }
+
+  const deleteProductWeight = await ProductWeightModel.findByIdAndDelete(
+    request.params.id
+  );
+
+  if (!deleteProductWeight) {
+    response.status(404).json({
+      message: "PESO NO ELIMINADO",
+      success: false,
+      error: true,
+    });
+  }
+
+  return response.status(200).json({
+    success: true,
+    error: false,
+    message: "PESO ELIMINADO",
+  });
+}
+
+export async function deleteMultipleProductWeight(request, response) {
+  const { ids } = request.body;
+
+  if (!ids || !Array.isArray(ids)) {
+    return response
+      .status(400)
+      .json({ error: true, success: false, message: "ENTRADA NO VÁLIDA" });
+  }
+
+  try {
+    await ProductWeightModel.deleteMany({ _id: { $in: ids } });
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      message: "PESOS ELIMINADOS",
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function getProductWeight(request, response) {
+  try {
+    const productWeight = await ProductWeightModel.find();
+
+    if (!productWeight) {
+      return response.status(500).json({
+        error: true,
+        success: false,
+      });
+    }
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      data: productWeight,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function getProductWeightById(request, response) {
+  try {
+    const productWeight = await ProductWeightModel.findById(request.params.id);
+
+    if (!productWeight) {
+      return response.status(500).json({
+        error: true,
+        success: false,
+      });
+    }
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      data: productWeight,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+export async function updateProductWeight(request, response) {
+  try {
+    const productWeight = await ProductWeightModel.findByIdAndUpdate(
+      request.params.id,
+      {
+        name: request.body.name,
+      },
+      { new: true }
+    );
+
+    if (!productWeight) {
+      return response.status(404).json({
+        message: "EL PESO NO SE PUEDE ACTUALIZAR",
+        status: false,
+      });
+    }
+
+    return response.status(200).json({
+      message: "EL PESO ESTÁ ACTUALIZADO",
+      error: false,
+      success: true,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+// PARA TAMAÑO
+export async function createProductSize(request, response) {
+  try {
+    let productSize = new ProductSizeModel({
+      name: request.body.name,
+    });
+
+    productSize = await productSize.save();
+    if (!productSize) {
+      response.status(500).json({
+        error: true,
+        success: false,
+        message: "TAMAÑO NO CREADO",
+      });
+    }
+
+    return response.status(200).json({
+      message: "TAMAÑO CREADO CON ÉXITO",
+      error: false,
+      success: true,
+      product: productSize,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function deleteProductSize(request, response) {
+  const productSize = await ProductSizeModel.findById(request.params.id);
+
+  if (!productSize) {
+    return response.status(404).json({
+      message: "TAMAÑO NO ENCONTRADO",
+      error: true,
+      success: false,
+    });
+  }
+
+  const deleteProductSize = await ProductSizeModel.findByIdAndDelete(
+    request.params.id
+  );
+
+  if (!deleteProductSize) {
+    response.status(404).json({
+      message: "TAMAÑO NO ELIMINADO",
+      success: false,
+      error: true,
+    });
+  }
+
+  return response.status(200).json({
+    success: true,
+    error: false,
+    message: "TAMAÑO ELIMINADO",
+  });
+}
+
+export async function deleteMultipleProductSize(request, response) {
+  const { ids } = request.body;
+
+  if (!ids || !Array.isArray(ids)) {
+    return response
+      .status(400)
+      .json({ error: true, success: false, message: "ENTRADA NO VÁLIDA" });
+  }
+
+  try {
+    await ProductSizeModel.deleteMany({ _id: { $in: ids } });
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      message: "TAMAÑOS ELIMINADOS",
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function getProductSize(request, response) {
+  try {
+    const productSize = await ProductSizeModel.find();
+
+    if (!productSize) {
+      return response.status(500).json({
+        error: true,
+        success: false,
+      });
+    }
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      data: productSize,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function getProductSizeById(request, response) {
+  try {
+    const productSize = await ProductSizeModel.findById(request.params.id);
+
+    if (!productSize) {
+      return response.status(500).json({
+        error: true,
+        success: false,
+      });
+    }
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      data: productSize,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+export async function updateProductSize(request, response) {
+  try {
+    const productSize = await ProductSizeModel.findByIdAndUpdate(
+      request.params.id,
+      {
+        name: request.body.name,
+      },
+      { new: true }
+    );
+
+    if (!productSize) {
+      return response.status(404).json({
+        message: "EL TAMAÑO NO SE PUEDE ACTUALIZAR",
+        status: false,
+      });
+    }
+
+    return response.status(200).json({
+      message: "EL TAMAÑO ESTÁ ACTUALIZADO",
+      error: false,
+      success: true,
     });
   } catch (error) {
     return response.status(500).json({

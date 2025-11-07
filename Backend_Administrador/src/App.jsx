@@ -26,6 +26,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { fetchDataFromApi } from "./utils/api";
 import Profile from "./Pages/Profile";
 import AddRams from "./Pages/Products/addRams.jsx";
+import AddWeight from "./Pages/Products/addWeight.jsx";
+import AddSize from "./Pages/Products/addSize.jsx";
 
 const MyContext = createContext();
 
@@ -351,6 +353,60 @@ function App() {
                 } transition-all duration-300`}
               >
                 <AddRams />
+              </div>
+            </div>
+          </section>
+        </>
+      ),
+    },
+    {
+      path: "/product/addWeight",
+      exact: true,
+      element: (
+        <>
+          <section className="main">
+            <Header />
+            <div className="contentMain flex">
+              <div
+                className={`overflow-hidden sidebarWrapper ${
+                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                } transition-all duration-300`}
+              >
+                <Sidebar />
+              </div>
+              <div
+                className={`contentRight !py-4 !px-5 ${
+                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
+                } transition-all duration-300`}
+              >
+                <AddWeight />
+              </div>
+            </div>
+          </section>
+        </>
+      ),
+    },
+    {
+      path: "/product/addSize",
+      exact: true,
+      element: (
+        <>
+          <section className="main">
+            <Header />
+            <div className="contentMain flex">
+              <div
+                className={`overflow-hidden sidebarWrapper ${
+                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                } transition-all duration-300`}
+              >
+                <Sidebar />
+              </div>
+              <div
+                className={`contentRight !py-4 !px-5 ${
+                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
+                } transition-all duration-300`}
+              >
+                <AddSize />
               </div>
             </div>
           </section>

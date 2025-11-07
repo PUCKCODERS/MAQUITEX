@@ -18,7 +18,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-const AddRams = () => {
+const AddSize = () => {
   const [name, setName] = useState();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +31,7 @@ const AddRams = () => {
   }, []);
 
   const getData = () => {
-    fetchDataFromApi("/api/product/productRams").then((res) => {
+    fetchDataFromApi("/api/product/productSize").then((res) => {
       if (res?.error === false) {
         setData(res?.data);
       }
@@ -44,12 +44,12 @@ const AddRams = () => {
     setIsLoading(true);
 
     if (name === "") {
-      context.alertBox("error", "PORFAVOR INGRESE EL COLOR");
+      context.alertBox("error", "PORFAVOR INGRESE EL TAMAÑO");
       return false;
     }
 
     if (editId === "") {
-      postData(`/api/product/productRams/create`, {
+      postData(`/api/product/productSize/create`, {
         name: name,
       }).then((res) => {
         if (res?.error === false) {
@@ -66,7 +66,7 @@ const AddRams = () => {
     }
 
     if (editId !== "") {
-      editData(`/api/product/productRams/${editId}`, {
+      editData(`/api/product/productSize/${editId}`, {
         name: name,
       }).then((res) => {
         if (res?.data?.error === false) {
@@ -85,14 +85,14 @@ const AddRams = () => {
   };
 
   const deleteItem = (id) => {
-    deleteData(`/api/product/productRams/${id}`).then(() => {
+    deleteData(`/api/product/productSize/${id}`).then(() => {
       getData();
-      context.alertBox("success", "COLOR ELIMINADO");
+      context.alertBox("success", "TAMAÑO ELIMINADO");
     });
   };
 
   const editItem = (id) => {
-    fetchDataFromApi(`/api/product/productRams/${id}`).then((res) => {
+    fetchDataFromApi(`/api/product/productSize/${id}`).then((res) => {
       console.log(res);
       setName(res?.data?.name);
       setEditId(res?.data?._id);
@@ -103,7 +103,7 @@ const AddRams = () => {
     <>
       <div className="flex !bg-gray-700 items-center justify-between !px-5 !py-5 !mt-3 sm:rounded-lg border-b dark:border-gray-700 ">
         <h2 className="text-white text-[20px] !font-[500] ">
-          AGREGAR COLORES DEL PRODUCTO
+          AGREGAR TAMAÑO DEL PRODUCTO
         </h2>
       </div>
 
@@ -111,7 +111,7 @@ const AddRams = () => {
         <form className="form !py-3 !p-6" onSubmit={handleSubmit}>
           <div className="col !mb-4">
             <h3 className="text-[#082c55] font-bold text-[16px] !mb-2">
-              COLOR DEL PRODUCTO
+              TAMAÑO DEL PRODUCTO
             </h3>
             <input
               type="text"
@@ -155,7 +155,7 @@ const AddRams = () => {
                     className="!px-0 !py-3 whitespace-nowrap"
                     width="60%"
                   >
-                    COLOR
+                    TAMAÑO
                   </th>
                   <th
                     scope="col"
@@ -215,4 +215,4 @@ const AddRams = () => {
   );
 };
 
-export default AddRams;
+export default AddSize;

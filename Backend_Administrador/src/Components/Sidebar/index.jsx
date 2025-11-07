@@ -148,6 +148,22 @@ const Sidebar = () => {
                     </Button>
                   </Link>
                 </li>
+                <li className="!w-full">
+                  <Link to="/product/addWeight">
+                    <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
+                      <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
+                      AÑADIR PESO DE PRODUCTO
+                    </Button>
+                  </Link>
+                </li>
+                <li className="!w-full">
+                  <Link to="/product/addSize">
+                    <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
+                      <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
+                      AÑADIR TAMAÑO DE PRODUCTO
+                    </Button>
+                  </Link>
+                </li>
               </ul>
             </Collapse>
           </li>
