@@ -40,53 +40,55 @@ const AddRams = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     setIsLoading(true);
 
-    if (name === "") {
+    if (!name || name.trim() === "") {
+      setIsLoading(false);
       context.alertBox("error", "PORFAVOR INGRESE EL COLOR");
-      return false;
+      return;
     }
 
     if (editId === "") {
-      postData(`/api/product/productRams/create`, {
-        name: name,
-      }).then((res) => {
-        if (res?.error === false) {
-          context.alertBox("success", res?.message);
-          setTimeout(() => {
+      postData(`/api/product/productRams/create`, { name })
+        .then((res) => {
+          if (res?.error === false) {
+            context.alertBox("success", res?.message);
+            setTimeout(() => {
+              setIsLoading(false);
+              getData();
+              setName("");
+            }, 300);
+          } else {
             setIsLoading(false);
-            getData();
-            setData("");
-          }, [300]);
-        } else {
-          context.alertBox("error", res?.message);
-        }
-      });
-    }
-
-    if (editId !== "") {
-      editData(`/api/product/productRams/${editId}`, {
-        name: name,
-      }).then((res) => {
-        if (res?.data?.error === false) {
-          context.alertBox("success", res?.data?.message);
-          setTimeout(() => {
+            context.alertBox("error", res?.message);
+          }
+        })
+        .catch(() => setIsLoading(false));
+    } else {
+      editData(`/api/product/productRams/${editId}`, { name })
+        .then((res) => {
+          if (res?.data?.error === false) {
+            context.alertBox("success", res?.data?.message);
+            setTimeout(() => {
+              setIsLoading(false);
+              getData();
+              setName("");
+              setEditId("");
+            }, 300);
+          } else {
             setIsLoading(false);
-            getData();
-            setName("");
-            setEditId("");
-          }, 300);
-        } else {
-          context.alertBox("error", res?.data?.message);
-        }
-      });
+            context.alertBox("error", res?.data?.message);
+          }
+        })
+        .catch(() => setIsLoading(false));
     }
   };
 
   const deleteItem = (id) => {
     deleteData(`/api/product/productRams/${id}`).then(() => {
       getData();
+      setName("");
+      setEditId("");
       context.alertBox("success", "COLOR ELIMINADO");
     });
   };
@@ -103,7 +105,7 @@ const AddRams = () => {
     <>
       <div className="flex !bg-gray-700 items-center justify-between !px-5 !py-5 !mt-3 sm:rounded-lg border-b dark:border-gray-700 ">
         <h2 className="text-white text-[20px] !font-[500] ">
-          AGREGAR COLORES DEL PRODUCTO
+          AGREGAR COLOR DEL PRODUCTO
         </h2>
       </div>
 

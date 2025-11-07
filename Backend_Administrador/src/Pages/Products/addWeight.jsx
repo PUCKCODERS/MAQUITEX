@@ -40,53 +40,54 @@ const AddWeight = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     setIsLoading(true);
 
-    if (name === "") {
+    if (!name || name.trim() === "") {
+      setIsLoading(false);
       context.alertBox("error", "PORFAVOR INGRESE EL PESO");
-      return false;
+      return;
     }
 
     if (editId === "") {
-      postData(`/api/product/productWeight/create`, {
-        name: name,
-      }).then((res) => {
-        if (res?.error === false) {
-          context.alertBox("success", res?.message);
-          setTimeout(() => {
+      postData(`/api/product/productWeight/create`, { name })
+        .then((res) => {
+          if (res?.error === false) {
+            context.alertBox("success", res?.message);
+            setTimeout(() => {
+              setIsLoading(false);
+              getData();
+              setName("");
+            }, 300);
+          } else {
             setIsLoading(false);
-            getData();
-            setData("");
-          }, [300]);
-        } else {
-          context.alertBox("error", res?.message);
-        }
-      });
-    }
-
-    if (editId !== "") {
-      editData(`/api/product/productWeight/${editId}`, {
-        name: name,
-      }).then((res) => {
-        if (res?.data?.error === false) {
-          context.alertBox("success", res?.data?.message);
-          setTimeout(() => {
+            context.alertBox("error", res?.message);
+          }
+        })
+        .catch(() => setIsLoading(false));
+    } else {
+      editData(`/api/product/productWeight/${editId}`, { name })
+        .then((res) => {
+          if (res?.data?.error === false) {
+            context.alertBox("success", res?.data?.message);
+            setTimeout(() => {
+              setIsLoading(false);
+              getData();
+              setName("");
+              setEditId("");
+            }, 300);
+          } else {
             setIsLoading(false);
-            getData();
-            setName("");
-            setEditId("");
-          }, 300);
-        } else {
-          context.alertBox("error", res?.data?.message);
-        }
-      });
+            context.alertBox("error", res?.data?.message);
+          }
+        })
+        .catch(() => setIsLoading(false));
     }
   };
-
   const deleteItem = (id) => {
     deleteData(`/api/product/productWeight/${id}`).then(() => {
       getData();
+      setName("");
+      setEditId("");
       context.alertBox("success", "PESO ELIMINADO");
     });
   };
