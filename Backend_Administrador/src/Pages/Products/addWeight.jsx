@@ -1,7 +1,6 @@
 import { Button } from "@mui/material";
 import React from "react";
 import { GiSave } from "react-icons/gi";
-import Checkbox from "@mui/material/Checkbox";
 import { GrEdit } from "react-icons/gr";
 import { FaTrashAlt } from "react-icons/fa";
 import { useState } from "react";
@@ -15,8 +14,6 @@ import {
 } from "../../utils/api";
 import { useEffect } from "react";
 import CircularProgress from "@mui/material/CircularProgress";
-
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const AddWeight = () => {
   const [name, setName] = useState();
@@ -142,15 +139,7 @@ const AddWeight = () => {
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-950 text-white">
                 <tr className="!text-[18px]">
-                  <th scope="col" class="!px-6 !pr-0 !py-3 " width="10%">
-                    <div className="w-[60px]">
-                      <Checkbox
-                        className="!text-white"
-                        {...label}
-                        size="small"
-                      />
-                    </div>
-                  </th>
+                  <th scope="col" class="!px-6 !pr-0 !py-3 " width="10%"></th>
                   <th
                     scope="col"
                     className="!px-0 !py-3 whitespace-nowrap"
@@ -174,15 +163,7 @@ const AddWeight = () => {
                       class="bg-white border-b dark:bg-gray-700 dark:border-gray-700 border-gray-200"
                       key={index}
                     >
-                      <td className="!px-6 !pr-0 !py-2">
-                        <div className="w-[60px]">
-                          <Checkbox
-                            className="!text-white"
-                            {...label}
-                            size="small"
-                          />
-                        </div>
-                      </td>
+                      <td className="!px-6 !pr-0 !py-2"></td>
                       <td className="!px-0 !py-2 text-white">
                         <span className="text-bold text-[20px]">
                           {item?.name}
