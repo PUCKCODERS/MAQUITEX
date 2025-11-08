@@ -248,6 +248,7 @@ const AddProduct = () => {
     }
 
     setIsLoading(true);
+    console.log(formFields);
 
     postData("/api/product/create", formFields).then((res) => {
       if (res?.error === false) {

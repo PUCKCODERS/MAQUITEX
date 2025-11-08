@@ -162,28 +162,6 @@ const ProductDetails = () => {
                 </div>
               )}
 
-              {product?.size?.length !== 0 && (
-                <div className="flex items-center !py-2">
-                  <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
-                    <RxRulerSquare className="text-[20px] text-[#082c55]" />
-                    TAMAÑO :
-                  </span>
-
-                  <div className="flex items-center !gap-2">
-                    {product?.size?.map((size, index) => {
-                      return (
-                        <span
-                          className="!font-bold text-[#fff] text-[12px] inline-block bg-[#082c55] !px-1 !py-1 sm:rounded-lg"
-                          key={index}
-                        >
-                          {size}
-                        </span>
-                      );
-                    })}
-                  </div>
-                </div>
-              )}
-
               {product?.productWeight?.length !== 0 && (
                 <div className="flex items-center !py-2">
                   <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
@@ -199,6 +177,28 @@ const ProductDetails = () => {
                           key={index}
                         >
                           {weight}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {product?.size?.length !== 0 && (
+                <div className="flex items-center !py-2">
+                  <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+                    <RxRulerSquare className="text-[20px] text-[#082c55]" />
+                    TAMAÑO :
+                  </span>
+
+                  <div className="flex items-center !gap-2">
+                    {product?.size?.map((size, index) => {
+                      return (
+                        <span
+                          className="!font-bold text-[#fff] text-[12px] inline-block bg-[#082c55] !px-1 !py-1 sm:rounded-lg"
+                          key={index}
+                        >
+                          {size}
                         </span>
                       );
                     })}

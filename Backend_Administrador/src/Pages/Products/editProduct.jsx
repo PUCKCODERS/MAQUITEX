@@ -44,8 +44,11 @@ const EditProduct = () => {
   const [productSubCat, setProductSubCat] = React.useState("");
   const [productFeatured, setProductFeatured] = React.useState("");
   const [productRams, setProductRams] = React.useState([]);
+  const [productRamsData, setProductRamsData] = React.useState([]);
   const [productWeight, setProductWeight] = React.useState([]);
+  const [productWeightData, setProductWeightData] = React.useState([]);
   const [productSize, setProductSize] = React.useState([]);
+  const [productSizeData, setProductSizeData] = React.useState([]);
   const [productThirdLavelCat, setProductThirdLavelCat] = useState("");
   const [previews, setPreviews] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -55,6 +58,22 @@ const EditProduct = () => {
   const context = useContext(MyContext);
 
   useEffect(() => {
+    fetchDataFromApi("/api/product/productRams/get").then((res) => {
+      if (res?.error === false) {
+        setProductRamsData(res?.data);
+      }
+    });
+    fetchDataFromApi("/api/product/productWeight/get").then((res) => {
+      if (res?.error === false) {
+        setProductWeightData(res?.data);
+      }
+    });
+    fetchDataFromApi("/api/product/productSize/get").then((res) => {
+      if (res?.error === false) {
+        setProductSizeData(res?.data);
+      }
+    });
+
     fetchDataFromApi(`/api/product/${context?.isOpenFullScreenPanel?.id}`).then(
       (res) => {
         setFormFields({
@@ -536,185 +555,90 @@ const EditProduct = () => {
               <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
                 COLOR
               </h3>
-              <Select
-                multiple
-                labelId="demo-simple-select-label"
-                id="productCatDrop"
-                size="small"
-                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                value={productRams}
-                label="Category"
-                onChange={handleChangeProductRams}
-              >
-                <MenuItem
-                  value={"NEGRO"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+              {productRamsData?.length !== 0 && (
+                <Select
+                  multiple
+                  labelId="demo-simple-select-label"
+                  id="productCatDrop"
+                  size="small"
+                  className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                  value={productRams}
+                  label="Category"
+                  onChange={handleChangeProductRams}
                 >
-                  NEGRO
-                </MenuItem>
-                <MenuItem
-                  value={"BLANCO"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  BLANCO
-                </MenuItem>
-
-                <MenuItem
-                  value={"AZUL"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  AZUL
-                </MenuItem>
-                <MenuItem
-                  value={"VERDE"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  VERDE
-                </MenuItem>
-                <MenuItem
-                  value={"AMARILLO"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  AMARILLO
-                </MenuItem>
-                <MenuItem
-                  value={"ROJO"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  ROJO
-                </MenuItem>
-                <MenuItem
-                  value={"MORADO"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  MORADO
-                </MenuItem>
-                <MenuItem
-                  value={"MARRON"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  MARRON
-                </MenuItem>
-                <MenuItem
-                  value={"CELESTE"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  CELESTE
-                </MenuItem>
-                <MenuItem
-                  value={"ROSADO"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  ROSADO
-                </MenuItem>
-              </Select>
+                  {productRamsData?.map((item, index) => {
+                    return (
+                      <MenuItem
+                        key={index}
+                        value={item?.name}
+                        className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                      >
+                        {item.name}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              )}
             </div>
 
             <div className="col">
               <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
                 PESO
               </h3>
-              <Select
-                multiple
-                labelId="demo-simple-select-label"
-                id="productCatDrop"
-                size="small"
-                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                value={productWeight}
-                label="Category"
-                onChange={handleChangeProductWeight}
-              >
-                <MenuItem
-                  value={"2 KG"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+              {productWeightData?.length !== 0 && (
+                <Select
+                  multiple
+                  labelId="demo-simple-select-label"
+                  id="productCatDrop"
+                  size="small"
+                  className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                  value={productWeight}
+                  label="Category"
+                  onChange={handleChangeProductWeight}
                 >
-                  2 KG
-                </MenuItem>
-                <MenuItem
-                  value={"4 KG"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  4 KG
-                </MenuItem>
-                <MenuItem
-                  value={"6 KG"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  6 KG
-                </MenuItem>
-
-                <MenuItem
-                  value={"8 KG"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  8 KG
-                </MenuItem>
-                <MenuItem
-                  value={"10 KG"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  10 KG
-                </MenuItem>
-              </Select>
+                  {productWeightData?.map((item, index) => {
+                    return (
+                      <MenuItem
+                        key={index}
+                        value={item?.name}
+                        className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                      >
+                        {item.name}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              )}
             </div>
 
             <div className="col">
               <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
                 TAMAÑO
               </h3>
-              <Select
-                multiple
-                labelId="demo-simple-select-label"
-                id="productCatDrop"
-                size="small"
-                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                value={productSize}
-                label="Category"
-                onChange={handleChangeProductSize}
-              >
-                <MenuItem
-                  value={"1 METRO"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+              {productSizeData?.length !== 0 && (
+                <Select
+                  multiple
+                  labelId="demo-simple-select-label"
+                  id="productCatDrop"
+                  size="small"
+                  className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                  value={productSize}
+                  label="Category"
+                  onChange={handleChangeProductSize}
                 >
-                  1 METRO
-                </MenuItem>
-                <MenuItem
-                  value={"5 METROS"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  5 METROS
-                </MenuItem>
-                <MenuItem
-                  value={"10 METROS"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  10 METROS
-                </MenuItem>
-                <MenuItem
-                  value={"20 METROS"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  20 METROS
-                </MenuItem>
-                <MenuItem
-                  value={"Pequeña / Portátil: 38 × 18 × 28 cm"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  Pequeña / Portátil: 38 × 18 × 28 cm
-                </MenuItem>
-                <MenuItem
-                  value={"Mediana / Estándar: 45 × 20 × 32 cm"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  Mediana / Estándar: 45 × 20 × 32 cm
-                </MenuItem>
-                <MenuItem
-                  value={"Grande / Industrial: 52 × 25 × 38 cm"}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  Grande / Industrial: 52 × 25 × 38 cm
-                </MenuItem>
-              </Select>
+                  {productSizeData?.map((item, index) => {
+                    return (
+                      <MenuItem
+                        key={index}
+                        value={item?.name}
+                        className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                      >
+                        {item.name}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              )}
             </div>
           </div>
 
