@@ -28,7 +28,7 @@ const AddRams = () => {
   }, []);
 
   const getData = () => {
-    fetchDataFromApi("/api/product/productRams").then((res) => {
+    fetchDataFromApi("/api/product/productRams/get").then((res) => {
       if (res?.error === false) {
         setData(res?.data);
       }

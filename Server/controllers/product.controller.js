@@ -772,7 +772,7 @@ export async function updateProduct(request, response) {
         rating: request.body.rating,
         isFeatured: request.body.isFeatured,
         discount: request.body.discount,
-        productRam: request.body.productRam,
+        productRams: request.body.productRams,
         size: request.body.size,
         productWeight: request.body.productWeight,
       },

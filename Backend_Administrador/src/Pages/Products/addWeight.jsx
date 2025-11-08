@@ -28,7 +28,7 @@ const AddWeight = () => {
   }, []);
 
   const getData = () => {
-    fetchDataFromApi("/api/product/productWeight").then((res) => {
+    fetchDataFromApi("/api/product/productWeight/get").then((res) => {
       if (res?.error === false) {
         setData(res?.data);
       }

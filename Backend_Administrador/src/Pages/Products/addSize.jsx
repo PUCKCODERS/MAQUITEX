@@ -28,7 +28,7 @@ const AddSize = () => {
   }, []);
 
   const getData = () => {
-    fetchDataFromApi("/api/product/productSize").then((res) => {
+    fetchDataFromApi("/api/product/productSize/get").then((res) => {
       if (res?.error === false) {
         setData(res?.data);
       }

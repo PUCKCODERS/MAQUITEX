@@ -35,7 +35,7 @@ const EditProduct = () => {
     rating: "",
     isFeatured: false,
     discount: "",
-    productRam: [],
+    productRams: [],
     size: [],
     productWeight: [],
   });
@@ -43,7 +43,7 @@ const EditProduct = () => {
   const [productCat, setProductCat] = React.useState("");
   const [productSubCat, setProductSubCat] = React.useState("");
   const [productFeatured, setProductFeatured] = React.useState("");
-  const [productRam, setProductRam] = React.useState([]);
+  const [productRams, setProductRams] = React.useState([]);
   const [productWeight, setProductWeight] = React.useState([]);
   const [productSize, setProductSize] = React.useState([]);
   const [productThirdLavelCat, setProductThirdLavelCat] = useState("");
@@ -75,7 +75,7 @@ const EditProduct = () => {
           rating: res?.product?.rating,
           isFeatured: res?.product?.isFeatured,
           discount: res?.product?.discount,
-          productRam: res?.product?.productRam,
+          productRams: res?.product?.productRams,
           size: res?.product?.size,
           productWeight: res?.product?.productWeight,
         });
@@ -84,7 +84,7 @@ const EditProduct = () => {
         setProductSubCat(res?.product?.subCatId);
         setProductThirdLavelCat(res?.product?.thirdsubCatId);
         setProductFeatured(res?.product?.isFeatured);
-        setProductRam(res?.product?.productRam);
+        setProductRams(res?.product?.productRams);
         setProductSize(res?.product?.size);
         setProductWeight(res?.product?.productWeight);
 
@@ -126,13 +126,13 @@ const EditProduct = () => {
     formFields.isFeatured = event.target.value;
   };
 
-  const handleChangeProductRam = (event) => {
+  const handleChangeProductRams = (event) => {
     const {
       target: { value },
     } = event;
-    setProductRam(typeof value === "string" ? value.split(",") : value);
+    setProductRams(typeof value === "string" ? value.split(",") : value);
 
-    formFields.productRam = value;
+    formFields.productRams = value;
   };
 
   const handleChangeProductWeight = (event) => {
@@ -542,9 +542,9 @@ const EditProduct = () => {
                 id="productCatDrop"
                 size="small"
                 className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                value={productRam}
+                value={productRams}
                 label="Category"
-                onChange={handleChangeProductRam}
+                onChange={handleChangeProductRams}
               >
                 <MenuItem
                   value={"NEGRO"}

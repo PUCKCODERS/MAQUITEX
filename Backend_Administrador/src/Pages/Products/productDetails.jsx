@@ -140,7 +140,7 @@ const ProductDetails = () => {
                 </span>
               </div>
 
-              {product?.productRam?.length !== 0 && (
+              {product?.productRams?.length !== 0 && (
                 <div className="flex items-center !py-2">
                   <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                     <IoIosColorPalette className="text-[20px] text-[#082c55]" />
@@ -148,7 +148,7 @@ const ProductDetails = () => {
                   </span>
 
                   <div className="flex items-center !gap-2">
-                    {product?.productRam?.map((ram, index) => {
+                    {product?.productRams?.map((ram, index) => {
                       return (
                         <span
                           className="!font-bold text-[#fff] text-[12px] inline-block bg-[#082c55] !px-1 !py-1 sm:rounded-lg"
