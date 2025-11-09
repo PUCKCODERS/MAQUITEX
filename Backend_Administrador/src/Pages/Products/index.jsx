@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { FaCartPlus } from "react-icons/fa";
+import Rating from "@mui/material/Rating";
 
 import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
@@ -47,12 +48,17 @@ const columns = [
   {
     id: "price",
     label: "PRECIO",
-    minWidth: 100,
+    minWidth: 130,
   },
   {
     id: "sales",
     label: "VENTAS",
-    minWidth: 80,
+    minWidth: 100,
+  },
+  {
+    id: "rating",
+    label: "CALIFICACIÓN",
+    minWidth: 100,
   },
   {
     id: "action",
@@ -486,6 +492,18 @@ export const Products = () => {
                           <p className="text-[15px] !w-[100px] ">
                             <span className="font-[600]">{product?.sale}</span>
                             <span> VENTAS</span>
+                          </p>
+                        </TableCell>
+                        <TableCell
+                          style={{ minWidth: columns.minWidth }}
+                          className="!text-white"
+                        >
+                          <p className="text-[15px] !w-[100px] ">
+                            <Rating
+                              name="half-rating"
+                              size="small"
+                              defaultValue={product?.rating}
+                            />
                           </p>
                         </TableCell>
                         <TableCell

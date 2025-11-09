@@ -1,4 +1,4 @@
-import React, { useState, PureComponent, useContext } from "react";
+import React, { useState, PureComponent, useContext, useEffect } from "react";
 import DashboardBoxes from "../../Components/DashboardBoxes";
 import { FaRegSmileWink } from "react-icons/fa";
 import Button from "@mui/material/Button";
@@ -23,6 +23,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import SearchBox from "../../Components/SearchBox";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import { FcDeleteDatabase } from "react-icons/fc";
+import CircularProgress from "@mui/material/CircularProgress";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import "react-lazy-load-image-component/src/effects/blur.css";
+import Rating from "@mui/material/Rating";
 
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -38,6 +46,11 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { MyContext } from "../../App";
+import {
+  fetchDataFromApi,
+  deleteMultipleData,
+  deleteData,
+} from "../../utils/api";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -52,12 +65,17 @@ const columns = [
   {
     id: "price",
     label: "PRECIO",
-    minWidth: 100,
+    minWidth: 130,
   },
   {
     id: "sales",
     label: "VENTAS",
-    minWidth: 80,
+    minWidth: 100,
+  },
+  {
+    id: "rating",
+    label: "CALIFICACIÓN",
+    minWidth: 100,
   },
   {
     id: "action",
@@ -74,17 +92,21 @@ const columns = [
 const Dashboard = () => {
   const [isOpenOrderdProduct, setIsOpenOrderdProduct] = useState(null);
 
-  const isShowOrderdProduct = (index) => {
-    if (isOpenOrderdProduct === index) {
-      setIsOpenOrderdProduct(null);
-    } else {
-      setIsOpenOrderdProduct(index);
-    }
-  };
-
+  const [productCat, setProductCat] = React.useState("");
+  const [productSubCat, setProductSubCat] = React.useState("");
+  const [productThirdLavelCat, setProductThirdLavelCat] = useState("");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [categoryFilterVal, setcategoryFilterVal] = React.useState("");
+  const [/*categoryFilterVal,*/ setcategoryFilterVal] = React.useState("");
+  const [isLoading, setIsloading] = useState(false);
+  const [productData, setProductData] = useState([]);
+  const [sortedIds, setSortedIds] = useState([]);
+  const [productToDelete, setProductToDelete] = useState(null);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isMultiConfirmOpen, setIsMultiConfirmOpen] = useState(false);
+
+  const context = useContext(MyContext);
+
   const [chart1Data /*{setChart1Data}*/] = useState([
     {
       name: "ENERO",
@@ -160,7 +182,35 @@ const Dashboard = () => {
     },
   ]);
 
-  const context = useContext(MyContext);
+  useEffect(() => {
+    getProducts();
+  }, [context?.isOpenFullScreenPanel]);
+
+  const handleSelectAll = (e) => {
+    const isChecked = e.target.checked;
+
+    const updatedItems = productData.map((item) => ({
+      ...item,
+      checked: isChecked,
+    }));
+    setProductData(updatedItems);
+
+    if (isChecked) {
+      const ids = updatedItems.map((item) => item._id).sort((a, b) => a - b);
+
+      setSortedIds(ids);
+    } else {
+      setSortedIds([]);
+    }
+  };
+
+  const isShowOrderdProduct = (index) => {
+    if (isOpenOrderdProduct === index) {
+      setIsOpenOrderdProduct(null);
+    } else {
+      setIsOpenOrderdProduct(index);
+    }
+  };
 
   const handleChangePageCatFilter = (event) => {
     setcategoryFilterVal(event.target.value);
@@ -173,6 +223,119 @@ const Dashboard = () => {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  const handleCheckboxChange = (e, id /*, index*/) => {
+    const updatedItems = productData.map((item) =>
+      item._id === id ? { ...item, checked: !item.checked } : item
+    );
+
+    setProductData(updatedItems);
+
+    const selectedIds = updatedItems
+      .filter((item) => item.checked)
+      .map((item) => item._id)
+      .sort((a, b) => a - b);
+    setSortedIds(selectedIds);
+  };
+
+  const getProducts = async () => {
+    setIsloading(true);
+    fetchDataFromApi("/api/product/getAllProducts").then((res) => {
+      let productArr = [];
+      if (res?.error === false) {
+        for (let i = 0; i < res?.products?.length; i++) {
+          productArr[i] = res?.products[i];
+          productArr[i].checked = false;
+        }
+        setTimeout(() => {
+          setProductData(productArr);
+          setIsloading(false);
+        }, 300);
+      }
+    });
+  };
+
+  const handleChangeProductCat = (event) => {
+    setProductCat(event.target.value);
+    setProductSubCat("");
+    setProductThirdLavelCat("");
+    setIsloading(true);
+    fetchDataFromApi(
+      `/api/product/getAllProductsByCatId/${event.target.value}`
+    ).then((res) => {
+      if (res?.error === false) {
+        setProductData(res?.products);
+        setTimeout(() => {
+          setIsloading(false);
+        }, 300);
+      }
+    });
+  };
+
+  const handleChangeProductSubCat = (event) => {
+    setProductSubCat(event.target.value);
+    setProductCat("");
+    setProductThirdLavelCat("");
+    setIsloading(true);
+    fetchDataFromApi(
+      `/api/product/getAllProductsBySubCatId/${event.target.value}`
+    ).then((res) => {
+      if (res?.error === false) {
+        setProductData(res?.products);
+        setTimeout(() => {
+          setIsloading(false);
+        }, 300);
+      }
+    });
+  };
+
+  const handleChangeProductThirdLavelSubCat = (event) => {
+    setProductThirdLavelCat(event.target.value);
+    setProductCat("");
+    setProductSubCat("");
+    setIsloading(true);
+    fetchDataFromApi(
+      `/api/product/getAllProductsByThirdLavelCat/${event.target.value}`
+    ).then((res) => {
+      if (res?.error === false) {
+        setProductData(res?.products);
+        setTimeout(() => {
+          setIsloading(false);
+        }, 300);
+      }
+    });
+  };
+
+  const deleteProduct = (id) => {
+    setProductToDelete(id);
+    setIsConfirmOpen(true);
+  };
+
+  const confirmDeleteMultiple = async () => {
+    try {
+      await deleteMultipleData(`/api/product/deleteMultiple`, {
+        ids: sortedIds,
+      });
+      getProducts();
+      setSortedIds([]);
+      setIsMultiConfirmOpen(false);
+      context.alertBox("success", "PRODUCTOS ELIMINADOS");
+    } catch (error) {
+      console.error(error);
+      context.alertBox("error", "ERROR AL ELIMINAR ELEMENTOS");
+    }
+  };
+
+  const confirmDelete = () => {
+    if (productToDelete) {
+      deleteData(`/api/product/${productToDelete}`).then(() => {
+        getProducts();
+        setIsConfirmOpen(false);
+        setProductToDelete(null);
+        context.alertBox("success", "PRODUCTO ELIMINADO EXITOSAMENTE");
+      });
+    }
   };
 
   return (
@@ -205,377 +368,109 @@ const Dashboard = () => {
       </div>
       <DashboardBoxes />
 
-      <div className="card !my-4 shadow-md sm:rounded-lg dark:bg-gray-700">
-        <div className="flex !bg-gray-950 items-center justify-between !px-5 !py-5 border-b dark:border-gray-700">
-          <h2 className="!text-white text-[20px] font-[500] ">
-            PRODUCTOS
-            <span className="font-[400] text-[14px] !ml-3">
-              (PEQUEÑA DESCRIPCION)
-            </span>
-          </h2>
-        </div>
-
-        <div className="flex items-center w-full !text-white !bg-gray-800 !pl-5 !pr-5 !py-4 !border-b !border-gray-500 justify-between">
-          <div className="col !w-[20%]">
-            <h4 className="font-[bold] !text-[15px] !mb-2">CATEGORIA</h4>
-            <Select
-              className="w-full !text-white !font-[bold] !font-bold !bg-gray-600 !border-0 !rounded-md !shadow-none !border-b !border-gray-500"
-              size="small"
-              labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"
-              value={categoryFilterVal}
-              onChange={handleChangePageCatFilter}
-              label="CATEGORIA"
-            >
-              <MenuItem
-                value=""
-                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
+      <div className="card !my-4 !pt-5 shadow-md sm:rounded-lg dark:bg-gray-800">
+        <div className="flex items-center w-full !text-white !bg-gray-800 !pl-5 !pr-5 !py-4 !border-b !border-gray-500 justify-between !gap-4">
+          <div className="col !w-[25%]">
+            <h4 className="font-[bold] !text-[15px] !mb-2">CATEGORÍA</h4>
+            {context?.catData?.length !== 0 && (
+              <Select
+                style={{ zoom: "80%" }}
+                labelId="demo-simple-select-label"
+                id="productCatDrop"
+                size="small"
+                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                value={productCat}
+                label="Category"
+                onChange={handleChangeProductCat}
               >
-                <em>NINGUNO</em>
-              </MenuItem>
-              <MenuItem
-                value={10}
-                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
-              >
-                MAQUINAS
-              </MenuItem>
-              <MenuItem
-                value={20}
-                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
-              >
-                REPUESTOS
-              </MenuItem>
-              <MenuItem
-                value={30}
-                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
-              >
-                ACCESORIOS
-              </MenuItem>
-            </Select>
+                {context?.catData?.map((cat /*, index*/) => {
+                  return (
+                    <MenuItem
+                      value={cat?._id}
+                      className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                    >
+                      {cat?.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            )}
           </div>
 
-          <div className="col !w-[37%] !ml-auto flex items-center !gap-3">
-            <Button className="btn btn-sm flex items-center ">EXPORTAR</Button>
-            <Button
-              className="btn btn-sm"
-              onClick={() =>
-                context.setIsOpenFullScreenPanel({
-                  open: true,
-                  model: "NUEVO PRODUCTO",
-                })
-              }
-            >
-              AGREGAR PRODUCTO
-            </Button>
-          </div>
-        </div>
-
-        <div class="relative overflow-x-auto !mt-2  dark:!bg-gray-800">
-          <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-700 text-white">
-              <tr>
-                <th scope="col" class="!px-6 !pr-0 !py-3" width="10%">
-                  <div className="w-[60px]">
-                    <Checkbox className="!text-white" {...label} size="small" />
-                  </div>
-                </th>
-                <th scope="col" className="!px-0 !py-3 whitespace-nowrap">
-                  PRODUCTO
-                </th>
-                <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
-                  CATEGORIA
-                </th>
-                <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
-                  SUB CATEGORIA
-                </th>
-                <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
-                  MARCA
-                </th>
-                <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
-                  PRECIO
-                </th>
-                <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
-                  VENTAS
-                </th>
-                <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
-                  OPCIONES
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                <td className="!px-6 !pr-0 !py-2">
-                  <div className="w-[60px]">
-                    <Checkbox className="!text-white" {...label} size="small" />
-                  </div>
-                </td>
-                <td className="!px-0 !py-2">
-                  <div className="flex items-center !gap-4 w-[300px]">
-                    <div className="img w-[65px] h-[65px] rounded-md overflow-hidden group">
-                      <Link to="/product/45745">
-                        <img
-                          src="https://dcdn-us.mitiendanube.com/stores/937/060/products/whatsapp-image-2024-05-08-at-16-49-38-e8501bf0a251c9748817152035761232-1024-1024.jpeg"
-                          className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
-                        />
-                      </Link>
-                    </div>
-
-                    <div className="info w-[75%]">
-                      <h3 className="font-bold font-[bold] text-[12px] leading-4">
-                        <Link
-                          to="/product/45745"
-                          className="!text-white hover:!text-[white] !cursor-pointer"
+          <div className="col !w-[25%]">
+            <h4 className="font-[bold] !text-[15px] !mb-2">SUBCATEGORÍA</h4>
+            {context?.catData?.length !== 0 && (
+              <Select
+                style={{ zoom: "80%" }}
+                labelId="demo-simple-select-label"
+                id="productCatDrop"
+                size="small"
+                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                value={productSubCat}
+                label="Sub Category"
+                onChange={handleChangeProductSubCat}
+              >
+                {context?.catData?.map((cat /*, index*/) => {
+                  return (
+                    cat?.children?.length !== 0 &&
+                    cat?.children?.map((subCat /*, index*/) => {
+                      return (
+                        <MenuItem
+                          value={subCat?._id}
+                          className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
                         >
-                          MÁQUINA DE COSER INDUSTRIAL DE COLUMNA ZOJE ZJ
-                          9610SA-D3-M-3 MÁQUINA DE COSER INDUSTRIAL
-                        </Link>
-                      </h3>
-
-                      <p className="text-[12px] !mt-1">MÁQUINA</p>
-                    </div>
-                  </div>
-                </td>
-                <td className="!px-6 !py-2">ELECTRONICO</td>
-                <td className="!px-6 !py-2">MAQUINA</td>
-                <td className="!px-6 !py-2">SINGER</td>
-                <td className="!px-6 !py-2 ">
-                  <div class="flex !gap-1 flex-col">
-                    <span class="oldPrice line-through leading-3 text-[15px] font-[500]">
-                      $69.99
-                    </span>
-                    <span class="price text-[white] text-[15px] font-[600]">
-                      $99.00
-                    </span>
-                  </div>
-                </td>
-                <td className="!px-6 !py-2">
-                  <p className="text-[15px] w-[100px]">
-                    <span className="font-[600]">369 </span>
-                    VENTAS
-                  </p>
-                  <Progress value={40} type="warning" />
-                </td>
-
-                <td className="!px-6 !py-2">
-                  <div className="flex items-center !gap-1">
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <GrEdit className=" !text-[20px] " />
-                    </Button>
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <ImEye className="!text-[20px]" />
-                    </Button>
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <FaTrashAlt className="!text-[20px]" />
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                <td className="!px-6 !pr-0 !py-2">
-                  <div className="w-[60px]">
-                    <Checkbox className="!text-white" {...label} size="small" />
-                  </div>
-                </td>
-                <td className="!px-0 !py-2">
-                  <div className="flex items-center !gap-4 w-[300px]">
-                    <div className="img w-[65px] h-[65px] rounded-md overflow-hidden group">
-                      <Link to="/product/45745">
-                        <img
-                          src="https://dcdn-us.mitiendanube.com/stores/937/060/products/whatsapp-image-2024-05-08-at-16-49-38-e8501bf0a251c9748817152035761232-1024-1024.jpeg"
-                          className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
-                        />
-                      </Link>
-                    </div>
-
-                    <div className="info w-[75%]">
-                      <h3 className="font-bold font-[bold] text-[12px] leading-4">
-                        <Link
-                          to="/product/45745"
-                          className="!text-white hover:!text-[white] !cursor-pointer"
-                        >
-                          MÁQUINA DE COSER INDUSTRIAL DE COLUMNA ZOJE ZJ
-                          9610SA-D3-M-3 MÁQUINA DE COSER INDUSTRIAL
-                        </Link>
-                      </h3>
-
-                      <p className="text-[12px] !mt-1">MÁQUINA</p>
-                    </div>
-                  </div>
-                </td>
-                <td className="!px-6 !py-2">ELECTRONICO</td>
-                <td className="!px-6 !py-2">MAQUINA</td>
-                <td className="!px-6 !py-2">SINGER</td>
-                <td className="!px-6 !py-2 ">
-                  <div class="flex !gap-1 flex-col">
-                    <span class="oldPrice line-through leading-3 text-[15px] font-[500]">
-                      $69.99
-                    </span>
-                    <span class="price text-[white] text-[15px] font-[600]">
-                      $99.00
-                    </span>
-                  </div>
-                </td>
-                <td className="!px-6 !py-2">
-                  <p className="text-[15px] w-[100px]">
-                    <span className="font-[600]">369 </span>
-                    VENTAS
-                  </p>
-                  <Progress value={40} type="warning" />
-                </td>
-
-                <td className="!px-6 !py-2">
-                  <div className="flex items-center !gap-1">
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <GrEdit className=" !text-[20px] " />
-                    </Button>
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <ImEye className="!text-[20px]" />
-                    </Button>
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <FaTrashAlt className="!text-[20px]" />
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                <td className="!px-6 !pr-0 !py-2">
-                  <div className="w-[60px]">
-                    <Checkbox className="!text-white" {...label} size="small" />
-                  </div>
-                </td>
-                <td className="!px-0 !py-2">
-                  <div className="flex items-center !gap-4 w-[300px]">
-                    <div className="img w-[65px] h-[65px] rounded-md overflow-hidden group">
-                      <Link to="/product/45745">
-                        <img
-                          src="https://dcdn-us.mitiendanube.com/stores/937/060/products/whatsapp-image-2024-05-08-at-16-49-38-e8501bf0a251c9748817152035761232-1024-1024.jpeg"
-                          className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
-                        />
-                      </Link>
-                    </div>
-
-                    <div className="info w-[75%]">
-                      <h3 className="font-bold font-[bold] text-[12px] leading-4">
-                        <Link
-                          to="/product/45745"
-                          className="!text-white hover:!text-[white] !cursor-pointer"
-                        >
-                          MÁQUINA DE COSER INDUSTRIAL DE COLUMNA ZOJE ZJ
-                          9610SA-D3-M-3 MÁQUINA DE COSER INDUSTRIAL
-                        </Link>
-                      </h3>
-
-                      <p className="text-[12px] !mt-1">MÁQUINA</p>
-                    </div>
-                  </div>
-                </td>
-                <td className="!px-6 !py-2">ELECTRONICO</td>
-                <td className="!px-6 !py-2">MAQUINA</td>
-                <td className="!px-6 !py-2">SINGER</td>
-                <td className="!px-6 !py-2 ">
-                  <div class="flex !gap-1 flex-col">
-                    <span class="oldPrice line-through leading-3 text-[15px] font-[500]">
-                      $69.99
-                    </span>
-                    <span class="price text-[white] text-[15px] font-[600]">
-                      $99.00
-                    </span>
-                  </div>
-                </td>
-                <td className="!px-6 !py-2">
-                  <p className="text-[15px] w-[100px]">
-                    <span className="font-[600]">369 </span>
-                    VENTAS
-                  </p>
-                  <Progress value={40} type="warning" />
-                </td>
-
-                <td className="!px-6 !py-2">
-                  <div className="flex items-center !gap-1">
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <GrEdit className=" !text-[20px] " />
-                    </Button>
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <ImEye className="!text-[20px]" />
-                    </Button>
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <FaTrashAlt className="!text-[20px]" />
-                    </Button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div className="flex items-center justify-end !pt-5 !pb-5 !px-4 !bg-gray-100 !border-t !border-gray-500">
-          <Pagination count={10} className="custom-pagination" />
-        </div>
-      </div>
-
-      <div className="card !my-4 shadow-md sm:rounded-lg dark:bg-gray-700">
-        <div className="flex !bg-gray-950 items-center justify-between !px-5 !py-5 border-b dark:border-gray-700">
-          <h2 className="text-white text-[20px] !font-[500] ">
-            PRODUCTOS
-            <span className="font-[400] text-[14px] !ml-3">
-              (MATERIAL UI DESCRIPCION)
-            </span>
-          </h2>
-        </div>
-
-        <div className="flex items-center w-full !text-white !bg-gray-800 !pl-5 !pr-5 !py-4 !border-b !border-gray-500 justify-between">
-          <div className="col !w-[20%]">
-            <h4 className="font-[bold] !text-[15px] !mb-2">CATEGORIA</h4>
-            <Select
-              className="w-full !text-white !font-[bold] !font-bold !bg-gray-600 !border-0 !rounded-md !shadow-none !border-b !border-gray-500"
-              size="small"
-              labelId="demo-simple-select-standard-label"
-              id="demo-simple-select-standard"
-              value={categoryFilterVal}
-              onChange={handleChangePageCatFilter}
-              label="CATEGORIA"
-            >
-              <MenuItem
-                value=""
-                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
-              >
-                <em>NINGUNO</em>
-              </MenuItem>
-              <MenuItem
-                value={10}
-                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
-              >
-                MAQUINAS
-              </MenuItem>
-              <MenuItem
-                value={20}
-                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
-              >
-                REPUESTOS
-              </MenuItem>
-              <MenuItem
-                value={30}
-                className="hover:!bg-gray-700 hover:!text-white !font-[bold] !font-bold"
-              >
-                ACCESORIOS
-              </MenuItem>
-            </Select>
+                          {subCat?.name}
+                        </MenuItem>
+                      );
+                    })
+                  );
+                })}
+              </Select>
+            )}
           </div>
 
-          <div className="!w-[35%] !ml-auto flex items-center !gap-3">
-            <Button className="btn btn-sm flex items-center ">EXPORTAR</Button>
-            <Button
-              className="btn btn-sm"
-              onClick={() =>
-                context.setIsOpenFullScreenPanel({
-                  open: true,
-                  model: "NUEVO PRODUCTO",
-                })
-              }
-            >
-              AGREGAR PRODUCTO
-            </Button>
+          <div className="col !w-[25%]">
+            <h4 className="font-[bold] !text-[15px] !mb-2">
+              CATEGORÍA TERCER NIVEL
+            </h4>
+            {context?.catData?.length !== 0 && (
+              <Select
+                style={{ zoom: "80%" }}
+                labelId="demo-simple-select-label"
+                id="productCatDrop"
+                size="small"
+                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                value={productThirdLavelCat}
+                label="Sub Category"
+                onChange={handleChangeProductThirdLavelSubCat}
+              >
+                {context?.catData?.map((cat) => {
+                  return (
+                    cat?.children?.length !== 0 &&
+                    cat?.children?.map((subCat) => {
+                      return (
+                        subCat?.children?.length !== 0 &&
+                        subCat?.children?.map((thirdLavelCat, index) => {
+                          return (
+                            <MenuItem
+                              value={thirdLavelCat?._id}
+                              key={index}
+                              className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                            >
+                              {thirdLavelCat?.name}
+                            </MenuItem>
+                          );
+                        })
+                      );
+                    })
+                  );
+                })}
+              </Select>
+            )}
+          </div>
+
+          <div className="col !w-[20%] ml-auto">
+            <SearchBox />
           </div>
         </div>
 
@@ -584,7 +479,17 @@ const Dashboard = () => {
             <TableHead className="!bg-gray-950">
               <TableRow>
                 <TableCell>
-                  <Checkbox {...label} size="small" className="!text-white" />
+                  <Checkbox
+                    {...label}
+                    size="small"
+                    className="!text-white"
+                    onChange={handleSelectAll}
+                    checked={
+                      productData?.length > 0
+                        ? productData.every((item) => item.checked)
+                        : false
+                    }
+                  />
                 </TableCell>
 
                 {columns.map((column) => (
@@ -599,270 +504,159 @@ const Dashboard = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
-                <TableCell style={{ minWidth: columns.minWidth }}>
-                  <Checkbox {...label} size="small" className="!text-white" />
-                </TableCell>
-                <TableCell style={{ minWidth: columns.minWidth }}>
-                  <div className="flex items-center !gap-4 w-[300px] ">
-                    <div className="img w-[65px] h-[65px] rounded-md overflow-hidden group">
-                      <Link to="/product/45745">
-                        <img
-                          src="https://dcdn-us.mitiendanube.com/stores/937/060/products/whatsapp-image-2024-05-08-at-16-49-38-e8501bf0a251c9748817152035761232-1024-1024.jpeg"
-                          className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
-                        />
-                      </Link>
-                    </div>
+              {isLoading === false ? (
+                productData?.length !== 0 &&
+                productData
+                  ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  ?.map((product, index) => {
+                    return (
+                      <TableRow
+                        key={index}
+                        className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200"
+                      >
+                        <TableCell style={{ minWidth: columns.minWidth }}>
+                          <Checkbox
+                            {...label}
+                            size="small"
+                            className="!text-white"
+                            checked={product.checked === true ? true : false}
+                            onChange={(e) =>
+                              handleCheckboxChange(e, product._id, index)
+                            }
+                          />
+                        </TableCell>
+                        <TableCell style={{ minWidth: columns.minWidth }}>
+                          <div className="flex items-center !gap-4 w-[300px] ">
+                            <div className="img !w-[85px] !h-[85px] rounded-md overflow-hidden group !min-w-[85px]">
+                              <Link
+                                to={`/product/${product?._id}`}
+                                data-discover="true"
+                              >
+                                <LazyLoadImage
+                                  alt={"image"}
+                                  effect="blur"
+                                  src={product?.images[0]}
+                                  className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+                                />
+                              </Link>
+                            </div>
 
-                    <div className="info w-[75%]">
-                      <h3 className="!font-bold !font-[bold] text-[12px] leading-4">
-                        <Link
-                          to="/product/45745"
-                          className="!text-white hover:!text-[white] !cursor-pointer"
+                            <div className="info w-[75%]">
+                              <h3 className=" !font-[600] text-[12px] leading-4">
+                                <Link
+                                  to={`/product/${product?._id}`}
+                                  data-discover="true"
+                                  className="!text-white hover:!text-[white] !cursor-pointer"
+                                >
+                                  {product?.name}
+                                </Link>
+                              </h3>
+
+                              <p className="!text-[15px] !font-[bold] !text-white !mt-1">
+                                {product?.brand}
+                              </p>
+                            </div>
+                          </div>
+                        </TableCell>
+                        <TableCell
+                          style={{ minWidth: columns.minWidth }}
+                          className="!text-white"
                         >
-                          MÁQUINA DE COSER INDUSTRIAL DE COLUMNA ZOJE ZJ
-                          9610SA-D3-M-3 MÁQUINA DE COSER INDUSTRIAL
-                        </Link>
-                      </h3>
-
-                      <p className="text-[12px] font-[bold] !text-white !mt-1">
-                        MÁQUINA
-                      </p>
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell
-                  style={{ minWidth: columns.minWidth }}
-                  className="!text-white"
-                >
-                  ELECTRONICO
-                </TableCell>
-                <TableCell
-                  style={{ minWidth: columns.minWidth }}
-                  className="!text-white"
-                >
-                  MAQUINA
-                </TableCell>
-
-                <TableCell
-                  style={{ minWidth: columns.minWidth }}
-                  className="!text-white"
-                >
-                  <div class="flex !gap-1 flex-col">
-                    <span class="oldPrice line-through leading-3 text-[15px] font-[500]">
-                      $69.99
-                    </span>
-                    <span class="price text-[white] text-[15px] font-[600]">
-                      $99.00
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell
-                  style={{ minWidth: columns.minWidth }}
-                  className="!text-white"
-                >
-                  <p className="text-[15px] w-[100px]">
-                    <span className="font-[600]">369 </span>
-                    VENTAS
-                  </p>
-                  <Progress value={40} type="success" />
-                </TableCell>
-                <TableCell
-                  style={{ minWidth: columns.minWidth }}
-                  className="!text-white"
-                >
-                  <div className="flex items-center !gap-1">
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <GrEdit className=" !text-[20px] " />
-                    </Button>
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <ImEye className="!text-[20px]" />
-                    </Button>
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <FaTrashAlt className="!text-[20px]" />
-                    </Button>
-                  </div>
-                </TableCell>
-              </TableRow>
-
-              <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
-                <TableCell style={{ minWidth: columns.minWidth }}>
-                  <Checkbox {...label} size="small" className="!text-white" />
-                </TableCell>
-                <TableCell style={{ minWidth: columns.minWidth }}>
-                  <div className="flex items-center !gap-4 w-[300px] ">
-                    <div className="img w-[65px] h-[65px] rounded-md overflow-hidden group">
-                      <Link to="/product/45745">
-                        <img
-                          src="https://dcdn-us.mitiendanube.com/stores/937/060/products/whatsapp-image-2024-05-08-at-16-49-38-e8501bf0a251c9748817152035761232-1024-1024.jpeg"
-                          className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
-                        />
-                      </Link>
-                    </div>
-
-                    <div className="info w-[75%]">
-                      <h3 className="!font-bold !font-[bold] text-[12px] leading-4">
-                        <Link
-                          to="/product/45745"
-                          className="!text-white hover:!text-[white] !cursor-pointer"
+                          {product?.catName}
+                        </TableCell>
+                        <TableCell
+                          style={{ minWidth: columns.minWidth }}
+                          className="!text-white"
                         >
-                          MÁQUINA DE COSER INDUSTRIAL DE COLUMNA ZOJE ZJ
-                          9610SA-D3-M-3 MÁQUINA DE COSER INDUSTRIAL
-                        </Link>
-                      </h3>
+                          {product?.subCat}
+                        </TableCell>
 
-                      <p className="text-[12px] font-[bold] !text-white !mt-1">
-                        MÁQUINA
-                      </p>
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell
-                  style={{ minWidth: columns.minWidth }}
-                  className="!text-white"
-                >
-                  ELECTRONICO
-                </TableCell>
-                <TableCell
-                  style={{ minWidth: columns.minWidth }}
-                  className="!text-white"
-                >
-                  MAQUINA
-                </TableCell>
-
-                <TableCell
-                  style={{ minWidth: columns.minWidth }}
-                  className="!text-white"
-                >
-                  <div class="flex !gap-1 flex-col">
-                    <span class="oldPrice line-through leading-3 text-[15px] font-[500]">
-                      $69.99
-                    </span>
-                    <span class="price text-[white] text-[15px] font-[600]">
-                      $99.00
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell
-                  style={{ minWidth: columns.minWidth }}
-                  className="!text-white"
-                >
-                  <p className="text-[15px] w-[100px]">
-                    <span className="font-[600]">369 </span>
-                    VENTAS
-                  </p>
-                  <Progress value={40} type="success" />
-                </TableCell>
-                <TableCell
-                  style={{ minWidth: columns.minWidth }}
-                  className="!text-white"
-                >
-                  <div className="flex items-center !gap-1">
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <GrEdit className=" !text-[20px] " />
-                    </Button>
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <ImEye className="!text-[20px]" />
-                    </Button>
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <FaTrashAlt className="!text-[20px]" />
-                    </Button>
-                  </div>
-                </TableCell>
-              </TableRow>
-
-              <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
-                <TableCell style={{ minWidth: columns.minWidth }}>
-                  <Checkbox {...label} size="small" className="!text-white" />
-                </TableCell>
-                <TableCell style={{ minWidth: columns.minWidth }}>
-                  <div className="flex items-center !gap-4 w-[300px] ">
-                    <div className="img w-[65px] h-[65px] rounded-md overflow-hidden group">
-                      <Link to="/product/45745">
-                        <img
-                          src="https://dcdn-us.mitiendanube.com/stores/937/060/products/whatsapp-image-2024-05-08-at-16-49-38-e8501bf0a251c9748817152035761232-1024-1024.jpeg"
-                          className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
-                        />
-                      </Link>
-                    </div>
-
-                    <div className="info w-[75%]">
-                      <h3 className="!font-bold !font-[bold] text-[12px] leading-4">
-                        <Link
-                          to="/product/45745"
-                          className="!text-white hover:!text-[white] !cursor-pointer"
+                        <TableCell
+                          style={{ minWidth: columns.minWidth }}
+                          className="!text-white"
                         >
-                          MÁQUINA DE COSER INDUSTRIAL DE COLUMNA ZOJE ZJ
-                          9610SA-D3-M-3 MÁQUINA DE COSER INDUSTRIAL
-                        </Link>
-                      </h3>
+                          <div class="flex !gap-1 flex-col">
+                            <span class="oldPrice line-through leading-3 text-[15px] font-[500]">
+                              &#36; {product?.oldPrice}
+                            </span>
+                            <span class="price text-[white] text-[15px] font-[600]">
+                              &#36; {product?.price}
+                            </span>
+                          </div>
+                        </TableCell>
+                        <TableCell
+                          style={{ minWidth: columns.minWidth }}
+                          className="!text-white"
+                        >
+                          <p className="text-[15px] !w-[100px] ">
+                            <span className="font-[600]">{product?.sale}</span>
+                            <span> VENTAS</span>
+                          </p>
+                        </TableCell>
+                        <TableCell
+                          style={{ minWidth: columns.minWidth }}
+                          className="!text-white"
+                        >
+                          <p className="text-[15px] !w-[100px] ">
+                            <Rating
+                              name="half-rating"
+                              size="small"
+                              defaultValue={product?.rating}
+                            />
+                          </p>
+                        </TableCell>
+                        <TableCell
+                          style={{ minWidth: columns.minWidth }}
+                          className="!text-white"
+                        >
+                          <div className="flex items-center !gap-1">
+                            <Button
+                              className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                              onClick={() =>
+                                context.setIsOpenFullScreenPanel({
+                                  open: true,
+                                  model: "EDITAR PRODUCTO",
+                                  id: product?._id,
+                                })
+                              }
+                            >
+                              <GrEdit className=" !text-[20px] " />
+                            </Button>
+                            <Link href={`/product/${product?._id}`} passHref>
+                              <Button className="!-[35px] !h-[35px] !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                                <ImEye className="!text-[20px]" />
+                              </Button>
+                            </Link>
 
-                      <p className="text-[12px] font-[bold] !text-white !mt-1">
-                        MÁQUINA
-                      </p>
-                    </div>
-                  </div>
-                </TableCell>
-                <TableCell
-                  style={{ minWidth: columns.minWidth }}
-                  className="!text-white"
-                >
-                  ELECTRONICO
-                </TableCell>
-                <TableCell
-                  style={{ minWidth: columns.minWidth }}
-                  className="!text-white"
-                >
-                  MAQUINA
-                </TableCell>
-
-                <TableCell
-                  style={{ minWidth: columns.minWidth }}
-                  className="!text-white"
-                >
-                  <div class="flex !gap-1 flex-col">
-                    <span class="oldPrice line-through leading-3 text-[15px] font-[500]">
-                      $69.99
-                    </span>
-                    <span class="price text-[white] text-[15px] font-[600]">
-                      $99.00
-                    </span>
-                  </div>
-                </TableCell>
-                <TableCell
-                  style={{ minWidth: columns.minWidth }}
-                  className="!text-white"
-                >
-                  <p className="text-[15px] w-[100px]">
-                    <span className="font-[600]">369 </span>
-                    VENTAS
-                  </p>
-                  <Progress value={40} type="success" />
-                </TableCell>
-                <TableCell
-                  style={{ minWidth: columns.minWidth }}
-                  className="!text-white"
-                >
-                  <div className="flex items-center !gap-1">
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <GrEdit className=" !text-[20px] " />
-                    </Button>
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <ImEye className="!text-[20px]" />
-                    </Button>
-                    <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                      <FaTrashAlt className="!text-[20px]" />
-                    </Button>
-                  </div>
-                </TableCell>
-              </TableRow>
+                            <Button
+                              className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                              onClick={() => deleteProduct(product?._id)}
+                            >
+                              <FaTrashAlt className="!text-[20px]" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+              ) : (
+                <>
+                  <TableRow>
+                    <TableCell colspan={8}>
+                      <div className="flex items-center justify-center w-full min-h-[400px]">
+                        <CircularProgress className="!text-white" />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                </>
+              )}
             </TableBody>
           </Table>
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={10}
+          count={productData?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -870,6 +664,86 @@ const Dashboard = () => {
           className="!bg-gray-100 !text-balck !border-t !border-gray-500"
         />
       </div>
+
+      <Dialog
+        open={isConfirmOpen}
+        onClose={() => setIsConfirmOpen(false)}
+        PaperProps={{
+          style: {
+            borderRadius: "15px",
+            padding: "20px",
+            textAlign: "center",
+            width: "!360px",
+          },
+        }}
+      >
+        <div className="flex flex-col items-center justify-center">
+          <FcDeleteDatabase className="text-[120px] !mb-2" />
+          <DialogTitle
+            className="!text-[20px] text-[#082c55] !font-bold !pb-1 !text-center"
+            sx={{ lineHeight: 1.2 }}
+          >
+            ¿DESEA ELIMINAR ESTE PRODUCTO?
+          </DialogTitle>
+          <p className="text-gray-800 text-[16px] !mb-4">
+            ESTA ACCIÓN NO SE PUEDE DESHACER
+          </p>
+        </div>
+        <div className="flex justify-center !gap-3 !pb-2">
+          <Button
+            onClick={confirmDelete}
+            className="!bg-[#1976d2] hover:!bg-[#0d47a1] !text-white !font-bold !px-4 !py-2"
+          >
+            Sí, eliminar
+          </Button>
+          <Button
+            onClick={() => setIsConfirmOpen(false)}
+            className="!bg-[#d32f2f] hover:!bg-[#9a0007] !text-white !font-bold !px-4 !py-2"
+          >
+            Cancelar
+          </Button>
+        </div>
+      </Dialog>
+
+      <Dialog
+        open={isMultiConfirmOpen}
+        onClose={() => setIsMultiConfirmOpen(false)}
+        PaperProps={{
+          style: {
+            borderRadius: "15px",
+            padding: "20px",
+            textAlign: "center",
+            width: "!360px",
+          },
+        }}
+      >
+        <div className="flex flex-col items-center justify-center">
+          <FcDeleteDatabase className="text-[120px] !mb-2" />
+          <DialogTitle
+            className="!text-[20px] text-[#082c55] !font-bold !pb-1 !text-center"
+            sx={{ lineHeight: 1.2 }}
+          >
+            ¿DESEA ELIMINAR TODOS LOS PRODUCTOS SELECCIONADOS?
+          </DialogTitle>
+          <p className="text-gray-800 text-[16px] !mb-4">
+            ESTA ACCIÓN NO SE PUEDE DESHACER
+          </p>
+        </div>
+        <div className="flex justify-center !gap-3 !pb-2">
+          <Button
+            onClick={confirmDeleteMultiple}
+            className="!bg-[#1976d2] hover:!bg-[#0d47a1] !text-white !font-bold !px-4 !py-2"
+          >
+            Sí, eliminar
+          </Button>
+          <Button
+            onClick={() => setIsMultiConfirmOpen(false)}
+            className="!bg-[#d32f2f] hover:!bg-[#9a0007] !text-white !font-bold !px-4 !py-2"
+          >
+            Cancelar
+          </Button>
+        </div>
+      </Dialog>
 
       <div className="card !my-4 shadow-md sm:rounded-lg dark:bg-gray-700">
         <div className="flex !bg-gray-950 items-center justify-between !px-5 !py-5 border-b dark:border-gray-700">
