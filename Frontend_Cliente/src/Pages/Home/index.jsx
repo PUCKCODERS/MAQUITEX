@@ -17,9 +17,18 @@ import BlogItem from "../../components/BlogItem";
 import HomeBannerV2 from "../../components/HomeSliderV2";
 import BannerBoxV2 from "../../components/bannerBoxV2";
 import AdsBannerSliderV2 from "../../components/AdsBannerSliderV2";
+import { useEffect } from "react";
+import { fetchDataFromApi } from "../../utils/api";
+import { useState } from "react";
 
 const Home = () => {
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    fetchDataFromApi("/api/homeSlides").then((res) => {
+      console.log(res);
+    });
+  }, []);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

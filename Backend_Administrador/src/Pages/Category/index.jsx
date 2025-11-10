@@ -25,8 +25,6 @@ import { deleteData, fetchDataFromApi } from "../../utils/api";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
-const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
 const columns = [
   { id: "image", label: "IMAGEN", minWidth: 150 },
   { id: "catName", label: "NOMBRE", minWidth: 150 },
@@ -101,15 +99,11 @@ export const CategoryList = () => {
         </div>
       </div>
 
-      <div className="card !my-4 !pt-5 shadow-md sm:rounded-lg dark:bg-gray-800">
+      <div className="card !my-4 !pt-5 shadow-md sm:rounded-lg dark:bg-gray-950">
         <TableContainer sx={{ maxHeight: 440 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead className="!bg-gray-950">
               <TableRow>
-                <TableCell width={60}>
-                  <Checkbox {...label} size="small" className="!text-white" />
-                </TableCell>
-
                 {columns.map((column) => (
                   <TableCell
                     width={column.minWidth}
@@ -129,15 +123,8 @@ export const CategoryList = () => {
                       key={index}
                       className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200"
                     >
-                      <TableCell>
-                        <Checkbox
-                          {...label}
-                          size="small"
-                          className="!text-white"
-                        />
-                      </TableCell>
                       <TableCell width={100}>
-                        <div className="flex items-center !gap-4 w-[80px]">
+                        <div className="flex items-center !gap-4 w-[60px]">
                           <div className="img w-full rounded-md overflow-hidden !bg-Transparent group">
                             <Link to="/product/45745" data-discover="true">
                               <LazyLoadImage
@@ -152,7 +139,7 @@ export const CategoryList = () => {
                       </TableCell>
 
                       <TableCell width={100}>
-                        <span className="!text-[15px] !font-bold !font-[bold] !inline-block !rounded-md !p-1 !px-2 !bg-gray-100">
+                        <span className="!text-[18px] !font-bold !font-[bold] !inline-block !rounded-md !p-1 !px-2 text-white">
                           {item?.name}
                         </span>
                       </TableCell>

@@ -10,7 +10,7 @@ const CategoryPanel = (props) => {
   };
 
   const DrawerList = (
-    <Box sx={{ width: 250 }} role="presentation" className="categoryPanel">
+    <Box sx={{ width: 300 }} role="presentation" className="categoryPanel">
       <h3 className="!p-3 text-[16px] text-[#082c55] font-[bold] font-bold flex items-center justify-between">
         TODAS LAS CATEGORÍAS{" "}
         <IoClose
@@ -19,7 +19,7 @@ const CategoryPanel = (props) => {
         />
       </h3>
 
-      <CategoryCollapse />
+      {props?.data?.length !== 0 && <CategoryCollapse data={props?.data} />}
     </Box>
   );
 

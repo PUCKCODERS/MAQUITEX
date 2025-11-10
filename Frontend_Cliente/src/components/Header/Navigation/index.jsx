@@ -6,9 +6,21 @@ import { Link } from "react-router-dom";
 import { FaTruckFast } from "react-icons/fa6";
 import CategoryPanel from "./CategoryPanel";
 import "../Navigation/style.css";
+import { useEffect } from "react";
+import { fetchDataFromApi } from "../../../utils/api";
 
 const Navigation = () => {
   const [isOpenCatPanel, setIsOpenCatPanel] = useState(false);
+  const [catData, setCatData] = useState([]);
+
+  useEffect(() => {
+    fetchDataFromApi("/api/category").then((res) => {
+      if (res?.error === false) {
+        setCatData(res?.data);
+      }
+      console.log(res);
+    });
+  }, []);
 
   const openCategoryPanel = () => {
     setIsOpenCatPanel(true);
@@ -38,129 +50,70 @@ const Navigation = () => {
                   </Button>
                 </Link>
               </li>
-              <li className="list-none !text-[#082c55] font-bold font-[bold] relative">
-                <Link to="/" className="link transition">
-                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
-                    MAQUINAS
-                  </Button>
-                </Link>
 
-                <div className="submenu absolute !top-[135%] !left-[0%] min-w-[200px] bg-[#ebebeb] shadow-[3px_3px_3px_#274a72] opacity-0 transition-all z-10 ">
-                  <ul>
-                    <li className="list-none w-full relative">
-                      <Link to="/" className="w-full !mb-1">
-                        <Button className="!text-[#082c55] hover:!text-[#fff] hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
-                          SINGER
+              {catData?.length !== 0 &&
+                catData?.map((cat, index) => {
+                  return (
+                    <li
+                      className="list-none !text-[#082c55] font-bold font-[bold] relative"
+                      key={index}
+                    >
+                      <Link to="/productListing" className="link transition">
+                        <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
+                          {cat?.name}
                         </Button>
+                      </Link>
 
-                        <div className="submenu absolute !top-[0%] !left-[100%] min-w-[200px] bg-white shadow-[3px_3px_3px_#274a72] opacity-0 transition-all">
+                      {cat?.children?.length !== 0 && (
+                        <div className="submenu absolute !top-[135%] !left-[0%] min-w-[200px] bg-[#ebebeb] shadow-[3px_3px_3px_#274a72] opacity-0 transition-all z-10 ">
                           <ul>
-                            <li className="list-none w-full">
-                              <Link to="/" className="w-full">
-                                <Button className="!text-[#082c55] hover:!text-[#fff] !bg-[#fff] hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
-                                  SINGER
-                                </Button>
-                              </Link>
-                            </li>
+                            {cat?.children?.map((subCat, index_) => {
+                              return (
+                                <li
+                                  className="list-none w-full relative"
+                                  key={index_}
+                                >
+                                  <Link to="/" className="w-full !mb-1">
+                                    <Button className="!text-[#082c55] hover:!text-[#fff] hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
+                                      {subCat?.name}
+                                    </Button>
 
-                            <li className="list-none w-full">
-                              <Link to="/" className="w-full">
-                                <Button className="hover:!text-[#fff] !bg-[#fff] hover:!bg-[#082c55] !text-[#082c55] !w-full !text-left !justify-start !rounded-none">
-                                  SINGER
-                                </Button>
-                              </Link>
-                            </li>
-
-                            <li className="list-none w-full">
-                              <Link to="/" className="w-full">
-                                <Button className="!text-[#082c55] hover:!text-[#fff] !bg-[#fff] hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
-                                  SINGER
-                                </Button>
-                              </Link>
-                            </li>
-
-                            <li className="list-none w-full">
-                              <Link to="/" className="w-full">
-                                <Button className="!text-[#082c55] hover:!text-[#fff] !bg-[#fff] hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
-                                  SINGER
-                                </Button>
-                              </Link>
-                            </li>
-
-                            <li className="list-none w-full">
-                              <Link to="/" className="w-full">
-                                <Button className="!text-[#082c55] hover:!text-[#fff] !bg-[#fff] hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
-                                  SINGER
-                                </Button>
-                              </Link>
-                            </li>
+                                    {subCat?.children?.length !== 0 && (
+                                      <div className="submenu absolute !top-[0%] !left-[100%] min-w-[200px] bg-white shadow-[3px_3px_3px_#274a72] opacity-0 transition-all">
+                                        <ul>
+                                          {subCat?.children?.map(
+                                            (thirdLavelCat, index__) => {
+                                              return (
+                                                <li
+                                                  className="list-none w-full"
+                                                  key={index__}
+                                                >
+                                                  <Link
+                                                    to="/"
+                                                    className="w-full"
+                                                  >
+                                                    <Button className="!text-[#082c55] hover:!text-[#fff] !bg-[#fff] hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
+                                                      {thirdLavelCat?.name}
+                                                    </Button>
+                                                  </Link>
+                                                </li>
+                                              );
+                                            }
+                                          )}
+                                        </ul>
+                                      </div>
+                                    )}
+                                  </Link>
+                                </li>
+                              );
+                            })}
                           </ul>
                         </div>
-                      </Link>
+                      )}
                     </li>
+                  );
+                })}
 
-                    <li className="list-none w-full">
-                      <Link to="/" className="w-full">
-                        <Button className="hover:!text-[#fff]  hover:!bg-[#082c55] !text-[#082c55] !w-full !text-left !justify-start !rounded-none">
-                          SINGER
-                        </Button>
-                      </Link>
-                    </li>
-
-                    <li className="list-none w-full">
-                      <Link to="/" className="w-full">
-                        <Button className="!text-[#082c55] hover:!text-[#fff]  hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
-                          SINGER
-                        </Button>
-                      </Link>
-                    </li>
-
-                    <li className="list-none w-full">
-                      <Link to="/" className="w-full">
-                        <Button className="!text-[#082c55] hover:!text-[#fff]  hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
-                          SINGER
-                        </Button>
-                      </Link>
-                    </li>
-
-                    <li className="list-none w-full">
-                      <Link to="/" className="w-full">
-                        <Button className="!text-[#082c55] hover:!text-[#fff]  hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
-                          SINGER
-                        </Button>
-                      </Link>
-                    </li>
-                  </ul>
-                </div>
-              </li>
-              <li className="list-none !text-[#082c55] font-bold font-[bold]">
-                <Link to="/" className="link transition">
-                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
-                    CORTE
-                  </Button>
-                </Link>
-              </li>
-              <li className="list-none !text-[#082c55] font-bold font-[bold]">
-                <Link to="/" className="link transition">
-                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
-                    PLANCHADO
-                  </Button>
-                </Link>
-              </li>
-              <li className="list-none !text-[#082c55] font-bold font-[bold]">
-                <Link to="/" className="link transition">
-                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
-                    ACCESORIOS
-                  </Button>
-                </Link>
-              </li>
-              <li className="list-none !text-[#082c55] font-bold font-[bold]">
-                <Link to="/" className="link transition">
-                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
-                    REPUESTOS
-                  </Button>
-                </Link>
-              </li>
               <li className="list-none !text-[#082c55] font-bold font-[bold]">
                 <Link to="/" className="link transition">
                   <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
@@ -188,10 +141,14 @@ const Navigation = () => {
       </nav>
 
       {/*Componentes del panel de categoria*/}
-      <CategoryPanel
-        isOpenCatPanel={isOpenCatPanel}
-        setIsOpenCatPanel={setIsOpenCatPanel}
-      />
+
+      {catData?.length !== 0 && (
+        <CategoryPanel
+          isOpenCatPanel={isOpenCatPanel}
+          setIsOpenCatPanel={setIsOpenCatPanel}
+          data={catData}
+        />
+      )}
     </>
   );
 };
