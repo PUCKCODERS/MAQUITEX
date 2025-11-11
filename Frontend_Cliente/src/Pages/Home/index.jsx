@@ -23,10 +23,11 @@ import { useState } from "react";
 
 const Home = () => {
   const [value, setValue] = useState(0);
+  const [homeSlidesData, setHomeSlidesData] = useState([]);
 
   useEffect(() => {
     fetchDataFromApi("/api/homeSlides").then((res) => {
-      console.log(res);
+      setHomeSlidesData(res?.data);
     });
   }, []);
 
@@ -36,7 +37,7 @@ const Home = () => {
 
   return (
     <>
-      <HomeSlider />
+      {homeSlidesData?.length !== 0 && <HomeSlider data={homeSlidesData} />}
 
       <section className="!py-6">
         <div className="container flex !gap-3">

@@ -9,6 +9,7 @@ import { MyContext } from "../../App";
 import { deleteImages, postData } from "../../utils/api";
 import CircularProgress from "@mui/material/CircularProgress";
 import { GiSave } from "react-icons/gi";
+import { useNavigate } from "react-router-dom";
 
 const AddHomeSlide = () => {
   const [formFields, setFormFields] = useState({
@@ -19,6 +20,8 @@ const AddHomeSlide = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const context = useContext(MyContext);
+
+  const history = useNavigate();
 
   const setPreviewsFun = (previewsArr) => {
     const imgArr = [...previews];
@@ -66,6 +69,8 @@ const AddHomeSlide = () => {
         context.setIsOpenFullScreenPanel({
           open: false,
         });
+
+        history("/homeSlider/list");
       }, 2000);
     });
   };
