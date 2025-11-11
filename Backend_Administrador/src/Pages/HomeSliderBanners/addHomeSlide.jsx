@@ -21,7 +21,7 @@ const AddHomeSlide = () => {
   const context = useContext(MyContext);
 
   const setPreviewsFun = (previewsArr) => {
-    const imgArr = previews;
+    const imgArr = [...previews];
     for (let i = 0; i < previewsArr.length; i++) {
       imgArr.push(previewsArr[i]);
     }
@@ -29,7 +29,7 @@ const AddHomeSlide = () => {
     setPreviews([]);
     setTimeout(() => {
       setPreviews(imgArr);
-      formFields.images = imgArr;
+      setFormFields((prev) => ({ ...prev, images: imgArr }));
     }, 10);
   };
 
