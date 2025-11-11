@@ -12,7 +12,7 @@ import Divider from "@mui/material/Divider";
 import { FaUser } from "react-icons/fa";
 import { GiExitDoor } from "react-icons/gi";
 import { MyContext } from "../../App";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { fetchDataFromApi } from "../../utils/api";
 import AddProduct from "../../Pages/Products/addProduct";
 import AddHomeSlide from "../../Pages/HomeSliderBanners/addHomeSlide";
@@ -48,6 +48,8 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 const Header = () => {
   const [anchorMyAcc, setAnchorMyAcc] = useState(null);
   const openMyAcc = Boolean(anchorMyAcc);
+
+  const history = useNavigate();
   const handleClickMyAcc = (event) => {
     setAnchorMyAcc(event.currentTarget);
   };
@@ -68,6 +70,7 @@ const Header = () => {
         context.setIsLogin(false);
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
+        history("/login");
       }
     });
   };
