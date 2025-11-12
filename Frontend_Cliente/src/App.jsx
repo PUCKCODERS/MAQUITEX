@@ -35,6 +35,7 @@ function App() {
   const [isLogin, setIsLogin] = useState(false);
   const [userData, setUserData] = useState(null);
   const [address, setAddress] = useState([]);
+  const [catData, setCatData] = useState([]);
 
   const [openCartPanel, setOpenCartPanel] = useState(false);
 
@@ -73,6 +74,14 @@ function App() {
       setIsLogin(false);
     }
   }, [isLogin]);
+
+  useEffect(() => {
+    fetchDataFromApi("/api/category").then((res) => {
+      if (res?.error === false) {
+        setCatData(res?.data);
+      }
+    });
+  }, []);
 
   const openAlertBox = (status, msg) => {
     if (status === "success") {
@@ -141,6 +150,8 @@ function App() {
     userData,
     setAddress,
     address,
+    setCatData,
+    catData,
   };
 
   return (

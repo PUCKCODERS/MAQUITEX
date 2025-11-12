@@ -1,2 +1,6 @@
 cloudinary
-se abre esta cuenta con puckcoders google
+se abre esta cuenta con puckcoders Google
+
+frot/component/header/navigation/index/  y front/component/homeCatSlider/index
+S.Tecnico, Nosotros, Contacto se relacionan para en el futuro generar las paginas respectivas e informativas de la que tienen contexto su creación  
+

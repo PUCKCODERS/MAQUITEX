@@ -7,20 +7,18 @@ import { FaTruckFast } from "react-icons/fa6";
 import CategoryPanel from "./CategoryPanel";
 import "../Navigation/style.css";
 import { useEffect } from "react";
-import { fetchDataFromApi } from "../../../utils/api";
+import { useContext } from "react";
+import { MyContext } from "../../../App";
 
 const Navigation = () => {
   const [isOpenCatPanel, setIsOpenCatPanel] = useState(false);
   const [catData, setCatData] = useState([]);
 
+  const context = useContext(MyContext);
+
   useEffect(() => {
-    fetchDataFromApi("/api/category").then((res) => {
-      if (res?.error === false) {
-        setCatData(res?.data);
-      }
-      console.log(res);
-    });
-  }, []);
+    setCatData(context?.catData);
+  }, [context?.catData]);
 
   const openCategoryPanel = () => {
     setIsOpenCatPanel(true);
@@ -30,7 +28,7 @@ const Navigation = () => {
     <>
       <nav className="!py-1 ">
         <div className="container flex items-center justify-end gap-9">
-          <div className="col_1 w-[20%]">
+          <div className="col_1 !w-[20%]">
             <Button
               className="!text-[#082c55]  !bg-[#f1f1f1] !gap-2 w-full shadow-[3px_3px_3px_#274a72]"
               onClick={openCategoryPanel}
@@ -41,14 +39,14 @@ const Navigation = () => {
             </Button>
           </div>
 
-          <div className="col_2 w-[60%] !mr-1">
+          <div className="col_2 w-[60%] !ml-6">
             <ul className="flex items-center gap-0 nav">
               <li className="list-none ">
-                <Link to="/" className="link transition ">
+                {/*<Link to="/" className="link transition ">
                   <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
                     INICIO
                   </Button>
-                </Link>
+                </Link>*/}
               </li>
 
               {catData?.length !== 0 &&
@@ -117,6 +115,14 @@ const Navigation = () => {
               <li className="list-none !text-[#082c55] font-bold font-[bold]">
                 <Link to="/" className="link transition">
                   <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
+                    S.TECNICO
+                  </Button>
+                </Link>
+              </li>
+
+              <li className="list-none !text-[#082c55] font-bold font-[bold]">
+                <Link to="/" className="link transition">
+                  <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
                     NOSOTROS
                   </Button>
                 </Link>
@@ -131,9 +137,9 @@ const Navigation = () => {
             </ul>
           </div>
 
-          <div className="col_3 w-[20%] !ml-3">
-            <p className="!text-[13px] text-[#000] font-[600] flex items-center !gap-2 !mb-0 !mt-0">
-              <FaTruckFast className="!text-[30px] text-[#000] !ml-6" />
+          <div className="col_3 w-[20%] !ml-6">
+            <p className="!text-[10px] text-[#000] font-[600] flex items-center !gap-1 !mb-0 !mt-0">
+              <FaTruckFast className="!text-[25px] text-[#000] !ml-7" />
               ENVIO GRATIS
             </p>
           </div>

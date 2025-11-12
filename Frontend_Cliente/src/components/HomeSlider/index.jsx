@@ -24,11 +24,11 @@ const HomeSlider = (props) => {
             props?.data?.map((item, index) => {
               return (
                 <SwiperSlide key={index}>
-                  <div className="item rounded-[20px] !overflow-hidden">
+                  <div className="item rounded-[20px] !overflow-hidden shadow-[3px_3px_3px_#082c55]">
                     <img
                       src={item?.images[0]}
                       alt="Banner slide"
-                      className="!w-full !left-0 !top-0 !h-[400px]"
+                      className="!w-full !left-0 !top-0 !h-[400px] "
                     />
                   </div>
                 </SwiperSlide>

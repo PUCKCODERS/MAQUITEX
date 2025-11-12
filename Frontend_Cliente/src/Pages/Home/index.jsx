@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import HomeSlider from "../../components/HomeSlider";
 import HomeCatSlider from "../../components/HomeCatSlider";
 import { FaTruckFast } from "react-icons/fa6";
@@ -20,10 +20,13 @@ import AdsBannerSliderV2 from "../../components/AdsBannerSliderV2";
 import { useEffect } from "react";
 import { fetchDataFromApi } from "../../utils/api";
 import { useState } from "react";
+import { MyContext } from "../../App";
 
 const Home = () => {
   const [value, setValue] = useState(0);
   const [homeSlidesData, setHomeSlidesData] = useState([]);
+
+  const context = useContext(MyContext);
 
   useEffect(() => {
     fetchDataFromApi("/api/homeSlides").then((res) => {
@@ -62,7 +65,10 @@ const Home = () => {
         </div>
       </section>
 
-      <HomeCatSlider />
+      {context?.catData?.length !== 0 && (
+        <HomeCatSlider data={context?.catData} />
+      )}
+
       <section className="!py-8 bg-white">
         <div className="container">
           <div className="flex items-center justify-between">
