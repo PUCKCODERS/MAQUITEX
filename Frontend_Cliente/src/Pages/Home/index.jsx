@@ -25,6 +25,9 @@ import { MyContext } from "../../App";
 const Home = () => {
   const [value, setValue] = useState(0);
   const [homeSlidesData, setHomeSlidesData] = useState([]);
+  const [popularProductsData, setPopularProductsData] = useState([]);
+  const [productsData, setAllProductsData] = useState([]);
+  const [featuredProducts, setFeaturedProducts] = useState([]);
 
   const context = useContext(MyContext);
 
@@ -32,10 +35,35 @@ const Home = () => {
     fetchDataFromApi("/api/homeSlides").then((res) => {
       setHomeSlidesData(res?.data);
     });
+    fetchDataFromApi("/api/product/getAllProducts").then((res) => {
+      setAllProductsData(res?.products);
+    });
+
+    fetchDataFromApi("/api/product/getAllFeaturedProducts").then((res) => {
+      setFeaturedProducts(res?.products);
+    });
   }, []);
+
+  useEffect(() => {
+    fetchDataFromApi(
+      `/api/product/getAllProductsByCatId/${context?.catData[0]?._id}`
+    ).then((res) => {
+      if (res?.error === false) {
+        setPopularProductsData(res?.products);
+      }
+    });
+  }, [context?.catData]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const filterByCatId = (id) => {
+    fetchDataFromApi(`/api/product/getAllProductsByCatId/${id}`).then((res) => {
+      if (res?.error === false) {
+        setPopularProductsData(res?.products);
+      }
+    });
   };
 
   return (
@@ -74,7 +102,7 @@ const Home = () => {
           <div className="flex items-center justify-between">
             <div className="leftSec">
               <h2 className="text-[20px] font-bold">PRODUCTOS POPULARES</h2>
-              <p className="text-[12px] font-[400]">
+              <p className="text-[12px] font-[400] !mt-0 !mb-0">
                 NO TE PIERDAS LAS OFERTAS VIGENTES HASTA FINALES DE AÑO
               </p>
             </div>
@@ -87,26 +115,22 @@ const Home = () => {
                 scrollButtons="auto"
                 aria-label="scrollable auto tabs example"
               >
-                <Tab label="MAQUINAS" />
-                <Tab label="CORTE" />
-                <Tab label="PLANCHADO" />
-                <Tab label="ACCESORIOS" />
-                <Tab label="REPUESTOS" />
-                <Tab label="MAQUINAS" />
-                <Tab label="CORTE" />
-                <Tab label="PLANCHADO" />
-                <Tab label="ACCESORIOS" />
-                <Tab label="REPUESTOS" />
-                <Tab label="MAQUINAS" />
-                <Tab label="CORTE" />
-                <Tab label="PLANCHADO" />
-                <Tab label="ACCESORIOS" />
-                <Tab label="REPUESTOS" />
+                {context?.catData?.length !== 0 &&
+                  context?.catData?.map((cat, index) => {
+                    return (
+                      <Tab
+                        label={cat?.name}
+                        onClick={() => filterByCatId(cat?._id)}
+                      />
+                    );
+                  })}
               </Tabs>
             </div>
           </div>
 
-          <ProductsSlider items={6} />
+          {popularProductsData?.length !== 0 && (
+            <ProductsSlider items={6} data={popularProductsData} />
+          )}
         </div>
       </section>
       <section className="!py-4 !pt-8 bg-white">
@@ -136,7 +160,9 @@ const Home = () => {
       <section className="!py-5 !pt-4 bg-white">
         <div className="container">
           <h2 className="text-[20px] font-bold">NUEVOS PRODUCTOS</h2>
-          <ProductsSlider items={6} />
+          {productsData?.length !== 0 && (
+            <ProductsSlider items={6} data={productsData} />
+          )}
 
           <AdsBannerSlider items={3} />
         </div>
@@ -144,6 +170,9 @@ const Home = () => {
       <section className="!py-5 !pt-0 bg-white">
         <div className="container">
           <h2 className="text-[20px] font-bold">PRODUCTOS RECOMENDADOS</h2>
+          {featuredProducts?.length !== 0 && (
+            <ProductsSlider items={6} data={featuredProducts} />
+          )}
           <ProductsSlider items={6} />
 
           <AdsBannerSlider items={3} />

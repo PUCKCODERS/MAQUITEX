@@ -6,88 +6,115 @@ import { IoMdGitCompare } from "react-icons/io";
 import { Rating } from "@mui/material";
 import Button from "@mui/material/Button";
 
-const ProductDetailsComponent = () => {
+const ProductDetailsComponent = (props) => {
   const [productActionIndex, setProductActionIndex] = useState(null);
   return (
     <>
       <h1 className="text-[24px] font-[bold] font-bold text-[#082c55] !mb-2">
-        MÁQUINA DE COSER INDUSTRIAL DE COLUMNA ZOJE ZJ 9610SA-D3-M-3 MÁQUINA DE
-        COSER INDUSTRIAL
+        {props?.item?.name}
       </h1>
       <div className="flex items-center !gap-3">
         <span className="text-gray-500 text-[13px] ">
           MARCA :{" "}
           <span className="font-[500] text-black opacity-75 !ml-1">
-            MAQUINA SINGER
+            {props?.item?.brand}
           </span>
         </span>
 
-        <Rating name="size-small" defaultValue={4} size="small" readOnly />
+        <Rating
+          name="size-small"
+          defaultValue={props?.item?.rating}
+          size="small"
+          readOnly
+        />
         <span className="text-[13px] cursor-pointer">RESEÑAS (5)</span>
       </div>
 
       <div className="flex items-center !gap-4 !mt-4">
-        <span className="oldPrice line-through text-[#b8b8b8] text-[20px] font-[500]">
-          $69.00
+        <span className="oldPrice line-through text-red-400 text-[18px] font-[500]">
+          &#36; {props?.item?.oldPrice}
         </span>
         <span className="price text-[#0a7fec] text-[20px] font-[600]">
-          $99.00
+          &#36; {props?.item?.price}
         </span>
 
         <span className="text-[14px] ">
           DISPONIBLE EN STOCK :
           <span className="text-green-600 text-[14px] font-bold !ml-2">
-            1369 ARTICULOS
+            {props?.item?.countInStock} ARTICULOS
           </span>
         </span>
       </div>
 
       <p className="!mt-3 !pr-10 !mb-5 !text-[#000]">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis,
-        quasi? Autem, quia, aliquam similique excepturi, quasi corrupti nisi
-        ducimus impedit ullam officia tenetur voluptatem sapiente? Est enim
-        minima iusto iste. Lorem ipsum dolor sit amet consectetur adipisicing
-        elit. Officiis, quasi? Autem, quia, aliquam similique excepturi, quasi
-        corrupti nisi ducimus impedit ullam officia
+        {props?.item?.description}
       </p>
 
-      <div className="flex items-center !gap-3">
-        <span className="text-[16px] font-[bold] font-bold">TALLA</span>
-        <div className="flex items-center !gap-1 actions">
-          <Button
-            className={`${
-              productActionIndex === 0 ? "!bg-[#274a72] !text-white" : ""
-            }`}
-            onClick={() => setProductActionIndex(0)}
-          >
-            S
-          </Button>
-          <Button
-            className={`${
-              productActionIndex === 1 ? "!bg-[#274a72] !text-white" : ""
-            }`}
-            onClick={() => setProductActionIndex(1)}
-          >
-            M
-          </Button>
-          <Button
-            className={`${
-              productActionIndex === 2 ? "!bg-[#274a72] !text-white" : ""
-            }`}
-            onClick={() => setProductActionIndex(2)}
-          >
-            L
-          </Button>
-          <Button
-            className={`${
-              productActionIndex === 3 ? "!bg-[#274a72] !text-white" : ""
-            }`}
-            onClick={() => setProductActionIndex(3)}
-          >
-            XL
-          </Button>
+      {props?.item?.productRams?.length !== 0 && (
+        <div className="flex items-center !gap-3">
+          <span className="text-[16px] font-[bold] font-bold">COLOR</span>
+          <div className="flex items-center !gap-1 actions">
+            {props?.item?.productRams?.map((item, index) => {
+              return (
+                <Button
+                  className={`${
+                    productActionIndex === index
+                      ? "!bg-[#274a72] !text-white"
+                      : ""
+                  }`}
+                  onClick={() => setProductActionIndex(index)}
+                >
+                  {item}
+                </Button>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
+
+      {props?.item?.size?.length !== 0 && (
+        <div className="flex items-center !gap-3 !mt-2">
+          <span className="text-[16px] font-[bold] font-bold">TAMAÑO</span>
+          <div className="flex items-center !gap-1 actions">
+            {props?.item?.size?.map((item, index) => {
+              return (
+                <Button
+                  className={`${
+                    productActionIndex === index
+                      ? "!bg-[#274a72] !text-white"
+                      : ""
+                  }`}
+                  onClick={() => setProductActionIndex(index)}
+                >
+                  {item}
+                </Button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {props?.item?.productWeight?.length !== 0 && (
+        <div className="flex items-center !gap-3 !mt-2">
+          <span className="text-[16px] font-[bold] font-bold">PESO</span>
+          <div className="flex items-center !gap-1 actions">
+            {props?.item?.productWeight?.map((item, index) => {
+              return (
+                <Button
+                  className={`${
+                    productActionIndex === index
+                      ? "!bg-[#274a72] !text-white"
+                      : ""
+                  }`}
+                  onClick={() => setProductActionIndex(index)}
+                >
+                  {item}
+                </Button>
+              );
+            })}
+          </div>
+        </div>
+      )}
 
       <p className="text-green-600 font-bold text-[14px] !mt-5 !mb-2">
         ENVIO GRATIS

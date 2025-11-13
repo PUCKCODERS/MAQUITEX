@@ -29,7 +29,10 @@ import Address from "./Pages/MyAccount/address";
 const MyContext = createContext();
 
 function App() {
-  const [openProductDetailsModal, setOpenProductDetailsModal] = useState(false);
+  const [openProductDetailsModal, setOpenProductDetailsModal] = useState({
+    open: false,
+    item: {},
+  });
   const [maxWidth /*,{setMaxWidth}*/] = useState("lg");
   const [fullWidth /*,{setFullWidth}*/] = useState(true);
   const [isLogin, setIsLogin] = useState(false);
@@ -39,8 +42,18 @@ function App() {
 
   const [openCartPanel, setOpenCartPanel] = useState(false);
 
+  const handleOpenProductDetailsModal = (status, item) => {
+    setOpenProductDetailsModal({
+      open: status,
+      item: item,
+    });
+  };
+
   const handleCloseProductDetailsModal = () => {
-    setOpenProductDetailsModal(false);
+    setOpenProductDetailsModal({
+      open: false,
+      item: {},
+    });
   };
 
   const toggleCartPanel = (newOpen) => () => {
@@ -139,6 +152,7 @@ function App() {
 
   const values = {
     setOpenProductDetailsModal,
+    handleOpenProductDetailsModal,
     setOpenCartPanel,
     toggleCartPanel,
     openCartPanel,
@@ -193,7 +207,7 @@ function App() {
       <Toaster />
 
       <Dialog
-        open={openProductDetailsModal}
+        open={openProductDetailsModal.open}
         fullWidth={fullWidth}
         maxWidth={maxWidth}
         onClose={handleCloseProductDetailsModal}
@@ -209,13 +223,20 @@ function App() {
             >
               <IoCloseSharp className="text-[25px]" />
             </Button>
-            <div className="col1 w-[40%] !px-3">
-              <ProductZoom />
-            </div>
 
-            <div className="col2 w-[60%] !py-8 !px-8 !pr-16 productContent">
-              <ProductDetailsComponent />
-            </div>
+            {openProductDetailsModal?.item?.length !== 0 && (
+              <>
+                <div className="col1 w-[40%] !px-3 !py-8">
+                  <ProductZoom images={openProductDetailsModal?.item?.images} />
+                </div>
+
+                <div className="col2 w-[60%] !py-8 !px-8 !pr-16 productContent">
+                  <ProductDetailsComponent
+                    item={openProductDetailsModal?.item}
+                  />
+                </div>
+              </>
+            )}
           </div>
         </DialogContent>
       </Dialog>

@@ -319,7 +319,7 @@ footer form input::placeholder {
 .zoomProductSliderThumbs .swiper-slide {
   height: auto !important;
 }
-.zoomProductSliderThumbs .swiper-wrapper {
+.zoomProductSliderThumbs.space .swiper-wrapper {
   padding-top: 31px !important;
 }
 
@@ -467,4 +467,9 @@ button .MuiCircularProgress-root {
 .MuiDialog-paper {
   width: 700px !important;
   max-width: 700px !important;
+}
+
+.productDetailsModal .MuiDialog-paper {
+  width: 1200px !important;
+  max-width: 1200px !important;
 }

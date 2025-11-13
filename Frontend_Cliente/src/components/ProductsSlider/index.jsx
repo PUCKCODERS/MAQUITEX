@@ -17,60 +17,13 @@ const ProductsSlider = (props) => {
         modules={[Navigation]}
         className="sliderHome"
       >
-        <SwiperSlide>
-          <ProductItem />
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <ProductItem />
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <ProductItem />
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <ProductItem />
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <ProductItem />
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <ProductItem />
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <ProductItem />
-        </SwiperSlide>
-        <SwiperSlide>
-          <ProductItem />
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <ProductItem />
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <ProductItem />
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <ProductItem />
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <ProductItem />
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <ProductItem />
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <ProductItem />
-        </SwiperSlide>
+        {props?.data?.map((item, index) => {
+          return (
+            <SwiperSlide key={index}>
+              <ProductItem item={item} />
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </div>
   );

@@ -7,7 +7,7 @@ import "swiper/css/navigation";
 
 import { Navigation } from "swiper/modules";
 
-const ProductZoom = () => {
+const ProductZoom = (props) => {
   const [slideIndex, setSlideIndex] = useState(0);
   const zoomSliderBig = useRef();
   const zoomSliderSml = useRef();
@@ -29,125 +29,27 @@ const ProductZoom = () => {
             spaceBetween={10}
             navigation={true}
             modules={[Navigation]}
-            className="zoomProductSliderThumbs !h-[500px] overflow-hidden"
+            className={`zoomProductSliderThumbs !h-[500px] overflow-hidden ${
+              props?.images?.length > 5 && "space"
+            }`}
           >
-            <SwiperSlide>
-              <div
-                className={`item rounded-md !shadow-lg !border-1 border-[#737475] overflow-hidden cursor-pointer group transition-opacity duration-300 ${
-                  slideIndex === 0 ? "opacity-100" : "opacity-50"
-                }`}
-                onClick={() => goto(0)}
-              >
-                <img
-                  src="../../../imagenes/ProductZoom/ProductZoom1.jpg"
-                  className="w-full transition-all group-hover:scale-105"
-                />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div
-                className={`item rounded-md !shadow-lg !border-1 border-[#737475] overflow-hidden cursor-pointer group transition-opacity duration-300 ${
-                  slideIndex === 1 ? "opacity-100" : "opacity-50"
-                }`}
-                onClick={() => goto(1)}
-              >
-                <img
-                  src="../../../imagenes/ProductZoom/ProductZoom2.jpg"
-                  className="w-full transition-all group-hover:scale-105"
-                />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div
-                className={`item rounded-md !shadow-lg !border-1 border-[#737475] overflow-hidden cursor-pointer group transition-opacity duration-300 ${
-                  slideIndex === 2 ? "opacity-100" : "opacity-50"
-                }`}
-                onClick={() => goto(2)}
-              >
-                <img
-                  src="../../../imagenes/ProductZoom/ProductZoom3.jpg"
-                  className="w-full transition-all group-hover:scale-105"
-                />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div
-                className={`item rounded-md !shadow-lg !border-1 border-[#737475] overflow-hidden cursor-pointer group transition-opacity duration-300 ${
-                  slideIndex === 3 ? "opacity-100" : "opacity-50"
-                }`}
-                onClick={() => goto(3)}
-              >
-                <img
-                  src="../../../imagenes/ProductZoom/ProductZoom1.jpg"
-                  className="w-full transition-all group-hover:scale-105"
-                />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div
-                className={`item rounded-md !shadow-lg !border-1 border-[#737475] overflow-hidden cursor-pointer group transition-opacity duration-300 ${
-                  slideIndex === 4 ? "opacity-100" : "opacity-50"
-                }`}
-                onClick={() => goto(4)}
-              >
-                <img
-                  src="../../../imagenes/ProductZoom/ProductZoom2.jpg"
-                  className="w-full transition-all group-hover:scale-105"
-                />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div
-                className={`item rounded-md !shadow-lg !border-1 border-[#737475] overflow-hidden cursor-pointer group transition-opacity duration-300 ${
-                  slideIndex === 5 ? "opacity-100" : "opacity-50"
-                }`}
-                onClick={() => goto(5)}
-              >
-                <img
-                  src="../../../imagenes/ProductZoom/ProductZoom3.jpg"
-                  className="w-full transition-all group-hover:scale-105"
-                />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div
-                className={`item rounded-md !shadow-lg !border-1 border-[#737475] overflow-hidden cursor-pointer group transition-opacity duration-300 ${
-                  slideIndex === 6 ? "opacity-100" : "opacity-50"
-                }`}
-                onClick={() => goto(6)}
-              >
-                <img
-                  src="../../../imagenes/ProductZoom/ProductZoom1.jpg"
-                  className="w-full transition-all group-hover:scale-105"
-                />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div
-                className={`item rounded-md !shadow-lg !border-1 border-[#737475] overflow-hidden cursor-pointer group transition-opacity duration-300 ${
-                  slideIndex === 7 ? "opacity-100" : "opacity-50"
-                }`}
-                onClick={() => goto(7)}
-              >
-                <img
-                  src="../../../imagenes/ProductZoom/ProductZoom2.jpg"
-                  className="w-full transition-all group-hover:scale-105"
-                />
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div
-                className={`item rounded-md !shadow-lg !border-1 border-[#737475] overflow-hidden cursor-pointer group transition-opacity duration-300 ${
-                  slideIndex === 8 ? "opacity-100" : "opacity-50"
-                }`}
-                onClick={() => goto(8)}
-              >
-                <img
-                  src="../../../imagenes/ProductZoom/ProductZoom3.jpg"
-                  className="w-full transition-all group-hover:scale-105"
-                />
-              </div>
-            </SwiperSlide>
+            {props?.images?.map((item, index) => {
+              return (
+                <SwiperSlide key={index}>
+                  <div
+                    className={`item rounded-md !shadow-lg !border-1 border-[#737475] overflow-hidden cursor-pointer group transition-opacity duration-300 ${
+                      slideIndex === index ? "opacity-100" : "opacity-50"
+                    }`}
+                    onClick={() => goto(index)}
+                  >
+                    <img
+                      src={item}
+                      className="w-full transition-all group-hover:scale-105"
+                    />
+                  </div>
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
         </div>
 
@@ -158,78 +60,18 @@ const ProductZoom = () => {
             spaceBetween={0}
             navigation={false}
           >
-            <SwiperSlide>
-              <InnerImageZoom
-                zoomType="hover"
-                zoomScale={1}
-                src="../../../imagenes/ProductZoom/ProductZoom1.jpg"
-                className="!w-full !h-full !rounded-md !shadow-lg !border-1 border-[#737475]"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <InnerImageZoom
-                zoomType="hover"
-                zoomScale={1}
-                src="../../../imagenes/ProductZoom/ProductZoom2.jpg"
-                className="!w-full !h-full !rounded-md !shadow-lg !border-1 border-[#737475]"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <InnerImageZoom
-                zoomType="hover"
-                zoomScale={1}
-                src="../../../imagenes/ProductZoom/ProductZoom3.jpg"
-                className="!w-full !h-full !rounded-md !shadow-lg !border-1 border-[#737475]"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <InnerImageZoom
-                zoomType="hover"
-                zoomScale={1}
-                src="../../../imagenes/ProductZoom/ProductZoom1.jpg"
-                className="!w-full !h-full !rounded-md !shadow-lg !border-1 border-[#737475]"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <InnerImageZoom
-                zoomType="hover"
-                zoomScale={1}
-                src="../../../imagenes/ProductZoom/ProductZoom2.jpg"
-                className="!w-full !h-full !rounded-md !shadow-lg !border-1 border-[#737475]"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <InnerImageZoom
-                zoomType="hover"
-                zoomScale={1}
-                src="../../../imagenes/ProductZoom/ProductZoom3.jpg"
-                className="!w-full !h-full !rounded-md !shadow-lg !border-1 border-[#737475]"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <InnerImageZoom
-                zoomType="hover"
-                zoomScale={1}
-                src="../../../imagenes/ProductZoom/ProductZoom1.jpg"
-                className="!w-full !h-full !rounded-md !shadow-lg !border-1 border-[#737475]"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <InnerImageZoom
-                zoomType="hover"
-                zoomScale={1}
-                src="../../../imagenes/ProductZoom/ProductZoom2.jpg"
-                className="!w-full !h-full !rounded-md !shadow-lg !border-1 border-[#737475]"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <InnerImageZoom
-                zoomType="hover"
-                zoomScale={1}
-                src="../../../imagenes/ProductZoom/ProductZoom3.jpg"
-                className="!w-full !h-full !rounded-md !shadow-lg !border-1 border-[#737475]"
-              />
-            </SwiperSlide>
+            {props?.images?.map((item, index) => {
+              return (
+                <SwiperSlide key={index}>
+                  <InnerImageZoom
+                    zoomType="hover"
+                    zoomScale={1}
+                    src={item}
+                    className="!w-full !h-full !rounded-md !shadow-lg !border-1 border-[#737475]"
+                  />
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
         </div>
       </div>
