@@ -14,32 +14,35 @@ cloudinary.config({
 });
 
 // PARA PRODUCTO EN GENERAL
-var imagesArr = [];
 export async function uploadImages(request, response) {
   try {
-    imagesArr = [];
-
-    const image = request.files;
-
+    const files = request.files || [];
     const options = {
       use_filename: true,
       unique_filename: false,
       overwrite: false,
     };
 
-    for (let i = 0; i < image?.length; i++) {
-      const img = await cloudinary.uploader.upload(
-        image[i].path,
-        options,
-        function (error, result) {
-          imagesArr.push(result.secure_url);
-          fs.unlinkSync(`uploads/${request.files[i].filename}`);
+    const uploadedUrls = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const filePath = files[i].path;
+      const result = await cloudinary.uploader.upload(filePath, options);
+      if (result && result.secure_url) {
+        uploadedUrls.push(result.secure_url);
+      }
+
+      try {
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
         }
-      );
+      } catch (err) {}
     }
 
     return response.status(200).json({
-      images: imagesArr,
+      images: uploadedUrls,
+      error: false,
+      success: true,
     });
   } catch (error) {
     return response.status(500).json({
@@ -50,9 +53,12 @@ export async function uploadImages(request, response) {
   }
 }
 
-var imagesArr = [];
 export async function createProduct(request, response) {
   try {
+    const imagesFromClient = Array.isArray(request.body.images)
+      ? request.body.images
+      : [];
+
     let product = new ProductModel({
       name: request.body.name,
       description: request.body.description,
@@ -85,8 +91,6 @@ export async function createProduct(request, response) {
         message: "PRODUCTO NO CREADO",
       });
     }
-
-    imagesArr = [];
 
     return response.status(200).json({
       message: "PRODUCTO CREADO CON ÉXITO",
@@ -604,50 +608,57 @@ export async function getAllFeaturedProducts(request, response) {
 }
 
 export async function deleteProduct(request, response) {
-  const product = await ProductModel.findById(request.params.id).populate(
-    "category"
-  );
+  try {
+    const product = await ProductModel.findById(request.params.id).populate(
+      "category"
+    );
 
-  if (!product) {
-    return response.status(404).json({
-      message: "PRODUCTO NO ENCONTRADO",
-      error: true,
-      success: false,
-    });
-  }
-
-  const images = product.images;
-
-  let img = "";
-  for (img of images) {
-    const imgUrl = img;
-    const urlArr = imgUrl.split("/");
-    const image = urlArr[urlArr.length - 1];
-
-    const imageName = image.split(".")[0];
-
-    if (imageName) {
-      cloudinary.uploader.destroy(imageName, (error, result) => {});
+    if (!product) {
+      return response.status(404).json({
+        message: "PRODUCTO NO ENCONTRADO",
+        error: true,
+        success: false,
+      });
     }
-  }
 
-  const deleteProduct = await ProductModel.findByIdAndDelete(request.params.id);
+    const images = product.images || [];
 
-  if (!deleteProduct) {
-    response.status(404).json({
-      message: "PRODUCTO NO ELIMINADO",
-      success: false,
+    for (const imgUrl of images) {
+      try {
+        const urlArr = imgUrl.split("/");
+        const lastSeg = urlArr[urlArr.length - 1] || "";
+        const imageName = lastSeg.split(".")[0];
+        if (imageName) {
+          await cloudinary.uploader.destroy(imageName).catch(() => {});
+        }
+      } catch (err) {}
+    }
+
+    const deleteProduct = await ProductModel.findByIdAndDelete(
+      request.params.id
+    );
+
+    if (!deleteProduct) {
+      return response.status(404).json({
+        message: "PRODUCTO NO ELIMINADO",
+        success: false,
+        error: true,
+      });
+    }
+
+    return response.status(200).json({
+      success: true,
+      error: false,
+      message: "PRODUCTO ELIMINADO",
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
       error: true,
+      success: false,
     });
   }
-
-  return response.status(200).json({
-    success: true,
-    error: false,
-    message: "PRODUCTO ELIMINADO",
-  });
 }
-
 export async function deleteMultipleProduct(request, response) {
   const { ids } = request.body;
 
@@ -719,22 +730,29 @@ export async function getProduct(request, response) {
 }
 
 export async function removeImageFromCloudinary(request, response) {
-  const imgUrl = request.query.img;
-
-  const urlArr = imgUrl.split("/");
-  const image = urlArr[urlArr.length - 1];
-
-  const imageName = image.split(".")[0];
-
-  if (imageName) {
-    const res = await cloudinary.uploader.destroy(
-      imageName,
-      (error, result) => {}
-    );
-
-    if (res) {
-      response.status(200).send(res);
+  try {
+    const imgUrl = request.query.img;
+    if (!imgUrl) {
+      return response
+        .status(400)
+        .json({ error: true, message: "img query required" });
     }
+    const urlArr = imgUrl.split("/");
+    const image = urlArr[urlArr.length - 1] || "";
+    const imageName = image.split(".")[0];
+
+    if (imageName) {
+      const res = await cloudinary.uploader.destroy(imageName).catch(() => {});
+      return response.status(200).json({ error: false, result: res });
+    } else {
+      return response
+        .status(400)
+        .json({ error: true, message: "invalid image url" });
+    }
+  } catch (error) {
+    return response
+      .status(500)
+      .json({ error: true, message: error.message || error });
   }
 }
 
@@ -749,15 +767,16 @@ export async function updateProduct(request, response) {
       });
     }
 
-    const updatedImages =
-      imagesArr.length > 0 ? imagesArr : existingProduct.images;
+    const imagesFromClient = Array.isArray(request.body.images)
+      ? request.body.images
+      : existingProduct.images;
 
     const product = await ProductModel.findByIdAndUpdate(
       request.params.id,
       {
         name: request.body.name,
         description: request.body.description,
-        images: updatedImages,
+        images: imagesFromClient,
         brand: request.body.brand,
         price: request.body.price,
         oldPrice: request.body.oldPrice,
@@ -786,12 +805,11 @@ export async function updateProduct(request, response) {
       });
     }
 
-    imagesArr = [];
-
     return response.status(200).json({
       message: "EL PRODUCTO ESTÁ ACTUALIZADO",
       error: false,
       success: true,
+      product,
     });
   } catch (error) {
     return response.status(500).json({

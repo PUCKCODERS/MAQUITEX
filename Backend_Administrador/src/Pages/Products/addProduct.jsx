@@ -153,8 +153,12 @@ const AddProduct = () => {
   };
 
   const setPreviewsFun = (previewsArr) => {
-    setPreviews(previewsArr);
-    formFields.images = previewsArr;
+    const newArr = [...previews, ...previewsArr];
+    setPreviews(newArr);
+    setFormFields((formFields) => ({
+      ...formFields,
+      images: newArr,
+    }));
   };
 
   const removeImg = (image, index) => {
