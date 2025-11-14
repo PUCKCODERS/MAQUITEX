@@ -473,3 +473,7 @@ button .MuiCircularProgress-root {
   width: 1200px !important;
   max-width: 1200px !important;
 }
+
+header {
+  box-shadow: 10px 10 px 10 px #000;
+}

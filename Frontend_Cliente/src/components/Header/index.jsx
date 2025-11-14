@@ -57,7 +57,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-white">
+    <header className="!bg-white sticky -top-[130px] z-150">
       <div className="top-strip !py-2 !bg-[#f1f1f1] border-t-[1px] border-b-[1px] border-[#b8b8b8]">
         <div className="container">
           <div className="flex items-center justify-between">

@@ -59,7 +59,7 @@ const ProductItem = (props) => {
             to={`/product/${props?.item?._id}`}
             className="link transition-all"
           >
-            {props?.item?.name}
+            {props?.item?.name?.substr(0, 60) + "..."}
           </Link>
         </h3>
         <Rating
