@@ -164,12 +164,12 @@ const AddProduct = () => {
     }));
   };
 
-  const setBannerImagesFun = (previewsArr) => {
-    const newArr = [...previews, ...previewsArr];
-    setBannerPreviews(newArr);
+  const setBannerImagesFun = (bannerPreviewsArr) => {
+    const newBannerArr = [...bannerPreviews, ...bannerPreviewsArr];
+    setBannerPreviews(newBannerArr);
     setFormFields((formFields) => ({
       ...formFields,
-      bannerimages: newArr,
+      bannerimages: newBannerArr,
     }));
   };
 
@@ -183,6 +183,20 @@ const AddProduct = () => {
       setTimeout(() => {
         setPreviews(imageArr);
         formFields.images = imageArr;
+      }, 100);
+    });
+  };
+
+  const removeBannerImg = (image, index) => {
+    var imageArr = [];
+    imageArr = bannerPreviews;
+    deleteImages(`/api/product/deleteImage?img=${image}`).then(() => {
+      imageArr.splice(index, 1);
+
+      setBannerPreviews([]);
+      setTimeout(() => {
+        setBannerPreviews(imageArr);
+        formFields.bannerimages = imageArr;
       }, 100);
     });
   };
@@ -673,7 +687,7 @@ const AddProduct = () => {
                         <span
                           className="!absolute w-[20px] h-[20px] rounded-full overflow-hidden !text-[#fff]  !bg-[#030712] hover:!text-[#030712] hover:!bg-[#fff] !shadow-[0px_0px_0px_3px_#6b6c6d] hover:!shadow-[0px_0px_0px_3px_#030712]
                           -top-[0x] -right-[0px] flex items-center justify-center z-50 cursor-pointer"
-                          onClick={() => removeImg(image, index)}
+                          onClick={() => removeBannerImg(image, index)}
                         >
                           <IoClose className="text-[20px]" />
                         </span>
@@ -695,14 +709,14 @@ const AddProduct = () => {
                   setPreviewsFun={setBannerImagesFun}
                 />
               </div>
-              <h3 className="font-bold text-[18px] text-[#082c55] !mb-3">
+              <h3 className="font-bold text-[18px] text-[#082c55] !mb-2 !mt-3">
                 TITULO DE BANNER
               </h3>
               <input
                 type="text"
                 className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
                 name="bannerTitlename"
-                value={formFields.name}
+                value={formFields.bannerTitlename}
                 onChange={onChangeInput}
               />
             </div>
