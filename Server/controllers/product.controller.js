@@ -53,16 +53,60 @@ export async function uploadImages(request, response) {
   }
 }
 
+export async function uploadBannerImages(request, response) {
+  try {
+    const files = request.files || [];
+    const options = {
+      use_filename: true,
+      unique_filename: false,
+      overwrite: false,
+    };
+
+    const bannerImage = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const filePath = files[i].path;
+      const result = await cloudinary.uploader.upload(filePath, options);
+      if (result && result.secure_url) {
+        bannerImage.push(result.secure_url);
+      }
+
+      try {
+        if (fs.existsSync(filePath)) {
+          fs.unlinkSync(filePath);
+        }
+      } catch (err) {}
+    }
+
+    return response.status(200).json({
+      bannerimages: bannerImage,
+      error: false,
+      success: true,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
 export async function createProduct(request, response) {
   try {
     const imagesFromClient = Array.isArray(request.body.images)
       ? request.body.images
       : [];
 
+    const bannerimagesFromClient = Array.isArray(request.body.bannerimages)
+      ? request.body.bannerimages
+      : [];
+
     let product = new ProductModel({
       name: request.body.name,
       description: request.body.description,
       images: imagesArr,
+      bannerimages: bannerImage,
       brand: request.body.brand,
       price: request.body.price,
       oldPrice: request.body.oldPrice,
@@ -771,12 +815,18 @@ export async function updateProduct(request, response) {
       ? request.body.images
       : existingProduct.images;
 
+    const bannerimagesFromClient = Array.isArray(request.body.bannerimages)
+      ? request.body.bannerimages
+      : existingProduct.bannerimages;
+
     const product = await ProductModel.findByIdAndUpdate(
       request.params.id,
       {
         name: request.body.name,
         description: request.body.description,
         images: imagesFromClient,
+        bannerimages: bannerimagesFromClient,
+        bannerTitleName: request.body.bannerTitlename,
         brand: request.body.brand,
         price: request.body.price,
         oldPrice: request.body.oldPrice,

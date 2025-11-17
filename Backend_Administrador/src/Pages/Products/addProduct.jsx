@@ -38,6 +38,8 @@ const AddProduct = () => {
     productRams: [],
     size: [],
     productWeight: [],
+    bannerTitlename: "",
+    bannerimages: [],
   });
 
   const [productCat, setProductCat] = React.useState("");
@@ -51,6 +53,7 @@ const AddProduct = () => {
   const [productSizeData, setProductSizeData] = React.useState([]);
   const [productThirdLavelCat, setProductThirdLavelCat] = useState("");
   const [previews, setPreviews] = useState([]);
+  const [bannerPreviews, setBannerPreviews] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const history = useNavigate();
@@ -161,10 +164,19 @@ const AddProduct = () => {
     }));
   };
 
+  const setBannerImagesFun = (previewsArr) => {
+    const newArr = [...previews, ...previewsArr];
+    setBannerPreviews(newArr);
+    setFormFields((formFields) => ({
+      ...formFields,
+      bannerimages: newArr,
+    }));
+  };
+
   const removeImg = (image, index) => {
     var imageArr = [];
     imageArr = previews;
-    deleteImages(`/api/category/deleteImage?img=${image}`).then(() => {
+    deleteImages(`/api/product/deleteImage?img=${image}`).then(() => {
       imageArr.splice(index, 1);
 
       setPreviews([]);
@@ -644,6 +656,54 @@ const AddProduct = () => {
                 name="images"
                 url="/api/product/uploadImages"
                 setPreviewsFun={setPreviewsFun}
+              />
+            </div>
+          </div>
+
+          <div className="col w-full !p-5 !px-0">
+            <div className="shadow-mg bg-gray-200 !p-4 w-full">
+              <h3 className="font-bold text-[18px] text-[#082c55] !mb-3">
+                IMAGENES DE BANNER
+              </h3>
+              <div className="grid grid-cols-7 !gap-2">
+                {bannerPreviews?.length !== 0 &&
+                  bannerPreviews?.map((image, index) => {
+                    return (
+                      <div className="uploadBoxWrapper relative" key={index}>
+                        <span
+                          className="!absolute w-[20px] h-[20px] rounded-full overflow-hidden !text-[#fff]  !bg-[#030712] hover:!text-[#030712] hover:!bg-[#fff] !shadow-[0px_0px_0px_3px_#6b6c6d] hover:!shadow-[0px_0px_0px_3px_#030712]
+                          -top-[0x] -right-[0px] flex items-center justify-center z-50 cursor-pointer"
+                          onClick={() => removeImg(image, index)}
+                        >
+                          <IoClose className="text-[20px]" />
+                        </span>
+
+                        <div
+                          className="uploadBox !p-0 rounded-md overflow-hidden border border-[#082c55] h-[150px] w-[100%]
+                           bg-gray-200 cursor-pointer hover:bg-gray-300 flex items-center justify-center flex-col "
+                        >
+                          <img src={image} className="w-100" />
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                <UploadBox
+                  multiple={true}
+                  name="bannerimages"
+                  url="/api/product/uploadBannerImages"
+                  setBannerImagesFun={setBannerImagesFun}
+                />
+              </div>
+              <h3 className="font-bold text-[18px] text-[#082c55] !mb-3">
+                TITULO DE BANNER
+              </h3>
+              <input
+                type="text"
+                className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+                name="bannerTitlename"
+                value={formFields.name}
+                onChange={onChangeInput}
               />
             </div>
           </div>

@@ -37,11 +37,18 @@ import {
   updateProductRams,
   updateProductSize,
   updateProductWeight,
+  uploadBannerImages,
   uploadImages,
 } from "../controllers/product.controller.js";
 
 const productRouter = Router();
 productRouter.post("/uploadImages", auth, upload.array("images"), uploadImages);
+productRouter.post(
+  "/uploadBannerImages",
+  auth,
+  upload.array("bannerimages"),
+  uploadBannerImages
+);
 productRouter.post("/create", auth, createProduct);
 productRouter.post("/productRams/create", auth, createProductRams);
 productRouter.post("/productWeight/create", auth, createProductWeight);

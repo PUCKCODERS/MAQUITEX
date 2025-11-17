@@ -21,6 +21,7 @@ import { useEffect } from "react";
 import { fetchDataFromApi } from "../../utils/api";
 import { useState } from "react";
 import { MyContext } from "../../App";
+import ProductLoading from "../../components/ProductLoading";
 
 const Home = () => {
   const [value, setValue] = useState(0);
@@ -59,6 +60,7 @@ const Home = () => {
   };
 
   const filterByCatId = (id) => {
+    setPopularProductsData([]);
     fetchDataFromApi(`/api/product/getAllProductsByCatId/${id}`).then((res) => {
       if (res?.error === false) {
         setPopularProductsData(res?.products);
@@ -69,29 +71,6 @@ const Home = () => {
   return (
     <>
       {homeSlidesData?.length !== 0 && <HomeSlider data={homeSlidesData} />}
-
-      <section className="!py-6">
-        <div className="container flex !gap-3">
-          <div className="part1 w-[70%]">
-            <HomeBannerV2 />
-          </div>
-
-          <div className="part2 w-[30%] flex items-center !gap-2 justify-between flex-col">
-            <BannerBoxV2
-              info="left"
-              image={
-                "https://polipapel.vteximg.com.br/arquivos/ids/174453-1000-1000/O76237.png?v=638191796905070000igua.jpg"
-              }
-            />
-            <BannerBoxV2
-              info="right"
-              image={
-                "https://polipapel.vteximg.com.br/arquivos/ids/174453-1000-1000/O76237.png?v=638191796905070000igua.jpg"
-              }
-            />
-          </div>
-        </div>
-      </section>
 
       {context?.catData?.length !== 0 && (
         <HomeCatSlider data={context?.catData} />
@@ -128,11 +107,37 @@ const Home = () => {
             </div>
           </div>
 
+          {popularProductsData?.length === 0 && <ProductLoading />}
+
           {popularProductsData?.length !== 0 && (
             <ProductsSlider items={6} data={popularProductsData} />
           )}
         </div>
       </section>
+
+      <section className="!py-6">
+        <div className="container flex !gap-3">
+          <div className="part1 w-[70%]">
+            <HomeBannerV2 />
+          </div>
+
+          <div className="part2 w-[30%] flex items-center !gap-2 justify-between flex-col">
+            <BannerBoxV2
+              info="left"
+              image={
+                "https://polipapel.vteximg.com.br/arquivos/ids/174453-1000-1000/O76237.png?v=638191796905070000igua.jpg"
+              }
+            />
+            <BannerBoxV2
+              info="right"
+              image={
+                "https://polipapel.vteximg.com.br/arquivos/ids/174453-1000-1000/O76237.png?v=638191796905070000igua.jpg"
+              }
+            />
+          </div>
+        </div>
+      </section>
+
       <section className="!py-4 !pt-8 bg-white">
         <div className="container">
           <div className="freeShipping !w-[80%] !m-auto !py-4 !p-4 border-3 !border-gray-950 bg-gray-700 flex items-center justify-between !rounded-md !mb-7">
@@ -160,6 +165,9 @@ const Home = () => {
       <section className="!py-5 !pt-4 bg-white">
         <div className="container">
           <h2 className="text-[20px] font-bold">NUEVOS PRODUCTOS</h2>
+
+          {productsData?.length === 0 && <ProductLoading />}
+
           {productsData?.length !== 0 && (
             <ProductsSlider items={6} data={productsData} />
           )}
@@ -170,6 +178,9 @@ const Home = () => {
       <section className="!py-5 !pt-0 bg-white">
         <div className="container">
           <h2 className="text-[20px] font-bold">PRODUCTOS RECOMENDADOS</h2>
+
+          {featuredProducts?.length === 0 && <ProductLoading />}
+
           {featuredProducts?.length !== 0 && (
             <ProductsSlider items={6} data={featuredProducts} />
           )}
