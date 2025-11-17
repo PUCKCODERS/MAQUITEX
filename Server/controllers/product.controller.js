@@ -79,7 +79,7 @@ export async function uploadBannerImages(request, response) {
     }
 
     return response.status(200).json({
-      bannerimages: bannerImage,
+      images: bannerImage,
       error: false,
       success: true,
     });

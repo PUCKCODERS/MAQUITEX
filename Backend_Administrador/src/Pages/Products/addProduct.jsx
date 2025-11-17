@@ -692,7 +692,7 @@ const AddProduct = () => {
                   multiple={true}
                   name="bannerimages"
                   url="/api/product/uploadBannerImages"
-                  setBannerImagesFun={setBannerImagesFun}
+                  setPreviewsFun={setBannerImagesFun}
                 />
               </div>
               <h3 className="font-bold text-[18px] text-[#082c55] !mb-3">
