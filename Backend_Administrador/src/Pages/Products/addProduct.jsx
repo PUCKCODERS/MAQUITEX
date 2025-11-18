@@ -41,6 +41,7 @@ const AddProduct = () => {
     productWeight: [],
     bannerTitlename: "",
     bannerimages: [],
+    isDisplayOnHomeBanner: false,
   });
 
   const [productCat, setProductCat] = React.useState("");
@@ -56,6 +57,7 @@ const AddProduct = () => {
   const [previews, setPreviews] = useState([]);
   const [bannerPreviews, setBannerPreviews] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [checkedSwitch, setCheckedSwitch] = useState(false);
 
   const label = { inputProps: { "aria-label": "Switch demo" } };
 
@@ -202,6 +204,11 @@ const AddProduct = () => {
         formFields.bannerimages = imageArr;
       }, 100);
     });
+  };
+
+  const handleChangeSwitch = (event) => {
+    setCheckedSwitch(event.target.checked);
+    formFields.checkedSwitch = event.target.checked;
   };
 
   const handleSubmitg = (e) => {
@@ -679,12 +686,16 @@ const AddProduct = () => {
           </div>
 
           <div className="col w-full !p-5 !px-0">
-            <div className="bg-white border-1 border-[#082c55] !shadow-[3px_3px_3px_#082c55] rounded-sm  !p-4 w-full">
+            <div className="bg-white border-1 border-[#082c55] !shadow-[3px_3px_3px_#082c55] rounded-sm !p-4 w-full">
               <div className="flex items-center justify-between">
                 <h3 className="font-bold text-[18px] text-[#082c55] !mb-3">
-                  IMAGENES Y MULTIMEDIA
+                  IMAGENES DE BANNER
                 </h3>
-                <Switch {...label} />
+                <Switch
+                  {...label}
+                  onChange={handleChangeSwitch}
+                  checked={checkedSwitch}
+                />
               </div>
               <div className="grid grid-cols-7 !gap-2">
                 {bannerPreviews?.length !== 0 &&

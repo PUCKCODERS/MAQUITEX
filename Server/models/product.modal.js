@@ -107,6 +107,10 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    isDisplayOnHomeBanner: {
+      type: Boolean,
+      default: false,
+    },
     dateCreated: {
       type: Date,
       default: Date.now,
