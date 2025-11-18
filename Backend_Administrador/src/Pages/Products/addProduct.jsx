@@ -15,6 +15,7 @@ import { deleteImages, fetchDataFromApi, postData } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import { GiSave } from "react-icons/gi";
+import Switch from "@mui/material/Switch";
 
 const AddProduct = () => {
   const [formFields, setFormFields] = useState({
@@ -55,6 +56,8 @@ const AddProduct = () => {
   const [previews, setPreviews] = useState([]);
   const [bannerPreviews, setBannerPreviews] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const label = { inputProps: { "aria-label": "Switch demo" } };
 
   const history = useNavigate();
 
@@ -642,6 +645,7 @@ const AddProduct = () => {
             <h3 className="font-bold text-[18px] text-[#082c55] !mb-3">
               IMAGENES Y MULTIMEDIA
             </h3>
+
             <div className="grid grid-cols-7 !gap-2">
               {previews?.length !== 0 &&
                 previews?.map((image, index) => {
@@ -675,10 +679,13 @@ const AddProduct = () => {
           </div>
 
           <div className="col w-full !p-5 !px-0">
-            <div className="shadow-mg bg-gray-200 !p-4 w-full">
-              <h3 className="font-bold text-[18px] text-[#082c55] !mb-3">
-                IMAGENES DE BANNER
-              </h3>
+            <div className="bg-white border-1 border-[#082c55] !shadow-[3px_3px_3px_#082c55] rounded-sm  !p-4 w-full">
+              <div className="flex items-center justify-between">
+                <h3 className="font-bold text-[18px] text-[#082c55] !mb-3">
+                  IMAGENES Y MULTIMEDIA
+                </h3>
+                <Switch {...label} />
+              </div>
               <div className="grid grid-cols-7 !gap-2">
                 {bannerPreviews?.length !== 0 &&
                   bannerPreviews?.map((image, index) => {
