@@ -503,6 +503,7 @@ export const Products = () => {
                               name="half-rating"
                               size="small"
                               defaultValue={product?.rating}
+                              readOnly
                             />
                           </p>
                         </TableCell>

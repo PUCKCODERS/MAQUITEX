@@ -208,7 +208,7 @@ const AddProduct = () => {
 
   const handleChangeSwitch = (event) => {
     setCheckedSwitch(event.target.checked);
-    formFields.checkedSwitch = event.target.checked;
+    formFields.isDisplayOnHomeBanner = event.target.checked;
   };
 
   const handleSubmitg = (e) => {
