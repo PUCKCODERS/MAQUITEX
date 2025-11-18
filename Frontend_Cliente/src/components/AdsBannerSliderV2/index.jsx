@@ -9,7 +9,7 @@ import BannerBoxV2 from "../bannerBoxV2";
 
 const AdsBannerSliderV2 = (props) => {
   return (
-    <div className="!py-5 w-full">
+    <div className="!py-5 w-full ">
       <Swiper
         loop={true}
         slidesPerView={props.items}
@@ -18,7 +18,7 @@ const AdsBannerSliderV2 = (props) => {
         modules={[Navigation]}
         className="smlBtn"
       >
-        <SwiperSlide className="!rounded-md !mb-4 !border-1 !border-[#082c55] shadow-lg !bg-gray-100">
+        <SwiperSlide className="!rounded-md !mb-4 !mr-2 !overflow-hidden  shadow-[3px_3px_3px_#274a72] !bg-gray-100">
           <BannerBoxV2
             info="right"
             image={
@@ -27,7 +27,7 @@ const AdsBannerSliderV2 = (props) => {
             liink={"/"}
           />
         </SwiperSlide>
-        <SwiperSlide className="!bg-gray-900 rounded-md !mb-4 !border-1 !border-[#082c55] shadow-lg">
+        <SwiperSlide className="!rounded-md !mb-4 !mr-2 !overflow-hidden  shadow-[3px_3px_3px_#274a72] !bg-gray-100">
           <BannerBoxV2
             info="right"
             image={
@@ -35,7 +35,7 @@ const AdsBannerSliderV2 = (props) => {
             }
           />
         </SwiperSlide>
-        <SwiperSlide className="!bg-gray-100 rounded-md !mb-4 !border-1 !border-[#082c55] shadow-lg">
+        <SwiperSlide className="!rounded-md !mb-4 !mr-2 !overflow-hidden  shadow-[3px_3px_3px_#274a72] !bg-gray-100">
           <BannerBoxV2
             info="right"
             image={
@@ -44,7 +44,7 @@ const AdsBannerSliderV2 = (props) => {
             liink={"/"}
           />
         </SwiperSlide>
-        <SwiperSlide className="!bg-gray-100 rounded-md !mb-4 !border-1 !border-[#082c55] shadow-lg">
+        <SwiperSlide className="!rounded-md !mb-4 !mr-2 !overflow-hidden shadow-[3px_3px_3px_#274a72] !bg-gray-100">
           <BannerBoxV2
             info="right"
             image={

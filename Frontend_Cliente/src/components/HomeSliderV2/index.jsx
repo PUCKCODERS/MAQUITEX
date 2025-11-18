@@ -24,13 +24,13 @@ const HomeBannerV2 = (props) => {
         disableOnInteraction: false,
       }}
       modules={[EffectFade, Navigation, Pagination, Autoplay]}
-      className="homeSliderV2 !shadow-[3px_6px_9px_#000]"
+      className="homeSliderV2 !shadow-[3px_6px_9px_#082c55] rounded-md "
     >
       {props?.data?.map((item, index) => {
         if (item?.isDisplayOnHomeBanner === true) {
           return (
             <SwiperSlide key={index}>
-              <div className="item w-full overflow-hidden">
+              <div className="item w-full overflow-hidden ">
                 <img
                   src={item?.bannerimages[0]}
                   className="!left-0 !top-0 !w-full !h-[400px] "
@@ -44,7 +44,7 @@ const HomeBannerV2 = (props) => {
                   </h2>
 
                   <h3 className="text-[#000] flex items-center text-[18px] font-[bold] !w-full !text-left !mt-3 !mb-3 !gap-3 relative -right-[100%] opacity-0">
-                    A PARTIR DE SOLO{" "}
+                    A TAN DE SOLO{" "}
                     <span className="text-[#082c55] text-[30px] font-[700]">
                       &#36; {item?.price}
                     </span>

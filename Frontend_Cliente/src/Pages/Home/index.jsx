@@ -115,13 +115,13 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="!py-6">
+      <section className="!py-6 bg-white">
         <div className="container flex !gap-3">
           <div className="part1 w-[70%]">
             {productsData?.length !== 0 && <HomeBannerV2 data={productsData} />}
           </div>
 
-          <div className="part2 w-[30%] flex items-center !gap-2 justify-between flex-col">
+          <div className="part2 w-[30%] flex items-center !gap-2 justify-between flex-col ">
             <BannerBoxV2
               info="left"
               image={
