@@ -15,6 +15,7 @@ import { FaWeightScale } from "react-icons/fa6";
 import { BiSolidMessageEdit } from "react-icons/bi";
 import { BsPatchCheckFill } from "react-icons/bs";
 import Rating from "@mui/material/Rating";
+import { GiMoneyStack } from "react-icons/gi";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const ProductDetails = () => {
@@ -121,6 +122,15 @@ const ProductDetails = () => {
                 {product?.name}
               </h1>
 
+              <div className="flex items-center !py-2">
+                <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+                  <GiMoneyStack className="text-[20px] text-[#082c55]" />
+                  PRECIO :
+                </span>
+                <span className="!font-bold text-[#082c55] text-[14px]">
+                  &#36; {product?.price}
+                </span>
+              </div>
               <div className="flex items-center !py-2">
                 <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                   <MdBrandingWatermark className="text-[20px] text-[#082c55]" />
