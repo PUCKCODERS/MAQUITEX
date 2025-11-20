@@ -29,6 +29,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { IoClose } from "react-icons/io5";
 import EditProduct from "../../Pages/Products/editProduct";
+import AddBannerV1 from "../../Pages/Banners/addBannerV1";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -258,6 +259,9 @@ const Header = () => {
         )}
         {context?.isOpenFullScreenPanel?.model === "EDITAR PRODUCTO" && (
           <EditProduct />
+        )}
+        {context?.isOpenFullScreenPanel?.model === "AGREGAR BANNER" && (
+          <AddBannerV1 />
         )}
       </Dialog>
     </>

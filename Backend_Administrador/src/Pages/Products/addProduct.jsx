@@ -356,9 +356,10 @@ const AddProduct = () => {
                   label="Category"
                   onChange={handleChangeProductCat}
                 >
-                  {context?.catData?.map((cat /*, index*/) => {
+                  {context?.catData?.map((cat, index) => {
                     return (
                       <MenuItem
+                        key={index}
                         value={cat?._id}
                         onClick={() => selectCatByName(cat?.name)}
                         className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
@@ -386,12 +387,13 @@ const AddProduct = () => {
                   label="Sub Category"
                   onChange={handleChangeProductSubCat}
                 >
-                  {context?.catData?.map((cat /*, index*/) => {
+                  {context?.catData?.map((cat) => {
                     return (
                       cat?.children?.length !== 0 &&
-                      cat?.children?.map((subCat /*, index*/) => {
+                      cat?.children?.map((subCat, index) => {
                         return (
                           <MenuItem
+                            key={index}
                             value={subCat?._id}
                             onClick={() => selectSubCatByName(subCat?.name)}
                             className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
