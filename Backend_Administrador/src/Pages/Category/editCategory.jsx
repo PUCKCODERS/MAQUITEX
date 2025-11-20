@@ -24,7 +24,6 @@ const EditCategory = () => {
     const id = context?.isOpenFullScreenPanel?.id;
 
     fetchDataFromApi(`/api/category/${id}`).then((res) => {
-      console.log(res?.category);
       formFields.name = res?.category?.name;
       setPreviews(res?.category?.images);
     });

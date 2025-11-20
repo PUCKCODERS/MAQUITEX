@@ -134,7 +134,16 @@ export const BannerV1List = () => {
 
                       <TableCell width={100} className="!text-white">
                         <div className="flex items-center !gap-3">
-                          <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                          <Button
+                            className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                            onClick={() =>
+                              context.setIsOpenFullScreenPanel({
+                                open: true,
+                                model: "EDITAR BANNER",
+                                id: item?._id,
+                              })
+                            }
+                          >
                             <GrEdit className=" !text-[20px] " />
                           </Button>
                           <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
