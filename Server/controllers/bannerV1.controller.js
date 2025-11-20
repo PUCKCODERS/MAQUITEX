@@ -65,7 +65,7 @@ export async function addBanner(request, response) {
       });
     }
 
-    category = await category.save();
+    banner = await banner.save();
 
     imagesArr = [];
 
@@ -98,7 +98,7 @@ export async function getBanners(request, response) {
     return response.status(200).json({
       error: false,
       success: true,
-      data: rootCategories,
+      data: banners,
     });
   } catch (error) {
     return response.status(500).json({
@@ -111,7 +111,8 @@ export async function getBanners(request, response) {
 
 export async function deleteBanner(request, response) {
   const banner = await BannerV1Model.findById(request.params.id);
-  const images = category.images;
+  const images = banner.images;
+
   let img = "";
 
   for (img of images) {
