@@ -18,40 +18,21 @@ const AdsBannerSliderV2 = (props) => {
         modules={[Navigation]}
         className="smlBtn"
       >
-        <SwiperSlide className="!rounded-md !mb-4 !mr-2 !overflow-hidden  shadow-[3px_3px_3px_#274a72] !bg-gray-100">
-          <BannerBoxV2
-            info="right"
-            image={
-              "https://polipapel.vteximg.com.br/arquivos/ids/174453-1000-1000/O76237.png?v=638191796905070000igua.jpg"
-            }
-            liink={"/"}
-          />
-        </SwiperSlide>
-        <SwiperSlide className="!rounded-md !mb-4 !mr-2 !overflow-hidden  shadow-[3px_3px_3px_#274a72] !bg-gray-100">
-          <BannerBoxV2
-            info="right"
-            image={
-              "https://polipapel.vteximg.com.br/arquivos/ids/174453-1000-1000/O76237.png?v=638191796905070000igua.jpg"
-            }
-          />
-        </SwiperSlide>
-        <SwiperSlide className="!rounded-md !mb-4 !mr-2 !overflow-hidden  shadow-[3px_3px_3px_#274a72] !bg-gray-100">
-          <BannerBoxV2
-            info="right"
-            image={
-              "https://polipapel.vteximg.com.br/arquivos/ids/174453-1000-1000/O76237.png?v=638191796905070000igua.jpg"
-            }
-            liink={"/"}
-          />
-        </SwiperSlide>
-        <SwiperSlide className="!rounded-md !mb-4 !mr-2 !overflow-hidden shadow-[3px_3px_3px_#274a72] !bg-gray-100">
-          <BannerBoxV2
-            info="right"
-            image={
-              "https://polipapel.vteximg.com.br/arquivos/ids/174453-1000-1000/O76237.png?v=638191796905070000igua.jpg"
-            }
-          />
-        </SwiperSlide>
+        {props?.data?.map((item, index) => {
+          return (
+            <SwiperSlide
+              key={index}
+              className="!rounded-md !mb-4 !mr-2 !overflow-hidden  shadow-[3px_3px_3px_#274a72] !bg-gray-100"
+            >
+              <BannerBoxV2
+                info={item?.alignInfo}
+                item={item}
+                image={item?.images[0]}
+                liink={"/"}
+              />
+            </SwiperSlide>
+          );
+        })}
       </Swiper>
     </div>
   );

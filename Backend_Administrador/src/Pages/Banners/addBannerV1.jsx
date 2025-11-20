@@ -17,12 +17,14 @@ const AddBannerV1 = () => {
     subCatId: "",
     thirdsubCatId: "",
     price: "",
+    alignInfo: "",
   });
 
   const [previews, setPreviews] = useState([]);
   const [productCat, setProductCat] = useState("");
   const [productSubCat, setProductSubCat] = React.useState("");
   const [productThirdLavelCat, setProductThirdLavelCat] = useState("");
+  const [alignInfo, setAlignInfo] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const history = useNavigate();
 
@@ -51,6 +53,11 @@ const AddBannerV1 = () => {
   const handleChangeProductThirdLavelSubCat = (event) => {
     setProductThirdLavelCat(event.target.value);
     formFields.thirdsubCatId = event.target.value;
+  };
+
+  const handleChangeAlignInfo = (event) => {
+    setAlignInfo(event.target.value);
+    formFields.alignInfo = event.target.value;
   };
 
   const setPreviewsFun = (previewsArr) => {
@@ -245,6 +252,37 @@ const AddBannerV1 = () => {
               value={formFields.price}
               onChange={onChangeInput}
             />
+          </div>
+
+          <div className="col">
+            <h3 className="text-[#082c55] font-bold text-[14px] !mb-2">
+              ALINEAR INFORMACIÓN
+            </h3>
+
+            {context?.catData?.length !== 0 && (
+              <Select
+                labelId="demo-simple-select-label"
+                id="productCatDrop"
+                size="small"
+                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                value={alignInfo}
+                label="Sub Category"
+                onChange={handleChangeAlignInfo}
+              >
+                <MenuItem
+                  value={"left"}
+                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                >
+                  IZQUIEDA
+                </MenuItem>
+                <MenuItem
+                  value={"right"}
+                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                >
+                  DERECHA
+                </MenuItem>
+              </Select>
+            )}
           </div>
         </div>
 

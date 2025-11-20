@@ -15,20 +15,22 @@ const bannerV1Schema = new mongoose.Schema(
     catId: {
       type: String,
       default: "",
-      required: true,
     },
     subCatId: {
       type: String,
       default: "",
-      required: true,
     },
     thirdsubCatId: {
       type: String,
       default: "",
-      required: true,
     },
     price: {
       type: Number,
+      default: "",
+      required: true,
+    },
+    alignInfo: {
+      type: String,
       default: "",
       required: true,
     },

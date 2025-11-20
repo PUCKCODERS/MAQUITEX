@@ -120,13 +120,13 @@ export const HomeSliderBanners = () => {
                     <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
                       <TableCell width={300}>
                         <div
-                          className="flex items-center !gap-4  w-[300px]"
+                          className="flex items-center !gap-4  w-[400px]"
                           key={index}
                         >
                           <div className="img w-full rounded-md overflow-hidden border border-[#fff] group">
                             <img
                               src={item?.images[0]}
-                              className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+                              className=" group-hover:scale-105 transition-all duration-300 !cursor-pointer w-[400px] !h-[200px]"
                             />
                           </div>
                         </div>
