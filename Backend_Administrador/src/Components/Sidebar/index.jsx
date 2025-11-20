@@ -263,7 +263,7 @@ const Sidebar = () => {
             <Collapse isOpened={submenuIndex === 5 ? true : false}>
               <ul className="!w-full">
                 <li className="!w-full">
-                  <Link to="/bannerV1List">
+                  <Link to="/bannerV1/list">
                     <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
                       <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
                       LISTA DE BANNER

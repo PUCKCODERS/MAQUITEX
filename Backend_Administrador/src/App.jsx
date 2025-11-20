@@ -28,6 +28,7 @@ import Profile from "./Pages/Profile";
 import AddRams from "./Pages/Products/addRams.jsx";
 import AddWeight from "./Pages/Products/addWeight.jsx";
 import AddSize from "./Pages/Products/addSize.jsx";
+import BannerV1List from "./Pages/Banners/bannerV1List.jsx";
 
 const MyContext = createContext();
 
@@ -407,6 +408,33 @@ function App() {
                 } transition-all duration-300`}
               >
                 <AddSize />
+              </div>
+            </div>
+          </section>
+        </>
+      ),
+    },
+    {
+      path: "/bannerV1/list",
+      exact: true,
+      element: (
+        <>
+          <section className="main">
+            <Header />
+            <div className="contentMain flex">
+              <div
+                className={`overflow-hidden sidebarWrapper ${
+                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                } transition-all duration-300`}
+              >
+                <Sidebar />
+              </div>
+              <div
+                className={`contentRight !py-4 !px-5 ${
+                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
+                } transition-all duration-300`}
+              >
+                <BannerV1List />
               </div>
             </div>
           </section>
