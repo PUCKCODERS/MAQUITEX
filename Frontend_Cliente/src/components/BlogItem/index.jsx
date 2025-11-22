@@ -5,8 +5,8 @@ import { BsBoxArrowUpRight } from "react-icons/bs";
 
 const BlogItem = (props) => {
   return (
-    <div className="blogItem group">
-      <div className="imgWrapper w-full overflow-hidden rounded-md border-2 border-[#274a72] cursor-pointer relative">
+    <div className="blogItem group !mr-2">
+      <div className="imgWrapper w-full overflow-hidden rounded-md shadow-[6px_6px_6px_#274a72] cursor-pointer relative">
         <img
           src={props?.item?.images[0]}
           className="w-full transition-all group-hover:scale-105 group-hover:rotate-0"
