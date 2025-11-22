@@ -1,10 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button } from "@mui/material";
-
 import { GrEdit } from "react-icons/gr";
-
 import { FaTrashAlt } from "react-icons/fa";
-
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -12,7 +9,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-
 import { MyContext } from "../../App";
 import { deleteData, fetchDataFromApi } from "../../utils/api";
 import Dialog from "@mui/material/Dialog";
@@ -21,13 +17,15 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 const columns = [
   { id: "image", label: "IMAGEN", minWidth: 250 },
+  { id: "title", label: "TITULO", minWidth: 250 },
+  { id: "description", label: "DESCRIPCIÓN", minWidth: 300 },
   { id: "action", label: "OPCIONES", minWidth: 100 },
 ];
 
-export const BannerV1List = () => {
+export const BlogList = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [slidesData, setSlidesData] = useState([]);
+  const [blogData, setBlogData] = useState([]);
   const [slideToDelete, setSlideToDelete] = useState(null);
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
@@ -38,8 +36,8 @@ export const BannerV1List = () => {
   }, [context?.isOpenFullScreenPanel]);
 
   const getData = () => {
-    fetchDataFromApi("/api/bannerV1").then((res) => {
-      setSlidesData(res?.data);
+    fetchDataFromApi("/api/blog").then((res) => {
+      setBlogData(res?.blogs);
     });
   };
 
@@ -59,11 +57,11 @@ export const BannerV1List = () => {
 
   const confirmDelete = () => {
     if (slideToDelete) {
-      deleteData(`/api/bannerV1/${slideToDelete}`).then(() => {
+      deleteData(`/api/blog/${slideToDelete}`).then(() => {
         getData();
         setIsConfirmOpen(false);
         setSlideToDelete(null);
-        context.alertBox("success", "BANNER ELIMINADA EXITOSAMENTE");
+        context.alertBox("success", "BLOG ELIMINADA EXITOSAMENTE");
       });
     }
   };
@@ -72,7 +70,7 @@ export const BannerV1List = () => {
     <>
       <div className="flex !bg-gray-700 items-center justify-between !px-5 !py-5 !mt-3 sm:rounded-lg border-b dark:border-gray-700">
         <h2 className="text-white text-[20px] !font-[500] ">
-          LISTA DE BANNERS
+          LISTA DE BLOGS
           <span className="font-[400] text-[14px] !ml-3"></span>
         </h2>
 
@@ -82,11 +80,11 @@ export const BannerV1List = () => {
             onClick={() =>
               context.setIsOpenFullScreenPanel({
                 open: true,
-                model: "AGREGAR BANNER",
+                model: "AGREGAR BLOG",
               })
             }
           >
-            AÑADIR BANNER
+            AÑADIR BLOG
           </Button>
         </div>
       </div>
@@ -108,8 +106,8 @@ export const BannerV1List = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {slidesData?.length !== 0 &&
-                slidesData?.map((item, index) => {
+              {blogData?.length !== 0 &&
+                blogData?.map((item, index) => {
                   return (
                     <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
                       <TableCell width={300}>
@@ -120,10 +118,28 @@ export const BannerV1List = () => {
                           <div className="img w-full rounded-md overflow-hidden border border-[#fff] group">
                             <img
                               src={item?.images[0]}
-                              className=" group-hover:scale-105 transition-all duration-300 !cursor-pointer w-[300px] !h-[200px]"
+                              className=" group-hover:scale-105 transition-all duration-300 !cursor-pointer w-[300px] !h-[150px]"
                             />
                           </div>
                         </div>
+                      </TableCell>
+
+                      <TableCell
+                        width={200}
+                        className="!text-white text-[15px]  font-[600] "
+                      >
+                        {item?.title}
+                      </TableCell>
+
+                      <TableCell
+                        width={300}
+                        className="!text-white text-[15px]  font-[600]"
+                      >
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: item?.description?.substr(0, 450) + "...",
+                          }}
+                        ></div>
                       </TableCell>
 
                       <TableCell width={100} className="!text-white">
@@ -133,18 +149,18 @@ export const BannerV1List = () => {
                             onClick={() =>
                               context.setIsOpenFullScreenPanel({
                                 open: true,
-                                model: "EDITAR BANNER",
+                                model: "EDITAR BLOG",
                                 id: item?._id,
                               })
                             }
                           >
                             <GrEdit className=" !text-[20px] " />
                           </Button>
-                          <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                            <FaTrashAlt
-                              className="!text-[20px]"
-                              onClick={() => deleteSlide(item?._id)}
-                            />
+                          <Button
+                            className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                            onClick={() => deleteSlide(item?._id)}
+                          >
+                            <FaTrashAlt className="!text-[20px]" />
                           </Button>
                         </div>
                       </TableCell>
@@ -154,6 +170,7 @@ export const BannerV1List = () => {
             </TableBody>
           </Table>
         </TableContainer>
+
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
@@ -184,7 +201,7 @@ export const BannerV1List = () => {
             className="!text-[20px] text-[#082c55] !font-bold !pb-1 !text-center"
             sx={{ lineHeight: 1.2 }}
           >
-            ¿DESEA ELIMINAR ESTE BANNER?
+            ¿DESEA ELIMINAR ESTE BLOG?
           </DialogTitle>
           <p className="text-gray-800 text-[16px] !mb-4">
             ESTA ACCIÓN NO SE PUEDE DESHACER
@@ -209,4 +226,4 @@ export const BannerV1List = () => {
   );
 };
 
-export default BannerV1List;
+export default BlogList;

@@ -239,3 +239,10 @@ input[type="email"]:disabled {
 .contentRight {
   margin-top: 60px !important;
 }
+
+.rsw-editor {
+  min-height: 200px !important;
+  background: #fff !important;
+  border-color: #9fc3ec !important;
+  box-shadow: 3px 3px 3px #082c55 !important;
+}

@@ -31,6 +31,8 @@ import { IoClose } from "react-icons/io5";
 import EditProduct from "../../Pages/Products/editProduct";
 import AddBannerV1 from "../../Pages/Banners/addBannerV1";
 import EditBannerV1 from "../../Pages/Banners/editBannerV1";
+import AddBlog from "../../Pages/Blog/addBlog";
+import EditBlog from "../../Pages/Blog/editBlog";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -266,6 +268,12 @@ const Header = () => {
         )}
         {context?.isOpenFullScreenPanel?.model === "EDITAR BANNER" && (
           <EditBannerV1 />
+        )}
+        {context?.isOpenFullScreenPanel?.model === "AGREGAR BLOG" && (
+          <AddBlog />
+        )}
+        {context?.isOpenFullScreenPanel?.model === "EDITAR BLOG" && (
+          <EditBlog />
         )}
       </Dialog>
     </>
