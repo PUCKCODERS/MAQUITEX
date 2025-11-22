@@ -9,11 +9,116 @@ import Button from "@mui/material/Button";
 import RangeSlider from "react-range-slider-input";
 import "react-range-slider-input/dist/style.css";
 import Rating from "@mui/material/Rating";
+import { useContext } from "react";
+import { MyContext } from "../../App";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { postData } from "../../utils/api";
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   const [isOpenedCategoryFilter, setIsOpenCategoryFilter] = useState(true);
   const [isOpenedAvailFilter, setIsOpenAvailFilter] = useState(true);
   const [isOpenedSizeFilter, setIsOpenSizeFilter] = useState(true);
+
+  const [filters, setFilters] = useState({
+    catId: [],
+    subCatId: [],
+    thirdsubCatId: [],
+    minPrice: "",
+    maxPrice: "",
+    rating: "",
+    page: 1,
+    limit: 5,
+  });
+
+  const [price, setPrice] = useState([0, 10000]);
+
+  const context = useContext(MyContext);
+  const location = useLocation();
+
+  const handleCheckboxChange = (field, value) => {
+    const currentValues = filters[field] || [];
+    const updatedValues = currentValues?.includes(value)
+      ? currentValues.filter((item) => item !== value)
+      : [...currentValues, value];
+
+    setFilters((prev) => ({
+      ...prev,
+      [field]: updatedValues,
+    }));
+
+    if (field === "catId") {
+      setFilters((prev) => ({
+        ...prev,
+        subCatId: [],
+        thirdsubCatId: [],
+      }));
+    }
+  };
+
+  useEffect(() => {
+    const url = window.location.href;
+    const queryParameters = new URLSearchParams(location.search);
+
+    if (url.includes("catId")) {
+      const categoryId = queryParameters.get("catId");
+      const catArr = [];
+      catArr.push(categoryId);
+      filters.catId = catArr;
+      filters.subCatId = [];
+      filters.thirdsubCatId = [];
+      filters.rating = [];
+    }
+
+    if (url.includes("subCatId")) {
+      const subcategoryId = queryParameters.get("subCatId");
+      const subcatArr = [];
+      subcatArr.push(subcategoryId);
+      filters.subCatId = subcatArr;
+      filters.catId = [];
+      filters.thirdsubCatId = [];
+      filters.rating = [];
+    }
+
+    if (url.includes("thirdsubCatId")) {
+      const thirdcategoryId = queryParameters.get("thirdsubCatId");
+      const thirdcatArr = [];
+      thirdcatArr.push(thirdcategoryId);
+      filters.subCatId = [];
+      filters.catId = [];
+      filters.thirdsubCatId = thirdcatArr;
+      filters.rating = [];
+    }
+
+    filters.page = 1;
+
+    setTimeout(() => {
+      filtesData();
+    }, 200);
+  }, [location]);
+
+  const filtesData = () => {
+    props.setIsLoading(true);
+    postData(`/api/product/filters`, filters).then((res) => {
+      props.setProductsData(res);
+      props.setIsLoading(false);
+      props.setTotalPages(res?.totalPages);
+      window.scrollTo(0, 0);
+    });
+  };
+
+  useEffect(() => {
+    filters.page = props.page;
+    filtesData();
+  }, [filters, props.page]);
+
+  useEffect(() => {
+    setFilters((prev) => ({
+      ...prev,
+      minPrice: price[0],
+      maxPrice: price[1],
+    }));
+  });
 
   return (
     <aside className="sidebar !py-5 ">
@@ -33,46 +138,20 @@ const Sidebar = () => {
         </h3>
         <Collapse isOpened={isOpenedCategoryFilter}>
           <div className="scroll !px-5 relative -left-[13px]">
-            <FormControlLabel
-              control={<Checkbox size="small" />}
-              label="MAQUINAS"
-              className="w-full"
-            />
-            <FormControlLabel
-              control={<Checkbox size="small" />}
-              label="CORTE"
-              className="w-full"
-            />
-            <FormControlLabel
-              control={<Checkbox size="small" />}
-              label="PLANCHADO"
-              className="w-full"
-            />
-            <FormControlLabel
-              control={<Checkbox size="small" />}
-              label="ACCESORIOS"
-              className="w-full"
-            />
-            <FormControlLabel
-              control={<Checkbox size="small" />}
-              label="REPUESTOS"
-              className="w-full"
-            />
-            <FormControlLabel
-              control={<Checkbox size="small" />}
-              label="OFERTAS"
-              className="w-full"
-            />
-            <FormControlLabel
-              control={<Checkbox size="small" />}
-              label="NOSOTROS"
-              className="w-full"
-            />
-            <FormControlLabel
-              control={<Checkbox size="small" />}
-              label="CONTACTO"
-              className="w-full"
-            />
+            {context?.catData?.length !== 0 &&
+              context?.catData?.map((item, index) => {
+                return (
+                  <FormControlLabel
+                    key={index}
+                    value={item?._id}
+                    control={<Checkbox />}
+                    checked={filters?.catId?.includes(item?._id)}
+                    label={item?.name}
+                    onChange={() => handleCheckboxChange("catId", item?._id)}
+                    className="w-full"
+                  />
+                );
+              })}
           </div>
         </Collapse>
       </div>
@@ -152,13 +231,19 @@ const Sidebar = () => {
           FILTRAR POR PRECIO
         </h3>
 
-        <RangeSlider />
+        <RangeSlider
+          value={price}
+          onInput={setPrice}
+          min={1}
+          max={10000}
+          setp={5}
+        />
         <div className="flex !pt-4 !pb-2 priceRange">
           <span className="!ml-auto text-[13px] flex items-center justify-between !gap-2">
-            From: <strong className="!text-dark">$: {100}</strong>
+            From: <strong className="!text-dark">$: {price[0]}</strong>
           </span>
           <span className="!ml-auto text-[13px] flex items-center justify-between !gap-2">
-            From: <strong className="!text-dark">$: {999}</strong>
+            From: <strong className="!text-dark">$: {price[1]}</strong>
           </span>
         </div>
       </div>

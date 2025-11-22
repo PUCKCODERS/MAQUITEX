@@ -11,10 +11,18 @@ import { TfiLayoutGrid3Alt } from "react-icons/tfi";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
+import ProductLoadingGrid from "../../components/ProductLoading/productLoadingGrid";
 
 const ProductListing = () => {
   const [itemView, setItemView] = useState("grid");
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const [productsData, setProductsData] = useState([]);
+  const [isLoading, setIsLoading] = useState([]);
+
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -50,7 +58,14 @@ const ProductListing = () => {
       <div className="bg-white !p-2 !mt-4">
         <div className="container flex !gap-3">
           <div className="sidebarWrapper !w-[20%] !h-full bg-white ">
-            <Sidebar />
+            <Sidebar
+              productsData={productsData}
+              setProductsData={setProductsData}
+              isLoading={isLoading}
+              setIsLoading={setIsLoading}
+              page={page}
+              setTotalPages={setTotalPages}
+            />
           </div>
 
           <div className="rightContent w-[80%] !py-3">
@@ -72,7 +87,9 @@ const ProductListing = () => {
                 </Button>
 
                 <span className="text-[14px] font-[600] !pl-3 !text-[#082c55]">
-                  EXISTEN 369 PRODUCTOS
+                  EXISTEN{" "}
+                  {productsData?.length !== 0 ? productsData?.length : 0}{" "}
+                  PRODUCTOS
                 </span>
               </div>
 
@@ -150,31 +167,41 @@ const ProductListing = () => {
             >
               {itemView === "grid" ? (
                 <>
-                  <ProductItem />
-                  <ProductItem />
-                  <ProductItem />
-                  <ProductItem />
-                  <ProductItem />
-                  <ProductItem />
-                  <ProductItem />
-                  <ProductItem />
+                  {isLoading === true ? (
+                    <ProductLoadingGrid view={itemView} />
+                  ) : (
+                    productsData?.products?.length !== 0 &&
+                    productsData?.products?.map((item, index) => {
+                      return <ProductItem key={index} item={item} />;
+                    })
+                  )}
                 </>
               ) : (
                 <>
-                  <ProductItemListView />
-                  <ProductItemListView />
-                  <ProductItemListView />
-                  <ProductItemListView />
-                  <ProductItemListView />
-                  <ProductItemListView />
-                  <ProductItemListView />
+                  {isLoading === true ? (
+                    <ProductItemListView view={itemView} />
+                  ) : (
+                    productsData?.products?.length !== 0 &&
+                    productsData?.products?.map((item, index) => {
+                      return <ProductItemListView key={index} item={item} />;
+                    })
+                  )}
                   <ProductItemListView />
                 </>
               )}
             </div>
-            <div className="flex items-center justify-center !mt-10">
-              <Pagination count={10} showFirstButton showLastButton />
-            </div>
+
+            {totalPages > 1 && (
+              <div className="flex items-center justify-center !mt-10">
+                <Pagination
+                  showFirstButton
+                  showLastButton
+                  count={totalPages}
+                  page={page}
+                  onChange={(e, value) => setPage(value)}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -14,6 +14,7 @@ import {
   deleteProductRams,
   deleteProductSize,
   deleteProductWeight,
+  filters,
   getAllFeaturedProducts,
   getAllProducts,
   getAllProductsByCatId,
@@ -90,5 +91,7 @@ productRouter.get("/:id", getProduct);
 productRouter.get("/productRams/:id", getProductRamsById);
 productRouter.get("/productWeight/:id", getProductWeightById);
 productRouter.get("/productSize/:id", getProductSizeById);
+
+productRouter.post("/filters", filters);
 
 export default productRouter;
