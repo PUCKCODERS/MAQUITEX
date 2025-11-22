@@ -12,6 +12,7 @@ import { GoTriangleDown } from "react-icons/go";
 import { Collapse } from "react-collapse";
 import { FaClipboardList } from "react-icons/fa";
 import { PiSlideshowFill } from "react-icons/pi";
+import { ImNewspaper } from "react-icons/im";
 import { MyContext } from "../../App";
 
 const Sidebar = () => {
@@ -282,6 +283,49 @@ const Sidebar = () => {
                   >
                     <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
                     AÑADIR BANNER
+                  </Button>
+                </li>
+              </ul>
+            </Collapse>
+          </li>
+
+          <li>
+            <Button
+              className="w-full !text-[#082c55] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300"
+              onClick={() => isOpenSubMenu(6)}
+            >
+              <ImNewspaper className="!text-[20px] " /> <span>BLOGS</span>
+              <span className="!ml-auto !text-[20px] !w-[30px] !h-[30px] flex items-center justify-center">
+                <GoTriangleDown
+                  className={`transition-all ${
+                    submenuIndex === 5 ? "rotate-180" : ""
+                  }`}
+                />
+              </span>
+            </Button>
+
+            <Collapse isOpened={submenuIndex === 6 ? true : false}>
+              <ul className="!w-full">
+                <li className="!w-full">
+                  <Link to="/blog/list">
+                    <Button className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3">
+                      <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
+                      LISTA DE BLOGS
+                    </Button>
+                  </Link>
+                </li>
+                <li className="!w-full">
+                  <Button
+                    className="!text-gray-500 !text-[10px] !font-[600] !capitalize !justify-start !w-full !pl-9 flex !gap-3"
+                    onClick={() =>
+                      context.setIsOpenFullScreenPanel({
+                        open: true,
+                        model: "AGREGAR BLOG",
+                      })
+                    }
+                  >
+                    <span className="block w-[5px] h-[5px] rounded-full !bg-gray-600 "></span>
+                    AÑADIR BLOG
                   </Button>
                 </li>
               </ul>
