@@ -18,7 +18,7 @@ const ProductListing = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const [productsData, setProductsData] = useState([]);
-  const [isLoading, setIsLoading] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -69,7 +69,7 @@ const ProductListing = () => {
           </div>
 
           <div className="rightContent w-[80%] !py-3">
-            <div className="bg-[#d6e7f8] !p-2 w-full !mb-4 rounded-md flex items-center justify-between">
+            <div className="bg-[#d6e7f8] !p-2 w-full !mb-4 rounded-md flex items-center justify-between ">
               <div className="col1 flex items-center itemViewActions">
                 <Button
                   className={`!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-[#274a72] hover:!text-[#000] hover:!bg-white
@@ -87,8 +87,8 @@ const ProductListing = () => {
                 </Button>
 
                 <span className="text-[14px] font-[600] !pl-3 !text-[#082c55]">
-                  EXISTEN{" "}
-                  {productsData?.length !== 0 ? productsData?.length : 0}{" "}
+                  EXISTEN
+                  {productsData?.length !== 0 ? productsData?.length : 0}
                   PRODUCTOS
                 </span>
               </div>
@@ -161,7 +161,7 @@ const ProductListing = () => {
             <div
               className={`grid ${
                 itemView === "grid"
-                  ? "grid-cols-4 md:grid-cols-4"
+                  ? "grid-cols-5 md:grid-cols-5"
                   : "grid-cols-1 md:grid-cols-1"
               } !gap-4`}
             >
@@ -186,7 +186,6 @@ const ProductListing = () => {
                       return <ProductItemListView key={index} item={item} />;
                     })
                   )}
-                  <ProductItemListView />
                 </>
               )}
             </div>

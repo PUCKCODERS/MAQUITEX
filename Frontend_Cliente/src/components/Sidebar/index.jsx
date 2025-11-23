@@ -17,8 +17,6 @@ import { postData } from "../../utils/api";
 
 const Sidebar = (props) => {
   const [isOpenedCategoryFilter, setIsOpenCategoryFilter] = useState(true);
-  const [isOpenedAvailFilter, setIsOpenAvailFilter] = useState(true);
-  const [isOpenedSizeFilter, setIsOpenSizeFilter] = useState(true);
 
   const [filters, setFilters] = useState({
     catId: [],
@@ -31,7 +29,7 @@ const Sidebar = (props) => {
     limit: 5,
   });
 
-  const [price, setPrice] = useState([0, 10000]);
+  const [price, setPrice] = useState([0, 1000]);
 
   const context = useContext(MyContext);
   const location = useLocation();
@@ -80,8 +78,8 @@ const Sidebar = (props) => {
       filters.rating = [];
     }
 
-    if (url.includes("thirdsubCatId")) {
-      const thirdcategoryId = queryParameters.get("thirdsubCatId");
+    if (url.includes("thirdLavelCatId")) {
+      const thirdcategoryId = queryParameters.get("thirdLavelCatId");
       const thirdcatArr = [];
       thirdcatArr.push(thirdcategoryId);
       filters.subCatId = [];
@@ -94,7 +92,7 @@ const Sidebar = (props) => {
 
     setTimeout(() => {
       filtesData();
-    }, 200);
+    }, 100);
   }, [location]);
 
   const filtesData = () => {
@@ -118,7 +116,7 @@ const Sidebar = (props) => {
       minPrice: price[0],
       maxPrice: price[1],
     }));
-  });
+  }, [price]);
 
   return (
     <aside className="sidebar !py-5 ">
@@ -156,76 +154,6 @@ const Sidebar = (props) => {
         </Collapse>
       </div>
 
-      <div className="box !mt-3">
-        <h3 className="!w-full !mb-3 text-[15px] font-[bold] flex items-center !pr-2 text-[#082c55]">
-          DISPONIBILIDAD
-          <Button
-            className="!w-[30px] !h-[30px] !min-w-[30px] !rounded-full !ml-auto !text-[#082c55]"
-            onClick={() => setIsOpenAvailFilter(!isOpenedAvailFilter)}
-          >
-            {isOpenedAvailFilter === true ? (
-              <VscTriangleUp />
-            ) : (
-              <VscTriangleDown />
-            )}
-          </Button>
-        </h3>
-        <Collapse isOpened={isOpenedAvailFilter}>
-          <div className="scroll !px-4 relative -left-[13px]">
-            <FormControlLabel
-              control={<Checkbox size="small" />}
-              label="DISPONIBILIDAD (1237)"
-              className="w-full"
-            />
-            <FormControlLabel
-              control={<Checkbox size="small" />}
-              label="EN STOCK (1290)"
-              className="w-full"
-            />
-            <FormControlLabel
-              control={<Checkbox size="small" />}
-              label="NO DISPONIBILIDAD (369)"
-              className="w-full"
-            />
-          </div>
-        </Collapse>
-      </div>
-
-      <div className="box !mt-3">
-        <h3 className="w-full !mb-3 text-[15px] font-[bold] flex items-center !pr-2 text-[#082c55]">
-          TAMAÑO
-          <Button
-            className="!w-[30px] !h-[30px] !min-w-[30px] !rounded-full !ml-auto !text-[#082c55]"
-            onClick={() => setIsOpenSizeFilter(!isOpenedSizeFilter)}
-          >
-            {isOpenedSizeFilter === true ? (
-              <VscTriangleUp />
-            ) : (
-              <VscTriangleDown />
-            )}
-          </Button>
-        </h3>
-        <Collapse isOpened={isOpenedSizeFilter}>
-          <div className="scroll !px-5 relative -left-[13px]">
-            <FormControlLabel
-              control={<Checkbox size="small" />}
-              label="GRANDE (33)"
-              className="w-full"
-            />
-            <FormControlLabel
-              control={<Checkbox size="small" />}
-              label="MEDIANO (33)"
-              className="w-full"
-            />
-            <FormControlLabel
-              control={<Checkbox size="small" />}
-              label="PEQUEÑO (33)"
-              className="w-full"
-            />
-          </div>
-        </Collapse>
-      </div>
-
       <div className="box !mt-4">
         <h3 className="w-full !mb-3 text-[15px] font-[bold] flex items-center !pr-5 text-[#556f8d]">
           FILTRAR POR PRECIO
@@ -235,7 +163,7 @@ const Sidebar = (props) => {
           value={price}
           onInput={setPrice}
           min={1}
-          max={10000}
+          max={1000}
           setp={5}
         />
         <div className="flex !pt-4 !pb-2 priceRange">
@@ -252,20 +180,55 @@ const Sidebar = (props) => {
         <h3 className="w-full !mb-3 text-[14px] font-[bold] flex items-center !pr-5 text-[#556f8d]">
           FILTAR POR CALIFICACION
         </h3>
-        <div className="w-full !cursor-pointer">
-          <Rating name="size-small" defaultValue={5} size="small" readOnly />
+
+        <div className="flex items-center">
+          <FormControlLabel
+            value={5}
+            control={<Checkbox />}
+            checked={filters?.rating?.includes(5)}
+            onChange={() => handleCheckboxChange("rating", 5)}
+          />
+          <Rating name="rating" value={5} size="small" readOnly />
         </div>
-        <div className="w-full !cursor-pointer">
-          <Rating name="size-small" defaultValue={4} size="small" readOnly />
+
+        <div className="flex items-center">
+          <FormControlLabel
+            value={4}
+            control={<Checkbox />}
+            checked={filters?.rating?.includes(4)}
+            onChange={() => handleCheckboxChange("rating", 4)}
+          />
+          <Rating name="rating" value={4} size="small" readOnly />
         </div>
-        <div className="w-full !cursor-pointer">
-          <Rating name="size-small" defaultValue={3} size="small" readOnly />
+
+        <div className="flex items-center">
+          <FormControlLabel
+            value={3}
+            control={<Checkbox />}
+            checked={filters?.rating?.includes(3)}
+            onChange={() => handleCheckboxChange("rating", 3)}
+          />
+          <Rating name="rating" value={3} size="small" readOnly />
         </div>
-        <div className="w-full !cursor-pointer">
-          <Rating name="size-small" defaultValue={2} size="small" readOnly />
+
+        <div className="flex items-center">
+          <FormControlLabel
+            value={2}
+            control={<Checkbox />}
+            checked={filters?.rating?.includes(2)}
+            onChange={() => handleCheckboxChange("rating", 2)}
+          />
+          <Rating name="rating" value={2} size="small" readOnly />
         </div>
-        <div className="w-full !cursor-pointer">
-          <Rating name="size-small" defaultValue={1} size="small" readOnly />
+
+        <div className="flex items-center">
+          <FormControlLabel
+            value={1}
+            control={<Checkbox />}
+            checked={filters?.rating?.includes(1)}
+            onChange={() => handleCheckboxChange("rating", 1)}
+          />
+          <Rating name="rating" value={1} size="small" readOnly />
         </div>
       </div>
     </aside>

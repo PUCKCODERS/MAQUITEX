@@ -6,7 +6,7 @@ const BannerBoxV2 = (props) => {
   return (
     <div className="bannerBoxV2 bg-white w-full overflow-hidden rounded-md group relative !border-1 !border-[#b1cdee] shadow-[3px_3px_3px_#274a72]">
       <img
-        src={props.image}
+        src={props?.image}
         className={`!w-full !h-[195px] !rounded-md transition-all duration-150 group-hover:scale-105 
     
   `}

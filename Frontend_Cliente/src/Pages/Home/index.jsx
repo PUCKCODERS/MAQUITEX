@@ -105,9 +105,10 @@ const Home = () => {
                 aria-label="scrollable auto tabs example"
               >
                 {context?.catData?.length !== 0 &&
-                  context?.catData?.map((cat /*, index*/) => {
+                  context?.catData?.map((cat, index) => {
                     return (
                       <Tab
+                        key={index}
                         label={cat?.name}
                         onClick={() => filterByCatId(cat?._id)}
                       />
