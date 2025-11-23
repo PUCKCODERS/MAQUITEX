@@ -38,7 +38,10 @@ const CategoryCollapse = (props) => {
                   className="list-none flex items-center relative flex-col"
                   key={index}
                 >
-                  <Link to="/" className="!w-full">
+                  <Link
+                    to={`/productListing?catId=${cat?._id}`}
+                    className="!w-full"
+                  >
                     <Button className="!w-full !text-[#fff] !bg-[#3c4a5a]  !rounded-none !text-left !justify-start !px-3 ">
                       {cat?.name}
                     </Button>
@@ -62,7 +65,10 @@ const CategoryCollapse = (props) => {
                         cat?.children?.map((subCat, index_) => {
                           return (
                             <li className="list-none relative" key={index_}>
-                              <Link to="/" className="w-full">
+                              <Link
+                                to={`/productListing?subCatId=${subCat?._id}`}
+                                className="w-full"
+                              >
                                 <Button className="w-full !text-left !justify-start !px-3 !text-[#274a72]">
                                   {subCat?.name}
                                 </Button>
@@ -90,7 +96,7 @@ const CategoryCollapse = (props) => {
                                             key={index__}
                                           >
                                             <Link
-                                              to="/"
+                                              to={`/productListing?thirdLavelCatId=${thirdLavelCat?._id}`}
                                               className="w-full !text-left !justify-start !px-3 transition text-[13px] !text-[#4a5b6e] "
                                             >
                                               {thirdLavelCat?.name}

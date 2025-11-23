@@ -56,7 +56,10 @@ const Navigation = () => {
                       className="list-none !text-[#082c55] font-bold font-[bold] relative"
                       key={index}
                     >
-                      <Link to="/productListing" className="link transition">
+                      <Link
+                        to={`/productListing?catId=${cat?._id}`}
+                        className="link transition"
+                      >
                         <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
                           {cat?.name}
                         </Button>
@@ -71,7 +74,10 @@ const Navigation = () => {
                                   className="list-none w-full relative"
                                   key={index_}
                                 >
-                                  <Link to="/" className="w-full !mb-1">
+                                  <Link
+                                    to={`/productListing?subCatId=${subCat?._id}`}
+                                    className="w-full !mb-1"
+                                  >
                                     <Button className="!text-[#082c55] hover:!text-[#fff] hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
                                       {subCat?.name}
                                     </Button>
@@ -87,7 +93,7 @@ const Navigation = () => {
                                                   key={index__}
                                                 >
                                                   <Link
-                                                    to="/"
+                                                    to={`/productListing?thirdLavelCatId=${thirdLavelCat?._id}`}
                                                     className="w-full"
                                                   >
                                                     <Button className="!text-[#082c55] hover:!text-[#fff] !bg-[#fff] hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
