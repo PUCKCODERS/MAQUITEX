@@ -51,7 +51,7 @@ const ProductItem = (props) => {
         </div>
       </div>
 
-      <div className="info !p-3 !py-4 !bg-gray-100 relative !pb-[50px] !h-[220px]">
+      <div className="info !p-3 !py-4 !bg-gray-100 relative !pb-[50px] !h-[210px]">
         <h6 className="text-[13px] text-[#556f8d] font-[bold]">
           <span className="link transition-all">{props?.item?.brand}</span>
         </h6>
@@ -60,7 +60,7 @@ const ProductItem = (props) => {
             to={`/product/${props?.item?._id}`}
             className="link transition-all"
           >
-            {props?.item?.name?.substr(0, 60) + "..."}
+            {props?.item?.name?.substr(0, 60)}
           </Link>
         </h3>
         <Rating
@@ -70,7 +70,7 @@ const ProductItem = (props) => {
           readOnly
         />
 
-        <div className="flex items-center justify-between !gap-4">
+        <div className="flex items-center justify-between !gap-4 ">
           <span className="oldPrice line-through text-red-400 text-[13px] font-[500]">
             &#36; {props?.item?.oldPrice}
           </span>
@@ -79,8 +79,11 @@ const ProductItem = (props) => {
           </span>
         </div>
 
-        <div className="!absolute !bottom-[10px] !left-0 !pl-3 !pr-3 !w-full">
-          <Button className="btn-org flex  btn-sm gap-2 " size="small">
+        <div className="!absolute !bottom-[10px] !left-0 !w-full flex justify-center">
+          <Button
+            className="btn-org flex btn-sm gap-2 w-[90%] justify-center"
+            size="small"
+          >
             AGREGAR
             <FaShoppingCart className="!text-[20px] !scale-x-[-1]" />
           </Button>

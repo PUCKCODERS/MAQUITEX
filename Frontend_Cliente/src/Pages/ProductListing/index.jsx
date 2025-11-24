@@ -139,7 +139,7 @@ const ProductListing = () => {
                     onClick={() =>
                       handleSortBy(
                         "name",
-                        "desc",
+                        "asc",
                         productsData,
                         "POR NOMBRE, A....Z"
                       )
