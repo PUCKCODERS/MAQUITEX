@@ -26,7 +26,7 @@ const Sidebar = (props) => {
     maxPrice: "",
     rating: "",
     page: 1,
-    limit: 5,
+    limit: 25,
   });
 
   const [price, setPrice] = useState([0, 1000]);
@@ -119,7 +119,7 @@ const Sidebar = (props) => {
   }, [price]);
 
   return (
-    <aside className="sidebar !py-5 ">
+    <aside className="sidebar !py-5 sticky -top-[130px] z-[99]">
       <div className="box">
         <h3 className="!w-full !mb-3 text-[12px] font-[bold] font-bold flex items-center !pr-2 text-[#082c55]">
           FILTRAR POR CATEGORIA

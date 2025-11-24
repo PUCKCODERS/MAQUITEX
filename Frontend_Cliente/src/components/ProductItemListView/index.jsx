@@ -15,7 +15,7 @@ const ProductItem = (props) => {
     <div className="productItem bg-white !rounded-md !overflow-hidden !border-1 !border-[#b1cdee] shadow-[5px_5px_5px_#274a72] flex items-center">
       <div className="group imgWrapper !w-[25%] !top-0 !overflow-hidden !rounded-md relative">
         <Link to="/">
-          <div className="img !h-[200px] !overflow-hidden">
+          <div className="img !overflow-hidden">
             <img
               src={props?.item?.images[0]}
               className="!left-0 !top-0 !w-[300px] !h-[200px] !rounded-md"

@@ -12,6 +12,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
 import ProductLoadingGrid from "../../components/ProductLoading/productLoadingGrid";
+import { postData } from "../../utils/api";
 
 const ProductListing = () => {
   const [itemView, setItemView] = useState("grid");
@@ -23,12 +24,26 @@ const ProductListing = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
+  const [selectedSortVal, setSelectedSortVal] = useState("POR NOMBRE, A....Z");
+
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleSortBy = (name, order, products, value) => {
+    setSelectedSortVal(value);
+    postData(`/api/product/sortBy`, {
+      products: products,
+      sortBy: name,
+      order: order,
+    }).then((res) => {
+      setProductsData(res);
+      setAnchorEl(null);
+    });
   };
 
   return (
@@ -57,7 +72,7 @@ const ProductListing = () => {
       </div>
       <div className="bg-white !p-2 !mt-4">
         <div className="container flex !gap-3">
-          <div className="sidebarWrapper !w-[20%] !h-full bg-white ">
+          <div className="sidebarWrapper !w-[20%] bg-white ">
             <Sidebar
               productsData={productsData}
               setProductsData={setProductsData}
@@ -87,8 +102,10 @@ const ProductListing = () => {
                 </Button>
 
                 <span className="text-[14px] font-[600] !pl-3 !text-[#082c55]">
-                  EXISTEN
-                  {productsData?.length !== 0 ? productsData?.length : 0}
+                  CONTINE{" "}
+                  {productsData?.length !== 0
+                    ? productsData?.products?.length
+                    : 0}{" "}
                   PRODUCTOS
                 </span>
               </div>
@@ -106,7 +123,7 @@ const ProductListing = () => {
                   onClick={handleClick}
                   className="!bg-white !font-[bold] !text-[14px] !capitalize hover:!text-[#082c55] !border !border-[#9ab8da]"
                 >
-                  VENTAS DE MAYOR A MENOR
+                  {selectedSortVal}
                 </Button>
 
                 <Menu
@@ -119,37 +136,56 @@ const ProductListing = () => {
                   }}
                 >
                   <MenuItem
-                    onClick={handleClose}
-                    className="!text-[#556f8d] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
-                  >
-                    VENTAS DE MAYOR A MENOR
-                  </MenuItem>
-                  <MenuItem
-                    onClick={handleClose}
-                    className="!text-[#556f8d] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
-                  >
-                    RELEVANCIA
-                  </MenuItem>
-                  <MenuItem
-                    onClick={handleClose}
+                    onClick={() =>
+                      handleSortBy(
+                        "name",
+                        "desc",
+                        productsData,
+                        "POR NOMBRE, A....Z"
+                      )
+                    }
                     className="!text-[#556f8d] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
                   >
                     POR NOMBRE, A....Z
                   </MenuItem>
+
                   <MenuItem
-                    onClick={handleClose}
+                    onClick={() =>
+                      handleSortBy(
+                        "name",
+                        "desc",
+                        productsData,
+                        "POR NOMBRE, Z....A"
+                      )
+                    }
                     className="!text-[#556f8d] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
                   >
                     POR NOMBRE, Z....A
                   </MenuItem>
+
                   <MenuItem
-                    onClick={handleClose}
+                    onClick={() =>
+                      handleSortBy(
+                        "price",
+                        "asc",
+                        productsData,
+                        "PRECIO, DE MENOR A MAYOR"
+                      )
+                    }
                     className="!text-[#556f8d] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
                   >
                     PRECIO, DE MENOR A MAYOR
                   </MenuItem>
+
                   <MenuItem
-                    onClick={handleClose}
+                    onClick={() =>
+                      handleSortBy(
+                        "price",
+                        "desc",
+                        productsData,
+                        "PRECIO, DE MAYOR A MENOR"
+                      )
+                    }
                     className="!text-[#556f8d] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
                   >
                     PRECIO, DE MAYOR A MENOR

@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import { FaHeart } from "react-icons/fa";
 import { IoGitCompare } from "react-icons/io5";
 import { MdZoomOutMap } from "react-icons/md";
+import { FaShoppingCart } from "react-icons/fa";
 import { MyContext } from "../../App"; // Adjust the import path as necessary
 
 const ProductItem = (props) => {
@@ -50,7 +51,7 @@ const ProductItem = (props) => {
         </div>
       </div>
 
-      <div className="info !p-3 !py-4 !bg-gray-100">
+      <div className="info !p-3 !py-4 !bg-gray-100 relative !pb-[50px] !h-[220px]">
         <h6 className="text-[13px] text-[#556f8d] font-[bold]">
           <span className="link transition-all">{props?.item?.brand}</span>
         </h6>
@@ -76,6 +77,13 @@ const ProductItem = (props) => {
           <span class="price text-[#082c55] text-[15px] font-[600]">
             &#36; {props?.item?.price}
           </span>
+        </div>
+
+        <div className="!absolute !bottom-[10px] !left-0 !pl-3 !pr-3 !w-full">
+          <Button className="btn-org flex  btn-sm gap-2 " size="small">
+            AGREGAR
+            <FaShoppingCart className="!text-[20px] !scale-x-[-1]" />
+          </Button>
         </div>
       </div>
     </div>
