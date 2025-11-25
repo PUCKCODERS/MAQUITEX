@@ -128,6 +128,85 @@ export async function verifyEmailController(request, response) {
   }
 }
 
+export async function authWithGoogle(request, response) {
+  const { name, email, password, avatar, mobile, role } = request.body;
+
+  try {
+    const existingUser = await UserModel.findOne({ email: email });
+
+    if (!existingUser) {
+      const user = await UserModel.create({
+        name: name,
+        mobile: mobile,
+        email: email,
+        password: "null",
+        avatar: avatar,
+        role: role,
+        verify_email: true,
+        signUpWithGoogle: true,
+      });
+
+      await user.save();
+
+      const accessToken = await generatedAccessToken(user._id);
+      const refreshToken = await generatedRefreshToken(user._id);
+
+      await UserModel.findByIdAndUpdate(user?._id, {
+        last_login_date: new Date(),
+      });
+
+      const cookiesOption = {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+      };
+      response.cookie("accessToken", accessToken, cookiesOption);
+      response.cookie("refreshToken", refreshToken, cookiesOption);
+
+      return response.json({
+        message: "INICIO DE SESIÓN EXITOSAMENTE",
+        error: false,
+        success: true,
+        data: {
+          accessToken,
+          refreshToken,
+        },
+      });
+    } else {
+      const accessToken = await generatedAccessToken(existingUser._id);
+      const refreshToken = await generatedRefreshToken(existingUser._id);
+
+      await UserModel.findByIdAndUpdate(existingUser._id, {
+        last_login_date: new Date(),
+      });
+
+      const cookiesOption = {
+        httpOnly: true,
+        secure: true,
+        sameSite: "None",
+      };
+      response.cookie("accessToken", accessToken, cookiesOption);
+      response.cookie("refreshToken", refreshToken, cookiesOption);
+
+      return response.json({
+        message: "INICIO DE SESIÓN EXITOSAMENTE",
+        error: false,
+        success: true,
+        data: {
+          accessToken,
+          refreshToken,
+        },
+      });
+    }
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: true,
+    });
+  }
+}
+
 export async function loginUserController(request, response) {
   try {
     const { email, password } = request.body;

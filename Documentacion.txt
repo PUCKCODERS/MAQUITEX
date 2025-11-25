@@ -1,6 +1,13 @@
-cloudinary
-se abre esta cuenta con puckcoders Google
+Mira para darte contexto al agregar un producto funciona perfectamente en eso no tengo ningún problema, lo que si me esta dando problema es en:
 
-frot/component/header/navigation/index/  y front/component/homeCatSlider/index
-S.Tecnico, Nosotros, Contacto se relacionan para en el futuro generar las paginas respectivas e informativas de la que tienen contexto su creación  
+Cuando estoy creando un producto y por ejemplo subo 4 fotos incluso antes de guardar el producto y quiero borrar una foto que ya no quiero que se vea en el producto visualmente lo borra ósea se ven solo 3 fotos pero al guardar el producto y volver a ver el producto guardado o al editar el producto aparecen las 4 fotos ese seria el primer problema por correguir quiero que borre normalmente como debería ser
 
+Cuando por ejemplo voy a editar un producto que tiene por ejemplo 5 fotos y quiero borrar 1 como en el ejemplo anterior solo la borra visualmente ósea me deja ver cuatro fotos pero al guardar y ver el producto guardado nuevamente me reflejan las 5 fotos 
+
+Cuando por ejemplo tengo 5 fotos y quiero añadir por ejemplo 3 fotos mas visualmente me permite ósea se ven 8 fotos pero al guardar el producto me borra las 5 ya existentes y solo me deja guardadadas las 3 nuevas fotos y quisiera que se vean todas las 8
+
+En conclusión me deja guaradar fotos al crear o editar el producto pero no me deja borrarlas normalmente si quisiera o agregarlas normalmente si quisiera 
+
+ayúdame a correguir esto porfavor sin cambiar mucho la lógica del código ya que estoy siguiendo un tutorial y no quiero perder el contexto 
+
+firebase con cuenta puckcoders video 61
