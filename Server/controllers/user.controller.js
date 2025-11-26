@@ -591,7 +591,7 @@ export async function resetpassword(request, response) {
       });
     }
 
-    if (user.signUpWithGoogle === flase) {
+    if (user.signUpWithGoogle === false) {
       if (oldPassword) {
         const checkPassword = await bcryptjs.compare(
           oldPassword,
