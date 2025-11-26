@@ -52,30 +52,43 @@ const MyAccount = () => {
         mobile: context?.userData?.mobile,
       });
 
-      const ph = `"${context?.userData?.mobile}"`;
-      setPhone(ph);
+      // no envolver en comillas
+      setPhone(context?.userData?.mobile || "");
 
-      setChangePassword({
-        email: context?.userData?.email,
-      });
+      // Inicializa changePassword con todos los campos esperados pero conservando
+      // valores previos si ya existen (por seguridad)
+      setChangePassword((prev) => ({
+        email: context?.userData?.email || "",
+        oldPassword: prev.oldPassword || "",
+        newPassword: prev.newPassword || "",
+        confirmPassword: prev.confirmPassword || "",
+      }));
     }
   }, [context?.userData]);
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    setFormFields(() => {
-      return {
-        ...formFields,
-        [name]: value,
-      };
-    });
 
-    setChangePassword(() => {
-      return {
-        ...formFields,
+    // si el campo pertenece a changePassword, actualizamos ese estado
+    const changePasswordKeys = [
+      "email",
+      "oldPassword",
+      "newPassword",
+      "confirmPassword",
+    ];
+    if (changePasswordKeys.includes(name)) {
+      setChangePassword((prev) => ({
+        ...prev,
         [name]: value,
-      };
-    });
+      }));
+      return;
+    }
+
+    // si es campo del perfil, actualizamos formFields (merge correcto)
+    setFormFields((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const valideValue = Object.values(formFields).every((el) => el);
@@ -137,18 +150,24 @@ const MyAccount = () => {
 
     setIsLoading2(true);
 
-    if (changePassword.oldPassword === "") {
+    if (
+      changePassword.oldPassword === "" &&
+      context?.userData?.signUpWithGoogle === false
+    ) {
       context.alertBox("error", "POR FAVOR INTRODUZCA SU CONTRASEÑA ANTERIOR");
+      setIsLoading2(false);
       return false;
     }
 
     if (changePassword.newPassword === "") {
       context.alertBox("error", "POR FAVOR INTRODUZCA SU NUEVA CONTRASEÑA");
+      setIsLoading2(false);
       return false;
     }
 
     if (changePassword.confirmPassword === "") {
       context.alertBox("error", "POR FAVOR CONFIRME SU CONTRASEÑA");
+      setIsLoading2(false);
       return false;
     }
 
@@ -157,20 +176,29 @@ const MyAccount = () => {
         "error",
         "CONTRASEÑA Y CONFIRMAR CONTRASEÑA NO COINCIDE"
       );
+      setIsLoading2(false);
       return false;
     }
 
+    // petición al backend
     postData(`/api/user/reset-password`, changePassword, {
       withCredentials: true,
-    }).then((res) => {
-      if (res?.error !== true) {
+    })
+      .then((res) => {
         setIsLoading2(false);
-        context.alertBox("success", res?.message);
-      } else {
-        context.alertBox("error", res?.message);
+        if (res?.error !== true) {
+          context.alertBox("success", res?.message);
+        } else {
+          context.alertBox("error", res?.message);
+        }
+      })
+      .catch((err) => {
         setIsLoading2(false);
-      }
-    });
+        context.alertBox(
+          "error",
+          err?.message || "ERROR AL CAMBIAR LA CONTRASEÑA"
+        );
+      });
   };
 
   return (
@@ -216,14 +244,13 @@ const MyAccount = () => {
                 <div className="w-[50%]">
                   <TextField
                     type="email"
-                    label="CORREO ELECTRONICO"
+                    label="CORREO ELECTRÓNICO"
                     variant="outlined"
                     size="small"
                     className="w-full"
                     name="email"
                     value={formFields.email}
                     disabled={true}
-                    onChange={onChangeInput}
                   />
                 </div>
               </div>
@@ -236,9 +263,10 @@ const MyAccount = () => {
                     disabled={isLoading === true ? true : false}
                     onChange={(phone) => {
                       setPhone(phone);
-                      setFormFields({
+                      setFormFields((prev) => ({
+                        ...prev,
                         mobile: phone,
-                      });
+                      }));
                     }}
                   />
                 </div>
