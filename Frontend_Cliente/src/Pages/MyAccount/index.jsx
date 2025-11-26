@@ -17,7 +17,7 @@ const MyAccount = () => {
   const [isChangePasswordFormShow, setisChangePasswordFormShow] =
     useState(false);
   const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState([]);
+  const [address /*, setAddress*/] = useState([]);
 
   const [formFields, setFormFields] = useState({
     name: "",
@@ -163,7 +163,6 @@ const MyAccount = () => {
     postData(`/api/user/reset-password`, changePassword, {
       withCredentials: true,
     }).then((res) => {
-      console.log(res);
       if (res?.error !== true) {
         setIsLoading2(false);
         context.alertBox("success", res?.message);
@@ -275,11 +274,12 @@ const MyAccount = () => {
 
           <div className="flex !gap-2 flex-col !mt-4">
             {address?.length > 0 &&
-              address?.map((address /*index*/) => {
+              address?.map((address, index) => {
                 return (
                   <>
                     <label className="addressBox w-full flex items-center justify-center border-1 border-[#bdbdbd] bg-[#f1f1f1] !p-3 rounded-md cursor-pointer shadow-[3px_3px_3px_#000]">
                       <Radio
+                        key={index}
                         {...label}
                         name="address"
                         checked={selectedValue === address?._id}
@@ -313,21 +313,23 @@ const MyAccount = () => {
               <hr className="!text-[#b8b8b8]" />
 
               <form className="!mt-8" onSubmit={handleSubmitChangePassword}>
-                <div className="flex items-center !gap-5">
-                  <div className="w-[50%]">
-                    <TextField
-                      label="CONTRASEÑA ANTERIOR"
-                      variant="outlined"
-                      size="small"
-                      className="w-full"
-                      name="oldPassword"
-                      value={changePassword.oldPassword}
-                      disabled={isLoading2 === true ? true : false}
-                      onChange={onChangeInput}
-                    />
-                  </div>
+                <div className="grid grid-cols-2 !gap-5">
+                  {context?.userData?.signUpWithGoogle === false && (
+                    <div className="col">
+                      <TextField
+                        label="CONTRASEÑA ANTERIOR"
+                        variant="outlined"
+                        size="small"
+                        className="w-full"
+                        name="oldPassword"
+                        value={changePassword.oldPassword}
+                        disabled={isLoading2 === true ? true : false}
+                        onChange={onChangeInput}
+                      />
+                    </div>
+                  )}
 
-                  <div className="w-[50%]">
+                  <div className="col">
                     <TextField
                       type="text"
                       label="NUEVA CONTRASEÑA"
@@ -339,10 +341,8 @@ const MyAccount = () => {
                       onChange={onChangeInput}
                     />
                   </div>
-                </div>
 
-                <div className="flex items-center !mt-4 !gap-5">
-                  <div className="w-[50%]">
+                  <div className="col">
                     <TextField
                       label="CONFIRMAR CONTRASEÑA"
                       variant="outlined"
@@ -356,11 +356,7 @@ const MyAccount = () => {
                 </div>
 
                 <div className="flex items-center !gap-4 !mt-5 cursor-pointer">
-                  <Button
-                    type="submit"
-                    disabled={!valideValue2}
-                    className="btn-org btn-lg w-[250px] "
-                  >
+                  <Button type="submit" className="btn-org btn-lg w-[250px] ">
                     {isLoading2 === true ? (
                       <CircularProgress color="inherit" />
                     ) : (

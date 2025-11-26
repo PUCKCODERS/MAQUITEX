@@ -81,8 +81,8 @@ const Register = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
+        // const credential = GoogleAuthProvider.credentialFromResult(result);
+        //const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
 
@@ -112,14 +112,14 @@ const Register = () => {
           }
         });
       })
-      .catch((error) => {
+      .catch((/*error*/) => {
         // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        //const errorCode = error.code;
+        // const errorMessage = error.message;
         // The email of the user's account used.
-        const email = error.customData.email;
+        // const email = error.customData.email;
         // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        //const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
       });
   };
@@ -220,7 +220,7 @@ const Register = () => {
             !text-black !shadow-[5px_5px_7px_#7994b1] hover:!bg-[#e4e4e4] hover:!shadow-[5px_5px_5px_#7994b1] !mb-3"
               onClick={authWithGoogle}
             >
-              <FcGoogle className="text-[20px]" /> INICIAR CON GOOGLE
+              <FcGoogle className="text-[20px]" /> REGÍSTRATE EN GOOGLE
             </Button>
           </form>
         </div>

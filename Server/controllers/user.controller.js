@@ -591,16 +591,21 @@ export async function resetpassword(request, response) {
       });
     }
 
-    if (oldPassword) {
-      const checkPassword = await bcryptjs.compare(oldPassword, user.password);
-      if (!checkPassword) {
-        return response.status(400).json({
-          message: "SU ANTIGUA CONTRASEÑA ES INCORRECTA",
-          error: true,
-          success: false,
-        });
+    if (user.signUpWithGoogle === flase) {
+      if (oldPassword) {
+        const checkPassword = await bcryptjs.compare(
+          oldPassword,
+          user.password
+        );
+        if (!checkPassword) {
+          return response.status(400).json({
+            message: "SU ANTIGUA CONTRASEÑA ES INCORRECTA",
+            error: true,
+            success: false,
+          });
+        }
+      } else {
       }
-    } else {
     }
 
     if (newPassword !== confirmPassword) {
@@ -615,6 +620,7 @@ export async function resetpassword(request, response) {
     const hashPassword = await bcryptjs.hash(confirmPassword, salt);
 
     user.password = hashPassword;
+    user.signUpWithGoogle = false;
     user.otp = "";
     user.otpExpires = "";
     await user.save();
