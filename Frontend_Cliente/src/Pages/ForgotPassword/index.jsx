@@ -134,7 +134,7 @@ const ForgotPassword = () => {
                   setIsPasswordShow2(!isPasswordShow2);
                 }}
               >
-                {isPasswordShow === false ? (
+                {isPasswordShow2 === false ? (
                   <FaEye className="text-[20px] opacity-75" />
                 ) : (
                   <FaEyeLowVision className="text-[20px] opacity-75" />
