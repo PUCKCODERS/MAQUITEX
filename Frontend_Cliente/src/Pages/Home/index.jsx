@@ -134,20 +134,21 @@ const Home = () => {
             {productsData?.length !== 0 && <HomeBannerV2 data={productsData} />}
           </div>
 
-          <div className="part2 w-[30%] flex items-center !gap-2 justify-between flex-col ">
-            <BannerBoxV2
-              info="left"
-              image={
-                "https://polipapel.vteximg.com.br/arquivos/ids/174453-1000-1000/O76237.png?v=638191796905070000igua.jpg"
-              }
-            />
-            <BannerBoxV2
-              info="right"
-              image={
-                "https://polipapel.vteximg.com.br/arquivos/ids/174453-1000-1000/O76237.png?v=638191796905070000igua.jpg"
-              }
-            />
-          </div>
+          {bannerV1Data.length >= 2 && (
+            <div className="part2 w-[30%] flex items-center !gap-2 justify-between flex-col">
+              <BannerBoxV2
+                info="left"
+                item={bannerV1Data[0]}
+                image={bannerV1Data[0]?.images?.[0]}
+              />
+
+              <BannerBoxV2
+                info="right"
+                item={bannerV1Data[1]}
+                image={bannerV1Data[1]?.images?.[0]}
+              />
+            </div>
+          )}
         </div>
       </section>
 
