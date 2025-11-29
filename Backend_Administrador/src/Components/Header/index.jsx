@@ -33,6 +33,8 @@ import AddBannerV1 from "../../Pages/Banners/addBannerV1";
 import EditBannerV1 from "../../Pages/Banners/editBannerV1";
 import AddBlog from "../../Pages/Blog/addBlog";
 import EditBlog from "../../Pages/Blog/editBlog";
+import AddBannerV2 from "../../Pages/Banners/addBannerV2";
+import EditBannerV2 from "../../Pages/Banners/editBannerV2";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -268,6 +270,12 @@ const Header = () => {
         )}
         {context?.isOpenFullScreenPanel?.model === "EDITAR BANNER" && (
           <EditBannerV1 />
+        )}
+        {context?.isOpenFullScreenPanel?.model === "AGREGAR BANNER PROMO" && (
+          <AddBannerV2 />
+        )}
+        {context?.isOpenFullScreenPanel?.model === "EDITAR BANNER PROMO" && (
+          <EditBannerV2 />
         )}
         {context?.isOpenFullScreenPanel?.model === "AGREGAR BLOG" && (
           <AddBlog />

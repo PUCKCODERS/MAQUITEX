@@ -17,6 +17,7 @@ import BlogItem from "../../components/BlogItem";
 import HomeBannerV2 from "../../components/HomeSliderV2";
 import BannerBoxV2 from "../../components/bannerBoxV2";
 import AdsBannerSliderV2 from "../../components/AdsBannerSliderV2";
+import AdsBannerSliderV3 from "../../components/AdsBannerSliderV3";
 import { useEffect } from "react";
 import { fetchDataFromApi } from "../../utils/api";
 import { useState } from "react";
@@ -30,6 +31,7 @@ const Home = () => {
   const [productsData, setAllProductsData] = useState([]);
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [bannerV1Data, setBannerV1Data] = useState([]);
+  const [bannerV2Data, setBannerV2Data] = useState([]);
   const [blogData, setBlogData] = useState([]);
 
   const context = useContext(MyContext);
@@ -50,6 +52,10 @@ const Home = () => {
 
     fetchDataFromApi("/api/bannerV1").then((res) => {
       setBannerV1Data(res?.data);
+    });
+
+    fetchDataFromApi("/api/bannerV2").then((res) => {
+      setBannerV2Data(res?.data);
     });
 
     fetchDataFromApi("/api/blog").then((res) => {
@@ -188,7 +194,9 @@ const Home = () => {
             <ProductsSlider items={6} data={productsData} />
           )}
 
-          <AdsBannerSlider items={3} />
+          {bannerV2Data?.length !== 0 && (
+            <AdsBannerSliderV3 items={3} data={bannerV2Data} />
+          )}
         </div>
       </section>
       <section className="!py-5 !pt-0 bg-white">
@@ -202,7 +210,13 @@ const Home = () => {
           )}
           <ProductsSlider items={6} />
 
-          <AdsBannerSlider items={3} />
+          {bannerV1Data?.length !== 0 && (
+            <AdsBannerSliderV2 items={4} data={bannerV1Data} />
+          )}
+
+          {bannerV2Data?.length !== 0 && (
+            <AdsBannerSliderV3 items={2} data={bannerV2Data} />
+          )}
         </div>
       </section>
 
