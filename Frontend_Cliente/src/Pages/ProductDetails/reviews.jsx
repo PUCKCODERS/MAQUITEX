@@ -83,6 +83,7 @@ const Reviews = (props) => {
                 <div className="info w-[60%] flex items-center !gap-3">
                   <div className="img w-[80px] h-[80px] overflow-hidden rounded-full border-3 border-[#!text-[#082c55]] ">
                     <img
+                      key={index}
                       src={review?.image}
                       className="w-full h-full object-cover"
                     />
