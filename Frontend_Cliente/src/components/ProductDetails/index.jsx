@@ -27,7 +27,12 @@ const ProductDetailsComponent = (props) => {
           size="small"
           readOnly
         />
-        <span className="text-[13px] cursor-pointer">RESEÑAS (5)</span>
+        <span
+          className="text-[13px] cursor-pointer"
+          onClick={props.gotoReviews}
+        >
+          RESEÑAS ({props.reviewsCount})
+        </span>
       </div>
 
       <div className="flex items-center !gap-4 !mt-4">
