@@ -17,7 +17,7 @@ const CartPanel = (props) => {
 
   return (
     <>
-      <div className="scroll w-full max-h-[340px] overflow-y-scroll overflow-x-hidden !py-3 !px-4">
+      <div className="scroll !w-full max-h-[410px] overflow-y-scroll overflow-x-hidden !py-3 !px-4">
         {props?.data?.map((item, index) => {
           return (
             <div className="cartItem w-full flex items-center !gap-4 border-b border-[#d1d1d1] !pb-4 !mb-2">
@@ -31,7 +31,7 @@ const CartPanel = (props) => {
                 </Link>
               </div>
 
-              <div className="info w-[75%] !pr-5 !relative">
+              <div className="info w-[75%] !pr-5 !relative !pt-3">
                 <h4 className="text-[14px] !font-bold !text-[#556f8d] hover:!text-[#20446d]">
                   <Link to={`/product/${item?._id}`}>
                     {item?.productTitle?.substr(0, 80)}
@@ -66,18 +66,32 @@ const CartPanel = (props) => {
       <div className="bottomSec !absolute bottom-[0] left-[10px] w-full overflow-hidden !pr-5">
         <div className="bottomInfo !py-3 !px-4 w-full border-t border-[#d1d1d1] flex items-center justify-between flex-col">
           <div className="flex items-center justify-between w-full">
-            <span className="text-[14px] font-[600]">1 ITEM</span>
-            <span className="text-[#0a7fec]  font-bold">$96.00</span>
+            <span className="text-[14px]  !text-[#556f8d] !font-bold">
+              {context?.cartData?.length} PRODUCTOS
+            </span>
+            <span className="text-[#0a7fec]  font-bold">
+              {(context.cartData?.length !== 0
+                ? context.cartData
+                    ?.map((item) => parseInt(item.price) * item.quantity)
+                    .reduce((total, value) => total + value, 0)
+                : 0
+              )
+                ?.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                })
+                .replace("$", "$ ")}
+            </span>
           </div>
 
-          <div className="flex items-center justify-between w-full">
+          {/*<div className="flex items-center justify-between w-full">
             <span className="text-[14px] font-[600]">MAQUINA</span>
             <span className="text-[#0a7fec]  font-bold">$96.00</span>
-          </div>
+          </div>*/}
         </div>
 
         <div className="bottomInfo !py-3 !px-4 w-full border-t border-[#d1d1d1] flex items-center justify-between flex-col">
-          <div className="flex items-center justify-between w-full">
+          {/*<div className="flex items-center justify-between w-full">
             <span className="text-[14px] font-[600]">TOTAL (SIN IVA)</span>
             <span className="text-[#0a7fec]  font-bold">$96.00</span>
           </div>
@@ -85,11 +99,27 @@ const CartPanel = (props) => {
           <div className="flex items-center justify-between w-full">
             <span className="text-[14px] font-[600]">IVA INCLUIDO</span>
             <span className="text-[#0a7fec]  font-bold">$96.00</span>
-          </div>
+          </div>*/}
 
-          <div className="flex items-center justify-between w-full">
-            <span className="text-[14px] font-[600]">TOTAL FINAL</span>
-            <span className="text-[#0a7fec]  font-bold">$96.00</span>
+          <div className="flex items-center justify-between w-full ">
+            <span className="text-[14px]  !text-[#556f8d] !font-bold">
+              TOTAL FINAL{" "}
+              <span className="text-red-600 text-[10px]">(INCLUIDO IVA)</span>
+            </span>
+            <span className="text-[#0a7fec]  font-bold">
+              {" "}
+              {(context.cartData?.length !== 0
+                ? context.cartData
+                    ?.map((item) => parseInt(item.price) * item.quantity)
+                    .reduce((total, value) => total + value, 0)
+                : 0
+              )
+                ?.toLocaleString("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                })
+                .replace("$", "$ ")}
+            </span>
           </div>
 
           <br />
