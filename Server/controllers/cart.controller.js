@@ -1,10 +1,18 @@
-import CartProductModel from "../models/cartproduct.model.js";
-import UserModel from "../models/user.model.js";
+import CartProductModel from "../models/cartProduct.model.js";
 
 export const addToCartItemController = async (request, response) => {
   try {
     const userId = request.userId;
-    const { productId } = request.body;
+    const {
+      productTitle,
+      image,
+      rating,
+      price,
+      quantity,
+      subTotal,
+      productId,
+      countInStock,
+    } = request.body;
 
     if (!productId) {
       return response.status(402).json({
@@ -21,26 +29,27 @@ export const addToCartItemController = async (request, response) => {
 
     if (checkItemCart) {
       return response.status(400).json({
-        message: "ITEM YA EN EL CARRITO",
+        message: "PRODUCTO YA EN EL CARRITO",
       });
     }
 
     const cartItem = new CartProductModel({
-      quantity: 1,
-      userId: userId,
+      productTitle: productTitle,
+      image: image,
+      rating: rating,
+      price: price,
+      quantity: quantity,
+      subTotal: subTotal,
       productId: productId,
+      countInStock: countInStock,
+      userId: userId,
     });
 
     const save = await cartItem.save();
 
-    const updateCartUser = await UserModel.updateOne(
-      { _id: userId },
-      { $push: { shopping_cart: productId } }
-    );
-
     return response.status(200).json({
       data: save,
-      message: "ITEM AÑADIDO EXITOSAMENTE",
+      message: "PRODUCTO AÑADIDO EXITOSAMENTE",
       error: false,
       success: true,
     });
@@ -57,12 +66,12 @@ export const getCartItemController = async (request, response) => {
   try {
     const userId = request.userId;
 
-    const cartItem = await CartProductModel.find({
+    const cartItems = await CartProductModel.find({
       userId: userId,
-    }).populate("productId");
+    });
 
     return response.json({
-      data: cartItem,
+      data: cartItems,
       error: false,
       success: true,
     });
@@ -82,7 +91,7 @@ export const updateCartItemQtyController = async (request, response) => {
 
     if (!_id || !qty) {
       return response.status(400).json({
-        message: "PROPORCIONAR _id, qty",
+        message: "PROPORCIONAR ID, Y CANTIDAD",
       });
     }
 
@@ -114,9 +123,11 @@ export const updateCartItemQtyController = async (request, response) => {
 export const deleteCartItemQtyController = async (request, response) => {
   try {
     const userId = request.userId;
-    const { _id, productId } = request.body;
+    const { id } = request.params;
 
-    if (!_id) {
+    console.log(id);
+
+    if (!id) {
       return response.status(400).json({
         message: "PROPORCIONAR _id",
         error: true,
@@ -125,7 +136,7 @@ export const deleteCartItemQtyController = async (request, response) => {
     }
 
     const deleteCartItem = await CartProductModel.deleteOne({
-      _id: _id,
+      _id: id,
       userId: userId,
     });
 
@@ -137,23 +148,8 @@ export const deleteCartItemQtyController = async (request, response) => {
       });
     }
 
-    const user = await UserModel.findOne({
-      _id: userId,
-    });
-
-    const cartItems = user?.shopping_cart;
-
-    const updatedUserCart = [
-      ...cartItems.slice(0, cartItems.indexOf(productId)),
-      ...cartItems.slice(cartItems.indexOf(productId) + 1),
-    ];
-
-    user.shopping_cart = updatedUserCart;
-
-    await user.save();
-
     return response.json({
-      message: "ITEM ELIMINADO",
+      message: "PRODUCTO ELIMINADO",
       error: false,
       success: true,
       data: deleteCartItem,

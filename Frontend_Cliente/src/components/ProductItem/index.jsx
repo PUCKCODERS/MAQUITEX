@@ -8,9 +8,56 @@ import { IoGitCompare } from "react-icons/io5";
 import { MdZoomOutMap } from "react-icons/md";
 import { FaShoppingCart } from "react-icons/fa";
 import { MyContext } from "../../App"; // Adjust the import path as necessary
+import { useState } from "react";
+import { ImMinus } from "react-icons/im";
+import { ImPlus } from "react-icons/im";
+import { useEffect } from "react";
+import { deleteData } from "../../utils/api";
 
 const ProductItem = (props) => {
+  const [quantity, setQuantity] = useState(1);
+  const [isAdded, setIsAdded] = useState(false);
+  const [cartItem, setCartItem] = useState(false);
+
   const context = useContext(MyContext);
+
+  const addToCart = (product, userId, quantity) => {
+    context?.addToCart(product, userId, quantity);
+    setIsAdded(true);
+  };
+
+  useEffect(() => {
+    const item = context?.cartData?.filter((cartItem) =>
+      cartItem.productId.includes(props?.item?._id)
+    );
+
+    if (item?.length !== 0) {
+      setCartItem(item);
+      setIsAdded(true);
+    }
+  }, []);
+
+  const minusQty = () => {
+    if (quantity !== 1 && quantity > 1) {
+      setQuantity(quantity - 1);
+    } else {
+      setQuantity(1);
+    }
+
+    if (quantity === 1) {
+      deleteData(`/api/cart/delete-cart-item/${cartItem[0]?._id}`).then(
+        (res) => {
+          setIsAdded(false);
+          console.log(res);
+          context.alertBox("success", "PRODUCTO ELIMINADO");
+        }
+      );
+    }
+  };
+
+  const addQty = () => {
+    setQuantity(quantity + 1);
+  };
 
   return (
     <div className="productItem bg-white !rounded-md !overflow-hidden !border-1 !border-[#b1cdee] shadow-[5px_5px_5px_#274a72] ">
@@ -79,14 +126,37 @@ const ProductItem = (props) => {
           </span>
         </div>
 
-        <div className="!absolute !bottom-[10px] !left-0 !w-full flex justify-center">
-          <Button
-            className="btn-org flex btn-sm gap-2 w-[90%] justify-center"
-            size="small"
-          >
-            AGREGAR
-            <FaShoppingCart className="!text-[20px] !scale-x-[-1]" />
-          </Button>
+        <div className="!absolute !bottom-[10px] !left-0 !pl-1 !pr-1 !w-full  ">
+          {isAdded === false ? (
+            <Button
+              className="btn-org flex btn-sm gap-3 w-[100%] justify-center "
+              size="small"
+              onClick={() =>
+                addToCart(props?.item, context?.userData?._id, quantity)
+              }
+            >
+              AGREGAR
+              <FaShoppingCart className="!text-[20px] !scale-x-[-1]" />
+            </Button>
+          ) : (
+            <div className="flex items-center justify-between overflow-hidden rounded-full border-1 border-[#082c55]">
+              <Button
+                className="!min-w-[30px] !w-[30px] !h-[30px] !bg-[#556f8d]  !text-white !rounded-none"
+                onClick={minusQty}
+              >
+                <ImMinus />
+              </Button>
+              <span className="!text-[20px] !text-bold !text-[#082c55]">
+                {quantity}
+              </span>
+              <Button
+                className="!min-w-[30px] !w-[30px] !h-[30px] !bg-[#082c55] !text-white !rounded-none"
+                onClick={addQty}
+              >
+                <ImPlus />
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { firebaseApp } from "../../firebase.jsx";
+import { useEffect } from "react";
 const auth = getAuth(firebaseApp);
 const googleProvider = new GoogleAuthProvider();
 
@@ -26,6 +27,10 @@ const Register = () => {
 
   const context = useContext(MyContext);
   const history = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;

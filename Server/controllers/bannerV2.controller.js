@@ -54,7 +54,7 @@ export async function addBanner(request, response) {
       catId: request.body.catId,
       subCatId: request.body.subCatId,
       thirdsubCatId: request.body.thirdsubCatId,
-      price: request.body.price,
+
       alignInfo: request.body.alignInfo,
     });
 
@@ -154,7 +154,7 @@ export async function updatedBanner(request, response) {
       catId: request.body.catId,
       subCatId: request.body.subCatId,
       thirdsubCatId: request.body.thirdsubCatId,
-      price: request.body.price,
+
       alignInfo: request.body.alignInfo,
     },
     { new: true }

@@ -98,14 +98,14 @@ const AddBannerV2 = () => {
       return false;
     }
 
-    if (formFields.price === "") {
+    /*if (formFields.price === "") {
       context.alertBox(
         "error",
         "POR FAVOR INTRODUZCA EL PRECIO DEL BANNER PROMO"
       );
       setIsLoading(false);
       return false;
-    }
+    }*/
 
     if (previews?.length === 0) {
       context.alertBox(

@@ -23,7 +23,7 @@ import Checkout from "./Pages/Checkout";
 import MyAccount from "./Pages/MyAccount";
 import MyList from "./Pages/MyList";
 import Orders from "./Pages/Orders";
-import { fetchDataFromApi } from "./utils/api";
+import { fetchDataFromApi, postData } from "./utils/api";
 import Address from "./Pages/MyAccount/address";
 
 const MyContext = createContext();
@@ -39,6 +39,7 @@ function App() {
   const [userData, setUserData] = useState(null);
   const [address, setAddress] = useState([]);
   const [catData, setCatData] = useState([]);
+  const [cartData, setCartData] = useState([]);
 
   const [openCartPanel, setOpenCartPanel] = useState(false);
 
@@ -83,6 +84,8 @@ function App() {
           }
         }
       });
+
+      getCartItems();
     } else {
       setIsLogin(false);
     }
@@ -150,6 +153,43 @@ function App() {
     }
   };
 
+  const addToCart = (product, userId, quantity) => {
+    if (userId === undefined) {
+      alertBox("error", "NO HAS INICIADO SESIÓN, POR FAVOR INICIA SESIÓN");
+      return false;
+    }
+
+    const data = {
+      productTitle: product?.name,
+      image: product?.images[0],
+      rating: product?.rating,
+      price: product?.price,
+      quantity: quantity,
+      subTotal: parseInt(product?.price * quantity),
+      productId: product?._id,
+      countInStock: product?.countInStock,
+      userId: userId,
+    };
+
+    postData("/api/cart/add", data).then((res) => {
+      if (res?.error === false) {
+        alertBox("success", res?.message);
+
+        getCartItems();
+      } else {
+        alertBox("error", res?.message);
+      }
+    });
+  };
+
+  const getCartItems = () => {
+    fetchDataFromApi(`/api/cart/get`).then((res) => {
+      if (res?.error === false) {
+        setCartData(res?.data);
+      }
+    });
+  };
+
   const values = {
     setOpenProductDetailsModal,
     handleOpenProductDetailsModal,
@@ -166,6 +206,8 @@ function App() {
     address,
     setCatData,
     catData,
+    addToCart,
+    cartData,
   };
 
   return (

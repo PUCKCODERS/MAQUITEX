@@ -24,11 +24,7 @@ const bannerV2Schema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    price: {
-      type: Number,
-      default: "",
-      required: true,
-    },
+
     alignInfo: {
       type: String,
       default: "",

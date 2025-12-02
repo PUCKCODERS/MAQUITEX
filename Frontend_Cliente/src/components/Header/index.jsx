@@ -52,6 +52,8 @@ const Header = () => {
         context.setIsLogin(false);
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
+        context.setUserData(null);
+        history("/");
       }
     });
   };
@@ -243,7 +245,10 @@ const Header = () => {
                     aria-label="cart"
                     onClick={() => context.setOpenCartPanel(true)}
                   >
-                    <StyledBadge badgeContent={4} color="secondary">
+                    <StyledBadge
+                      badgeContent={context?.cartData?.length}
+                      color="secondary"
+                    >
                       <FaShoppingCart className="text-[#274a72]" />
                     </StyledBadge>
                   </IconButton>
