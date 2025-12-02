@@ -171,6 +171,8 @@ function App() {
       userId: userId,
     };
 
+    console.log(data);
+
     postData("/api/cart/add", data).then((res) => {
       if (res?.error === false) {
         alertBox("success", res?.message);
@@ -208,6 +210,7 @@ function App() {
     catData,
     addToCart,
     cartData,
+    getCartItems,
   };
 
   return (

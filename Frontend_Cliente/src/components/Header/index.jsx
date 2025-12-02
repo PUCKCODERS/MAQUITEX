@@ -246,7 +246,11 @@ const Header = () => {
                     onClick={() => context.setOpenCartPanel(true)}
                   >
                     <StyledBadge
-                      badgeContent={context?.cartData?.length}
+                      badgeContent={
+                        context?.cartData?.length !== 0
+                          ? context?.cartData?.length
+                          : 0
+                      }
                       color="secondary"
                     >
                       <FaShoppingCart className="text-[#274a72]" />

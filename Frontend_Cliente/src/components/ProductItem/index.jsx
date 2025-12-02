@@ -34,6 +34,9 @@ const ProductItem = (props) => {
     if (item?.length !== 0) {
       setCartItem(item);
       setIsAdded(true);
+      setQuantity(item[0]?.quantity || 1);
+    } else {
+      setQuantity(1);
     }
   }, [context?.cartData]);
 
@@ -50,6 +53,7 @@ const ProductItem = (props) => {
           setIsAdded(false);
           console.log(res);
           context.alertBox("success", "PRODUCTO ELIMINADO");
+          context.getCartItems();
         }
       );
     } else {
@@ -60,7 +64,8 @@ const ProductItem = (props) => {
       };
 
       editData(`/api/cart/update-qty`, obj).then((res) => {
-        console.log(res);
+        context.alertBox("success", res?.data?.message);
+        context.getCartItems();
       });
     }
   };
@@ -75,7 +80,7 @@ const ProductItem = (props) => {
     };
 
     editData(`/api/cart/update-qty`, obj).then((res) => {
-      console.log(res);
+      context.alertBox("success", res?.data?.message);
     });
   };
 
