@@ -15,6 +15,7 @@ import { FaYoutube } from "react-icons/fa";
 import { FaInstagramSquare } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { AiFillTikTok } from "react-icons/ai";
+import { GiShoppingCart } from "react-icons/gi";
 
 import { IoCloseSharp } from "react-icons/io5";
 import Drawer from "@mui/material/Drawer";
@@ -334,7 +335,7 @@ const Footer = () => {
       >
         <div className="flex items-center justify-between !py-3 !px-4 !gap-3 border-b-2 border-[#d1d1d1] overflow-hidden">
           <h4 className="font-bold font-[bold] !text-[#082c55] !text-[20px]">
-            CARRITO
+            CARRITO ({context?.cartData?.length})
           </h4>
           <IoCloseSharp
             className="!w-[20px] !h-[20px] !min-w-[20px] !rounded-full !text-[#fff] !absolute !top-[15px] !right-[15px] !bg-[#274a72] hover:!text-[#082c55] hover:!bg-[#fff] !shadow-[0px_0px_0px_3px_#7994b1] hover:!shadow-[0px_0px_0px_3px_#082c55] cursor-pointer"
@@ -342,7 +343,44 @@ const Footer = () => {
           />
         </div>
 
-        <CartPanel />
+        {context?.cartData?.length !== 0 ? (
+          <CartPanel data={context?.cartData} />
+        ) : (
+          <div className="!mt-3 flex flex-col justify-center items-center">
+            <span className="font-bold !text-[#082c55] !text-[20px] ">
+              CARRITO VACÍO
+            </span>
+
+            <GiShoppingCart className="font-bold !text-[#082c55] !text-[90px] " />
+
+            <div className="text-center !mt-4 max-w-xs !p-2">
+              <p className="text-gray-950 !mb-3">
+                ¡Parece que aún no has agregado nada! Explora nuestras
+                categorías y encuentra ese producto que tanto deseas.
+              </p>
+
+              <button className="bg-[#082c55] text-white font-semibold !py-2 !px-4 rounded transition duration-300 shadow-md">
+                CONTINUAR COMPARNDO Y VER OFERTAS
+              </button>
+
+              <div className="!mt-3 text-sm">
+                <a
+                  href="/favoritos"
+                  className="text-blue-600 hover:text-blue-800 !mx-2"
+                >
+                  IR A MIS FAVORITOS
+                </a>
+                <span className="text-gray-400">|</span>
+                <a
+                  href="/vistos-recientemente"
+                  className="text-blue-600 hover:text-blue-800 !mx-1"
+                >
+                  COMPARTIDOS
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
       </Drawer>
     </>
   );

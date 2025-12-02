@@ -83,7 +83,7 @@ const ProductDetails = () => {
                             >
                               <img
                                 src={item}
-                                className="!w-[100%] !h-[100%] transition-all group-hover:scale-105 "
+                                className="!w-[100%] !h-[75px] transition-all group-hover:scale-105 "
                               />
                             </div>
                           </SwiperSlide>
