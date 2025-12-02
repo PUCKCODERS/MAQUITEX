@@ -12,7 +12,7 @@ import { useState } from "react";
 import { ImMinus } from "react-icons/im";
 import { ImPlus } from "react-icons/im";
 import { useEffect } from "react";
-import { deleteData } from "../../utils/api";
+import { deleteData, editData } from "../../utils/api";
 
 const ProductItem = (props) => {
   const [quantity, setQuantity] = useState(1);
@@ -35,7 +35,7 @@ const ProductItem = (props) => {
       setCartItem(item);
       setIsAdded(true);
     }
-  }, []);
+  }, [context?.cartData]);
 
   const minusQty = () => {
     if (quantity !== 1 && quantity > 1) {
@@ -52,11 +52,31 @@ const ProductItem = (props) => {
           context.alertBox("success", "PRODUCTO ELIMINADO");
         }
       );
+    } else {
+      const obj = {
+        _id: cartItem[0]?._id,
+        qty: quantity - 1,
+        subTotal: props?.item?.price * quantity - props?.item?.price,
+      };
+
+      editData(`/api/cart/update-qty`, obj).then((res) => {
+        console.log(res);
+      });
     }
   };
 
   const addQty = () => {
     setQuantity(quantity + 1);
+
+    const obj = {
+      _id: cartItem[0]?._id,
+      qty: quantity + 1,
+      subTotal: props?.item?.price * quantity + props?.item?.price,
+    };
+
+    editData(`/api/cart/update-qty`, obj).then((res) => {
+      console.log(res);
+    });
   };
 
   return (
