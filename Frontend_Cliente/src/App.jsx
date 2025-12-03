@@ -164,11 +164,16 @@ function App() {
       image: product?.images[0],
       rating: product?.rating,
       price: product?.price,
+      oldPrice: product?.oldPrice,
+      discount: product?.discount,
       quantity: quantity,
       subTotal: parseInt(product?.price * quantity),
       productId: product?._id,
       countInStock: product?.countInStock,
-      userId: userId,
+      brand: product?.brand,
+      size: product?.size,
+      weight: userId,
+      ram: userId,
     };
 
     console.log(data);

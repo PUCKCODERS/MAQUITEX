@@ -1,27 +1,41 @@
-import React from "react";
+import React, { useContext } from "react";
 import Button from "@mui/material/Button";
 import { FaCashRegister } from "react-icons/fa6";
 import CartItems from "./cartItems";
+import { MyContext } from "../../App";
 
 const CartPage = () => {
+  const context = useContext(MyContext);
+
   return (
     <section className="section !py-5 !pb-5">
       <div className="container w-[80%] max-w-[80%] flex !gap-5">
         <div className="leftPart w-[70%]">
           <div className="shadow-md rounded-md  bg-white">
             <div className="!py-2 !px-3 border-b border-[#d1d1d1] ">
-              <h2 className="font-[bold] font-bold text-[20px]">TU CARRITO</h2>
-              <p className="!mt-2 !mb-2 text-[#000] font-[600]">
-                ESTOS SON <span className="font-bold text-[#ec370a]"> 2 </span>
+              <h2 className="font-[bold] font-bold text-[20px] flex justify-center">
+                TU CARRITO
+              </h2>
+              <p className="!mt-2 !mb-2 text-[#556f8d] font-[600] flex justify-center">
+                ESTOS SON
+                <span className="font-bold text-[#ec370a]">
+                  &nbsp;{context?.cartData?.length}&nbsp;
+                </span>
                 PRODUCTOS EN TU CARRITO
               </p>
             </div>
-            <CartItems size="S" qty={1} />
-            <CartItems size="S" qty={1} />
-            <CartItems size="S" qty={1} />
-            <CartItems size="S" qty={1} />
-            <CartItems size="S" qty={1} />
-            <CartItems size="S" qty={1} />
+
+            {context?.cartData?.length !== 0 &&
+              context?.cartData.map((item, index) => {
+                return (
+                  <CartItems
+                    item={item}
+                    key={index}
+                    size="S"
+                    quantity={item?.quantity}
+                  />
+                );
+              })}
           </div>
         </div>
 

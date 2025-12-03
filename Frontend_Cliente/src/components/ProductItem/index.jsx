@@ -19,11 +19,29 @@ const ProductItem = (props) => {
   const [isAdded, setIsAdded] = useState(false);
   const [cartItem, setCartItem] = useState(false);
 
+  const [activeTab, setActiveTab] = useState(null);
+  const [isShowTabs, setIsShowTabs] = useState(false);
+
   const context = useContext(MyContext);
 
   const addToCart = (product, userId, quantity) => {
-    context?.addToCart(product, userId, quantity);
-    setIsAdded(true);
+    if (props?.item?.size?.length !== 0) {
+      setIsShowTabs(true);
+    } else {
+      context?.addToCart(product, userId, quantity);
+      setIsAdded(true);
+      setIsShowTabs(false);
+    }
+
+    if (activeTab !== null) {
+      context?.addToCart(product, userId, quantity);
+      setIsAdded(true);
+      setIsShowTabs(false);
+    }
+  };
+
+  const handleClickActiveTab = (index) => {
+    setActiveTab(index);
   };
 
   useEffect(() => {
@@ -98,6 +116,27 @@ const ProductItem = (props) => {
             />
           </div>
         </Link>
+
+        {isShowTabs === true && (
+          <div className="flex items-center justify-center !absolute !text-[11px] top-0 left-0 w-full h-full !bg-[rgba(0,0,0,0.7)] !z-[60] !p-3 !gap-2">
+            {props?.item?.size?.length !== 0 &&
+              props?.item?.size?.map((size, index) => {
+                return (
+                  <span
+                    key={index}
+                    className={`flex items-center justify-center !p-1 !px-1 text-[#000] bg-[#fff]  hover:bg-[#b1cdee] !max-w-[45px] !h-[35px] rounded-sm cursor-pointer  border-1 border-[#000] ${
+                      activeTab === index &&
+                      "!bg-[#082c55] !text-white border-1 border-[#fff] "
+                    }`}
+                    onClick={() => handleClickActiveTab(index)}
+                  >
+                    {size}
+                  </span>
+                );
+              })}
+          </div>
+        )}
+
         <span className="discount flex items-center absolute top-[0px] left-[0px] !z-50 bg-[#e05e12] text-white !rounded-lg !p-1 text-[12px] font-[500]">
           {props?.item?.discount}%
         </span>

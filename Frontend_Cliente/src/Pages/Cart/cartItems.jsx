@@ -37,26 +37,30 @@ const CartItems = (props) => {
 
   return (
     <div className="cartItem w-full !p-3 flex items-center !gap-4 !pb-5 border-b border-[#d1d1d1]">
-      <div className="img w-[20%] rounded-md overflow-hidden shadow-[5px_5px_5px_#274a72]">
+      <div className="img w-[20%] rounded-md overflow-hidden shadow-[3px_3px_3px_#274a72] border-1 border-[#acb1b8]">
         <Link to="/product/7845" className="group">
           <img
-            src="https://dcdn-us.mitiendanube.com/stores/937/060/products/whatsapp-image-2024-05-08-at-16-49-38-e8501bf0a251c9748817152035761232-1024-1024.jpeg"
-            className="!w-full group-hover:scale-105 transition-all"
+            src={props?.item?.image}
+            className="!w-full !h-[180px] group-hover:scale-105 transition-all"
           />
         </Link>
       </div>
 
       <div className="info w-[80%] relative">
-        <RiDeleteBin5Fill className="absolute top-[0px] right-[10px] cursor-pointer text-[25px] text-[#d67070] hover:!text-[#ce0202]  link transition-all" />
-        <span className="text-[13px] font-[500]">MAQUINA SINGER</span>
-        <h3 className="text-[15px] font-bold font-[bold] !mb-3 !mt-1">
-          <Link className="link">
-            MÁQUINA DE COSER INDUSTRIAL DE COLUMNA ZOJE ZJ 9610SA-D3-M-3 MÁQUINA
-            DE COSER INDUSTRIAL DE COLUMNA ZOJE ZJ
+        <RiDeleteBin5Fill className="!absolute top-[-20px] right-[10px] cursor-pointer text-[25px] text-[#d67070] hover:!text-[#ce0202]  link transition-all" />
+        <span className="text-[13px] font-[500]">{props?.item?.brand}</span>
+        <h3 className="!text-[15px] !font-[bold] !mb-3 !mt-1">
+          <Link className=" !text-[#556f8d] hover:!text-[#20446d]">
+            {props?.item?.productTitle?.substr(0, 200)}
           </Link>
         </h3>
 
-        <Rating name="size-small" defaultValue={4} size="small" readOnly />
+        <Rating
+          name="size-small"
+          value={props?.item?.rating}
+          size="small"
+          readOnly
+        />
 
         <div className="flex items-center !gap-4 !mt-2">
           <div className="relative">

@@ -17,7 +17,7 @@ const CartPanel = (props) => {
 
   return (
     <>
-      <div className="scroll !w-full max-h-[410px] overflow-y-scroll overflow-x-hidden !py-3 !px-4">
+      <div className="scroll !w-full max-h-[400px] overflow-y-scroll overflow-x-hidden !py-3 !px-4">
         {props?.data?.map((item, index) => {
           return (
             <div className="cartItem w-full flex items-center !gap-4 border-b border-[#d1d1d1] !pb-4 !mb-2">
@@ -83,24 +83,18 @@ const CartPanel = (props) => {
                 .replace("$", "$ ")}
             </span>
           </div>
+        </div>
 
-          {/*<div className="flex items-center justify-between w-full">
-            <span className="text-[14px] font-[600]">MAQUINA</span>
-            <span className="text-[#0a7fec]  font-bold">$96.00</span>
-          </div>*/}
+        <div className="bottomInfo !py-3 !px-4 w-full border-t border-[#d1d1d1] flex items-center justify-between">
+          <span className="text-[14px]  !text-[#556f8d] !font-bold">
+            CANTIDAD TOTAL DE PRODUCTOS
+          </span>
+          <span className="text-[#0a7fec] font-bold">
+            {context.cartData?.reduce((sum, item) => sum + item.quantity, 0)}
+          </span>
         </div>
 
         <div className="bottomInfo !py-3 !px-4 w-full border-t border-[#d1d1d1] flex items-center justify-between flex-col">
-          {/*<div className="flex items-center justify-between w-full">
-            <span className="text-[14px] font-[600]">TOTAL (SIN IVA)</span>
-            <span className="text-[#0a7fec]  font-bold">$96.00</span>
-          </div>
-
-          <div className="flex items-center justify-between w-full">
-            <span className="text-[14px] font-[600]">IVA INCLUIDO</span>
-            <span className="text-[#0a7fec]  font-bold">$96.00</span>
-          </div>*/}
-
           <div className="flex items-center justify-between w-full ">
             <span className="text-[14px]  !text-[#556f8d] !font-bold">
               TOTAL FINAL{" "}

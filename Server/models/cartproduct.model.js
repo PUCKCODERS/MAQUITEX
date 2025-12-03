@@ -18,6 +18,21 @@ const cartProductSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    oldPrice: {
+      type: Number,
+    },
+    discount: {
+      type: Number,
+    },
+    size: {
+      type: String,
+    },
+    weight: {
+      type: String,
+    },
+    ram: {
+      type: String,
+    },
     quantity: {
       type: Number,
       required: true,
@@ -37,6 +52,9 @@ const cartProductSchema = new mongoose.Schema(
     userId: {
       type: String,
       required: true,
+    },
+    brand: {
+      type: String,
     },
   },
   {
