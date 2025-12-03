@@ -21,27 +21,46 @@ const ProductItem = (props) => {
 
   const [activeTab, setActiveTab] = useState(null);
   const [isShowTabs, setIsShowTabs] = useState(false);
+  const [selectedTabName, setSelectedTabName] = useState(null);
 
   const context = useContext(MyContext);
 
   const addToCart = (product, userId, quantity) => {
+    const productItem = {
+      _id: product?._id,
+      name: product?.name,
+      image: product?.images[0],
+      rating: product?.rating,
+      price: product?.price,
+      oldPrice: product?.oldPrice,
+      discount: product?.discount,
+      quantity: quantity,
+      subTotal: parseInt(product?.price * quantity),
+      countInStock: product?.countInStock,
+      brand: product?.brand,
+      size: selectedTabName,
+      weight: selectedTabName,
+      ram: selectedTabName,
+    };
+
     if (props?.item?.size?.length !== 0) {
       setIsShowTabs(true);
     } else {
-      context?.addToCart(product, userId, quantity);
+      context?.addToCart(productItem, userId, quantity);
       setIsAdded(true);
       setIsShowTabs(false);
     }
 
     if (activeTab !== null) {
-      context?.addToCart(product, userId, quantity);
+      context?.addToCart(productItem, userId, quantity);
       setIsAdded(true);
       setIsShowTabs(false);
     }
   };
 
-  const handleClickActiveTab = (index) => {
+  const handleClickActiveTab = (index, name) => {
     setActiveTab(index);
+    setSelectedTabName(name);
   };
 
   useEffect(() => {
@@ -128,7 +147,7 @@ const ProductItem = (props) => {
                       activeTab === index &&
                       "!bg-[#082c55] !text-white border-1 border-[#fff] "
                     }`}
-                    onClick={() => handleClickActiveTab(index)}
+                    onClick={() => handleClickActiveTab(index, size)}
                   >
                     {size}
                   </span>

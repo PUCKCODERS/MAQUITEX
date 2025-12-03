@@ -161,7 +161,7 @@ function App() {
 
     const data = {
       productTitle: product?.name,
-      image: product?.images[0],
+      image: product?.image,
       rating: product?.rating,
       price: product?.price,
       oldPrice: product?.oldPrice,
@@ -172,8 +172,8 @@ function App() {
       countInStock: product?.countInStock,
       brand: product?.brand,
       size: product?.size,
-      weight: userId,
-      ram: userId,
+      weight: product?.productWeight,
+      ram: product?.productRams,
     };
 
     console.log(data);

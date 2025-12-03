@@ -8,10 +8,16 @@ export const addToCartItemController = async (request, response) => {
       image,
       rating,
       price,
+      oldPrice,
       quantity,
       subTotal,
       productId,
       countInStock,
+      discount,
+      size,
+      weight,
+      ram,
+      brand,
     } = request.body;
 
     if (!productId) {
@@ -38,10 +44,16 @@ export const addToCartItemController = async (request, response) => {
       image: image,
       rating: rating,
       price: price,
+      oldPrice: oldPrice,
       quantity: quantity,
       subTotal: subTotal,
       productId: productId,
       countInStock: countInStock,
+      discount: discount,
+      size: size,
+      weight: weight,
+      ram: ram,
+      brand: brand,
       userId: userId,
     });
 
