@@ -43,7 +43,11 @@ const ProductItem = (props) => {
       ram: selectedTabName,
     };
 
-    if (props?.item?.size?.length !== 0) {
+    if (
+      props?.item?.size?.length !== 0 ||
+      props?.item?.productRam?.length !== 0 ||
+      props?.item?.productWeight?.length !== 0
+    ) {
       setIsShowTabs(true);
     } else {
       context?.addToCart(productItem, userId, quantity);
@@ -89,6 +93,8 @@ const ProductItem = (props) => {
         setIsAdded(false);
         context.alertBox("success", "PRODUCTO ELIMINADO");
         context.getCartItems();
+        setIsShowTabs(false);
+        setActiveTab(null);
       });
     } else {
       const obj = {
@@ -139,7 +145,7 @@ const ProductItem = (props) => {
         {isShowTabs === true && (
           <div className="flex items-center justify-center !absolute !text-[11px] top-0 left-0 w-full h-full !bg-[rgba(0,0,0,0.7)] !z-[60] !p-3 !gap-2">
             {props?.item?.size?.length !== 0 &&
-              props?.item?.size?.map((size, index) => {
+              props?.item?.size?.map((item, index) => {
                 return (
                   <span
                     key={index}
@@ -147,9 +153,41 @@ const ProductItem = (props) => {
                       activeTab === index &&
                       "!bg-[#082c55] !text-white border-1 border-[#fff] "
                     }`}
-                    onClick={() => handleClickActiveTab(index, size)}
+                    onClick={() => handleClickActiveTab(index, item)}
                   >
-                    {size}
+                    {item}
+                  </span>
+                );
+              })}
+
+            {props?.item?.productRams?.length !== 0 &&
+              props?.item?.productRams?.map((item, index) => {
+                return (
+                  <span
+                    key={index}
+                    className={`flex items-center justify-center !p-1 !px-1 text-[#000] bg-[#fff]  hover:bg-[#b1cdee] !max-w-[55px] !h-[35px] rounded-sm cursor-pointer  border-1 border-[#000] ${
+                      activeTab === index &&
+                      "!bg-[#082c55] !text-white border-1 border-[#fff] "
+                    }`}
+                    onClick={() => handleClickActiveTab(index, item)}
+                  >
+                    {item}
+                  </span>
+                );
+              })}
+
+            {props?.item?.productWeight?.length !== 0 &&
+              props?.item?.productWeight?.map((item, index) => {
+                return (
+                  <span
+                    key={index}
+                    className={`flex items-center justify-center !p-1 !px-1 text-[#000] bg-[#fff]  hover:bg-[#b1cdee] !max-w-[45px] !h-[35px] rounded-sm cursor-pointer  border-1 border-[#000] ${
+                      activeTab === index &&
+                      "!bg-[#082c55] !text-white border-1 border-[#fff] "
+                    }`}
+                    onClick={() => handleClickActiveTab(index, item)}
+                  >
+                    {item}
                   </span>
                 );
               })}
