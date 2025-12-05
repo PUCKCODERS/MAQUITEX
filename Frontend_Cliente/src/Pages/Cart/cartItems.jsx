@@ -8,7 +8,7 @@ import Rating from "@mui/material/Rating";
 
 const CartItems = (props) => {
   const [sizeanchorEl, setSizeAnchorEl] = useState(null);
-  const [selectedSize, setCartItems] = useState(props.size);
+  const [selectedSize, setCartItems] = useState(props.selected);
   const openSize = Boolean(sizeanchorEl);
 
   const [qtyanchorEl, setQtyAnchorEl] = useState(null);
@@ -38,7 +38,7 @@ const CartItems = (props) => {
   return (
     <div className="cartItem w-full !p-3 flex items-center !gap-4 !pb-5 border-b border-[#d1d1d1]">
       <div className="img w-[20%] rounded-md overflow-hidden shadow-[3px_3px_3px_#274a72] border-1 border-[#acb1b8]">
-        <Link to="/product/7845" className="group">
+        <Link to={`/product/${props?.item?.productId}`} className="group">
           <img
             src={props?.item?.image}
             className="!w-full !h-[180px] group-hover:scale-105 transition-all"
@@ -50,7 +50,10 @@ const CartItems = (props) => {
         <RiDeleteBin5Fill className="!absolute top-[-20px] right-[10px] cursor-pointer text-[25px] text-[#d67070] hover:!text-[#ce0202]  link transition-all" />
         <span className="text-[13px] font-[500]">{props?.item?.brand}</span>
         <h3 className="!text-[15px] !font-[bold] !mb-3 !mt-1">
-          <Link className=" !text-[#556f8d] hover:!text-[#20446d]">
+          <Link
+            to={`/product/${props?.item?.productId}`}
+            className=" !text-[#556f8d] hover:!text-[#20446d]"
+          >
             {props?.item?.productTitle?.substr(0, 200)}
           </Link>
         </h3>
@@ -63,135 +66,98 @@ const CartItems = (props) => {
         />
 
         <div className="flex items-center !gap-4 !mt-2">
-          <div className="relative">
-            <span
-              className="flex items-center justify-center bg-[#f1f1f1] text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72]"
-              onClick={handleClickSize}
-            >
-              TAMAÑO {selectedSize} <GoTriangleDown />
-            </span>
+          {props?.item?.size !== "" && (
+            <>
+              {props?.productSizeData?.length !== 0 && (
+                <div className="relative">
+                  <span
+                    className="flex items-center justify-center bg-[#f1f1f1] text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72]"
+                    onClick={handleClickSize}
+                  >
+                    TAMAÑO {selectedSize} <GoTriangleDown />
+                  </span>
 
-            <Menu
-              id="size-menu"
-              anchorEl={sizeanchorEl}
-              open={openSize}
-              onClose={() => handleCloseSize(null)}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              <MenuItem
-                onClick={() => handleCloseSize("S")}
-                className="!text-[#556f8d] !font-bold hover:!text-[white] hover:!bg-[#274a72] !justify-center"
-              >
-                S
-              </MenuItem>
-              <MenuItem
-                onClick={() => handleCloseSize("M")}
-                className="!text-[#556f8d] !font-bold hover:!text-[white] hover:!bg-[#274a72] !justify-center"
-              >
-                M
-              </MenuItem>
-              <MenuItem
-                onClick={() => handleCloseSize("XL")}
-                className="!text-[#556f8d] !font-bold hover:!text-[white] hover:!bg-[#274a72] !justify-center"
-              >
-                XL
-              </MenuItem>
-              <MenuItem
-                onClick={() => handleCloseSize("L")}
-                className="!text-[#556f8d] !font-bold hover:!text-[white] hover:!bg-[#274a72] !justify-center"
-              >
-                L
-              </MenuItem>
-            </Menu>
-          </div>
+                  <Menu
+                    id="size-menu"
+                    anchorEl={sizeanchorEl}
+                    open={openSize}
+                    onClose={() => handleCloseSize(null)}
+                    MenuListProps={{
+                      "aria-labelledby": "basic-button",
+                    }}
+                  >
+                    {props?.productSizeData?.map((item, index) => {
+                      return (
+                        <MenuItem
+                          key={index}
+                          className={`${
+                            item?.name === selectedSize && "selected"
+                          }`}
+                          onClick={() => handleCloseSize(item?.name)}
+                          //className="!text-[#556f8d] !font-bold hover:!text-[white] hover:!bg-[#274a72] !justify-center"
+                        >
+                          {item?.name}
+                        </MenuItem>
+                      );
+                    })}
+                  </Menu>
+                </div>
+              )}
+            </>
+          )}
 
-          <div className="relative">
-            <span
-              className="flex items-center justify-center bg-[#f1f1f1] text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72]"
-              onClick={handleClickQty}
-            >
-              COLOR {selectedQty} <GoTriangleDown />
-            </span>
+          {props?.item?.ram !== "" && (
+            <>
+              {props?.productRamsData?.length !== 0 && (
+                <div className="relative">
+                  <span
+                    className="flex items-center justify-center bg-[#f1f1f1] text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72]"
+                    onClick={handleClickQty}
+                  >
+                    COLOR {selectedQty} <GoTriangleDown />
+                  </span>
 
-            <Menu
-              id="size-menu"
-              anchorEl={qtyanchorEl}
-              open={openQty}
-              onClose={() => handleCloseQty(null)}
-              MenuListProps={{
-                "aria-labelledby": "basic-button",
-              }}
-            >
-              <MenuItem
-                onClick={() => handleCloseQty("1")}
-                className="!text-[#556f8d] !font-bold hover:!text-[white] hover:!bg-[#274a72] !justify-center"
-              >
-                1
-              </MenuItem>
-              <MenuItem
-                onClick={() => handleCloseQty("2")}
-                className="!text-[#556f8d] !font-bold hover:!text-[white] hover:!bg-[#274a72] !justify-center"
-              >
-                2
-              </MenuItem>
-              <MenuItem
-                onClick={() => handleCloseQty("3")}
-                className="!text-[#556f8d] !font-bold hover:!text-[white] hover:!bg-[#274a72] !justify-center"
-              >
-                3
-              </MenuItem>
-              <MenuItem
-                onClick={() => handleCloseQty("4")}
-                className="!text-[#556f8d] !font-bold hover:!text-[white] hover:!bg-[#274a72] !justify-center"
-              >
-                4
-              </MenuItem>
-              <MenuItem
-                onClick={() => handleCloseQty("5")}
-                className="!text-[#556f8d] !font-bold hover:!text-[white] hover:!bg-[#274a72] !justify-center"
-              >
-                5
-              </MenuItem>
-              <MenuItem
-                onClick={() => handleCloseQty("6")}
-                className="!text-[#556f8d] !font-bold hover:!text-[white] hover:!bg-[#274a72] !justify-center"
-              >
-                6
-              </MenuItem>
-              <MenuItem
-                onClick={() => handleCloseQty("7")}
-                className="!text-[#556f8d] !font-bold hover:!text-[white] hover:!bg-[#274a72] !justify-center"
-              >
-                7
-              </MenuItem>
-              <MenuItem
-                onClick={() => handleCloseQty("8")}
-                className="!text-[#556f8d] !font-bold hover:!text-[white] hover:!bg-[#274a72] !justify-center"
-              >
-                8
-              </MenuItem>
-              <MenuItem
-                onClick={() => handleCloseQty("9")}
-                className="!text-[#556f8d] !font-bold hover:!text-[white] hover:!bg-[#274a72] !justify-center"
-              >
-                9
-              </MenuItem>
-            </Menu>
-          </div>
+                  <Menu
+                    id="size-menu"
+                    anchorEl={qtyanchorEl}
+                    open={openQty}
+                    onClose={() => handleCloseQty(null)}
+                    MenuListProps={{
+                      "aria-labelledby": "basic-button",
+                    }}
+                  >
+                    {props?.productRamsData?.map((item, index) => {
+                      return (
+                        <MenuItem
+                          key={index}
+                          className={`${
+                            item?.name === selectedSize && "selected"
+                          }`}
+                          onClick={() => handleCloseQty(item?.name)}
+                          //className="!text-[#556f8d] !font-bold hover:!text-[white] hover:!bg-[#274a72] !justify-center"
+                        >
+                          {item?.name}
+                        </MenuItem>
+                      );
+                    })}
+                  </Menu>
+                </div>
+              )}
+            </>
+          )}
         </div>
 
         <div className="flex items-center !gap-4 !mt-3">
           <span className="price text-[#0a7fec] text-[17px] font-[600]">
-            $69.00
+            &#36; {props?.item?.price}
           </span>
           <span className="oldPrice line-through text-[#b8b8b8] text-[15px] font-[500]">
-            $99.00
+            &#36; {props?.item?.oldPrice}
           </span>
 
           <span className="price text-[#ec370a] text-[17px] font-[600]">
-            39% <span className="text-[10px]">DESCUENTO</span>
+            {props?.item?.discount}%{" "}
+            <span className="text-[10px]">DESCUENTO</span>
           </span>
         </div>
       </div>

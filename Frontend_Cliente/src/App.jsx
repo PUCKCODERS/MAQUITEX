@@ -172,8 +172,8 @@ function App() {
       countInStock: product?.countInStock,
       brand: product?.brand,
       size: product?.size,
-      weight: product?.productWeight,
-      ram: product?.productRams,
+      weight: product?.weight,
+      ram: product?.ram,
     };
 
     console.log(data);

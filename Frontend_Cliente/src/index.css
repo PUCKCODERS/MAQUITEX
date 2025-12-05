@@ -481,3 +481,7 @@ header {
 .MuiCircularProgress-root {
   @apply !text-[#082c55];
 }
+
+.MuiButtonBase-root.MuiMenuItem-root.MuiMenuItem-gutters.selected {
+  @apply !text-[#082c55];
+}

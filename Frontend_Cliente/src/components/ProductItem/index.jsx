@@ -38,14 +38,14 @@ const ProductItem = (props) => {
       subTotal: parseInt(product?.price * quantity),
       countInStock: product?.countInStock,
       brand: product?.brand,
-      size: selectedTabName,
-      weight: selectedTabName,
-      ram: selectedTabName,
+      size: props?.item?.size?.length !== 0 ? selectedTabName : "",
+      weight: props?.item?.productWeight?.length !== 0 ? selectedTabName : "",
+      ram: props?.item?.productRams?.length !== 0 ? selectedTabName : "",
     };
 
     if (
       props?.item?.size?.length !== 0 ||
-      props?.item?.productRam?.length !== 0 ||
+      props?.item?.productRams?.length !== 0 ||
       props?.item?.productWeight?.length !== 0
     ) {
       setIsShowTabs(true);
@@ -143,54 +143,58 @@ const ProductItem = (props) => {
         </Link>
 
         {isShowTabs === true && (
-          <div className="flex items-center justify-center !absolute !text-[11px] top-0 left-0 w-full h-full !bg-[rgba(0,0,0,0.7)] !z-[60] !p-3 !gap-2">
-            {props?.item?.size?.length !== 0 &&
-              props?.item?.size?.map((item, index) => {
-                return (
+          <div className="flex flex-col items-center justify-center !absolute !text-[11px] top-0 left-0 w-full h-full !bg-[rgba(0,0,0,0.7)] !z-[60] !p-3 gap-4">
+            {/* SIZE */}
+            {props?.item?.size?.length !== 0 && (
+              <div className="flex flex-wrap justify-center gap-2">
+                {props?.item?.size.map((item, index) => (
                   <span
                     key={index}
-                    className={`flex items-center justify-center !p-1 !px-1 text-[#000] bg-[#fff]  hover:bg-[#b1cdee] !max-w-[45px] !h-[35px] rounded-sm cursor-pointer  border-1 border-[#000] ${
+                    className={`flex items-center justify-center !p-1 !px-1 text-[#000] bg-[#fff] hover:bg-[#b1cdee] !max-w-[45px] !h-[25px] rounded-sm cursor-pointer border-1 border-[#000] ${
                       activeTab === index &&
-                      "!bg-[#082c55] !text-white border-1 border-[#fff] "
+                      "!bg-[#082c55] !text-white border-1 border-[#fff]"
                     }`}
                     onClick={() => handleClickActiveTab(index, item)}
                   >
                     {item}
                   </span>
-                );
-              })}
+                ))}
+              </div>
+            )}
 
-            {props?.item?.productRams?.length !== 0 &&
-              props?.item?.productRams?.map((item, index) => {
-                return (
+            {props?.item?.productWeight?.length !== 0 && (
+              <div className="flex flex-wrap justify-center gap-2">
+                {props?.item?.productWeight.map((item, index) => (
                   <span
                     key={index}
-                    className={`flex items-center justify-center !p-1 !px-1 text-[#000] bg-[#fff]  hover:bg-[#b1cdee] !max-w-[55px] !h-[35px] rounded-sm cursor-pointer  border-1 border-[#000] ${
+                    className={`flex items-center justify-center !p-1 !px-1 text-[#000] bg-[#fff] hover:bg-[#b1cdee] !max-w-[45px] !h-[25px] rounded-sm cursor-pointer border-1 border-[#000] ${
                       activeTab === index &&
-                      "!bg-[#082c55] !text-white border-1 border-[#fff] "
+                      "!bg-[#082c55] !text-white border-1 border-[#fff]"
                     }`}
                     onClick={() => handleClickActiveTab(index, item)}
                   >
                     {item}
                   </span>
-                );
-              })}
+                ))}
+              </div>
+            )}
 
-            {props?.item?.productWeight?.length !== 0 &&
-              props?.item?.productWeight?.map((item, index) => {
-                return (
+            {props?.item?.productRams?.length !== 0 && (
+              <div className="flex flex-wrap justify-center gap-2">
+                {props?.item?.productRams.map((item, index) => (
                   <span
                     key={index}
-                    className={`flex items-center justify-center !p-1 !px-1 text-[#000] bg-[#fff]  hover:bg-[#b1cdee] !max-w-[45px] !h-[35px] rounded-sm cursor-pointer  border-1 border-[#000] ${
+                    className={`flex items-center justify-center !p-1 !px-2 text-[#000] bg-[#fff] hover:bg-[#b1cdee] !max-w-[55px] !h-[25px] rounded-sm cursor-pointer border-1 border-[#000] ${
                       activeTab === index &&
-                      "!bg-[#082c55] !text-white border-1 border-[#fff] "
+                      "!bg-[#082c55] !text-white border-1 border-[#fff]"
                     }`}
                     onClick={() => handleClickActiveTab(index, item)}
                   >
                     {item}
                   </span>
-                );
-              })}
+                ))}
+              </div>
+            )}
           </div>
         )}
 
