@@ -13,6 +13,11 @@ const CartItems = (props) => {
   const [sizeOptions, setSizeOptions] = useState([]);
   const openSize = Boolean(sizeanchorEl);
 
+  const [ramanchorEl, setRamAnchorEl] = useState(null);
+  const [selectedRam, setRamItems] = useState(props.ram || "");
+  const [ramOptions, setRamOptions] = useState([]);
+  const openRam = Boolean(ramanchorEl);
+
   const [qtyanchorEl, setQtyAnchorEl] = useState(null);
   const [selectedQty, setSelectedQty] = useState(props.quantity || "");
   const openQty = Boolean(qtyanchorEl);
@@ -25,10 +30,12 @@ const CartItems = (props) => {
       if (res?.error === false && res?.product) {
         const sizes = res.product?.size || [];
         setSizeOptions(Array.isArray(sizes) ? sizes : []);
+
+        const rams = res.product?.productRams || [];
+        setRamOptions(Array.isArray(rams) ? rams : []);
       }
     });
   }, [props?.item?.productId]);
-
   const handleClickSize = (event) => {
     setSizeAnchorEl(event.currentTarget);
   };
@@ -36,6 +43,16 @@ const CartItems = (props) => {
     setSizeAnchorEl(null);
     if (value !== null) {
       setCartItems(value);
+    }
+  };
+
+  const handleClickRam = (event) => {
+    setRamAnchorEl(event.currentTarget);
+  };
+  const handleCloseRam = (value) => {
+    setRamAnchorEl(null);
+    if (value !== null) {
+      setRamItems(value);
     }
   };
 
@@ -115,31 +132,31 @@ const CartItems = (props) => {
             </>
           )}
 
-          {props?.productRamsData && props?.productRamsData?.length > 0 && (
+          {ramOptions && ramOptions?.length > 0 && (
             <>
               <div className="relative">
                 <span
                   className="flex items-center justify-center bg-[#f1f1f1] text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72]"
-                  onClick={handleClickQty}
+                  onClick={handleClickRam}
                 >
-                  COLOR {selectedQty} <GoTriangleDown />
+                  COLOR {selectedRam} <GoTriangleDown />
                 </span>
 
                 <Menu
-                  id="qty-menu"
-                  anchorEl={qtyanchorEl}
-                  open={openQty}
-                  onClose={() => handleCloseQty(null)}
+                  id="size-menu"
+                  anchorEl={ramanchorEl}
+                  open={openRam}
+                  onClose={() => handleCloseRam(null)}
                   MenuListProps={{
                     "aria-labelledby": "basic-button",
                   }}
                 >
-                  {props?.productRamsData?.map((ram, index) => {
+                  {ramOptions?.map((ram, index) => {
                     return (
                       <MenuItem
                         key={index}
-                        className={`${ram === selectedQty && "selected"}`}
-                        onClick={() => handleCloseQty(ram)}
+                        className={`${ram === selectedRam && "selected"}`}
+                        onClick={() => handleCloseRam(ram)}
                       >
                         {ram}
                       </MenuItem>
