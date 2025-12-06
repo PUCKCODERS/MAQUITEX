@@ -1,19 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { GoTriangleDown } from "react-icons/go";
 import Rating from "@mui/material/Rating";
+import { fetchDataFromApi } from "../../utils/api";
 
 const CartItems = (props) => {
   const [sizeanchorEl, setSizeAnchorEl] = useState(null);
-  const [selectedSize, setCartItems] = useState(props.selected);
+  const [selectedSize, setCartItems] = useState(props.size || "");
+  const [sizeOptions, setSizeOptions] = useState([]);
   const openSize = Boolean(sizeanchorEl);
 
   const [qtyanchorEl, setQtyAnchorEl] = useState(null);
-  const [selectedQty, setSelectedQty] = useState(props.qty);
+  const [selectedQty, setSelectedQty] = useState(props.quantity || "");
   const openQty = Boolean(qtyanchorEl);
+
+  // Cargar tamaños disponibles desde la API
+  useEffect(() => {
+    fetchDataFromApi("/api/product/productSize/get").then((res) => {
+      if (res?.error === false) {
+        const sizeNames = res?.data?.map((item) => item.name);
+        setSizeOptions(sizeNames);
+      }
+    });
+  }, []);
 
   const handleClickSize = (event) => {
     setSizeAnchorEl(event.currentTarget);
@@ -66,83 +78,73 @@ const CartItems = (props) => {
         />
 
         <div className="flex items-center !gap-4 !mt-2">
-          {props?.item?.size !== "" && (
+          {sizeOptions && sizeOptions?.length > 0 && (
             <>
-              {props?.productSizeData?.length !== 0 && (
-                <div className="relative">
-                  <span
-                    className="flex items-center justify-center bg-[#f1f1f1] text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72]"
-                    onClick={handleClickSize}
-                  >
-                    TAMAÑO {selectedSize} <GoTriangleDown />
-                  </span>
+              <div className="relative">
+                <span
+                  className="flex items-center justify-center bg-[#f1f1f1] text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72]"
+                  onClick={handleClickSize}
+                >
+                  TAMAÑO {selectedSize} <GoTriangleDown />
+                </span>
 
-                  <Menu
-                    id="size-menu"
-                    anchorEl={sizeanchorEl}
-                    open={openSize}
-                    onClose={() => handleCloseSize(null)}
-                    MenuListProps={{
-                      "aria-labelledby": "basic-button",
-                    }}
-                  >
-                    {props?.productSizeData?.map((item, index) => {
-                      return (
-                        <MenuItem
-                          key={index}
-                          className={`${
-                            item?.name === selectedSize && "selected"
-                          }`}
-                          onClick={() => handleCloseSize(item?.name)}
-                          //className="!text-[#556f8d] !font-bold hover:!text-[white] hover:!bg-[#274a72] !justify-center"
-                        >
-                          {item?.name}
-                        </MenuItem>
-                      );
-                    })}
-                  </Menu>
-                </div>
-              )}
+                <Menu
+                  id="size-menu"
+                  anchorEl={sizeanchorEl}
+                  open={openSize}
+                  onClose={() => handleCloseSize(null)}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  {sizeOptions?.map((size, index) => {
+                    return (
+                      <MenuItem
+                        key={index}
+                        className={`${size === selectedSize && "selected"}`}
+                        onClick={() => handleCloseSize(size)}
+                      >
+                        {size}
+                      </MenuItem>
+                    );
+                  })}
+                </Menu>
+              </div>
             </>
           )}
 
-          {props?.item?.ram !== "" && (
+          {props?.productRamsData && props?.productRamsData?.length > 0 && (
             <>
-              {props?.productRamsData?.length !== 0 && (
-                <div className="relative">
-                  <span
-                    className="flex items-center justify-center bg-[#f1f1f1] text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72]"
-                    onClick={handleClickQty}
-                  >
-                    COLOR {selectedQty} <GoTriangleDown />
-                  </span>
+              <div className="relative">
+                <span
+                  className="flex items-center justify-center bg-[#f1f1f1] text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72]"
+                  onClick={handleClickQty}
+                >
+                  COLOR {selectedQty} <GoTriangleDown />
+                </span>
 
-                  <Menu
-                    id="size-menu"
-                    anchorEl={qtyanchorEl}
-                    open={openQty}
-                    onClose={() => handleCloseQty(null)}
-                    MenuListProps={{
-                      "aria-labelledby": "basic-button",
-                    }}
-                  >
-                    {props?.productRamsData?.map((item, index) => {
-                      return (
-                        <MenuItem
-                          key={index}
-                          className={`${
-                            item?.name === selectedSize && "selected"
-                          }`}
-                          onClick={() => handleCloseQty(item?.name)}
-                          //className="!text-[#556f8d] !font-bold hover:!text-[white] hover:!bg-[#274a72] !justify-center"
-                        >
-                          {item?.name}
-                        </MenuItem>
-                      );
-                    })}
-                  </Menu>
-                </div>
-              )}
+                <Menu
+                  id="qty-menu"
+                  anchorEl={qtyanchorEl}
+                  open={openQty}
+                  onClose={() => handleCloseQty(null)}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  {props?.productRamsData?.map((ram, index) => {
+                    return (
+                      <MenuItem
+                        key={index}
+                        className={`${ram === selectedQty && "selected"}`}
+                        onClick={() => handleCloseQty(ram)}
+                      >
+                        {ram}
+                      </MenuItem>
+                    );
+                  })}
+                </Menu>
+              </div>
             </>
           )}
         </div>

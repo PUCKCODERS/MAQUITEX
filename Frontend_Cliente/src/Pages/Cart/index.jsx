@@ -31,7 +31,7 @@ const CartPage = () => {
                   <CartItems
                     item={item}
                     key={index}
-                    size="S"
+                    size={item.size}
                     quantity={item?.quantity}
                   />
                 );
