@@ -18,6 +18,11 @@ const CartItems = (props) => {
   const [ramOptions, setRamOptions] = useState([]);
   const openRam = Boolean(ramanchorEl);
 
+  const [weightanchorEl, setWeightAnchorEl] = useState(null);
+  const [selectedWeight, setWeightItems] = useState(props.weight || "");
+  const [weightOptions, setWeightOptions] = useState([]);
+  const openWeight = Boolean(weightanchorEl);
+
   const [qtyanchorEl, setQtyAnchorEl] = useState(null);
   const [selectedQty, setSelectedQty] = useState(props.quantity || "");
   const openQty = Boolean(qtyanchorEl);
@@ -33,9 +38,13 @@ const CartItems = (props) => {
 
         const rams = res.product?.productRams || [];
         setRamOptions(Array.isArray(rams) ? rams : []);
+
+        const weights = res.product?.productWeight || [];
+        setWeightOptions(Array.isArray(weights) ? weights : []);
       }
     });
   }, [props?.item?.productId]);
+
   const handleClickSize = (event) => {
     setSizeAnchorEl(event.currentTarget);
   };
@@ -53,6 +62,16 @@ const CartItems = (props) => {
     setRamAnchorEl(null);
     if (value !== null) {
       setRamItems(value);
+    }
+  };
+
+  const handleClickWeight = (event) => {
+    setWeightAnchorEl(event.currentTarget);
+  };
+  const handleCloseWeight = (value) => {
+    setWeightAnchorEl(null);
+    if (value !== null) {
+      setWeightItems(value);
     }
   };
 
@@ -159,6 +178,41 @@ const CartItems = (props) => {
                         onClick={() => handleCloseRam(ram)}
                       >
                         {ram}
+                      </MenuItem>
+                    );
+                  })}
+                </Menu>
+              </div>
+            </>
+          )}
+
+          {weightOptions && weightOptions?.length > 0 && (
+            <>
+              <div className="relative">
+                <span
+                  className="flex items-center justify-center bg-[#f1f1f1] text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72]"
+                  onClick={handleClickWeight}
+                >
+                  PESO {selectedWeight} <GoTriangleDown />
+                </span>
+
+                <Menu
+                  id="size-menu"
+                  anchorEl={weightanchorEl}
+                  open={openWeight}
+                  onClose={() => handleCloseWeight(null)}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  {weightOptions?.map((weight, index) => {
+                    return (
+                      <MenuItem
+                        key={index}
+                        className={`${weight === selectedWeight && "selected"}`}
+                        onClick={() => handleCloseWeight(weight)}
+                      >
+                        {weight}
                       </MenuItem>
                     );
                   })}
