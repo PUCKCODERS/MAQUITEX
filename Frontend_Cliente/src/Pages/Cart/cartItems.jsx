@@ -32,6 +32,8 @@ const CartItems = (props) => {
     if (!productId) return;
 
     fetchDataFromApi(`/api/product/${productId}`).then((res) => {
+      console.log("Producto cargado:", res?.product);
+
       if (res?.error === false && res?.product) {
         const sizes = res.product?.size || [];
         setSizeOptions(Array.isArray(sizes) ? sizes : []);
@@ -97,7 +99,7 @@ const CartItems = (props) => {
       </div>
 
       <div className="info w-[80%] relative">
-        <RiDeleteBin5Fill className="!absolute top-[-20px] right-[10px] cursor-pointer text-[25px] text-[#d67070] hover:!text-[#ce0202]  link transition-all" />
+        <RiDeleteBin5Fill className="!absolute top-[-5px] right-[10px] cursor-pointer text-[25px] text-[#d67070] hover:!text-[#ce0202]  link transition-all" />
         <span className="text-[13px] font-[500]">{props?.item?.brand}</span>
         <h3 className="!text-[15px] !font-[bold] !mb-3 !mt-1">
           <Link

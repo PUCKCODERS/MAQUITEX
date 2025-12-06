@@ -32,6 +32,8 @@ const CartPage = () => {
                     item={item}
                     key={index}
                     size={item.size}
+                    ram={item.ram}
+                    weight={item.weight}
                     quantity={item?.quantity}
                   />
                 );

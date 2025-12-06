@@ -19,9 +19,13 @@ const ProductItem = (props) => {
   const [isAdded, setIsAdded] = useState(false);
   const [cartItem, setCartItem] = useState(false);
 
-  const [activeTab, setActiveTab] = useState(null);
+  const [activeTabSize, setActiveTabSize] = useState(null);
+  const [activeTabWeight, setActiveTabWeight] = useState(null);
+  const [activeTabRam, setActiveTabRam] = useState(null);
   const [isShowTabs, setIsShowTabs] = useState(false);
-  const [selectedTabName, setSelectedTabName] = useState(null);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedWeight, setSelectedWeight] = useState(null);
+  const [selectedRam, setSelectedRam] = useState(null);
 
   const context = useContext(MyContext);
 
@@ -38,9 +42,9 @@ const ProductItem = (props) => {
       subTotal: parseInt(product?.price * quantity),
       countInStock: product?.countInStock,
       brand: product?.brand,
-      size: props?.item?.size?.length !== 0 ? selectedTabName : "",
-      weight: props?.item?.productWeight?.length !== 0 ? selectedTabName : "",
-      ram: props?.item?.productRams?.length !== 0 ? selectedTabName : "",
+      size: props?.item?.size?.length !== 0 ? selectedSize : "",
+      weight: props?.item?.productWeight?.length !== 0 ? selectedWeight : "",
+      ram: props?.item?.productRams?.length !== 0 ? selectedRam : "",
     };
 
     if (
@@ -55,16 +59,30 @@ const ProductItem = (props) => {
       setIsShowTabs(false);
     }
 
-    if (activeTab !== null) {
+    if (
+      activeTabSize !== null ||
+      activeTabWeight !== null ||
+      activeTabRam !== null
+    ) {
       context?.addToCart(productItem, userId, quantity);
       setIsAdded(true);
       setIsShowTabs(false);
     }
   };
 
-  const handleClickActiveTab = (index, name) => {
-    setActiveTab(index);
-    setSelectedTabName(name);
+  const handleClickActiveTabSize = (index, name) => {
+    setActiveTabSize(index);
+    setSelectedSize(name);
+  };
+
+  const handleClickActiveTabWeight = (index, name) => {
+    setActiveTabWeight(index);
+    setSelectedWeight(name);
+  };
+
+  const handleClickActiveTabRam = (index, name) => {
+    setActiveTabRam(index);
+    setSelectedRam(name);
   };
 
   useEffect(() => {
@@ -94,7 +112,9 @@ const ProductItem = (props) => {
         context.alertBox("success", "PRODUCTO ELIMINADO");
         context.getCartItems();
         setIsShowTabs(false);
-        setActiveTab(null);
+        setActiveTabSize(null);
+        setActiveTabWeight(null);
+        setActiveTabRam(null);
       });
     } else {
       const obj = {
@@ -144,17 +164,16 @@ const ProductItem = (props) => {
 
         {isShowTabs === true && (
           <div className="flex flex-col items-center justify-center !absolute !text-[11px] top-0 left-0 w-full h-full !bg-[rgba(0,0,0,0.7)] !z-[60] !p-3 gap-4">
-            {/* SIZE */}
             {props?.item?.size?.length !== 0 && (
               <div className="flex flex-wrap justify-center gap-2">
                 {props?.item?.size.map((item, index) => (
                   <span
                     key={index}
                     className={`flex items-center justify-center !p-1 !px-1 text-[#000] bg-[#fff] hover:bg-[#b1cdee] !max-w-[45px] !h-[25px] rounded-sm cursor-pointer border-1 border-[#000] ${
-                      activeTab === index &&
+                      activeTabSize === index &&
                       "!bg-[#082c55] !text-white border-1 border-[#fff]"
                     }`}
-                    onClick={() => handleClickActiveTab(index, item)}
+                    onClick={() => handleClickActiveTabSize(index, item)}
                   >
                     {item}
                   </span>
@@ -168,10 +187,10 @@ const ProductItem = (props) => {
                   <span
                     key={index}
                     className={`flex items-center justify-center !p-1 !px-1 text-[#000] bg-[#fff] hover:bg-[#b1cdee] !max-w-[45px] !h-[25px] rounded-sm cursor-pointer border-1 border-[#000] ${
-                      activeTab === index &&
+                      activeTabWeight === index &&
                       "!bg-[#082c55] !text-white border-1 border-[#fff]"
                     }`}
-                    onClick={() => handleClickActiveTab(index, item)}
+                    onClick={() => handleClickActiveTabWeight(index, item)}
                   >
                     {item}
                   </span>
@@ -185,10 +204,10 @@ const ProductItem = (props) => {
                   <span
                     key={index}
                     className={`flex items-center justify-center !p-1 !px-2 text-[#000] bg-[#fff] hover:bg-[#b1cdee] !max-w-[55px] !h-[25px] rounded-sm cursor-pointer border-1 border-[#000] ${
-                      activeTab === index &&
+                      activeTabRam === index &&
                       "!bg-[#082c55] !text-white border-1 border-[#fff]"
                     }`}
-                    onClick={() => handleClickActiveTab(index, item)}
+                    onClick={() => handleClickActiveTabRam(index, item)}
                   >
                     {item}
                   </span>
