@@ -17,15 +17,17 @@ const CartItems = (props) => {
   const [selectedQty, setSelectedQty] = useState(props.quantity || "");
   const openQty = Boolean(qtyanchorEl);
 
-  // Cargar tamaños disponibles desde la API
   useEffect(() => {
-    fetchDataFromApi("/api/product/productSize/get").then((res) => {
-      if (res?.error === false) {
-        const sizeNames = res?.data?.map((item) => item.name);
-        setSizeOptions(sizeNames);
+    const productId = props?.item?.productId;
+    if (!productId) return;
+
+    fetchDataFromApi(`/api/product/${productId}`).then((res) => {
+      if (res?.error === false && res?.product) {
+        const sizes = res.product?.size || [];
+        setSizeOptions(Array.isArray(sizes) ? sizes : []);
       }
     });
-  }, []);
+  }, [props?.item?.productId]);
 
   const handleClickSize = (event) => {
     setSizeAnchorEl(event.currentTarget);
