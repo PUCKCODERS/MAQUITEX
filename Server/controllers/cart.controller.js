@@ -174,3 +174,45 @@ export const deleteCartItemQtyController = async (request, response) => {
     });
   }
 };
+
+export const updateCartItemController = async (request, response) => {
+  try {
+    const userId = request.userId;
+    const { _id, size, weight, ram } = request.body;
+
+    if (!_id) {
+      return response.status(400).json({
+        message: "PROPORCIONAR ID DEL ITEM",
+        error: true,
+        success: false,
+      });
+    }
+
+    const updateData = {};
+    if (size !== undefined) updateData.size = size;
+    if (weight !== undefined) updateData.weight = weight;
+    if (ram !== undefined) updateData.ram = ram;
+
+    const updateCartItem = await CartProductModel.updateOne(
+      {
+        _id: _id,
+        userId: userId,
+      },
+      updateData,
+      { new: true }
+    );
+
+    return response.json({
+      message: "ITEM ACTUALIZADO",
+      success: true,
+      error: false,
+      data: updateCartItem,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+};

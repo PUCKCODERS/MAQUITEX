@@ -68,6 +68,24 @@ const CartItems = (props) => {
     setSizeAnchorEl(null);
     if (value !== null) {
       setCartItems(value);
+
+      // Persistar el tamaño en el servidor
+      const obj = {
+        _id: props?.item?._id,
+        size: value,
+      };
+
+      editData(`/api/cart/update-item`, obj)
+        .then((res) => {
+          context?.alertBox(
+            "success",
+            res?.data?.message || "TAMAÑO ACTUALIZADO"
+          );
+          context?.getCartItems();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   };
 
@@ -78,6 +96,21 @@ const CartItems = (props) => {
     setRamAnchorEl(null);
     if (value !== null) {
       setRamItems(value);
+
+      // Persistar el color en el servidor
+      const obj = {
+        _id: props?.item?._id,
+        ram: value,
+      };
+
+      editData(`/api/cart/update-item`, obj)
+        .then(() => {
+          context?.alertBox("success", "COLOR ACTUALIZADO");
+          context?.getCartItems();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   };
 
@@ -88,6 +121,21 @@ const CartItems = (props) => {
     setWeightAnchorEl(null);
     if (value !== null) {
       setWeightItems(value);
+
+      // Persistar el peso en el servidor
+      const obj = {
+        _id: props?.item?._id,
+        weight: value,
+      };
+
+      editData(`/api/cart/update-item`, obj)
+        .then(() => {
+          context?.alertBox("success", "PESO ACTUALIZADO");
+          context?.getCartItems();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   };
 
@@ -107,11 +155,8 @@ const CartItems = (props) => {
       };
 
       editData(`/api/cart/update-qty`, obj)
-        .then((res) => {
-          context?.alertBox(
-            "success",
-            res?.data?.message || "CANTIDAD ACTUALIZADA"
-          );
+        .then(() => {
+          context?.alertBox("success", "CANTIDAD ACTUALIZADA");
           context?.getCartItems();
         })
         .catch((err) => {
