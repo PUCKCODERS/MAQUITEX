@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { GoTriangleDown } from "react-icons/go";
 import Rating from "@mui/material/Rating";
-import { fetchDataFromApi } from "../../utils/api";
+import { fetchDataFromApi, editData } from "../../utils/api";
+import { MyContext } from "../../App";
 
 const CartItems = (props) => {
+  const context = useContext(MyContext);
+
   const [sizeanchorEl, setSizeAnchorEl] = useState(null);
   const [selectedSize, setCartItems] = useState(props.size || "");
   const [sizeOptions, setSizeOptions] = useState([]);
@@ -24,7 +27,8 @@ const CartItems = (props) => {
   const openWeight = Boolean(weightanchorEl);
 
   const [qtyanchorEl, setQtyAnchorEl] = useState(null);
-  const [selectedQty, setSelectedQty] = useState(props.quantity || "");
+  const [selectedQty, setSelectedQty] = useState(props.quantity || 1);
+  const [qtyOptions, setqtyOptions] = useState([]);
   const openQty = Boolean(qtyanchorEl);
 
   useEffect(() => {
@@ -32,8 +36,6 @@ const CartItems = (props) => {
     if (!productId) return;
 
     fetchDataFromApi(`/api/product/${productId}`).then((res) => {
-      console.log("Producto cargado:", res?.product);
-
       if (res?.error === false && res?.product) {
         const sizes = res.product?.size || [];
         setSizeOptions(Array.isArray(sizes) ? sizes : []);
@@ -43,9 +45,21 @@ const CartItems = (props) => {
 
         const weights = res.product?.productWeight || [];
         setWeightOptions(Array.isArray(weights) ? weights : []);
+
+        // Generar un rango de cantidades de 1 a 10 (o basado en countInStock)
+        const maxQty = res.product?.countInStock || 10;
+        const quantitysArray = Array.from({ length: maxQty }, (_, i) => i + 1);
+        setqtyOptions(quantitysArray);
       }
     });
   }, [props?.item?.productId]);
+
+  // Inicializar selectedQty cuando props.quantity cambie
+  useEffect(() => {
+    if (props.quantity) {
+      setSelectedQty(props.quantity);
+    }
+  }, [props.quantity]);
 
   const handleClickSize = (event) => {
     setSizeAnchorEl(event.currentTarget);
@@ -84,6 +98,25 @@ const CartItems = (props) => {
     setQtyAnchorEl(null);
     if (value !== null) {
       setSelectedQty(value);
+
+      // Persistar la cantidad en el servidor y refrescar el carrito
+      const obj = {
+        _id: props?.item?._id,
+        qty: value,
+        subTotal: (props?.item?.price || 0) * value,
+      };
+
+      editData(`/api/cart/update-qty`, obj)
+        .then((res) => {
+          context?.alertBox(
+            "success",
+            res?.data?.message || "CANTIDAD ACTUALIZADA"
+          );
+          context?.getCartItems();
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
   };
 
@@ -118,6 +151,41 @@ const CartItems = (props) => {
         />
 
         <div className="flex items-center !gap-4 !mt-2">
+          {qtyOptions && qtyOptions?.length > 0 && (
+            <>
+              <div className="relative">
+                <span
+                  className="flex items-center justify-center bg-[#f1f1f1] text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72]"
+                  onClick={handleClickQty}
+                >
+                  CANTIDAD {selectedQty} <GoTriangleDown />
+                </span>
+
+                <Menu
+                  id="size-menu"
+                  anchorEl={qtyanchorEl}
+                  open={openQty}
+                  onClose={() => handleCloseQty(null)}
+                  MenuListProps={{
+                    "aria-labelledby": "basic-button",
+                  }}
+                >
+                  {qtyOptions?.map((quantity, index) => {
+                    return (
+                      <MenuItem
+                        key={index}
+                        className={`${quantity === selectedQty && "selected"}`}
+                        onClick={() => handleCloseQty(quantity)}
+                      >
+                        {quantity}
+                      </MenuItem>
+                    );
+                  })}
+                </Menu>
+              </div>
+            </>
+          )}
+
           {sizeOptions && sizeOptions?.length > 0 && (
             <>
               <div className="relative">
