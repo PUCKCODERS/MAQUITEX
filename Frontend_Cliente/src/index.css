@@ -483,5 +483,7 @@ header {
 }
 
 .MuiButtonBase-root.MuiMenuItem-root.MuiMenuItem-gutters.selected {
-  @apply !text-[#082c55];
+  @apply !text-[#fff];
+  background: #082c55;
+  font-weight: bold;
 }

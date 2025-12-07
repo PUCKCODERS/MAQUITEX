@@ -122,7 +122,7 @@ const CartItems = (props) => {
             <>
               <div className="relative">
                 <span
-                  className="flex items-center justify-center bg-[#f1f1f1] text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72]"
+                  className="flex items-center justify-center bg-[#f1f1f1]  text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72]"
                   onClick={handleClickSize}
                 >
                   TAMAÑO {selectedSize} <GoTriangleDown />
