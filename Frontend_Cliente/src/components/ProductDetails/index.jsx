@@ -1,13 +1,98 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import QtyBox from "../../components/QtyBox";
 import { GiShoppingCart } from "react-icons/gi";
 import { FaHeart } from "react-icons/fa";
 import { IoMdGitCompare } from "react-icons/io";
 import { Rating } from "@mui/material";
 import Button from "@mui/material/Button";
+import { MyContext } from "../../App";
+import CircularProgress from "@mui/material/CircularProgress";
+import { postData } from "../../utils/api";
 
 const ProductDetailsComponent = (props) => {
   const [productActionIndex, setProductActionIndex] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [tabError, setTabError] = useState(false);
+
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedWeight, setSelectedWeight] = useState(null);
+  const [selectedRam, setSelectedRam] = useState(null);
+
+  const context = useContext(MyContext);
+
+  const handleSelecteQty = (qty) => {
+    setQuantity(qty);
+  };
+
+  const handleClickActiveTabSize = (index, name) => {
+    setProductActionIndex(index);
+    setSelectedSize(name);
+  };
+
+  const handleClickActiveTabWeight = (index, name) => {
+    setProductActionIndex(index);
+    setSelectedWeight(name);
+  };
+
+  const handleClickActiveTabRam = (index, name) => {
+    setProductActionIndex(index);
+    setSelectedRam(name);
+  };
+
+  const addToCart = (product, userId, quantity) => {
+    if (userId === undefined) {
+      context?.alertBox(
+        "error",
+        "NO HAS INICIADO SESIÓN, POR FAVOR INICIA SESIÓN"
+      );
+      return false;
+    }
+
+    const productItem = {
+      productId: product?._id,
+      productTitle: product?.name,
+      image: product?.images[0],
+      rating: product?.rating,
+      price: product?.price,
+      oldPrice: product?.oldPrice,
+      discount: product?.discount,
+      quantity: quantity,
+      subTotal: parseInt(product?.price * quantity),
+      countInStock: product?.countInStock,
+      brand: product?.brand,
+      size: props?.item?.size?.length !== 0 ? selectedSize : "",
+      weight: props?.item?.productWeight?.length !== 0 ? selectedWeight : "",
+      ram: props?.item?.productRams?.length !== 0 ? selectedRam : "",
+    };
+
+    if (
+      (props?.item?.size?.length === 0 || selectedSize !== null) &&
+      (props?.item?.productWeight?.length === 0 || selectedWeight !== null) &&
+      (props?.item?.productRams?.length === 0 || selectedRam !== null)
+    ) {
+      setIsLoading(true);
+
+      postData("/api/cart/add", productItem).then((res) => {
+        if (res?.error === false) {
+          context?.alertBox("success", res?.message);
+
+          context?.getCartItems();
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 500);
+        } else {
+          context?.alertBox("error", res?.message);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 500);
+        }
+      });
+    } else {
+      setTabError(true);
+    }
+  };
+
   return (
     <>
       <h1 className="text-[24px] font-[bold] font-bold text-[#082c55] !mb-2">
@@ -55,8 +140,30 @@ const ProductDetailsComponent = (props) => {
         {props?.item?.description}
       </p>
 
+      {props?.item?.size?.length !== 0 && (
+        <div className="flex items-center !gap-3 ">
+          <span className="text-[16px] font-[bold] font-bold">TAMAÑO</span>
+          <div className="flex items-center !gap-1 actions">
+            {props?.item?.size?.map((item, index) => {
+              return (
+                <Button
+                  className={`${
+                    productActionIndex === index
+                      ? "!bg-[#274a72] !text-white"
+                      : ""
+                  } ${tabError === true && "error"}`}
+                  onClick={() => handleClickActiveTabSize(index, item)}
+                >
+                  {item}
+                </Button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {props?.item?.productRams?.length !== 0 && (
-        <div className="flex items-center !gap-3">
+        <div className="flex items-center !gap-3 !mt-2">
           <span className="text-[16px] font-[bold] font-bold">COLOR</span>
           <div className="flex items-center !gap-1 actions">
             {props?.item?.productRams?.map((item, index) => {
@@ -67,29 +174,7 @@ const ProductDetailsComponent = (props) => {
                       ? "!bg-[#274a72] !text-white"
                       : ""
                   }`}
-                  onClick={() => setProductActionIndex(index)}
-                >
-                  {item}
-                </Button>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {props?.item?.size?.length !== 0 && (
-        <div className="flex items-center !gap-3 !mt-2">
-          <span className="text-[16px] font-[bold] font-bold">TAMAÑO</span>
-          <div className="flex items-center !gap-1 actions">
-            {props?.item?.size?.map((item, index) => {
-              return (
-                <Button
-                  className={`${
-                    productActionIndex === index
-                      ? "!bg-[#274a72] !text-white"
-                      : ""
-                  }`}
-                  onClick={() => setProductActionIndex(index)}
+                  onClick={() => handleClickActiveTabRam(index, item)}
                 >
                   {item}
                 </Button>
@@ -111,7 +196,7 @@ const ProductDetailsComponent = (props) => {
                       ? "!bg-[#274a72] !text-white"
                       : ""
                   }`}
-                  onClick={() => setProductActionIndex(index)}
+                  onClick={() => handleClickActiveTabWeight(index, item)}
                 >
                   {item}
                 </Button>
@@ -130,12 +215,23 @@ const ProductDetailsComponent = (props) => {
 
       <div className="flex items-center !gap-4 !py-4">
         <div className="qtyBoxWrapper w-[70px]">
-          <QtyBox />
+          <QtyBox handleSelecteQty={handleSelecteQty} />
         </div>
 
-        <Button className="btn-org flex !gap-2">
-          AGREGAR
-          <GiShoppingCart className="text-[25px] scale-x-[-1]" />
+        <Button
+          className="btn-org flex !gap-2 !min-w-[150px]"
+          onClick={() =>
+            addToCart(props?.item, context?.userData?._id, quantity)
+          }
+        >
+          {isLoading === true ? (
+            <CircularProgress />
+          ) : (
+            <>
+              AGREGAR
+              <GiShoppingCart className="text-[25px] scale-x-[-1]" />
+            </>
+          )}
         </Button>
       </div>
 

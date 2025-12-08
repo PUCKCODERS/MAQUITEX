@@ -366,6 +366,10 @@ footer form input::placeholder {
   transition: all 0.3s ease !important;
 }
 
+.productContent .actions button.error {
+  border: 2px solid #ff5252 !important;
+}
+
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
@@ -450,6 +454,10 @@ input[type="number"]::-webkit-outer-spin-button {
 button .MuiCircularProgress-root {
   width: 30px !important;
   height: 30px !important;
+}
+
+button.btn-org .MuiCircularProgress-root {
+  color: #fff !important;
 }
 
 .react-international-phone-input {
