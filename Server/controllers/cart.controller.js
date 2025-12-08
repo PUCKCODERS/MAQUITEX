@@ -160,7 +160,7 @@ export const deleteCartItemQtyController = async (request, response) => {
       });
     }
 
-    return response.json({
+    return response.status(200).json({
       message: "PRODUCTO ELIMINADO",
       error: false,
       success: true,

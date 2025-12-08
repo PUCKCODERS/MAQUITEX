@@ -8,15 +8,15 @@ const CartPage = () => {
   const context = useContext(MyContext);
 
   return (
-    <section className="section !py-5 !pb-5">
+    <section className="section !py-10 !pb-10">
       <div className="container w-[80%] max-w-[80%] flex !gap-5">
         <div className="leftPart w-[70%]">
           <div className="shadow-md rounded-md  bg-white">
             <div className="!py-2 !px-3 border-b border-[#d1d1d1] ">
-              <h2 className="font-[bold] font-bold text-[20px] flex justify-center">
+              <h2 className="font-[bold]  !text-[25px] flex justify-center">
                 TU CARRITO
               </h2>
-              <p className="!mt-2 !mb-2 text-[#556f8d] font-[600] flex justify-center">
+              <p className="!mt-2 !mb-2 text-[#556f8d] !text-[20px] font-[600] flex justify-center">
                 ESTOS SON
                 <span className="font-bold text-[#ec370a]">
                   &nbsp;{context?.cartData?.length}&nbsp;

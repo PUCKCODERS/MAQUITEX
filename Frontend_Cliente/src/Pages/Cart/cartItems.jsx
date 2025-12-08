@@ -5,7 +5,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { GoTriangleDown } from "react-icons/go";
 import Rating from "@mui/material/Rating";
-import { fetchDataFromApi, editData } from "../../utils/api";
+import { fetchDataFromApi, editData, deleteData } from "../../utils/api";
 import { MyContext } from "../../App";
 
 const CartItems = (props) => {
@@ -35,6 +35,8 @@ const CartItems = (props) => {
     const productId = props?.item?.productId;
     if (!productId) return;
 
+    window.scrollTo(0, 0);
+
     fetchDataFromApi(`/api/product/${productId}`).then((res) => {
       if (res?.error === false && res?.product) {
         const sizes = res.product?.size || [];
@@ -45,16 +47,15 @@ const CartItems = (props) => {
 
         const weights = res.product?.productWeight || [];
         setWeightOptions(Array.isArray(weights) ? weights : []);
-
-        // Generar un rango de cantidades de 1 a 10 (o basado en countInStock)
-        const maxQty = res.product?.countInStock || 10;
-        const quantitysArray = Array.from({ length: maxQty }, (_, i) => i + 1);
-        setqtyOptions(quantitysArray);
       }
     });
   }, [props?.item?.productId]);
 
-  // Inicializar selectedQty cuando props.quantity cambie
+  useEffect(() => {
+    const quantitysArray = Array.from({ length: 999 }, (_, i) => i + 1);
+    setqtyOptions(quantitysArray);
+  }, []);
+
   useEffect(() => {
     if (props.quantity) {
       setSelectedQty(props.quantity);
@@ -69,7 +70,6 @@ const CartItems = (props) => {
     if (value !== null) {
       setCartItems(value);
 
-      // Persistar el tamaño en el servidor
       const obj = {
         _id: props?.item?._id,
         size: value,
@@ -97,7 +97,6 @@ const CartItems = (props) => {
     if (value !== null) {
       setRamItems(value);
 
-      // Persistar el color en el servidor
       const obj = {
         _id: props?.item?._id,
         ram: value,
@@ -122,7 +121,6 @@ const CartItems = (props) => {
     if (value !== null) {
       setWeightItems(value);
 
-      // Persistar el peso en el servidor
       const obj = {
         _id: props?.item?._id,
         weight: value,
@@ -147,7 +145,6 @@ const CartItems = (props) => {
     if (value !== null) {
       setSelectedQty(value);
 
-      // Persistar la cantidad en el servidor y refrescar el carrito
       const obj = {
         _id: props?.item?._id,
         qty: value,
@@ -165,6 +162,13 @@ const CartItems = (props) => {
     }
   };
 
+  const removeItem = (id) => {
+    deleteData(`/api/cart/delete-cart-item/${id}`).then(() => {
+      context.alertBox("success", "PRODUCTO ELIMINADO DE TU CARRITO");
+      context?.getCartItems();
+    });
+  };
+
   return (
     <div className="cartItem w-full !p-3 flex items-center !gap-4 !pb-5 border-b border-[#d1d1d1]">
       <div className="img w-[20%] rounded-md overflow-hidden shadow-[3px_3px_3px_#274a72] border-1 border-[#acb1b8]">
@@ -177,7 +181,10 @@ const CartItems = (props) => {
       </div>
 
       <div className="info w-[80%] relative">
-        <RiDeleteBin5Fill className="!absolute top-[-5px] right-[10px] cursor-pointer text-[25px] text-[#d67070] hover:!text-[#ce0202]  link transition-all" />
+        <RiDeleteBin5Fill
+          className="!absolute top-[-5px] right-[10px] cursor-pointer text-[25px] text-[#d67070] hover:!text-[#ce0202]  link transition-all"
+          onClick={() => removeItem(props?.item?._id)}
+        />
         <span className="text-[13px] font-[500]">{props?.item?.brand}</span>
         <h3 className="!text-[15px] !font-[bold] !mb-3 !mt-1">
           <Link
