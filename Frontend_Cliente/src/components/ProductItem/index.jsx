@@ -13,6 +13,7 @@ import { ImMinus } from "react-icons/im";
 import { ImPlus } from "react-icons/im";
 import { useEffect } from "react";
 import { deleteData, editData } from "../../utils/api";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const ProductItem = (props) => {
   const [quantity, setQuantity] = useState(1);
@@ -26,6 +27,7 @@ const ProductItem = (props) => {
   const [selectedSize, setSelectedSize] = useState(null);
   const [selectedWeight, setSelectedWeight] = useState(null);
   const [selectedRam, setSelectedRam] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const context = useContext(MyContext);
 
@@ -47,6 +49,8 @@ const ProductItem = (props) => {
       ram: props?.item?.productRams?.length !== 0 ? selectedRam : "",
     };
 
+    setIsLoading(true);
+
     if (
       props?.item?.size?.length !== 0 ||
       props?.item?.productRams?.length !== 0 ||
@@ -54,9 +58,12 @@ const ProductItem = (props) => {
     ) {
       setIsShowTabs(true);
     } else {
-      context?.addToCart(productItem, userId, quantity);
       setIsAdded(true);
       setIsShowTabs(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
+      context?.addToCart(productItem, userId, quantity);
     }
 
     if (
@@ -67,6 +74,9 @@ const ProductItem = (props) => {
       context?.addToCart(productItem, userId, quantity);
       setIsAdded(true);
       setIsShowTabs(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 500);
     }
   };
 
@@ -281,23 +291,34 @@ const ProductItem = (props) => {
               <FaShoppingCart className="!text-[20px] !scale-x-[-1]" />
             </Button>
           ) : (
-            <div className="flex items-center justify-between overflow-hidden rounded-full border-1 border-[#082c55]">
-              <Button
-                className="!min-w-[30px] !w-[30px] !h-[30px] !bg-[#556f8d]  !text-white !rounded-none"
-                onClick={minusQty}
-              >
-                <ImMinus />
-              </Button>
-              <span className="!text-[20px] !text-bold !text-[#082c55]">
-                {quantity}
-              </span>
-              <Button
-                className="!min-w-[30px] !w-[30px] !h-[30px] !bg-[#082c55] !text-white !rounded-none"
-                onClick={addQty}
-              >
-                <ImPlus />
-              </Button>
-            </div>
+            <>
+              {isLoading === true ? (
+                <Button
+                  className="btn-org flex btn-sm gap-3 w-[100%] justify-center "
+                  size="small"
+                >
+                  <CircularProgress />
+                </Button>
+              ) : (
+                <div className="flex items-center justify-between overflow-hidden rounded-full border-1 border-[#082c55]">
+                  <Button
+                    className="!min-w-[30px] !w-[30px] !h-[30px] !bg-[#556f8d]  !text-white !rounded-none"
+                    onClick={minusQty}
+                  >
+                    <ImMinus />
+                  </Button>
+                  <span className="!text-[20px] !text-bold !text-[#082c55]">
+                    {quantity}
+                  </span>
+                  <Button
+                    className="!min-w-[30px] !w-[30px] !h-[30px] !bg-[#082c55] !text-white !rounded-none"
+                    onClick={addQty}
+                  >
+                    <ImPlus />
+                  </Button>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>
