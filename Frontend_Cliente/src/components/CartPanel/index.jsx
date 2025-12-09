@@ -101,7 +101,6 @@ const CartPanel = (props) => {
               <span className="text-red-600 text-[10px]">(INCLUIDO IVA)</span>
             </span>
             <span className="text-[#0a7fec]  font-bold">
-              {" "}
               {(context.cartData?.length !== 0
                 ? context.cartData
                     ?.map((item) => parseInt(item.price) * item.quantity)

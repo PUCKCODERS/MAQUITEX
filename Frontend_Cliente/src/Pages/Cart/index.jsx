@@ -77,28 +77,67 @@ const CartPage = () => {
         </div>
 
         <div className="rightPart w-[30%]">
-          <div className="shadow-md rounded-md bg-white !p-5">
-            <h3 className="font-[bold] font-bold !pb-2 ">TOTAL DE CARRITO</h3>
+          <div className="shadow-md rounded-md bg-white !p-5 sticky !top-[155px] z-[90]">
+            <h3 className="font-[bold] font-bold !pb-2 flex items-center !justify-center">
+              TOTAL DE CARRITO
+            </h3>
             <hr />
 
-            <p className="flex items-center justify-between !mt-3">
-              <span className="text-[14px] font-[500]">SUBTOTAL</span>
-              <span className="text-[#0a7fec] font-bold">$369.69</span>
+            <p className="flex items-center justify-between !text-[10px] !mt-3">
+              <span className="text-[10px] font-[500]">SUBTOTAL</span>
+              <span className="text-[#0a7fec] font-bold">
+                {(context.cartData?.length !== 0
+                  ? context.cartData
+                      ?.map((item) => parseInt(item.price) * item.quantity)
+                      .reduce((total, value) => total + value, 0)
+                  : 0
+                )
+                  ?.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                  })
+                  .replace("$", "$ ")}
+              </span>
             </p>
 
-            <p className="flex items-center justify-between">
-              <span className="text-[14px] font-[500]">ENVIO</span>
-              <span className="text-[#274a72] font-bold">GRATIS</span>
+            <p className="flex items-center justify-between !text-[10px]">
+              <span className="text-[10px] font-[500]">ENVIO</span>
+              <span className="text-[#274a72] font-bold">
+                GRATIS{" "}
+                <span className="text-red-600 text-[10px]">(SOLO QUITO)</span>
+              </span>
             </p>
 
-            <p className="flex items-center justify-between">
-              <span className="text-[14px] font-[500]">DESTINO</span>
-              <span className="text-[#274a72] font-bold">QUITO</span>
+            <p className="flex items-center justify-between !text-[10px]">
+              <span className="text-[10px] font-[500]">
+                CANTIDAD TOTAL DE PRODUCTOS
+              </span>
+              <span className="text-[#0a7fec] font-bold">
+                {context.cartData?.reduce(
+                  (sum, item) => sum + item.quantity,
+                  0
+                )}
+              </span>
             </p>
 
-            <p className="flex items-center justify-between">
-              <span className="text-[14px] font-[500]">TOTAL</span>
-              <span className="text-[#0a7fec] font-bold">$369.69</span>
+            <p className="flex items-center justify-between !text-[10px]">
+              <span className="text-[10px] font-[500]">
+                TOTAL{" "}
+                <span className="text-red-600 text-[10px]">(INCLUIDO IVA)</span>
+              </span>
+              <span className="text-[#0a7fec] font-bold">
+                {(context.cartData?.length !== 0
+                  ? context.cartData
+                      ?.map((item) => parseInt(item.price) * item.quantity)
+                      .reduce((total, value) => total + value, 0)
+                  : 0
+                )
+                  ?.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                  })
+                  .replace("$", "$ ")}
+              </span>
             </p>
 
             <br />
