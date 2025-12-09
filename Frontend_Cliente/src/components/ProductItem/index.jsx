@@ -14,6 +14,7 @@ import { ImPlus } from "react-icons/im";
 import { useEffect } from "react";
 import { deleteData, editData } from "../../utils/api";
 import CircularProgress from "@mui/material/CircularProgress";
+import { GrClose } from "react-icons/gr";
 
 const ProductItem = (props) => {
   const [quantity, setQuantity] = useState(1);
@@ -174,6 +175,13 @@ const ProductItem = (props) => {
 
         {isShowTabs === true && (
           <div className="flex flex-col items-center justify-center !absolute !text-[11px] top-0 left-0 w-full h-full !bg-[rgba(0,0,0,0.7)] !z-[60] !p-3 gap-4">
+            <Button
+              className="!absolute !top-[5px] !right-[5px] !min-w-[20px] !w-[30px] !h-[30px] !rounded-full !text-[#082c55]  !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] hover:!shadow-[0px_0px_0px_3px_#fff] cursor-pointer"
+              onClick={() => setIsShowTabs(false)}
+            >
+              <GrClose className="  z-[90] !text-[15px]" />
+            </Button>
+
             {props?.item?.size?.length !== 0 && (
               <div className="flex flex-wrap justify-center gap-2">
                 {props?.item?.size.map((item, index) => (

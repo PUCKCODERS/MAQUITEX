@@ -72,6 +72,8 @@ const ProductDetailsComponent = (props) => {
       ram: props?.item?.productRams?.length !== 0 ? selectedRam : "",
     };
 
+    setIsLoading(true);
+
     if (
       (props?.item?.size?.length === 0 || selectedSize !== null) &&
       (props?.item?.productWeight?.length === 0 || selectedWeight !== null) &&
