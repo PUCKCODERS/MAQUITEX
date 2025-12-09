@@ -22,7 +22,10 @@ const CartPanel = (props) => {
           return (
             <div className="cartItem w-full flex items-center !gap-4 border-b border-[#d1d1d1] !pb-4 !mb-2">
               <div className="img w-[25%] overflow-hidden !h-[100px] border-1 border-[#8998aa] rounded-md shadow-[3px_3px_3px_#274a72]">
-                <Link to={`/product/${item?._id}`} className="block group">
+                <Link
+                  to={`/product/${item?.productId}`}
+                  className="block group"
+                >
                   <img
                     key={index}
                     src={item?.image}
@@ -33,7 +36,7 @@ const CartPanel = (props) => {
 
               <div className="info w-[75%] !pr-5 !relative !pt-3">
                 <h4 className="text-[14px] !font-bold !text-[#556f8d] hover:!text-[#20446d]">
-                  <Link to={`/product/${item?._id}`}>
+                  <Link to={`/product/${item?.productId}`}>
                     {item?.productTitle?.substr(0, 80)}
                   </Link>
                 </h4>
