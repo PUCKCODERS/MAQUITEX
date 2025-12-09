@@ -72,15 +72,12 @@ const ProductDetailsComponent = (props) => {
       ram: props?.item?.productRams?.length !== 0 ? selectedRam : "",
     };
 
-    setIsLoading(true);
-
     if (
       (props?.item?.size?.length === 0 || selectedSize !== null) &&
       (props?.item?.productWeight?.length === 0 || selectedWeight !== null) &&
       (props?.item?.productRams?.length === 0 || selectedRam !== null)
     ) {
       setIsLoading(true);
-
       postData("/api/cart/add", productItem).then((res) => {
         if (res?.error === false) {
           context?.alertBox("success", res?.message);
@@ -90,6 +87,7 @@ const ProductDetailsComponent = (props) => {
             setIsLoading(false);
           }, 500);
         } else {
+          setIsLoading(true);
           context?.alertBox("error", res?.message);
           setTimeout(() => {
             setIsLoading(false);
@@ -183,6 +181,8 @@ const ProductDetailsComponent = (props) => {
                 <Button
                   className={`${
                     activeTabRam === index ? "!bg-[#274a72] !text-white" : ""
+                  } ${
+                    tabError === true && selectedRam === null ? "error" : ""
                   }`}
                   onClick={() => handleClickActiveTabRam(index, item)}
                 >
@@ -203,6 +203,8 @@ const ProductDetailsComponent = (props) => {
                 <Button
                   className={`${
                     activeTabWeight === index ? "!bg-[#274a72] !text-white" : ""
+                  } ${
+                    tabError === true && selectedWeight === null ? "error" : ""
                   }`}
                   onClick={() => handleClickActiveTabWeight(index, item)}
                 >
