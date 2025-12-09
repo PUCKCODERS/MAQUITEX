@@ -10,7 +10,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { postData } from "../../utils/api";
 
 const ProductDetailsComponent = (props) => {
-  const [productActionIndex, setProductActionIndex] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [tabError, setTabError] = useState(false);
@@ -19,27 +18,37 @@ const ProductDetailsComponent = (props) => {
   const [selectedWeight, setSelectedWeight] = useState(null);
   const [selectedRam, setSelectedRam] = useState(null);
 
+  // Estados independientes para marcar cada grupo
+  const [activeTabSize, setActiveTabSize] = useState(null);
+  const [activeTabWeight, setActiveTabWeight] = useState(null);
+  const [activeTabRam, setActiveTabRam] = useState(null);
+
   const context = useContext(MyContext);
 
   const handleSelecteQty = (qty) => {
     setQuantity(qty);
   };
 
+  // HANDLERS DE SELECCIÓN (modificados)
   const handleClickActiveTabSize = (index, name) => {
-    setProductActionIndex(index);
+    setActiveTabSize(index);
     setSelectedSize(name);
+    setTabError(false);
   };
 
   const handleClickActiveTabWeight = (index, name) => {
-    setProductActionIndex(index);
+    setActiveTabWeight(index);
     setSelectedWeight(name);
+    setTabError(false);
   };
 
   const handleClickActiveTabRam = (index, name) => {
-    setProductActionIndex(index);
+    setActiveTabRam(index);
     setSelectedRam(name);
+    setTabError(false);
   };
 
+  // ADD TO CART (solo se añadió mensaje si falta selección)
   const addToCart = (product, userId, quantity) => {
     if (userId === undefined) {
       context?.alertBox(
@@ -90,6 +99,10 @@ const ProductDetailsComponent = (props) => {
       });
     } else {
       setTabError(true);
+      context.alertBox(
+        "error",
+        "TIENES QUE ESCOGER UNA OPCIÓN ANTES DE AGREGAR"
+      );
     }
   };
 
@@ -100,7 +113,7 @@ const ProductDetailsComponent = (props) => {
       </h1>
       <div className="flex items-center !gap-3">
         <span className="text-gray-500 text-[13px] ">
-          MARCA :{" "}
+          MARCA :
           <span className="font-[500] text-black opacity-75 !ml-1">
             {props?.item?.brand}
           </span>
@@ -140,6 +153,7 @@ const ProductDetailsComponent = (props) => {
         {props?.item?.description}
       </p>
 
+      {/* TAMAÑO */}
       {props?.item?.size?.length !== 0 && (
         <div className="flex items-center !gap-3 ">
           <span className="text-[16px] font-[bold] font-bold">TAMAÑO</span>
@@ -148,10 +162,10 @@ const ProductDetailsComponent = (props) => {
               return (
                 <Button
                   className={`${
-                    productActionIndex === index
-                      ? "!bg-[#274a72] !text-white"
-                      : ""
-                  } ${tabError === true && "error"}`}
+                    activeTabSize === index ? "!bg-[#274a72] !text-white" : ""
+                  } ${
+                    tabError === true && selectedSize === null ? "error" : ""
+                  }`}
                   onClick={() => handleClickActiveTabSize(index, item)}
                 >
                   {item}
@@ -162,6 +176,7 @@ const ProductDetailsComponent = (props) => {
         </div>
       )}
 
+      {/* COLOR */}
       {props?.item?.productRams?.length !== 0 && (
         <div className="flex items-center !gap-3 !mt-2">
           <span className="text-[16px] font-[bold] font-bold">COLOR</span>
@@ -170,9 +185,7 @@ const ProductDetailsComponent = (props) => {
               return (
                 <Button
                   className={`${
-                    productActionIndex === index
-                      ? "!bg-[#274a72] !text-white"
-                      : ""
+                    activeTabRam === index ? "!bg-[#274a72] !text-white" : ""
                   }`}
                   onClick={() => handleClickActiveTabRam(index, item)}
                 >
@@ -184,6 +197,7 @@ const ProductDetailsComponent = (props) => {
         </div>
       )}
 
+      {/* PESO */}
       {props?.item?.productWeight?.length !== 0 && (
         <div className="flex items-center !gap-3 !mt-2">
           <span className="text-[16px] font-[bold] font-bold">PESO</span>
@@ -192,9 +206,7 @@ const ProductDetailsComponent = (props) => {
               return (
                 <Button
                   className={`${
-                    productActionIndex === index
-                      ? "!bg-[#274a72] !text-white"
-                      : ""
+                    activeTabWeight === index ? "!bg-[#274a72] !text-white" : ""
                   }`}
                   onClick={() => handleClickActiveTabWeight(index, item)}
                 >
@@ -242,7 +254,7 @@ const ProductDetailsComponent = (props) => {
         </span>
 
         <span className="flex items-center !gap-2 text-[14px] text-[#556f8d] font-bold link cursor-pointer">
-          <IoMdGitCompare className="text-[18px] text-[#274a72] hover:scale-125 transition-transform duration-200" />{" "}
+          <IoMdGitCompare className="text-[18px] text-[#274a72] hover:scale-125 transition-transform duration-200" />
           AGREGAR PARA COMPARAR
         </span>
       </div>
