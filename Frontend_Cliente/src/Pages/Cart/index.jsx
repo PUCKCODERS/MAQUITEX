@@ -14,40 +14,34 @@ const CartPage = () => {
         <div className="leftPart w-[70%]">
           <div className="shadow-md rounded-md  bg-white">
             {context?.cartData?.length === 0 ? (
-              <div className="!py-10 !px-3 flex items-center justify-center">
-                <div className="!mt-3 flex flex-col justify-center items-center">
-                  <span className="font-bold !text-[#082c55] !text-[20px] ">
-                    CARRITO VACÍO
-                  </span>
+              <div className="flex items-center justify-center flex-col !pt-[30px] !gap-1">
+                <p className="!text-[#38597e] !text-[9px] !font-[600] !mb-1 !mt-4 !max-w-xs !p-0">
+                  ¡PARECE QUE AÚN NO HAS AGREGADO NADA! EXPLORA NUESTRAS
+                  CATEGORÍAS Y ENCUENTRA ESE PRODUCTO QUE TANTO DESEAS
+                </p>
 
-                  <GiShoppingCart className="font-bold !text-[#082c55] !text-[90px] " />
+                <img
+                  src="../../../imagenes/empty-cart.png"
+                  className="w-[200px]"
+                />
+                <Button className="btn-org btn-sm">
+                  <a href="/">CONTINUAR COMPRANDO</a>
+                </Button>
 
-                  <div className="text-center !mt-4 !max-w-xs !p-2">
-                    <p className="text-gray-950 !mb-3">
-                      ¡Parece que aún no has agregado nada! Explora nuestras
-                      categorías y encuentra ese producto que tanto deseas.
-                    </p>
-
-                    <button className="bg-[#082c55] text-white font-semibold !py-2 !px-4 rounded transition duration-300 shadow-md">
-                      CONTINUAR COMPARNDO Y VER OFERTAS
-                    </button>
-
-                    <div className="!mt-3 text-sm">
-                      <a
-                        href="/favoritos"
-                        className="text-blue-600 hover:text-blue-800 !mx-2"
-                      >
-                        IR A MIS FAVORITOS
-                      </a>
-                      <span className="text-gray-400">|</span>
-                      <a
-                        href="/vistos-recientemente"
-                        className="text-blue-600 hover:text-blue-800 !mx-1"
-                      >
-                        COMPARTIDOS
-                      </a>
-                    </div>
-                  </div>
+                <div className="!mt-6 !mb-6 text-sm ">
+                  <a
+                    href="/favoritos"
+                    className="text-blue-600 hover:text-blue-800 !mx-2"
+                  >
+                    IR A MIS FAVORITOS
+                  </a>
+                  <span className="text-gray-400">|</span>
+                  <a
+                    href="/vistos-recientemente"
+                    className="text-blue-600 hover:text-blue-800 !mx-1"
+                  >
+                    COMPARTIDOS
+                  </a>
                 </div>
               </div>
             ) : (

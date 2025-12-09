@@ -346,24 +346,25 @@ const Footer = () => {
         {context?.cartData?.length !== 0 ? (
           <CartPanel data={context?.cartData} />
         ) : (
-          <div className="!mt-3 flex flex-col justify-center items-center">
-            <span className="font-bold !text-[#082c55] !text-[20px] ">
-              CARRITO VACÍO
-            </span>
-
-            <GiShoppingCart className="font-bold !text-[#082c55] !text-[90px] " />
-
-            <div className="text-center !mt-4 max-w-xs !p-2">
-              <p className="text-gray-950 !mb-3">
-                ¡Parece que aún no has agregado nada! Explora nuestras
-                categorías y encuentra ese producto que tanto deseas.
+          <>
+            <div className="flex items-center justify-center flex-col !pt-[30px] !gap-1">
+              <p className="!text-[#38597e] !text-[9px] !font-[600] !mb-1 !mt-4 !max-w-xs !p-0">
+                ¡PARECE QUE AÚN NO HAS AGREGADO NADA! EXPLORA NUESTRAS
+                CATEGORÍAS Y ENCUENTRA ESE PRODUCTO QUE TANTO DESEAS
               </p>
 
-              <button className="bg-[#082c55] text-white font-semibold !py-2 !px-4 rounded transition duration-300 shadow-md">
-                CONTINUAR COMPARNDO Y VER OFERTAS
-              </button>
+              <img
+                src="../../../imagenes/empty-cart.png"
+                className="w-[200px]"
+              />
+              <Button
+                className="btn-org btn-sm"
+                onClick={context.toggleCartPanel(false)}
+              >
+                CONTINUAR COMPRANDO
+              </Button>
 
-              <div className="!mt-3 text-sm">
+              <div className="!mt-6 text-sm ">
                 <a
                   href="/favoritos"
                   className="text-blue-600 hover:text-blue-800 !mx-2"
@@ -379,7 +380,7 @@ const Footer = () => {
                 </a>
               </div>
             </div>
-          </div>
+          </>
         )}
       </Drawer>
     </>
