@@ -18,7 +18,6 @@ const ProductDetailsComponent = (props) => {
   const [selectedWeight, setSelectedWeight] = useState(null);
   const [selectedRam, setSelectedRam] = useState(null);
 
-  // Estados independientes para marcar cada grupo
   const [activeTabSize, setActiveTabSize] = useState(null);
   const [activeTabWeight, setActiveTabWeight] = useState(null);
   const [activeTabRam, setActiveTabRam] = useState(null);
@@ -29,7 +28,6 @@ const ProductDetailsComponent = (props) => {
     setQuantity(qty);
   };
 
-  // HANDLERS DE SELECCIÓN (modificados)
   const handleClickActiveTabSize = (index, name) => {
     setActiveTabSize(index);
     setSelectedSize(name);
@@ -48,7 +46,6 @@ const ProductDetailsComponent = (props) => {
     setTabError(false);
   };
 
-  // ADD TO CART (solo se añadió mensaje si falta selección)
   const addToCart = (product, userId, quantity) => {
     if (userId === undefined) {
       context?.alertBox(
@@ -153,7 +150,6 @@ const ProductDetailsComponent = (props) => {
         {props?.item?.description}
       </p>
 
-      {/* TAMAÑO */}
       {props?.item?.size?.length !== 0 && (
         <div className="flex items-center !gap-3 ">
           <span className="text-[16px] font-[bold] font-bold">TAMAÑO</span>
@@ -176,7 +172,6 @@ const ProductDetailsComponent = (props) => {
         </div>
       )}
 
-      {/* COLOR */}
       {props?.item?.productRams?.length !== 0 && (
         <div className="flex items-center !gap-3 !mt-2">
           <span className="text-[16px] font-[bold] font-bold">COLOR</span>
@@ -197,7 +192,6 @@ const ProductDetailsComponent = (props) => {
         </div>
       )}
 
-      {/* PESO */}
       {props?.item?.productWeight?.length !== 0 && (
         <div className="flex items-center !gap-3 !mt-2">
           <span className="text-[16px] font-[bold] font-bold">PESO</span>
