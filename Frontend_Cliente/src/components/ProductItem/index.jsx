@@ -102,12 +102,22 @@ const ProductItem = (props) => {
       cartItem.productId.includes(props?.item?._id)
     );
 
+    const myListItem = context?.myListData?.filter((item) =>
+      item.productId.includes(props?.item?._id)
+    );
+
     if (item?.length !== 0) {
       setCartItem(item);
       setIsAdded(true);
       setQuantity(item[0]?.quantity || 1);
     } else {
       setQuantity(1);
+    }
+
+    if (myListItem?.length !== 0) {
+      setIsAddedInMyList(true);
+    } else {
+      setIsAddedInMyList(false);
     }
   }, [context?.cartData]);
 
@@ -181,6 +191,7 @@ const ProductItem = (props) => {
         if (res?.error === false) {
           context?.alertBox("success", res?.message);
           setIsAddedInMyList(true);
+          context?.getMyListData();
         } else {
           context?.alertBox("error", "PRODUCTO YA EN MI LISTA");
         }
@@ -273,14 +284,14 @@ const ProductItem = (props) => {
 
         <div className="actions absolute top-[-200px] right-[5px] z-50 flex items-center gap-2 flex-col !w-[30px] transition-all duration-300 group-hover:top-[15px] opacity-0 group-hover:opacity-100">
           <Button
-            className={`!w-[35px] !h-[35px] !min-w-[35px] !text-[18px] !rounded-full !text-white !bg-[#f10606] !border-1 !border-[#f3b8b8]  hover:!bg-white hover:!text-[#f10606] group
+            className={`!w-[35px] !h-[35px] !min-w-[35px] !text-[18px] !rounded-full !text-[#082c55] !bg-[#f10606] !border-1 !border-[#f3b8b8]  hover:!bg-white  hover:!text-[#f10606] group-hover:!text-[#082c55] group-hover:!bg-white group
               `}
             onClick={() => handleAddToMyList(props?.item)}
           >
             {isAddedInMyList === true ? (
-              <FaHeart className="" />
+              <FaHeart className="text-[#f10606] bg-white " />
             ) : (
-              <FaHeart className=" " />
+              <FaHeart className="" />
             )}
           </Button>
 

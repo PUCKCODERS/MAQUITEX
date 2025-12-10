@@ -82,6 +82,7 @@ function App() {
       });
 
       getCartItems();
+      getMyListData();
     } else {
       setIsLogin(false);
     }
@@ -172,8 +173,6 @@ function App() {
       ram: product?.ram,
     };
 
-    console.log(data);
-
     postData("/api/cart/add", data).then((res) => {
       if (res?.error === false) {
         alertBox("success", res?.message);
@@ -194,7 +193,11 @@ function App() {
   };
 
   const getMyListData = () => {
-    fetchDataFromApi(`/api/myList`);
+    fetchDataFromApi(`/api/myList`).then((res) => {
+      if (res?.error === false) {
+        setMyListData(res?.data);
+      }
+    });
   };
 
   const values = {
