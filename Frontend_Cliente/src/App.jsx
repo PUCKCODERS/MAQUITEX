@@ -35,6 +35,7 @@ function App() {
   const [address, setAddress] = useState([]);
   const [catData, setCatData] = useState([]);
   const [cartData, setCartData] = useState([]);
+  const [myListData, setMyListData] = useState([]);
 
   const [openCartPanel, setOpenCartPanel] = useState(false);
 
@@ -192,6 +193,10 @@ function App() {
     });
   };
 
+  const getMyListData = () => {
+    fetchDataFromApi(`/api/myList`);
+  };
+
   const values = {
     openProductDetailsModal,
     setOpenProductDetailsModal,
@@ -214,6 +219,8 @@ function App() {
     cartData,
     setCartData,
     getCartItems,
+    myListData,
+    getMyListData,
   };
 
   return (

@@ -12,13 +12,14 @@ import { useState } from "react";
 import { ImMinus } from "react-icons/im";
 import { ImPlus } from "react-icons/im";
 import { useEffect } from "react";
-import { deleteData, editData } from "../../utils/api";
+import { deleteData, editData, postData } from "../../utils/api";
 import CircularProgress from "@mui/material/CircularProgress";
 import { GrClose } from "react-icons/gr";
 
 const ProductItem = (props) => {
   const [quantity, setQuantity] = useState(1);
   const [isAdded, setIsAdded] = useState(false);
+  const [isAddedInMyList, setIsAddedInMyList] = useState(false);
   const [cartItem, setCartItem] = useState(false);
 
   const [activeTabSize, setActiveTabSize] = useState(null);
@@ -156,6 +157,37 @@ const ProductItem = (props) => {
     });
   };
 
+  const handleAddToMyList = (item) => {
+    if (context?.userData === null) {
+      context?.alertBox(
+        "error",
+        "NO HAS INICIADO SESIÓN, POR FAVOR INICIA SESIÓN"
+      );
+      return false;
+    } else {
+      const obj = {
+        productId: item?._id,
+        userId: context?.userData?._id,
+        productTitle: item?.name,
+        image: item?.images[0],
+        rating: item?.rating,
+        price: item?.price,
+        oldPrice: item?.oldPrice,
+        brand: item?.brand,
+        discount: item?.discount,
+      };
+
+      postData("/api/myList/add", obj).then((res) => {
+        if (res?.error === false) {
+          context?.alertBox("success", res?.message);
+          setIsAddedInMyList(true);
+        } else {
+          context?.alertBox("error", "PRODUCTO YA EN MI LISTA");
+        }
+      });
+    }
+  };
+
   return (
     <div className="productItem bg-white !rounded-md !overflow-hidden !border-1 !border-[#b1cdee] shadow-[5px_5px_5px_#274a72] ">
       <div className="group imgWrapper !w-[100%] !overflow-hidden !rounded-md relative">
@@ -240,8 +272,16 @@ const ProductItem = (props) => {
         </span>
 
         <div className="actions absolute top-[-200px] right-[5px] z-50 flex items-center gap-2 flex-col !w-[30px] transition-all duration-300 group-hover:top-[15px] opacity-0 group-hover:opacity-100">
-          <Button className="!w-[35px] !h-[35px] !min-w-[35px] !text-[18px] !rounded-full !text-white !bg-[#f10606] !border-1 !border-[#f3b8b8]  hover:!bg-white hover:!text-[#f10606]">
-            <FaHeart className="" />
+          <Button
+            className={`!w-[35px] !h-[35px] !min-w-[35px] !text-[18px] !rounded-full !text-white !bg-[#f10606] !border-1 !border-[#f3b8b8]  hover:!bg-white hover:!text-[#f10606] group
+              `}
+            onClick={() => handleAddToMyList(props?.item)}
+          >
+            {isAddedInMyList === true ? (
+              <FaHeart className="" />
+            ) : (
+              <FaHeart className=" " />
+            )}
           </Button>
 
           <Button className="!w-[35px] !h-[35px] !min-w-[35px] !text-[18px] !rounded-full !text-white !bg-[#082c55] !border-1 !border-[#b1cdee] hover:!bg-white hover:!text-[#082c55]">
