@@ -1,10 +1,11 @@
-import React from "react";
-import Button from "@mui/material/Button";
-import { FaCashRegister } from "react-icons/fa6";
+import React, { useContext } from "react";
 import MyListItems from "./myListItems";
 import AccountSidebar from "../../components/AccountSidebar";
+import { MyContext } from "../../App";
 
 const MyList = () => {
+  const context = useContext(MyContext);
+
   return (
     <section className="!py-5 w-full">
       <div className="container flex !gap-5">
@@ -15,18 +16,22 @@ const MyList = () => {
         <div className="col2 w-[75%]">
           <div className="shadow-md rounded-md  bg-white">
             <div className="!py-2 !px-3 border-b border-[#d1d1d1] ">
-              <h2 className="font-[bold] font-bold text-[20px]">TU LISTA</h2>
-              <p className="!mt-2 !mb-2 text-[#000] font-[600]">
-                ESTOS SON <span className="font-bold text-[#ec370a]"> 2 </span>
-                PRODUCTOS DE TU LISTA
+              <h2 className="font-[bold]  !text-[25px] flex justify-center">
+                MI LISTA
+              </h2>
+              <p className="!mt-2 !mb-2 text-[#556f8d] !text-[20px] font-[600] flex justify-center">
+                ESTOS SON
+                <span className="font-bold text-[#ec370a]">
+                  &nbsp;{context?.cartData?.length}&nbsp;
+                </span>
+                PRODUCTOS DE MI LISTA
               </p>
             </div>
-            <MyListItems />
-            <MyListItems />
-            <MyListItems />
-            <MyListItems />
-            <MyListItems />
-            <MyListItems />
+
+            {context?.myListData?.length !== 0 &&
+              context?.myListData?.map((item, index) => {
+                return <MyListItems key={index} item={item} />;
+              })}
           </div>
         </div>
       </div>

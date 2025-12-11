@@ -54,6 +54,7 @@ const Header = () => {
         localStorage.removeItem("refreshToken");
         context.setUserData(null);
         context?.setCartData([]);
+        context?.setMyListData([]);
         history("/");
       }
     });
@@ -233,11 +234,20 @@ const Header = () => {
               </li>
               <li>
                 <Tooltip title="ME GUSTA" placement="top">
-                  <IconButton aria-label="cart">
-                    <StyledBadge badgeContent={4} color="secondary">
-                      <FaHeart className="text-[#e73821]" />
-                    </StyledBadge>
-                  </IconButton>
+                  <Link to="/my-list">
+                    <IconButton aria-label="cart">
+                      <StyledBadge
+                        badgeContent={
+                          context?.myListData?.length !== 0
+                            ? context?.myListData?.length
+                            : 0
+                        }
+                        color="secondary"
+                      >
+                        <FaHeart className="text-[#e73821]" />
+                      </StyledBadge>
+                    </IconButton>
+                  </Link>
                 </Tooltip>
               </li>
               <li>

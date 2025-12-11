@@ -223,6 +223,7 @@ function App() {
     setCartData,
     getCartItems,
     myListData,
+    setMyListData,
     getMyListData,
   };
 
