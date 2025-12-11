@@ -63,10 +63,6 @@ const MyListItems = (props) => {
             {props?.item?.discount}%{" "}
             <span className="text-[10px]">DESCUENTO</span>
           </span>
-
-          <Button className="btn-org btn-sm !text-[15px] !gap-2">
-            AGREGAR <GiShoppingCart class="text-[25px] scale-x-[-1]" />
-          </Button>
         </div>
 
         <br />

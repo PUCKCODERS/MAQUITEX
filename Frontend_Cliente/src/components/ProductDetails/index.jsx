@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import QtyBox from "../../components/QtyBox";
 import { GiShoppingCart } from "react-icons/gi";
 import { FaHeart } from "react-icons/fa";
@@ -45,6 +45,57 @@ const ProductDetailsComponent = (props) => {
     setSelectedRam(name);
     setTabError(false);
   };
+
+  // <-- NUEVO: autoseleccionar opciones cuando solo hay 1
+  useEffect(() => {
+    const item = props?.item || {};
+
+    // TAMAÑO
+    if (Array.isArray(item.size)) {
+      if (item.size.length === 1) {
+        setActiveTabSize(0);
+        setSelectedSize(item.size[0]);
+      } else {
+        // si cambió el producto, resetear selección si ahora hay múltiples opciones
+        setActiveTabSize(null);
+        setSelectedSize(null);
+      }
+    } else {
+      setActiveTabSize(null);
+      setSelectedSize(null);
+    }
+
+    // COLOR (productRams)
+    if (Array.isArray(item.productRams)) {
+      if (item.productRams.length === 1) {
+        setActiveTabRam(0);
+        setSelectedRam(item.productRams[0]);
+      } else {
+        setActiveTabRam(null);
+        setSelectedRam(null);
+      }
+    } else {
+      setActiveTabRam(null);
+      setSelectedRam(null);
+    }
+
+    // PESO (productWeight)
+    if (Array.isArray(item.productWeight)) {
+      if (item.productWeight.length === 1) {
+        setActiveTabWeight(0);
+        setSelectedWeight(item.productWeight[0]);
+      } else {
+        setActiveTabWeight(null);
+        setSelectedWeight(null);
+      }
+    } else {
+      setActiveTabWeight(null);
+      setSelectedWeight(null);
+    }
+
+    // si autoseleccionó, quitar el error visual
+    setTabError(false);
+  }, [props?.item]);
 
   const addToCart = (product, userId, quantity) => {
     if (userId === undefined) {
@@ -157,6 +208,7 @@ const ProductDetailsComponent = (props) => {
             {props?.item?.size?.map((item, index) => {
               return (
                 <Button
+                  key={`size-${index}`}
                   className={`${
                     activeTabSize === index ? "!bg-[#274a72] !text-white" : ""
                   } ${
@@ -179,6 +231,7 @@ const ProductDetailsComponent = (props) => {
             {props?.item?.productRams?.map((item, index) => {
               return (
                 <Button
+                  key={`ram-${index}`}
                   className={`${
                     activeTabRam === index ? "!bg-[#274a72] !text-white" : ""
                   } ${
@@ -201,6 +254,7 @@ const ProductDetailsComponent = (props) => {
             {props?.item?.productWeight?.map((item, index) => {
               return (
                 <Button
+                  key={`weight-${index}`}
                   className={`${
                     activeTabWeight === index ? "!bg-[#274a72] !text-white" : ""
                   } ${
