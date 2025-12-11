@@ -22,7 +22,7 @@ const MyList = () => {
               <p className="!mt-2 !mb-2 text-[#556f8d] !text-[20px] font-[600] flex justify-center">
                 ESTOS SON
                 <span className="font-bold text-[#ec370a]">
-                  &nbsp;{context?.cartData?.length}&nbsp;
+                  &nbsp;{context?.myListData?.length}&nbsp;
                 </span>
                 PRODUCTOS DE MI LISTA
               </p>
