@@ -32,6 +32,13 @@ const addressSchema = mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    landmark: {
+      type: String,
+    },
+    addressType: {
+      type: String,
+      enum: ["Home", "Work"],
+    },
     userId: {
       type: String,
       default: "",

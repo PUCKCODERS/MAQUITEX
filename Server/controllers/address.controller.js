@@ -10,9 +10,9 @@ export const addAddressController = async (request, response) => {
       pincode,
       country,
       mobile,
-      status,
       userId,
-      selected,
+      landmark,
+      addressType,
     } = request.body;
 
     const address = new AddressModel({
@@ -22,9 +22,9 @@ export const addAddressController = async (request, response) => {
       pincode,
       country,
       mobile,
-      status,
       userId,
-      selected,
+      landmark,
+      addressType,
     });
 
     const savedAddress = await address.save();

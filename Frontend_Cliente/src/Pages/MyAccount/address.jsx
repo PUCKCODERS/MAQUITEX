@@ -1,19 +1,17 @@
 import React, { useContext, useState, useEffect } from "react";
 import AccountSidebar from "../../components/AccountSidebar";
 import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { MyContext } from "../../App";
-
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
 
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
 import TextField from "@mui/material/TextField";
 
 import { GiSave } from "react-icons/gi";
-import { Button } from "@mui/material";
+import { Button, FormControlLabel } from "@mui/material";
 import { deleteData, fetchDataFromApi, postData } from "../../utils/api";
 import { FaTrashAlt } from "react-icons/fa";
 import { ImCancelCircle } from "react-icons/im";
@@ -25,10 +23,11 @@ const Address = () => {
   const context = useContext(MyContext);
   const [address, setAddress] = useState([]);
   const [phone, setPhone] = useState("");
-  const [status, setStatus] = useState(false);
+  //const [status, setStatus] = useState(false);
   const [isOpenModel, setisOpenModel] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedValue, setSelectedValue] = useState("");
+  const [addressType, setAddressType] = useState("");
 
   const [formFields, setFormFields] = useState({
     address_line1: "",
@@ -37,9 +36,9 @@ const Address = () => {
     pincode: "",
     country: "",
     mobile: "",
-    status: "",
     userId: "",
-    selected: false,
+    addressType: "",
+    landmark: "",
   });
 
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
@@ -72,13 +71,13 @@ const Address = () => {
     setisOpenModel(false);
   };
 
-  const handleChangeStatus = (event) => {
+  /*const handleChangeStatus = (event) => {
     setStatus(event.target.value);
     setFormFields((prevState) => ({
       ...prevState,
       status: event.target.value,
     }));
-  };
+  };*/
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
@@ -105,6 +104,14 @@ const Address = () => {
         });
       });
     }
+  };
+
+  const handleChangeAddressType = (event) => {
+    setAddressType(event.target.value);
+    setFormFields(() => ({
+      ...formFields,
+      addressType: event.target.value,
+    }));
   };
 
   const handleSubmit = (e) => {
@@ -139,6 +146,16 @@ const Address = () => {
 
     if (phone === "") {
       context.alertBox("error", "POR FAVOR INTRODUZCA SU NÚMERO DE TELÉFONO");
+      return false;
+    }
+
+    if (formFields.landmark === "") {
+      context.alertBox("error", "POR FAVOR INTRODUZCA UNA REFERENCIA");
+      return false;
+    }
+
+    if (formFields.addressType === "") {
+      context.alertBox("error", "POR FAVOR ESCOJA EL TIPO DE DIRECCIÓN");
       return false;
     }
 
@@ -189,12 +206,13 @@ const Address = () => {
 
               <div className="flex !gap-2 flex-col !mt-4">
                 {address?.length > 0 &&
-                  address?.map((address /*index*/) => {
+                  address?.map((address, index) => {
                     return (
                       <>
                         <div className="group relative addressBox w-full flex items-center justify-center border-1 border-[#bdbdbd] bg-[#f1f1f1] !p-3 rounded-md cursor-pointer shadow-[3px_3px_3px_#000]">
                           <label className="!mr-auto">
                             <Radio
+                              key={index}
                               {...label}
                               name="address"
                               checked={selectedValue === address?._id}
@@ -355,27 +373,39 @@ const Address = () => {
               />
             </div>
             <div className="col w-[50%] shadow-md rounded-md">
-              <Select
-                value={status}
-                onChange={handleChangeStatus}
-                displayEmpty
-                inputProps={{ "aria-label": "Without label" }}
+              <TextField
+                className="w-full"
+                label="REFERENCIA"
+                variant="outlined"
                 size="small"
-                className="w-full !text-[#082c55] !font-bold"
+                name="landmark"
+                onChange={onChangeInput}
+                value={formFields.landmark}
+              />
+            </div>
+          </div>
+
+          <div className="flex !gap-5 !pb-5 flex-col">
+            <h6 className="text-[13px] !mb-0">TIPO DE DIRECCIÓN</h6>
+            <div className="col shadow-md rounded-md">
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                name="row-radio-buttons-group"
+                value={addressType}
+                onChange={handleChangeAddressType}
               >
-                <MenuItem
-                  className="!text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55]"
-                  value={true}
-                >
-                  VERDADERO
-                </MenuItem>
-                <MenuItem
-                  className="!text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55]"
-                  value={false}
-                >
-                  FALSO
-                </MenuItem>
-              </Select>
+                <FormControlLabel
+                  value="Home"
+                  control={<Radio />}
+                  label="CASA"
+                />
+                <FormControlLabel
+                  value="Work"
+                  control={<Radio />}
+                  label="TRABAJO"
+                />
+              </RadioGroup>
             </div>
           </div>
 
