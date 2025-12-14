@@ -12,7 +12,12 @@ import TextField from "@mui/material/TextField";
 
 import { GiSave } from "react-icons/gi";
 import { Button, FormControlLabel } from "@mui/material";
-import { deleteData, fetchDataFromApi, postData } from "../../utils/api";
+import {
+  deleteData,
+  editData,
+  fetchDataFromApi,
+  postData,
+} from "../../utils/api";
 import { FaTrashAlt } from "react-icons/fa";
 import { ImCancelCircle } from "react-icons/im";
 import { FcDeleteDatabase } from "react-icons/fc";
@@ -30,6 +35,7 @@ const Address = () => {
   //const [selectedValue, setSelectedValue] = useState("");
   const [addressType, setAddressType] = useState("");
   const [mode, setMode] = useState("add");
+  const [addressId, setAddressId] = useState("");
 
   const [formFields, setFormFields] = useState({
     address_line1: "",
@@ -166,45 +172,72 @@ const Address = () => {
       return false;
     }
 
-    postData(`/api/address/add`, formFields, {
+    if (mode === "add") {
+      postData(`/api/address/add`, formFields, {
+        withCredentials: true,
+      }).then((res) => {
+        if (res?.error !== true) {
+          setIsLoading(false);
+          context.alertBox("success", res?.message);
+          setisOpenModel(false);
+
+          fetchDataFromApi(
+            `/api/address/get?userId=${context?.userData?._id}`
+          ).then((res) => {
+            setAddress(res.data);
+            setFormFields({
+              address_line1: "",
+              city: "",
+              state: "",
+              pincode: "",
+              country: "",
+              mobile: "",
+              userId: context?.userData?._id,
+              addressType: "",
+              landmark: "",
+            });
+            setAddressType("");
+            setPhone("");
+          });
+        } else {
+          context.alertBox("error", res?.message);
+          setIsLoading(false);
+        }
+      });
+    }
+  };
+
+  if (mode === "edit") {
+    editData(`/api/address/${addressId}`, formFields, {
       withCredentials: true,
     }).then((res) => {
-      if (res?.error !== true) {
-        setIsLoading(false);
-        context.alertBox("success", res?.message);
-        setisOpenModel(false);
-
-        fetchDataFromApi(
-          `/api/address/get?userId=${context?.userData?._id}`
-        ).then((res) => {
-          setAddress(res.data);
-          setFormFields({
-            address_line1: "",
-            city: "",
-            state: "",
-            pincode: "",
-            country: "",
-            mobile: "",
-            userId: context?.userData?._id,
-            addressType: "",
-            landmark: "",
-          });
-          setAddressType("");
-          setPhone("");
-        });
-      } else {
-        context.alertBox("error", res?.message);
-        setIsLoading(false);
-      }
+      console.log(res);
+      setAddress(res.address);
+      setisOpenModel(false);
     });
-  };
+  }
 
   const editAddress = (id) => {
     setMode("edit");
     setisOpenModel(true);
 
+    setAddressId(id);
+
     fetchDataFromApi(`/api/address/${id}`).then((res) => {
-      console.log(res);
+      setFormFields({
+        address_line1: res?.address?.address_line1,
+        city: res?.address?.city,
+        state: res?.address?.state,
+        pincode: res?.address?.pincode,
+        country: res?.address?.country,
+        mobile: res?.address?.mobile,
+        userId: res?.address?.userId,
+        addressType: res?.address?.addressType,
+        landmark: res?.address?.landmark,
+      });
+      const ph = `"${res?.address?.mobile}"`;
+      setPhone(ph);
+      setAddressType(res?.address?.addressType);
     });
   };
 

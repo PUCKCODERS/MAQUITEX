@@ -191,3 +191,49 @@ export const getSingleAddressController = async (request, response) => {
     });
   }
 };
+
+export async function editAddress(request, response) {
+  try {
+    const id = request.params.id;
+
+    const {
+      address_line1,
+      city,
+      state,
+      pincode,
+      country,
+      mobile,
+      userId,
+      landmark,
+      addressType,
+    } = request.body;
+
+    const address = await AddressModel.findByIdAndUpdate(
+      userId,
+      {
+        address_line1: address_line1,
+        city: city,
+        state: state,
+        pincode: pincode,
+        country: country,
+        mobile: mobile,
+        landmark: landmark,
+        addressType: addressType,
+      },
+      { new: true }
+    );
+
+    return response.json({
+      message: "DIRECCIÓN ACTUALIZADA EXITOSAMENTE",
+      error: false,
+      success: true,
+      address: address,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}

@@ -26,7 +26,7 @@ const AddressBox = (props) => {
     props.removeAddress(id);
   };
 
-  const editAddress = (e, id) => {
+  const editAddress = (id) => {
     setAnchorEl(null);
     props.editAddress(id);
   };
