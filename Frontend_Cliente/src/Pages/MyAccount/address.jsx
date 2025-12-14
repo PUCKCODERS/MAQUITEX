@@ -15,9 +15,10 @@ import { Button, FormControlLabel } from "@mui/material";
 import { deleteData, fetchDataFromApi, postData } from "../../utils/api";
 import { FaTrashAlt } from "react-icons/fa";
 import { ImCancelCircle } from "react-icons/im";
-import { FcDeleteDatabase } from "react-icons/fc"; // 🔹 AGREGADO ÍCONO NUEVO
+import { FcDeleteDatabase } from "react-icons/fc";
+import AddressBox from "./addressBox";
 
-const label = { inputProps: { "aria-label": "Radio demo" } };
+//const label = { inputProps: { "aria-label": "Radio demo" } };
 
 const Address = () => {
   const context = useContext(MyContext);
@@ -26,7 +27,7 @@ const Address = () => {
   //const [status, setStatus] = useState(false);
   const [isOpenModel, setisOpenModel] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedValue, setSelectedValue] = useState("");
+  //const [selectedValue, setSelectedValue] = useState("");
   const [addressType, setAddressType] = useState("");
 
   const [formFields, setFormFields] = useState({
@@ -44,9 +45,9 @@ const Address = () => {
   const [isConfirmOpen, setIsConfirmOpen] = useState(false);
   const [addressToDelete, setAddressToDelete] = useState(null);
 
-  const handleChange = (event) => {
-    setSelectedValue(event.target.value);
-  };
+  //const handleChange = (event) => {
+  //setSelectedValue(event.target.value);
+  //};
 
   useEffect(() => {
     if (context?.userData?._id !== undefined) {
@@ -171,6 +172,18 @@ const Address = () => {
           `/api/address/get?userId=${context?.userData?._id}`
         ).then((res) => {
           setAddress(res.data);
+          setFormFields({
+            address_line1: "",
+            city: "",
+            state: "",
+            pincode: "",
+            country: "",
+            mobile: "",
+            userId: "",
+            addressType: "",
+            landmark: "",
+          });
+          setAddressType("");
         });
       } else {
         context.alertBox("error", res?.message);
@@ -208,39 +221,11 @@ const Address = () => {
                 {address?.length > 0 &&
                   address?.map((address, index) => {
                     return (
-                      <>
-                        <div className="group relative addressBox w-full flex items-center justify-center border-1 border-[#bdbdbd] bg-[#f1f1f1] !p-3 rounded-md cursor-pointer shadow-[3px_3px_3px_#000]">
-                          <label className="!mr-auto">
-                            <Radio
-                              key={index}
-                              {...label}
-                              name="address"
-                              checked={selectedValue === address?._id}
-                              value={address?._id}
-                              onChange={handleChange}
-                            />
-                            <span className="text-[12px]">
-                              {address?.address_line1 +
-                                " " +
-                                address?.city +
-                                " " +
-                                address?.country +
-                                " " +
-                                address?.state +
-                                " " +
-                                address?.pincode}
-                            </span>
-                          </label>
-
-                          <span
-                            onClick={() => removeAddress(address?._id)}
-                            className="hidden group-hover:flex items-center justify-center w-[30px] h-[30px] rounded-full border-1 
-                          hover:bg-[#082c55] text-[#082c55] hover:text-white z-50 !ml-auto transition-all "
-                          >
-                            <FaTrashAlt />
-                          </span>
-                        </div>
-                      </>
+                      <AddressBox
+                        address={address}
+                        key={index}
+                        removeAddress={removeAddress}
+                      />
                     );
                   })}
               </div>
