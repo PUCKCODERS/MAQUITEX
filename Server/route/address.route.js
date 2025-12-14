@@ -4,6 +4,7 @@ import {
   addAddressController,
   deleteAddressController,
   getAddressController,
+  getSingleAddressController,
   /* selectAddressController,*/
 } from "../controllers/address.controller.js";
 
@@ -11,6 +12,7 @@ const addressRouter = Router();
 
 addressRouter.post("/add", auth, addAddressController);
 addressRouter.get("/get", auth, getAddressController);
+addressRouter.get("/:id", auth, getSingleAddressController);
 /*addressRouter.put("/selectAddress/:id", auth, selectAddressController);*/
 addressRouter.delete("/:id", auth, deleteAddressController);
 

@@ -164,3 +164,30 @@ export const deleteAddressController = async (request, response) => {
     });
   }
 };
+
+export const getSingleAddressController = async (request, response) => {
+  try {
+    const id = request.params.id;
+    const address = await AddressModel.findOne({ _id: id });
+
+    if (!address) {
+      return response.status(404).json({
+        message: "DIRECCIÓN NO ENCONTRADA",
+        error: true,
+        success: false,
+      });
+    }
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      address: address,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+};

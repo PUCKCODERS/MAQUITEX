@@ -29,6 +29,7 @@ const Address = () => {
   const [isLoading, setIsLoading] = useState(false);
   //const [selectedValue, setSelectedValue] = useState("");
   const [addressType, setAddressType] = useState("");
+  const [mode, setMode] = useState("add");
 
   const [formFields, setFormFields] = useState({
     address_line1: "",
@@ -118,6 +119,11 @@ const Address = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    if (!formFields.userId) {
+      context.alertBox("error", "USUARIO NO VALIDO");
+      return;
+    }
+
     setIsLoading(true);
 
     if (formFields.address_line1 === "") {
@@ -179,16 +185,26 @@ const Address = () => {
             pincode: "",
             country: "",
             mobile: "",
-            userId: "",
+            userId: context?.userData?._id,
             addressType: "",
             landmark: "",
           });
           setAddressType("");
+          setPhone("");
         });
       } else {
         context.alertBox("error", res?.message);
         setIsLoading(false);
       }
+    });
+  };
+
+  const editAddress = (id) => {
+    setMode("edit");
+    setisOpenModel(true);
+
+    fetchDataFromApi(`/api/address/${id}`).then((res) => {
+      console.log(res);
     });
   };
 
@@ -225,6 +241,7 @@ const Address = () => {
                         address={address}
                         key={index}
                         removeAddress={removeAddress}
+                        editAddress={editAddress}
                       />
                     );
                   })}
@@ -278,7 +295,7 @@ const Address = () => {
 
       <Dialog open={isOpenModel}>
         <DialogTitle className="text-[#082c55] !text-[25px] font-[bold]">
-          AGREGAR DIRECCIÓN
+          {mode === "add" ? "AGREGAR DIRECCIÓN" : "EDITAR DIRECCIÓN"}
         </DialogTitle>
         <form className="!p-8 !py-3 !pb-8" onSubmit={handleSubmit}>
           <div className="flex items-center !gap-5 !pb-5">

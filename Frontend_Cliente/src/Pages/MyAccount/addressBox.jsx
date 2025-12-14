@@ -26,6 +26,11 @@ const AddressBox = (props) => {
     props.removeAddress(id);
   };
 
+  const editAddress = (e, id) => {
+    setAnchorEl(null);
+    props.editAddress(id);
+  };
+
   return (
     <div className="group !relative addressBox w-full justify-center  border-1 border-[#bdbdbd] bg-[#f1f1f1] !p-4 rounded-md cursor-pointer shadow-[3px_3px_3px_#000]">
       <span className="inline-block !p-2 !bg-[#082c55] !text-white !font-[700]  !text-[12px] !rounded-sm">
@@ -85,7 +90,9 @@ const AddressBox = (props) => {
             },
           }}
         >
-          <MenuItem onClick={handleClose}>EDITAR</MenuItem>
+          <MenuItem onClick={() => editAddress(props?.address?._id)}>
+            EDITAR
+          </MenuItem>
           <MenuItem onClick={() => removeAddress(props?.address?._id)}>
             ELIMINAR
           </MenuItem>
