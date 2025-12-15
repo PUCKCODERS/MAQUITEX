@@ -57,6 +57,24 @@ const Address = () => {
   //setSelectedValue(event.target.value);
   //};
 
+  const resetForm = () => {
+    setMode("add");
+    setAddressId("");
+    setAddressType("");
+    setPhone("");
+    setFormFields({
+      address_line1: "",
+      city: "",
+      state: "",
+      pincode: "",
+      country: "",
+      mobile: "",
+      userId: context?.userData?._id,
+      addressType: "",
+      landmark: "",
+    });
+  };
+
   useEffect(() => {
     if (context?.userData?._id !== undefined) {
       setFormFields((prevState) => ({
@@ -77,6 +95,7 @@ const Address = () => {
   }, [context?.userData]);
 
   const handleClose = () => {
+    resetForm();
     setisOpenModel(false);
   };
 
@@ -182,6 +201,7 @@ const Address = () => {
           setTimeout(() => {
             setIsLoading(false);
             setisOpenModel(false);
+            resetForm();
           }, 500);
 
           fetchDataFromApi(
@@ -220,6 +240,7 @@ const Address = () => {
           setTimeout(() => {
             setIsLoading(false);
             setisOpenModel(false);
+            resetForm();
           }, 500);
           setAddress(res.data);
           setFormFields({
@@ -287,7 +308,10 @@ const Address = () => {
 
               <div
                 className="flex items-center justify-center !p-5 rounded-md border  border-[#082c55] bg-[#526b86] hover:bg-[#082c55] text-[#fff] hover:text-[#fff] !mt-5 cursor-pointer "
-                onClick={() => setisOpenModel(true)}
+                onClick={() => {
+                  resetForm();
+                  setisOpenModel(true);
+                }}
               >
                 <span className="text-[16px]  font-[500]">
                   AÑADIR DIRECCIÓN

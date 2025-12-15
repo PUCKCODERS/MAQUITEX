@@ -40,14 +40,6 @@ const AddressBox = (props) => {
       <h4 className="!pt-2 flex items-center !gap-4 !text-[14px]">
         <span>{context?.userData?.name}</span>
         <span>+{props?.address?.mobile}</span>
-
-        {/*<span
-                                 onClick={() => removeAddress(address?._id)}
-                                 className="hidden group-hover:flex items-center justify-center w-[30px] h-[30px] rounded-full border-1 
-                             hover:bg-[#082c55] text-[#082c55] hover:text-white z-50 !ml-auto transition-all "
-                               >
-                                 <FaTrashAlt />
-                               </span>*/}
       </h4>
 
       <span className="text-[12px] !font-[600] block !pt-0 ">
