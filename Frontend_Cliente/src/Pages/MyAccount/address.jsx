@@ -205,21 +205,30 @@ const Address = () => {
         }
       });
     }
-  };
 
-  if (mode === "edit") {
-    editData(`/api/address/${addressId}`, formFields, {
-      withCredentials: true,
-    }).then((res) => {
-      console.log(res);
-      setAddress(res.address);
-      setisOpenModel(false);
-    });
-  }
+    if (mode === "edit") {
+      editData(`/api/address/${addressId}`, formFields, {
+        withCredentials: true,
+      }).then((res) => {
+        console.log(res?.data?.address);
+        fetchDataFromApi(
+          `/api/address/get?userId=${context?.userData?._id}`
+        ).then((res) => {
+          setAddress(res.data);
+          setisOpenModel(false);
+        });
+      });
+    }
+  };
 
   const editAddress = (id) => {
     setMode("edit");
     setisOpenModel(true);
+
+    if (!formFields.userId) {
+      context.alertBox("error", "USUARIO NO VALIDO");
+      return;
+    }
 
     setAddressId(id);
 
@@ -231,7 +240,7 @@ const Address = () => {
         pincode: res?.address?.pincode,
         country: res?.address?.country,
         mobile: res?.address?.mobile,
-        userId: res?.address?.userId,
+        userId: res?.address?._id,
         addressType: res?.address?.addressType,
         landmark: res?.address?.landmark,
       });
