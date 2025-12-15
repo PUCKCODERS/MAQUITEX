@@ -22,6 +22,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { ImCancelCircle } from "react-icons/im";
 import { FcDeleteDatabase } from "react-icons/fc";
 import AddressBox from "./addressBox";
+import CircularProgress from "@mui/material/CircularProgress";
 
 //const label = { inputProps: { "aria-label": "Radio demo" } };
 
@@ -177,9 +178,11 @@ const Address = () => {
         withCredentials: true,
       }).then((res) => {
         if (res?.error !== true) {
-          setIsLoading(false);
           context.alertBox("success", res?.message);
-          setisOpenModel(false);
+          setTimeout(() => {
+            setIsLoading(false);
+            setisOpenModel(false);
+          }, 500);
 
           fetchDataFromApi(
             `/api/address/get?userId=${context?.userData?._id}`
@@ -207,15 +210,31 @@ const Address = () => {
     }
 
     if (mode === "edit") {
+      setIsLoading(true);
       editData(`/api/address/${addressId}`, formFields, {
         withCredentials: true,
-      }).then((res) => {
-        console.log(res?.data?.address);
+      }).then(() => {
         fetchDataFromApi(
           `/api/address/get?userId=${context?.userData?._id}`
         ).then((res) => {
+          setTimeout(() => {
+            setIsLoading(false);
+            setisOpenModel(false);
+          }, 500);
           setAddress(res.data);
-          setisOpenModel(false);
+          setFormFields({
+            address_line1: "",
+            city: "",
+            state: "",
+            pincode: "",
+            country: "",
+            mobile: "",
+            userId: context?.userData?._id,
+            addressType: "",
+            landmark: "",
+          });
+          setAddressType("");
+          setPhone("");
         });
       });
     }
@@ -440,12 +459,12 @@ const Address = () => {
                 onChange={handleChangeAddressType}
               >
                 <FormControlLabel
-                  value="Home"
+                  value="CASA"
                   control={<Radio />}
                   label="CASA"
                 />
                 <FormControlLabel
-                  value="Work"
+                  value="TRABAJO"
                   control={<Radio />}
                   label="TRABAJO"
                 />
@@ -459,7 +478,11 @@ const Address = () => {
               className=" hover:!text-[#fff] btn-org btn-lg w-full flex !gap-2 items-center !mt-3"
             >
               <GiSave className="text-[25px] " />
-              GUARDAR
+              {isLoading === true ? (
+                <CircularProgress color="inherit" />
+              ) : (
+                "GUARDAR"
+              )}
             </Button>
             <Button
               className=" hover:!text-[#fff] !bg-[#5c5c5c] hover:!bg-[#000] btn-org btn-lg w-full flex !gap-2 items-center !mt-3"
