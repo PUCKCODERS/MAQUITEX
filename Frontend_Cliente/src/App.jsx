@@ -38,6 +38,7 @@ function App() {
   const [myListData, setMyListData] = useState([]);
 
   const [openCartPanel, setOpenCartPanel] = useState(false);
+  const [openAddressPanel, setOpenAddressPanel] = useState(false);
 
   const handleOpenProductDetailsModal = (status, item) => {
     setOpenProductDetailsModal({
@@ -57,36 +58,43 @@ function App() {
     setOpenCartPanel(newOpen);
   };
 
+  const toggleAddressPanel = (newOpen) => () => {
+    setOpenAddressPanel(newOpen);
+  };
+
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
 
     if (token !== undefined && token !== null && token !== "") {
       setIsLogin(true);
 
-      fetchDataFromApi(`/api/user/user-details`).then((res) => {
-        setUserData(res.data);
-        if (res?.response?.data?.error === true) {
-          if (res?.response?.data?.message === "NO HAS INICIADO SESIÓN") {
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
-
-            alertBox(
-              "error",
-              "SU SESIÓN HA EXPIRADO, POR FAVOR INICIE SESIÓN DE NUEVO"
-            );
-
-            window.location.href = "/login";
-            setIsLogin(false);
-          }
-        }
-      });
-
       getCartItems();
       getMyListData();
+      getUserDetails();
     } else {
       setIsLogin(false);
     }
   }, [isLogin]);
+
+  const getUserDetails = () => {
+    fetchDataFromApi(`/api/user/user-details`).then((res) => {
+      setUserData(res.data);
+      if (res?.response?.data?.error === true) {
+        if (res?.response?.data?.message === "NO HAS INICIADO SESIÓN") {
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+
+          alertBox(
+            "error",
+            "SU SESIÓN HA EXPIRADO, POR FAVOR INICIE SESIÓN DE NUEVO"
+          );
+
+          window.location.href = "/login";
+          setIsLogin(false);
+        }
+      }
+    });
+  };
 
   useEffect(() => {
     fetchDataFromApi("/api/category").then((res) => {
@@ -208,6 +216,9 @@ function App() {
     setOpenCartPanel,
     toggleCartPanel,
     openCartPanel,
+    setOpenAddressPanel,
+    toggleAddressPanel,
+    openAddressPanel,
     openAlertBox,
     isLogin,
     setIsLogin,
@@ -225,6 +236,7 @@ function App() {
     myListData,
     setMyListData,
     getMyListData,
+    getUserDetails,
   };
 
   return (

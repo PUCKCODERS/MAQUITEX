@@ -402,6 +402,11 @@ input[type="number"]::-webkit-outer-spin-button {
   overflow: hidden !important;
 }
 
+.addressPanel .MuiPaper-root {
+  width: 600px !important;
+  overflow: hidden !important;
+}
+
 #size-menu .MuiButtonBase-root {
   font-size: 12px !important;
 }
