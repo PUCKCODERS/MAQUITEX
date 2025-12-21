@@ -117,7 +117,10 @@ const Address = () => {
                 className="flex items-center justify-center !p-5 rounded-md border  border-[#082c55] bg-[#526b86] hover:bg-[#082c55] text-[#fff] hover:text-[#fff] !mt-5 cursor-pointer "
                 onClick={
                   //resetForm()
-                  context?.toggleAddressPanel(true)
+                  () => {
+                    context?.setOpenAddressPanel(true);
+                    context?.setAddressMode("add");
+                  }
                 }
               >
                 <span className="text-[16px]  font-[500]">

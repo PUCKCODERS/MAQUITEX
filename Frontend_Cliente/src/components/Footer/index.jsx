@@ -397,12 +397,13 @@ const Footer = () => {
         anchor={"right"}
         className="addressPanel"
       >
-        <div className="flex items-center justify-center !py-3 !px-4 !gap-3 border-b-2 border-[#d1d1d1] overflow-hidden">
+        <div className="flex items-center justify-center !py-3 !px-4 !gap-3 border-b-2 border-[#d1d1d1] overflow-hidden ">
           <h4 className="font-bold font-[bold]  !text-[#082c55] !text-[20px]">
-            AÑADIR DIRECCIÓN DE ENTREGA
+            {context?.addressMode === "add" ? "AÑADIR" : "EDITAR"} DIRECCIÓN DE
+            ENTREGA
           </h4>
           <IoCloseSharp
-            className="!w-[20px] !h-[20px] !min-w-[20px] !rounded-full !text-[#fff] !absolute !top-[15px] !right-[15px] !bg-[#274a72] hover:!text-[#082c55] hover:!bg-[#fff] !shadow-[0px_0px_0px_3px_#7994b1] hover:!shadow-[0px_0px_0px_3px_#082c55] cursor-pointer"
+            className="!w-[20px] !h-[20px] !min-w-[20px] !rounded-full !text-[#fff] !absolute !top-[10px] !right-[15px] !bg-[#274a72] hover:!text-[#082c55] hover:!bg-[#fff] !shadow-[0px_0px_0px_3px_#7994b1] hover:!shadow-[0px_0px_0px_3px_#082c55] cursor-pointer"
             onClick={context.toggleAddressPanel(false)}
           />
         </div>

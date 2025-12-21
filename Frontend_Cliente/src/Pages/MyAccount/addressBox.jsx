@@ -28,7 +28,10 @@ const AddressBox = (props) => {
 
   const editAddress = (id) => {
     setAnchorEl(null);
-    props.editAddress(id);
+    context?.setOpenAddressPanel(true);
+    context?.setAddressMode("edit");
+    context?.setAddressId(id);
+    //context.editAddress(id);
   };
 
   return (
@@ -74,7 +77,7 @@ const AddressBox = (props) => {
             paper: {
               style: {
                 maxHeight: ITEM_HEIGHT * 4.5,
-                width: "20ch",
+                width: "15ch",
               },
             },
             list: {
@@ -82,10 +85,16 @@ const AddressBox = (props) => {
             },
           }}
         >
-          <MenuItem onClick={() => editAddress(props?.address?._id)}>
+          <MenuItem
+            className="!text-[#082c55] !bg-[#fff] hover:!text-white hover:!bg-[#082c55] !font-bold"
+            onClick={() => editAddress(props?.address?._id)}
+          >
             EDITAR
           </MenuItem>
-          <MenuItem onClick={() => removeAddress(props?.address?._id)}>
+          <MenuItem
+            className="!text-[#082c55] !bg-[#fff] hover:!text-white hover:!bg-[#082c55] !font-bold"
+            onClick={() => removeAddress(props?.address?._id)}
+          >
             ELIMINAR
           </MenuItem>
         </Menu>

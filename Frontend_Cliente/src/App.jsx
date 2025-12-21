@@ -40,6 +40,9 @@ function App() {
   const [openCartPanel, setOpenCartPanel] = useState(false);
   const [openAddressPanel, setOpenAddressPanel] = useState(false);
 
+  const [addressMode, setAddressMode] = useState("add");
+  const [addressId, setAddressId] = useState("");
+
   const handleOpenProductDetailsModal = (status, item) => {
     setOpenProductDetailsModal({
       open: status,
@@ -59,6 +62,9 @@ function App() {
   };
 
   const toggleAddressPanel = (newOpen) => () => {
+    if (newOpen == false) {
+      setAddressMode("add");
+    }
     setOpenAddressPanel(newOpen);
   };
 
@@ -237,6 +243,10 @@ function App() {
     setMyListData,
     getMyListData,
     getUserDetails,
+    setAddressMode,
+    addressMode,
+    addressId,
+    setAddressId,
   };
 
   return (

@@ -20,10 +20,6 @@ const AddAddress = () => {
   const [phone, setPhone] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [addressType, setAddressType] = useState("");
-  const [mode, setMode] = useState("add");
-  const [isOpenModel, setisOpenModel] = useState(false);
-  const [addressId, setAddressId] = useState("");
-  const [address, setAddress] = useState([]);
 
   const [formFields, setFormFields] = useState({
     address_line1: "",
@@ -36,6 +32,12 @@ const AddAddress = () => {
     addressType: "",
     landmark: "",
   });
+
+  useEffect(() => {
+    if (context?.userData?._id !== "" && context?.userData?._id !== undefined) {
+      context?.setAddress(context?.userData?.address_details);
+    }
+  }, [context?.userData]);
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
@@ -51,6 +53,12 @@ const AddAddress = () => {
       addressType: event.target.value,
     }));
   };
+
+  useEffect(() => {
+    if (context?.addressMode === "edit") {
+      fetchAddress(context?.addressId);
+    }
+  }, [context?.addressMode]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -100,7 +108,7 @@ const AddAddress = () => {
       return false;
     }
 
-    if (mode === "add") {
+    if (context?.addressMode === "add") {
       setIsLoading(true);
       postData(`/api/address/add`, formFields, {
         withCredentials: true,
@@ -108,8 +116,8 @@ const AddAddress = () => {
         if (res?.error !== true) {
           context.alertBox("success", res?.message);
           setTimeout(() => {
+            context?.setOpenAddressPanel(false);
             setIsLoading(false);
-            context?.toggleAddressPanel(false);
             // resetForm();
           }, 500);
 
@@ -135,9 +143,9 @@ const AddAddress = () => {
       });
     }
 
-    if (mode === "edit") {
+    if (context?.addressMode === "edit") {
       setIsLoading(true);
-      editData(`/api/address/${addressId}`, formFields, {
+      editData(`/api/address/${context?.addressId}`, formFields, {
         withCredentials: true,
       }).then(() => {
         fetchDataFromApi(
@@ -145,10 +153,10 @@ const AddAddress = () => {
         ).then((res) => {
           setTimeout(() => {
             setIsLoading(false);
-            context.toggleAddressPanel(false);
+            context.setOpenAddressPanel(false);
             //resetForm();
           }, 500);
-          setAddress(res.data);
+          context?.getUserDetails(res.data);
           setFormFields({
             address_line1: "",
             city: "",
@@ -167,16 +175,11 @@ const AddAddress = () => {
     }
   };
 
-  const editAddress = (id) => {
-    setMode("edit");
-    setisOpenModel(true);
-
+  const fetchAddress = (id) => {
     if (!formFields.userId) {
       context.alertBox("error", "USUARIO NO VALIDO");
       return;
     }
-
-    setAddressId(id);
 
     fetchDataFromApi(`/api/address/${id}`).then((res) => {
       setFormFields({
