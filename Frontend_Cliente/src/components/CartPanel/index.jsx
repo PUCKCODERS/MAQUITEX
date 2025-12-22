@@ -40,18 +40,23 @@ const CartPanel = (props) => {
                     {item?.productTitle?.substr(0, 80)}
                   </Link>
                 </h4>
-                <p className="flex items-center !text-[14px] !gap-5 !mt-2 !mb-2">
+                <p className="flex items-center !text-[12px] !gap-5 !mt-2 !mb-2">
                   <span>
-                    <span className="!text-[#556f8d] !font-bold">
-                      CANTIDAD:{" "}
-                    </span>
+                    <span className="!text-[#556f8d] !font-bold">CANT: </span>
                     <span className="text-[#0a7fec] font-bold">
                       {item?.quantity}
                     </span>
                   </span>
                   <span className="text-[#0a7fec] font-bold">
-                    <span className="!text-[#556f8d] !font-bold">PRECIO: </span>{" "}
-                    &#36; {item?.price}
+                    <span className="!text-[#556f8d] !font-bold">
+                      PRECIO.U:{" "}
+                    </span>{" "}
+                    {item?.price
+                      ?.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      })
+                      .replace("$", "$ ")}
                   </span>
                 </p>
 
@@ -127,7 +132,11 @@ const CartPanel = (props) => {
             >
               <Button className="btn-org btn-lg w-full">VER CARRITO</Button>
             </Link>
-            <Link to="/checkout" className="w-[50%] d-block">
+            <Link
+              to="/checkout"
+              className="w-[50%] d-block"
+              onClick={context.toggleCartPanel(false)}
+            >
               <Button className="btn-org btn-border btn-lg w-full">
                 VERIFICAR
               </Button>

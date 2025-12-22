@@ -89,6 +89,7 @@ const Address = () => {
           `/api/address/get?userId=${context?.userData?._id}`
         ).then((res) => {
           setAddress(res.data);
+          context?.getUserDetails();
           setIsConfirmOpen(false);
           setAddressToDelete(null);
           context.alertBox("success", "DIRECCIÓN ELIMINADA CORRECTAMENTE");
