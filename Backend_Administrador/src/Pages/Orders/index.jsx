@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import { FaAnglesDown } from "react-icons/fa6";
 import { FaAnglesUp } from "react-icons/fa6";
 import Badge from "../../components/Badge";
 import SearchBox from "../../Components/SearchBox";
-import { fetchDataFromApi } from "../../utils/api";
+import { editData, fetchDataFromApi } from "../../utils/api";
 import { useEffect } from "react";
+import { MenuItem, Select } from "@mui/material";
+import { MyContext } from "../../App";
 
 const Orders = () => {
   const [isOpenOrderdProduct, setIsOpenOrderdProduct] = useState(null);
   const [orders, setOrders] = useState([]);
+  const [orderStatus, setOrderStatus] = useState("");
+
+  const context = useContext(MyContext);
 
   const isShowOrderdProduct = (index) => {
     if (isOpenOrderdProduct === index) {
@@ -19,13 +24,28 @@ const Orders = () => {
     }
   };
 
+  const handleChange = (event, id) => {
+    setOrderStatus(event.target.value);
+
+    const obj = {
+      id: id,
+      order_status: event.target.value,
+    };
+
+    editData(`/api/order/order-status/${id}`, obj).then((res) => {
+      if (res?.data?.error === false) {
+        context.alertBox("success", res?.data?.message);
+      }
+    });
+  };
+
   useEffect(() => {
     fetchDataFromApi("/api/order/order-list").then((res) => {
       if (res?.error === false) {
         setOrders(res?.data);
       }
     });
-  }, []);
+  }, [orderStatus]);
 
   return (
     <div className="card !my-4 shadow-md sm:rounded-lg dark:bg-gray-700">
@@ -142,7 +162,23 @@ const Orders = () => {
                         <span className="text-white">{order?.userId?._id}</span>
                       </td>
                       <td class="!px-6 !py-4 font-[500] text-white">
-                        <Badge status={order?.order_status} />
+                        <Select
+                          labelId="demo-simple-select-helper-label"
+                          id="demo-simple-select-helper"
+                          value={
+                            order?.order_status !== null
+                              ? order?.order_status
+                              : orderStatus
+                          }
+                          label="Status"
+                          size="small"
+                          onChange={(e) => handleChange(e, order?._id)}
+                          className="!w-full !bg-white !text-[#274a72]"
+                        >
+                          <MenuItem value={"PENDIENTE"}>PENDIENTE</MenuItem>
+                          <MenuItem value={"CONFIRMADO"}>CONFIRMADO</MenuItem>
+                          <MenuItem value={"ENVIADO"}>ENVIADO</MenuItem>
+                        </Select>
                       </td>
                       <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
                         {order?.createdAt?.split("T")[0]}

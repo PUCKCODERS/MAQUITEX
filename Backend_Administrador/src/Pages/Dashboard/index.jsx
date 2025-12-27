@@ -720,7 +720,7 @@ const Dashboard = () => {
         <div className="flex !bg-gray-950 items-center justify-between !px-5 !py-5 border-b dark:border-gray-700">
           <h2 className="text-white text-[20px] !font-[500] ">
             PRODUCTOS
-            <span className="font-[400] text-[14px] !ml-3">()</span>
+            <span className="font-[400] text-[14px] !ml-3">(HOLA)</span>
           </h2>
         </div>
 
