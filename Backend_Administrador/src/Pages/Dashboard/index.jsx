@@ -1264,7 +1264,21 @@ const Dashboard = () => {
                           </span>
                         </td>
                         <td class="!px-6 !py-4 font-[500] text-white">
-                          <Badge status={order?.order_status} />
+                          <span
+                            className={`inline-block px-3 py-1 rounded-md text-xs font-semibold text-white
+                             ${
+                               order?.order_status === "CONFIRMADO"
+                                 ? "bg-green-600"
+                                 : order?.order_status === "PENDIENTE"
+                                 ? "bg-red-500"
+                                 : order?.order_status === "ENVIADO"
+                                 ? "bg-orange-500"
+                                 : "bg-gray-500"
+                             }
+                           `}
+                          >
+                            {order?.order_status}
+                          </span>
                         </td>
                         <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
                           {order?.createdAt?.split("T")[0]}

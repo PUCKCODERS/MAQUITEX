@@ -12,7 +12,7 @@ import { MyContext } from "../../App";
 const Orders = () => {
   const [isOpenOrderdProduct, setIsOpenOrderdProduct] = useState(null);
   const [orders, setOrders] = useState([]);
-  const [orderStatus, setOrderStatus] = useState("");
+  const [orderStatus] = useState("");
 
   const context = useContext(MyContext);
 
@@ -25,16 +25,22 @@ const Orders = () => {
   };
 
   const handleChange = (event, id) => {
-    setOrderStatus(event.target.value);
+    const newStatus = event.target.value;
 
     const obj = {
       id: id,
-      order_status: event.target.value,
+      order_status: newStatus,
     };
 
     editData(`/api/order/order-status/${id}`, obj).then((res) => {
       if (res?.data?.error === false) {
         context.alertBox("success", res?.data?.message);
+
+        setOrders((prevOrders) =>
+          prevOrders.map((order) =>
+            order._id === id ? { ...order, order_status: newStatus } : order
+          )
+        );
       }
     });
   };
