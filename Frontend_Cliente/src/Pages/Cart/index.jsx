@@ -4,8 +4,10 @@ import { FaCashRegister } from "react-icons/fa6";
 import CartItems from "./cartItems";
 import { MyContext } from "../../App";
 import { GiShoppingCart } from "react-icons/gi";
+import { Link } from "react-router-dom";
 
 const CartPage = () => {
+  window.scrollTo(0, 0);
   const context = useContext(MyContext);
 
   return (
@@ -141,10 +143,12 @@ const CartPage = () => {
             </p>
 
             <br />
-            <Button className="btn-org btn-lg w-full flex !gap-2">
-              <FaCashRegister className="text-[25px]" />
-              PASAR POR CAJA
-            </Button>
+            <Link to="/checkout">
+              <Button className="btn-org btn-lg w-full flex !gap-2">
+                <FaCashRegister className="text-[25px]" />
+                PASAR POR CAJA
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

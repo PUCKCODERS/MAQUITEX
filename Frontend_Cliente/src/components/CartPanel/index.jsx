@@ -130,16 +130,14 @@ const CartPanel = (props) => {
               className="w-[50%] d-block"
               onClick={context.toggleCartPanel(false)}
             >
-              <Button className="btn-org btn-lg w-full">VER CARRITO</Button>
+              <Button className="btn-org btn-lg w-full">CARRITO</Button>
             </Link>
             <Link
               to="/checkout"
               className="w-[50%] d-block"
               onClick={context.toggleCartPanel(false)}
             >
-              <Button className="btn-org btn-border btn-lg w-full">
-                VERIFICAR
-              </Button>
+              <Button className="btn-org btn-border btn-lg w-full">CAJA</Button>
             </Link>
           </div>
         </div>

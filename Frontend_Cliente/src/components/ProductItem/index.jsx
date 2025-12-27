@@ -330,10 +330,16 @@ const ProductItem = (props) => {
 
         <div className="flex items-center justify-between !gap-4 ">
           <span className="oldPrice line-through text-red-400 text-[13px] font-[500]">
-            &#36; {props?.item?.oldPrice}
+            {props?.item?.oldPrice?.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            })}
           </span>
           <span class="price text-[#082c55] text-[15px] font-[600]">
-            &#36; {props?.item?.price}
+            {props?.item?.price?.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            })}
           </span>
         </div>
 

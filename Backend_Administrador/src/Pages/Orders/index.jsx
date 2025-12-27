@@ -4,9 +4,12 @@ import { FaAnglesDown } from "react-icons/fa6";
 import { FaAnglesUp } from "react-icons/fa6";
 import Badge from "../../components/Badge";
 import SearchBox from "../../Components/SearchBox";
+import { fetchDataFromApi } from "../../utils/api";
+import { useEffect } from "react";
 
 const Orders = () => {
   const [isOpenOrderdProduct, setIsOpenOrderdProduct] = useState(null);
+  const [orders, setOrders] = useState([]);
 
   const isShowOrderdProduct = (index) => {
     if (isOpenOrderdProduct === index) {
@@ -15,6 +18,14 @@ const Orders = () => {
       setIsOpenOrderdProduct(index);
     }
   };
+
+  useEffect(() => {
+    fetchDataFromApi("/api/order/order-list").then((res) => {
+      if (res?.error === false) {
+        setOrders(res?.data);
+      }
+    });
+  }, []);
 
   return (
     <div className="card !my-4 shadow-md sm:rounded-lg dark:bg-gray-700">
@@ -26,18 +37,18 @@ const Orders = () => {
           <SearchBox />
         </div>
       </div>
-      <div class="relative overflow-x-auto !mt-1  dark:!bg-gray-800">
+      <div class="relative overflow-x-auto dark:!bg-gray-800 ">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-700 text-white">
+          <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-700 text-white ">
             <tr>
-              <th scope="col" class="!px-6 !py-3">
+              <th scope="col" class="!px-6 !py-3 !mb-3">
                 &nbsp;
               </th>
               <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
                 ID PEDIDO
               </th>
               <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
-                ID PAGO
+                FORMA
               </th>
               <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
                 NOMBRE
@@ -69,281 +80,174 @@ const Orders = () => {
             </tr>
           </thead>
           <tbody>
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-              <td class="!px-6 !py-4 font-[700] text-white">
-                <Button
-                  className="!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-[#274a72] hover:!text-[#fff] !bg-[#fff] hover:!bg-[#274a72] !shadow-[0px_0px_0px_3px_#7994b1] transition-all duration-300"
-                  onClick={() => isShowOrderdProduct(0)}
-                >
-                  {isOpenOrderdProduct === 0 ? (
-                    <FaAnglesUp className="text-[20px]" />
-                  ) : (
-                    <FaAnglesDown className="text-[20px]" />
-                  )}
-                </Button>
-              </td>
-              <td class="!px-6 !py-4 font-[500] ">
-                <span className="text-white">SILVER</span>
-              </td>
-              <td class="!px-6 !py-4 font-[500] ">
-                <span className="text-white">SILVER</span>
-              </td>
-              <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
-                SILVER SILVER
-              </td>
-              <td class="!px-6 !py-4 font-[500] ">0968873896</td>
-              <td class="!px-6 !py-4 font-[500] ">
-                <span className="text-[#bfc3cc] block w-[400px]">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Aliquam, possimus quis neque sunt molestias illum dolor
-                  adipisci assumenda laboriosam impedit?
-                </span>
-              </td>
-              <td class="!px-6 !py-4 font-[500] ">0316</td>
-              <td class="!px-6 !py-4 font-[500] ">$369,99</td>
-              <td class="!px-6 !py-4 font-[500] ">
-                jlc.rodriguez316@hotmail.com
-              </td>
-              <td class="!px-6 !py-4 font-[500] ">
-                <span className="text-white">SILVER</span>
-              </td>
-              <td class="!px-6 !py-4 font-[500] ">
-                <Badge status="ENTREGADO" />
-              </td>
-              <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
-                07 / 05 / 2025
-              </td>
-            </tr>
+            {orders?.length !== 0 &&
+              orders?.map((order, index) => {
+                return (
+                  <>
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                      <td class="!px-6 !py-4 font-[700] text-white">
+                        <Button
+                          className="!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-[#274a72] hover:!text-[#fff] !bg-[#fff] hover:!bg-[#274a72] !shadow-[0px_0px_0px_3px_#7994b1] transition-all duration-300"
+                          onClick={() => isShowOrderdProduct(index)}
+                        >
+                          {isOpenOrderdProduct === index ? (
+                            <FaAnglesUp className="text-[20px]" />
+                          ) : (
+                            <FaAnglesDown className="text-[20px]" />
+                          )}
+                        </Button>
+                      </td>
+                      <td class="!px-6 !py-4 font-[500] ">
+                        <span className="text-white">{order?._id}</span>
+                      </td>
+                      <td class="!px-6 !py-4 font-[500] ">
+                        <span className="text-white">
+                          {order?.paymentId
+                            ? order?.paymentId
+                            : "PAGO CONTRA REMBOLSO"}
+                        </span>
+                      </td>
+                      <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
+                        {order?.userId?.name}
+                      </td>
+                      <td class="!px-6 !py-4 font-[500] ">
+                        {order?.userId?.mobile}
+                      </td>
+                      <td class="!px-6 !py-4 font-[500] ">
+                        <span className="text-[#bfc3cc] block w-[400px]">
+                          {order?.delivery_address?.address_line1 +
+                            ", " +
+                            order?.delivery_address?.city +
+                            ", " +
+                            order?.delivery_address?.landmark +
+                            ", " +
+                            order?.delivery_address?.state +
+                            ", " +
+                            order?.delivery_address?.country}
+                        </span>
+                      </td>
+                      <td class="!px-6 !py-4 font-[500] ">
+                        {order?.delivery_address?.pincode}
+                      </td>
+                      <td class="!px-6 !py-4 font-[500] ">
+                        {order?.totalAmt?.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                        })}
+                      </td>
+                      <td class="!px-6 !py-4 font-[500] ">
+                        {order?.userId?.email}
+                      </td>
+                      <td class="!px-6 !py-4 font-[500] ">
+                        <span className="text-white">{order?.userId?._id}</span>
+                      </td>
+                      <td class="!px-6 !py-4 font-[500] text-white">
+                        <Badge status={order?.order_status} />
+                      </td>
+                      <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
+                        {order?.createdAt?.split("T")[0]}
+                      </td>
+                    </tr>
 
-            {isOpenOrderdProduct === 0 && (
-              <tr>
-                <td className="dark:bg-gray-800 !pl-20" colSpan="6">
-                  <div class="relative overflow-x-auto">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                      <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-700 text-white">
-                        <tr>
-                          <th
-                            scope="col"
-                            className="!px-6 !py-3 whitespace-nowrap"
-                          >
-                            ID PRODUCTO
-                          </th>
-                          <th
-                            scope="col"
-                            className="!px-6 !py-3 whitespace-nowrap"
-                          >
-                            NOMBRE PRODUCTO
-                          </th>
-                          <th
-                            scope="col"
-                            className="!px-6 !py-3 whitespace-nowrap"
-                          >
-                            IMAGEN
-                          </th>
-                          <th
-                            scope="col"
-                            className="!px-6 !py-3 whitespace-nowrap"
-                          >
-                            CANTIDAD
-                          </th>
-                          <th
-                            scope="col"
-                            className="!px-6 !py-3 whitespace-nowrap"
-                          >
-                            PRECIO
-                          </th>
-                          <th
-                            scope="col"
-                            className="!px-6 !py-3 whitespace-nowrap"
-                          >
-                            SUB TOTAL
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                          <td class="!px-6 !py-4 font-[500] ">
-                            <span className="text-white">SILVER</span>
-                          </td>
-                          <td class="!px-6 !py-4 font-[500] ">
-                            <span className="text-white">SILVER</span>
-                          </td>
-                          <td class="!px-6 !py-4 font-[500] ">
-                            <img
-                              src="https://dcdn-us.mitiendanube.com/stores/937/060/products/whatsapp-image-2024-05-08-at-16-49-38-e8501bf0a251c9748817152035761232-1024-1024.jpeg"
-                              className="w-[40px] h-[40px] object-cover rounded-md"
-                            />
-                          </td>
-                          <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
-                            6
-                          </td>
-                          <td class="!px-6 !py-4 font-[500]">0968873896</td>
-                          <td class="!px-6 !py-4 font-[500] ">$369.99</td>
-                        </tr>
-
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                          <td class="!px-6 !py-4 font-[500] ">
-                            <span className="text-white">SILVER</span>
-                          </td>
-                          <td class="!px-6 !py-4 font-[500] ">
-                            <span className="text-white">SILVER</span>
-                          </td>
-                          <td class="!px-6 !py-4 font-[500] ">
-                            <img
-                              src="https://dcdn-us.mitiendanube.com/stores/937/060/products/whatsapp-image-2024-05-08-at-16-49-38-e8501bf0a251c9748817152035761232-1024-1024.jpeg"
-                              className="w-[40px] h-[40px] object-cover rounded-md"
-                            />
-                          </td>
-                          <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
-                            6
-                          </td>
-                          <td class="!px-6 !py-4 font-[500]">0968873896</td>
-                          <td class="!px-6 !py-4 font-[500] ">$369.99</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </td>
-              </tr>
-            )}
-
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-              <td class="!px-6 !py-4 font-[700] text-white">
-                <Button
-                  className="!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-[#274a72] hover:!text-[#fff] !bg-[#fff] hover:!bg-[#274a72] !shadow-[0px_0px_0px_3px_#7994b1] transition-all duration-300"
-                  onClick={() => isShowOrderdProduct(1)}
-                >
-                  {isOpenOrderdProduct === 1 ? (
-                    <FaAnglesUp className="text-[20px]" />
-                  ) : (
-                    <FaAnglesDown className="text-[20px]" />
-                  )}
-                </Button>
-              </td>
-              <td class="!px-6 !py-4 font-[500] ">
-                <span className="text-white">SILVER</span>
-              </td>
-              <td class="!px-6 !py-4 font-[500] ">
-                <span className="text-white">SILVER</span>
-              </td>
-              <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
-                SILVER SILVER
-              </td>
-              <td class="!px-6 !py-4 font-[500] ">0968873896</td>
-              <td class="!px-6 !py-4 font-[500] ">
-                <span className="text-[#bfc3cc] block w-[400px]">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Aliquam, possimus quis neque sunt molestias illum dolor
-                  adipisci assumenda laboriosam impedit?
-                </span>
-              </td>
-              <td class="!px-6 !py-4 font-[500] ">0316</td>
-              <td class="!px-6 !py-4 font-[500] ">$369,99</td>
-              <td class="!px-6 !py-4 font-[500] ">
-                jlc.rodriguez316@hotmail.com
-              </td>
-              <td class="!px-6 !py-4 font-[500] ">
-                <span className="text-white">SILVER</span>
-              </td>
-              <td class="!px-6 !py-4 font-[500] ">
-                <Badge status="ENTREGADO" />
-              </td>
-              <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
-                07 / 05 / 2025
-              </td>
-            </tr>
-
-            {isOpenOrderdProduct === 1 && (
-              <tr>
-                <td className="dark:bg-gray-800 !pl-20" colSpan="6">
-                  <div class="relative overflow-x-auto">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                      <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-700 text-white">
-                        <tr>
-                          <th
-                            scope="col"
-                            className="!px-6 !py-3 whitespace-nowrap"
-                          >
-                            ID PRODUCTO
-                          </th>
-                          <th
-                            scope="col"
-                            className="!px-6 !py-3 whitespace-nowrap"
-                          >
-                            NOMBRE PRODUCTO
-                          </th>
-                          <th
-                            scope="col"
-                            className="!px-6 !py-3 whitespace-nowrap"
-                          >
-                            IMAGEN
-                          </th>
-                          <th
-                            scope="col"
-                            className="!px-6 !py-3 whitespace-nowrap"
-                          >
-                            CANTIDAD
-                          </th>
-                          <th
-                            scope="col"
-                            className="!px-6 !py-3 whitespace-nowrap"
-                          >
-                            PRECIO
-                          </th>
-                          <th
-                            scope="col"
-                            className="!px-6 !py-3 whitespace-nowrap"
-                          >
-                            SUB TOTAL
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                          <td class="!px-6 !py-4 font-[500] ">
-                            <span className="text-white">SILVER</span>
-                          </td>
-                          <td class="!px-6 !py-4 font-[500] ">
-                            <span className="text-white">SILVER</span>
-                          </td>
-                          <td class="!px-6 !py-4 font-[500] ">
-                            <img
-                              src="https://dcdn-us.mitiendanube.com/stores/937/060/products/whatsapp-image-2024-05-08-at-16-49-38-e8501bf0a251c9748817152035761232-1024-1024.jpeg"
-                              className="w-[40px] h-[40px] object-cover rounded-md"
-                            />
-                          </td>
-                          <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
-                            6
-                          </td>
-                          <td class="!px-6 !py-4 font-[500]">0968873896</td>
-                          <td class="!px-6 !py-4 font-[500] ">$369.99</td>
-                        </tr>
-
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
-                          <td class="!px-6 !py-4 font-[500] ">
-                            <span className="text-white">SILVER</span>
-                          </td>
-                          <td class="!px-6 !py-4 font-[500] ">
-                            <span className="text-white">SILVER</span>
-                          </td>
-                          <td class="!px-6 !py-4 font-[500] ">
-                            <img
-                              src="https://dcdn-us.mitiendanube.com/stores/937/060/products/whatsapp-image-2024-05-08-at-16-49-38-e8501bf0a251c9748817152035761232-1024-1024.jpeg"
-                              className="w-[40px] h-[40px] object-cover rounded-md"
-                            />
-                          </td>
-                          <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
-                            6
-                          </td>
-                          <td class="!px-6 !py-4 font-[500]">0968873896</td>
-                          <td class="!px-6 !py-4 font-[500] ">$369.99</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </td>
-              </tr>
-            )}
+                    {isOpenOrderdProduct === index && (
+                      <tr>
+                        <td className="dark:bg-gray-800 !pl-20" colSpan="6">
+                          <div class="relative overflow-x-auto">
+                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                              <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-700 text-white">
+                                <tr>
+                                  <th
+                                    scope="col"
+                                    className="!px-6 !py-3 whitespace-nowrap"
+                                  >
+                                    ID PRODUCTO
+                                  </th>
+                                  <th
+                                    scope="col"
+                                    className="!px-6 !py-3 whitespace-nowrap"
+                                  >
+                                    NOMBRE PRODUCTO
+                                  </th>
+                                  <th
+                                    scope="col"
+                                    className="!px-6 !py-3 whitespace-nowrap"
+                                  >
+                                    IMAGEN
+                                  </th>
+                                  <th
+                                    scope="col"
+                                    className="!px-6 !py-3 whitespace-nowrap"
+                                  >
+                                    CANTIDAD
+                                  </th>
+                                  <th
+                                    scope="col"
+                                    className="!px-6 !py-3 whitespace-nowrap"
+                                  >
+                                    PRECIO
+                                  </th>
+                                  <th
+                                    scope="col"
+                                    className="!px-6 !py-3 whitespace-nowrap"
+                                  >
+                                    SUB TOTAL
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {order?.products?.map((item, index) => {
+                                  return (
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                                      <td class="!px-6 !py-4 font-[500] ">
+                                        <span
+                                          key={index}
+                                          className="text-white"
+                                        >
+                                          {item?._id}
+                                        </span>
+                                      </td>
+                                      <td class="!px-6 !py-4 font-[500] ">
+                                        <span className="text-white">
+                                          <div className="w-[200px]">
+                                            {item?.productTitle}
+                                          </div>
+                                        </span>
+                                      </td>
+                                      <td class="!px-6 !py-4 font-[500] ">
+                                        <img
+                                          src={item?.image}
+                                          className="w-[40px] h-[40px] object-cover rounded-md"
+                                        />
+                                      </td>
+                                      <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
+                                        {item?.quantity}
+                                      </td>
+                                      <td class="!px-6 !py-4 font-[500]">
+                                        {item?.price?.toLocaleString("en-US", {
+                                          style: "currency",
+                                          currency: "USD",
+                                        })}
+                                      </td>
+                                      <td class="!px-6 !py-4 font-[500] ">
+                                        {(
+                                          item?.price * item?.quantity
+                                        )?.toLocaleString("en-US", {
+                                          style: "currency",
+                                          currency: "USD",
+                                        })}
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </>
+                );
+              })}
           </tbody>
         </table>
       </div>

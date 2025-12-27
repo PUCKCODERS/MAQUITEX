@@ -6,6 +6,7 @@ import {
   getCartItemController,
   updateCartItemQtyController,
   updateCartItemController,
+  emptyCartController,
 } from "../controllers/cart.controller.js";
 
 const cartRouter = Router();
@@ -15,5 +16,6 @@ cartRouter.get("/get", auth, getCartItemController);
 cartRouter.put("/update-qty", auth, updateCartItemQtyController);
 cartRouter.put("/update-item", auth, updateCartItemController);
 cartRouter.delete("/delete-cart-item/:id", auth, deleteCartItemQtyController);
+cartRouter.delete("/emptyCart/:id", auth, emptyCartController);
 
 export default cartRouter;
