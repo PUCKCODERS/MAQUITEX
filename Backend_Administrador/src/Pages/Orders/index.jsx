@@ -137,7 +137,7 @@ const Orders = () => {
                         {order?.userId?.name}
                       </td>
                       <td class="!px-6 !py-4 font-[500] ">
-                        {order?.userId?.mobile}
+                        +{order?.userId?.mobile}
                       </td>
                       <td class="!px-6 !py-4 font-[500] ">
                         <span className="text-[#bfc3cc] block w-[400px]">
@@ -149,7 +149,10 @@ const Orders = () => {
                             ", " +
                             order?.delivery_address?.state +
                             ", " +
-                            order?.delivery_address?.country}
+                            order?.delivery_address?.country +
+                            ", " +
+                            "+" +
+                            order?.delivery_address?.mobile}
                         </span>
                       </td>
                       <td class="!px-6 !py-4 font-[500] ">

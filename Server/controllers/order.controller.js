@@ -55,7 +55,7 @@ export const getOrderDetailsController = async (request, response) => {
   try {
     const userId = request.userId;
 
-    const orderlist = await OrderModel.find({ userId: userId })
+    const orderlist = await OrderModel.find()
       .sort({ createdAt: -1 })
       .populate("delivery_address userId");
 

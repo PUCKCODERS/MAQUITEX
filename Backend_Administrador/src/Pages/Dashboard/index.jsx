@@ -96,6 +96,7 @@ const Dashboard = () => {
   const [productSubCat, setProductSubCat] = React.useState("");
   const [productThirdLavelCat, setProductThirdLavelCat] = useState("");
   const [page, setPage] = React.useState(0);
+
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [categoryFilterVal, setcategoryFilterVal] = React.useState("");
   const [isLoading, setIsloading] = useState(false);
@@ -107,7 +108,11 @@ const Dashboard = () => {
 
   const context = useContext(MyContext);
 
+  const [ordersData, setOrdersData] = useState([]);
   const [orders, setOrders] = useState([]);
+  const [pageOrder, setPageOrder] = React.useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [totalOrdersData, setTotalOrdersData] = useState([]);
 
   const [chart1Data /*{setChart1Data}*/] = useState([
     {
@@ -195,6 +200,49 @@ const Dashboard = () => {
       }
     });
   }, []);
+
+  useEffect(() => {
+    fetchDataFromApi(`/api/order/order-list?page=${pageOrder}&limit=6`).then(
+      (res) => {
+        if (res?.error === false) {
+          setOrders(res);
+          setOrdersData(res?.data);
+        }
+      }
+    );
+
+    fetchDataFromApi(`/api/order/order-list`).then((res) => {
+      if (res?.error === false) {
+        setTotalOrdersData(res?.data);
+      }
+    });
+  }, [pageOrder]);
+
+  useEffect(() => {
+    if (searchQuery !== "") {
+      const filteredOrders = totalOrdersData?.data?.filter(
+        (order) =>
+          order._id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          order?.userId?.name
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+          order?.userId?.email
+            .toLowerCase()
+            .includes(searchQuery.toLowerCase()) ||
+          order?.createdAt.includes(searchQuery)
+      );
+      setOrdersData(filteredOrders);
+    } else {
+      fetchDataFromApi(`/api/order/order-list?page=${pageOrder}&limit=7`).then(
+        (res) => {
+          if (res?.error === false) {
+            setOrders(res);
+            setOrdersData(res?.data);
+          }
+        }
+      );
+    }
+  });
 
   const handleSelectAll = (e) => {
     const isChecked = e.target.checked;
@@ -1156,6 +1204,13 @@ const Dashboard = () => {
           <h2 className="text-white text-[20px] font-[500] ">
             PEDIDOS RECIENTES
           </h2>
+          <div className="w-[25%]">
+            <SearchBox
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              setPageOrder={setPageOrder}
+            />
+          </div>
         </div>
         <div class="relative overflow-x-auto !mt-0  dark:!bg-gray-800">
           <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -1200,8 +1255,8 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {orders?.length !== 0 &&
-                orders?.map((order, index) => {
+              {ordersData?.length !== 0 &&
+                ordersData?.map((order, index) => {
                   return (
                     <>
                       <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
@@ -1231,7 +1286,7 @@ const Dashboard = () => {
                           {order?.userId?.name}
                         </td>
                         <td class="!px-6 !py-4 font-[500] ">
-                          {order?.userId?.mobile}
+                          +{order?.userId?.mobile}
                         </td>
                         <td class="!px-6 !py-4 font-[500] ">
                           <span className="text-[#bfc3cc] block w-[400px]">
@@ -1245,6 +1300,7 @@ const Dashboard = () => {
                               ", " +
                               order?.delivery_address?.country +
                               ", " +
+                              "+" +
                               order?.delivery_address?.mobile}
                           </span>
                         </td>
@@ -1392,6 +1448,18 @@ const Dashboard = () => {
             </tbody>
           </table>
         </div>
+
+        {orders?.totalPages > 1 && (
+          <div className="flex items-center justify-center !mt-10 !pb-5">
+            <Pagination
+              showFirstButton
+              showLastButton
+              count={orders?.totalPages}
+              page={pageOrder}
+              onChange={(e, value) => setPageOrder(value)}
+            />
+          </div>
+        )}
       </div>
 
       <div className="card !my-4 shadow-md sm:rounded-lg dark:!bg-gray-800">
