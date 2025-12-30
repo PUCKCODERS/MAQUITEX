@@ -11,8 +11,7 @@ const SearchBox = (props) => {
     setSearchQuery(e.target.value);
     props.setSearchQuery(e.target.value);
     if (searchInput.current.value === "") {
-      console.log("hola");
-      props.setSearchQuery(1);
+      props.setPageOrder(1);
     }
   };
 

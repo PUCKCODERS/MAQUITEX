@@ -213,7 +213,7 @@ const Dashboard = () => {
 
     fetchDataFromApi(`/api/order/order-list`).then((res) => {
       if (res?.error === false) {
-        setTotalOrdersData(res?.data);
+        setTotalOrdersData(res);
       }
     });
   }, [pageOrder]);
@@ -242,7 +242,7 @@ const Dashboard = () => {
         }
       );
     }
-  });
+  }, [searchQuery]);
 
   const handleSelectAll = (e) => {
     const isChecked = e.target.checked;
