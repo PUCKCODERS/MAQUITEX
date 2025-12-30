@@ -1243,7 +1243,9 @@ const Dashboard = () => {
                               ", " +
                               order?.delivery_address?.state +
                               ", " +
-                              order?.delivery_address?.country}
+                              order?.delivery_address?.country +
+                              ", " +
+                              order?.delivery_address?.mobile}
                           </span>
                         </td>
                         <td class="!px-6 !py-4 font-[500] ">

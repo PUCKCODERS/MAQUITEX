@@ -156,83 +156,91 @@ const Checkout = () => {
   const checkout = (e) => {
     e.preventDefault();
 
-    var options = {
-      key: VITE_APP_RAZORPAY_KEY_ID,
-      key_secret: VITE_APP_RAZORPAY_KEY_SECRET,
-      amount: parseInt(totalAmount * 100),
-      currency: "USD",
-      order_receipt: context?.userData?.name,
-      name: "MAQUITEXT",
-      description: "PARA FINES DE PRUEBA",
-      handler: function (response) {
-        console.log(response);
+    if (userData?.address_details?.length !== 0) {
+      var options = {
+        key: VITE_APP_RAZORPAY_KEY_ID,
+        key_secret: VITE_APP_RAZORPAY_KEY_SECRET,
+        amount: parseInt(totalAmount * 100),
+        currency: "USD",
+        order_receipt: context?.userData?.name,
+        name: "MAQUITEXT",
+        description: "PARA FINES DE PRUEBA",
+        handler: function (response) {
+          console.log(response);
 
-        const paymentId = response.razorpay_payment_id;
-        const user = context?.userData;
-        const payLoad = {
-          userId: user?._id,
-          products: context?.cartData,
-          paymentId: paymentId,
-          payment_status: "COMPLETADO",
-          delivery_address: selectedAddress,
-          totalAmt: totalAmount,
-          date: new Date().toLocaleString("en-US", {
-            month: "short",
-            day: "2-digit",
-            year: "numeric",
-          }),
-        };
+          const paymentId = response.razorpay_payment_id;
+          const user = context?.userData;
+          const payLoad = {
+            userId: user?._id,
+            products: context?.cartData,
+            paymentId: paymentId,
+            payment_status: "COMPLETADO",
+            delivery_address: selectedAddress,
+            totalAmt: totalAmount,
+            date: new Date().toLocaleString("en-US", {
+              month: "short",
+              day: "2-digit",
+              year: "numeric",
+            }),
+          };
 
-        postData(`/api/order/create`, payLoad).then((res) => {
-          context.alertBox("success", res?.message);
-          if (res?.error === false) {
-            deleteData(`/api/cart/emptyCart/${user?._id}`).then(() => {
-              context?.getCartItems();
-            });
-            history("/order/success");
-          } else {
-            history("/order/failed");
-            context.alertBox("error", res?.message);
-          }
-        });
-      },
-      theme: {
-        color: "#082c55",
-      },
-    };
+          postData(`/api/order/create`, payLoad).then((res) => {
+            context.alertBox("success", res?.message);
+            if (res?.error === false) {
+              deleteData(`/api/cart/emptyCart/${user?._id}`).then(() => {
+                context?.getCartItems();
+              });
+              history("/order/success");
+            } else {
+              history("/order/failed");
+              context.alertBox("error", res?.message);
+            }
+          });
+        },
+        theme: {
+          color: "#082c55",
+        },
+      };
 
-    var pay = new window.Razorpay(options);
-    pay.open();
+      var pay = new window.Razorpay(options);
+      pay.open();
+    } else {
+      context.alertBox("error", "¡POR FAVOR AGREGE UNA DIRECCIÓN DE ENTREGA!");
+    }
   };
 
   const cashOnDelivery = () => {
     const user = context?.userData;
 
-    const payLoad = {
-      userId: user?._id,
-      products: context?.cartData,
-      paymentId: "",
-      payment_status: "PAGO CONTRA REMBOLSO COMPLETADO",
-      delivery_address: selectedAddress,
-      totalAmt: totalAmount,
-      date: new Date().toLocaleString("en-US", {
-        month: "short",
-        day: "2-digit",
-        year: "numeric",
-      }),
-    };
+    if (userData?.address_details?.length !== 0) {
+      const payLoad = {
+        userId: user?._id,
+        products: context?.cartData,
+        paymentId: "",
+        payment_status: "PAGO CONTRA REMBOLSO COMPLETADO",
+        delivery_address: selectedAddress,
+        totalAmt: totalAmount,
+        date: new Date().toLocaleString("en-US", {
+          month: "short",
+          day: "2-digit",
+          year: "numeric",
+        }),
+      };
 
-    postData(`/api/order/create`, payLoad).then((res) => {
-      context.alertBox("success", res?.message);
-      if (res?.error === false) {
-        deleteData(`/api/cart/emptyCart/${user?._id}`).then(() => {
-          context?.getCartItems();
-        });
-      } else {
-        context.alertBox("error", res?.message);
-      }
-      history("/order/success");
-    });
+      postData(`/api/order/create`, payLoad).then((res) => {
+        context.alertBox("success", res?.message);
+        if (res?.error === false) {
+          deleteData(`/api/cart/emptyCart/${user?._id}`).then(() => {
+            context?.getCartItems();
+          });
+        } else {
+          context.alertBox("error", res?.message);
+        }
+        history("/order/success");
+      });
+    } else {
+      context.alertBox("error", "¡POR FAVOR AGREGE UNA DIRECCIÓN DE ENTREGA!");
+    }
   };
 
   return (
@@ -290,9 +298,14 @@ const Checkout = () => {
                               ", " +
                               address?.state +
                               ", " +
-                              address?.landmark}
+                              address?.landmark +
+                              ", " +
+                              "+" +
+                              address?.mobile}
                           </p>
-                          <p className="!mb-0 font-bold">+{userData?.mobile}</p>
+                          <p className="!mb-0 font-bold">
+                            NUMERO PERFIL : +{userData?.mobile}
+                          </p>
                         </div>
 
                         <Button
@@ -402,7 +415,7 @@ const Checkout = () => {
                   CONFIRMAR
                 </Button>
 
-                <div id="paypal-button-container"></div>*/}
+                <div id="paypal-button-container" className={`${userData?.address_details?.length === 0 ? 'pointer-events-none': ''}`}></div>*/}
 
                 <Button
                   type="button"
