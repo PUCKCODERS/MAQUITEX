@@ -194,53 +194,57 @@ const Dashboard = () => {
   }, [context?.isOpenFullScreenPanel]);
 
   useEffect(() => {
-    fetchDataFromApi("/api/order/order-list").then((res) => {
+    fetchDataFromApi(`/api/order/order-list`).then((res) => {
       if (res?.error === false) {
-        setOrders(res?.data);
+        const all = res?.data || [];
+        setTotalOrdersData(all);
+        const totalPages = Math.max(1, Math.ceil(all.length / 6));
+        const start = (pageOrder - 1) * 6;
+        const pageData = all.slice(start, start + 6);
+        setOrders({ totalPages });
+        setOrdersData({ data: pageData });
       }
     });
   }, []);
 
   useEffect(() => {
-    fetchDataFromApi(`/api/order/order-list?page=${pageOrder}&limit=6`).then(
-      (res) => {
-        if (res?.error === false) {
-          setOrders(res);
-          setOrdersData(res?.data);
-        }
-      }
-    );
-
-    fetchDataFromApi(`/api/order/order-list`).then((res) => {
-      if (res?.error === false) {
-        setTotalOrdersData(res);
-      }
-    });
-  }, [pageOrder]);
+    if (!searchQuery) {
+      const all = totalOrdersData || [];
+      const totalPages = Math.max(1, Math.ceil(all.length / 6));
+      const start = (pageOrder - 1) * 6;
+      const pageData = all.slice(start, start + 6);
+      setOrders({ totalPages });
+      setOrdersData({ data: pageData });
+    }
+  }, [pageOrder, totalOrdersData, searchQuery]);
 
   useEffect(() => {
     if (searchQuery !== "") {
-      const filteredOrders = totalOrdersData?.data?.filter(
-        (order) =>
-          order._id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          order?.userId?.name
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase()) ||
-          order?.userId?.email
-            .toLowerCase()
-            .includes(searchQuery.toLowerCase()) ||
-          order?.createdAt.includes(searchQuery)
+      const dataArr = Array.isArray(totalOrdersData)
+        ? totalOrdersData
+        : totalOrdersData?.data || [];
+      const filteredOrders = dataArr.filter((order) =>
+        (
+          order?._id?.toString() +
+          " " +
+          (order?.userId?.name || "") +
+          " " +
+          (order?.userId?.email || "") +
+          " " +
+          (order?.createdAt || "")
+        )
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
       );
-      setOrdersData(filteredOrders);
+
+      const totalPages = Math.max(1, Math.ceil(filteredOrders.length / 6));
+      const start = (pageOrder - 1) * 6;
+      const pageData = filteredOrders.slice(start, start + 6);
+      setOrders({ totalPages });
+      setOrdersData({ data: pageData });
+      if (pageOrder > totalPages) setPageOrder(1);
     } else {
-      fetchDataFromApi(`/api/order/order-list?page=${pageOrder}&limit=7`).then(
-        (res) => {
-          if (res?.error === false) {
-            setOrders(res);
-            setOrdersData(res?.data);
-          }
-        }
-      );
+      // ())
     }
   }, [searchQuery]);
 
@@ -1255,8 +1259,8 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {ordersData?.length !== 0 &&
-                ordersData?.map((order, index) => {
+              {ordersData?.data?.length !== 0 &&
+                ordersData?.data?.map((order, index) => {
                   return (
                     <>
                       <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
@@ -1450,7 +1454,7 @@ const Dashboard = () => {
         </div>
 
         {orders?.totalPages > 1 && (
-          <div className="flex items-center justify-center !mt-10 !pb-5">
+          <div className="flex items-center justify-center  !mt-0 !pb-3 !bg-gray-100 !text-balck !border-t !border-gray-500">
             <Pagination
               showFirstButton
               showLastButton

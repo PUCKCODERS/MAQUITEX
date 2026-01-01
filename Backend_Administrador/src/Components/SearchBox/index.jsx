@@ -9,9 +9,13 @@ const SearchBox = (props) => {
 
   const onChangeInput = (e) => {
     setSearchQuery(e.target.value);
-    props.setSearchQuery(e.target.value);
+    if (props && typeof props.setSearchQuery === "function") {
+      props.setSearchQuery(e.target.value);
+    }
     if (searchInput.current.value === "") {
-      props.setPageOrder(1);
+      if (props && typeof props.setPageOrder === "function") {
+        props.setPageOrder(1);
+      }
     }
   };
 
