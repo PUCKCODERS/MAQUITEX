@@ -6,13 +6,18 @@ import Badge from "../../components/Badge";
 import SearchBox from "../../Components/SearchBox";
 import { editData, fetchDataFromApi } from "../../utils/api";
 import { useEffect } from "react";
-import { MenuItem, Select } from "@mui/material";
+import { MenuItem, Pagination, Select } from "@mui/material";
 import { MyContext } from "../../App";
 
 const Orders = () => {
   const [isOpenOrderdProduct, setIsOpenOrderdProduct] = useState(null);
-  const [orders, setOrders] = useState([]);
   const [orderStatus] = useState("");
+
+  const [ordersData, setOrdersData] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [pageOrder, setPageOrder] = React.useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [totalOrdersData, setTotalOrdersData] = useState([]);
 
   const context = useContext(MyContext);
 
@@ -36,8 +41,15 @@ const Orders = () => {
       if (res?.data?.error === false) {
         context.alertBox("success", res?.data?.message);
 
-        setOrders((prevOrders) =>
-          prevOrders.map((order) =>
+        setOrdersData((prevOrdersData) => ({
+          ...prevOrdersData,
+          data: prevOrdersData.data.map((order) =>
+            order._id === id ? { ...order, order_status: newStatus } : order
+          ),
+        }));
+
+        setTotalOrdersData((prevTotal) =>
+          prevTotal.map((order) =>
             order._id === id ? { ...order, order_status: newStatus } : order
           )
         );
@@ -53,21 +65,80 @@ const Orders = () => {
     });
   }, [orderStatus]);
 
+  useEffect(() => {
+    fetchDataFromApi(`/api/order/order-list`).then((res) => {
+      if (res?.error === false) {
+        const all = res?.data || [];
+        setTotalOrdersData(all);
+        const totalPages = Math.max(1, Math.ceil(all.length / 10));
+        const start = (pageOrder - 1) * 10;
+        const pageData = all.slice(start, start + 10);
+        setOrders({ totalPages });
+        setOrdersData({ data: pageData });
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!searchQuery) {
+      const all = totalOrdersData || [];
+      const totalPages = Math.max(1, Math.ceil(all.length / 10));
+      const start = (pageOrder - 1) * 10;
+      const pageData = all.slice(start, start + 10);
+      setOrders({ totalPages });
+      setOrdersData({ data: pageData });
+    }
+  }, [pageOrder, totalOrdersData, searchQuery]);
+
+  useEffect(() => {
+    if (searchQuery !== "") {
+      const dataArr = Array.isArray(totalOrdersData)
+        ? totalOrdersData
+        : totalOrdersData?.data || [];
+      const filteredOrders = dataArr.filter((order) =>
+        (
+          order?._id?.toString() +
+          " " +
+          (order?.userId?.name || "") +
+          " " +
+          (order?.userId?.email || "") +
+          " " +
+          (order?.createdAt || "")
+        )
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase())
+      );
+
+      const totalPages = Math.max(1, Math.ceil(filteredOrders.length / 10));
+      const start = (pageOrder - 1) * 10;
+      const pageData = filteredOrders.slice(start, start + 10);
+      setOrders({ totalPages });
+      setOrdersData({ data: pageData });
+      if (pageOrder > totalPages) setPageOrder(1);
+    } else {
+      // ())
+    }
+  }, [searchQuery]);
+
   return (
     <div className="card !my-4 shadow-md sm:rounded-lg dark:bg-gray-700">
       <div className="flex !bg-gray-950 items-center justify-between !px-5 !py-5 border-b dark:border-gray-700">
         <h2 className="text-white text-[20px] font-[500] ">
           PEDIDOS RECIENTES
         </h2>
-        <div className="w-[40%]">
-          <SearchBox />
+        <div className="w-[25%]">
+          <SearchBox
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            setPageOrder={setPageOrder}
+          />
         </div>
       </div>
-      <div class="relative overflow-x-auto dark:!bg-gray-800 ">
+      <div class="relative overflow-x-auto !mt-0  dark:!bg-gray-800">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-700 text-white ">
+          <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-700 text-white">
             <tr>
-              <th scope="col" class="!px-6 !py-3 !mb-3">
+              <th scope="col" class="!px-6 !py-3">
                 &nbsp;
               </th>
               <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
@@ -106,8 +177,8 @@ const Orders = () => {
             </tr>
           </thead>
           <tbody>
-            {orders?.length !== 0 &&
-              orders?.map((order, index) => {
+            {ordersData?.data?.length !== 0 &&
+              ordersData?.data?.map((order, index) => {
                 return (
                   <>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
@@ -296,6 +367,18 @@ const Orders = () => {
           </tbody>
         </table>
       </div>
+
+      {orders?.totalPages > 1 && (
+        <div className="flex items-center justify-center  !mt-0 !pb-3 !bg-gray-100 !text-balck !border-t !border-gray-500">
+          <Pagination
+            showFirstButton
+            showLastButton
+            count={orders?.totalPages}
+            page={pageOrder}
+            onChange={(e, value) => setPageOrder(value)}
+          />
+        </div>
+      )}
     </div>
   );
 };
