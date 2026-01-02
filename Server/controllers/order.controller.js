@@ -463,73 +463,73 @@ export const totalUsersController = async (request, response) => {
     ];
 
     for (let i = 0; i < users.length; i++) {
-      if (users[i]?._id?.$month === 1) {
+      if (users[i]?._id?.month === 1) {
         monthlyUsers[0] = {
           name: "ENERO",
           TotalUsers: users[i].count,
         };
       }
-      if (users[i]?._id?.$month === 2) {
+      if (users[i]?._id?.month === 2) {
         monthlyUsers[1] = {
           name: "FEBRERO",
           TotalUsers: users[i].count,
         };
       }
-      if (users[i]?._id?.$month === 3) {
+      if (users[i]?._id?.month === 3) {
         monthlyUsers[2] = {
           name: "MARZO",
           TotalUsers: users[i].count,
         };
       }
-      if (users[i]?._id?.$month === 4) {
+      if (users[i]?._id?.month === 4) {
         monthlyUsers[3] = {
           name: "ABRIL",
           TotalUsers: users[i].count,
         };
       }
-      if (users[i]?._id?.$month === 5) {
+      if (users[i]?._id?.month === 5) {
         monthlyUsers[4] = {
           name: "MAYO",
           TotalUsers: users[i].count,
         };
       }
-      if (users[i]?._id?.$month === 6) {
+      if (users[i]?._id?.month === 6) {
         monthlyUsers[5] = {
           name: "JUNIO",
           TotalUsers: users[i].count,
         };
       }
-      if (users[i]?._id?.$month === 7) {
+      if (users[i]?._id?.month === 7) {
         monthlyUsers[6] = {
           name: "JULIO",
           TotalUsers: users[i].count,
         };
       }
-      if (users[i]?._id?.$month === 8) {
+      if (users[i]?._id?.month === 8) {
         monthlyUsers[7] = {
           name: "AGOSTO",
           TotalUsers: users[i].count,
         };
       }
-      if (users[i]?._id?.$month === 9) {
+      if (users[i]?._id?.month === 9) {
         monthlyUsers[8] = {
           name: "SEPTIEMBRE",
           TotalUsers: users[i].count,
         };
       }
-      if (users[i]?._id?.$month === 10) {
+      if (users[i]?._id?.month === 10) {
         monthlyUsers[9] = {
           name: "OCTUBRE",
           TotalUsers: users[i].count,
         };
       }
-      if (users[i]?._id?.$month === 11) {
+      if (users[i]?._id?.month === 11) {
         monthlyUsers[10] = {
           name: "NOVIEMBRE",
           TotalUsers: users[i].count,
         };
       }
-      if (users[i]?._id?.$month === 12) {
+      if (users[i]?._id?.month === 12) {
         monthlyUsers[11] = {
           name: "DICIEMBRE",
           TotalUsers: users[i].count,

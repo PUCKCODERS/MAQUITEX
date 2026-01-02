@@ -120,7 +120,7 @@ const Dashboard = () => {
   const [allReviews, setAllReviews] = useState([]);
 
   const [chartData, setChartData] = useState([]);
-  const [year, setYear] = useState(new Date().getFullYear());
+  const [, /*year*/ setYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
     getProducts();
