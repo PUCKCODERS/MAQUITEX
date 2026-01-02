@@ -74,6 +74,23 @@ export const getOrderDetailsController = async (request, response) => {
   }
 };
 
+export async function getTotalOrdersCountController(request, response) {
+  try {
+    const ordersCount = await OrderModel.countDocuments();
+    return response.status(200).json({
+      error: false,
+      success: true,
+      count: ordersCount,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
 function getPayPalClient() {
   const environment =
     process.env.PAYPAL_MODE === "live"

@@ -114,6 +114,9 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [totalOrdersData, setTotalOrdersData] = useState([]);
 
+  const [users, setUsers] = useState([]);
+  const [allReviews, setAllReviews] = useState([]);
+
   const [chart1Data /*{setChart1Data}*/] = useState([
     {
       name: "ENERO",
@@ -247,6 +250,19 @@ const Dashboard = () => {
       // ())
     }
   }, [searchQuery]);
+
+  useEffect(() => {
+    fetchDataFromApi("/api/user/getAllUsers").then((res) => {
+      if (res?.error === false) {
+        setUsers(res?.users);
+      }
+    });
+    fetchDataFromApi("/api/user/getAllReviews").then((res) => {
+      if (res?.error === false) {
+        setAllReviews(res?.reviews);
+      }
+    });
+  }, []);
 
   const handleSelectAll = (e) => {
     const isChecked = e.target.checked;
@@ -436,7 +452,18 @@ const Dashboard = () => {
 
         <img src="../../../imagenes/Saludo/Saludo4.png" className="w-[250px]" />
       </div>
-      <DashboardBoxes />
+
+      {productData?.length !== 0 &&
+        users?.length !== 0 &&
+        allReviews?.length !== 0 && (
+          <DashboardBoxes
+            orders={totalOrdersData?.length}
+            products={productData?.length}
+            users={users?.length}
+            reviews={allReviews?.length}
+            category={context?.catData?.length}
+          />
+        )}
 
       <div className="card !my-4  shadow-md sm:rounded-lg dark:bg-gray-800 ">
         <div className="flex !bg-gray-950 items-center justify-between  !px-5 !py-5 !mt-3 border-b dark:border-gray-700 ">

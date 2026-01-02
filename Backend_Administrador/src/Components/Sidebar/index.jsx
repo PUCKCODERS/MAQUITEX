@@ -5,6 +5,7 @@ import { AiFillAppstore } from "react-icons/ai";
 import { FaUsers } from "react-icons/fa";
 import { GiSewingMachine } from "react-icons/gi";
 import { AiFillDatabase } from "react-icons/ai";
+import { TfiLayoutSlider } from "react-icons/tfi";
 import { AiFillReconciliation } from "react-icons/ai";
 import { GiExitDoor } from "react-icons/gi";
 import { RiSlideshowFill } from "react-icons/ri";
@@ -251,7 +252,7 @@ const Sidebar = () => {
               className="w-full !text-[#082c55] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300"
               onClick={() => isOpenSubMenu(5)}
             >
-              <PiSlideshowFill className="!text-[20px] " /> <span>BANNERS</span>
+              <TfiLayoutSlider className="!text-[20px] " /> <span>BANNERS</span>
               <span className="!ml-auto !text-[20px] !w-[30px] !h-[30px] flex items-center justify-center">
                 <GoTriangleDown
                   className={`transition-all ${

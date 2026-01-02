@@ -755,3 +755,53 @@ export async function getReviews(request, response) {
     });
   }
 }
+
+export async function getAllReviews(request, response) {
+  try {
+    const reviews = await UserModel.find();
+
+    if (!reviews) {
+      return response.status(400).json({
+        error: true,
+        success: false,
+      });
+    }
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      reviews: reviews,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: "ALGO ESTÁ MAL",
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function getAllUsers(request, response) {
+  try {
+    const users = await UserModel.find();
+
+    if (!users) {
+      return response.status(400).json({
+        error: true,
+        success: false,
+      });
+    }
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      users: users,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: "ALGO ESTÁ MAL",
+      error: true,
+      success: false,
+    });
+  }
+}

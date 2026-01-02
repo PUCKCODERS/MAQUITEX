@@ -3,6 +3,8 @@ import {
   addReview,
   authWithGoogle,
   forgotPasswordController,
+  getAllReviews,
+  getAllUsers,
   getReviews,
   loginUserController,
   logoutController,
@@ -40,4 +42,6 @@ userRouter.post("/refresh-token", refreshToken);
 userRouter.get("/user-details", auth, userDetails);
 userRouter.post("/addReview", auth, addReview);
 userRouter.get("/getReviews", getReviews);
+userRouter.get("/getAllReviews", getAllReviews);
+userRouter.get("/getAllUsers", getAllUsers);
 export default userRouter;
