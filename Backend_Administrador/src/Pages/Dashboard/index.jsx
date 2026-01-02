@@ -44,6 +44,8 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  BarChart,
+  Bar,
 } from "recharts";
 import { MyContext } from "../../App";
 import {
@@ -117,80 +119,8 @@ const Dashboard = () => {
   const [users, setUsers] = useState([]);
   const [allReviews, setAllReviews] = useState([]);
 
-  const [chart1Data /*{setChart1Data}*/] = useState([
-    {
-      name: "ENERO",
-      USUARIOS: 4000,
-      VENTAS: 2400,
-      amt: 2400,
-    },
-    {
-      name: "FEBRERO",
-      USUARIOS: 3000,
-      VENTAS: 1398,
-      amt: 2210,
-    },
-    {
-      name: "MARZO",
-      USUARIOS: 2000,
-      VENTAS: 9800,
-      amt: 2290,
-    },
-    {
-      name: "ABRIL",
-      USUARIOS: 2780,
-      VENTAS: 3908,
-      amt: 2000,
-    },
-    {
-      name: "MAYO",
-      USUARIOS: 1890,
-      VENTAS: 4800,
-      amt: 2181,
-    },
-    {
-      name: "JUNIO",
-      USUARIOS: 2390,
-      VENTAS: 3800,
-      amt: 2500,
-    },
-    {
-      name: "JULIO",
-      USUARIOS: 3490,
-      VENTAS: 4300,
-      amt: 2100,
-    },
-    {
-      name: "AGOSTO",
-      USUARIOS: 2000,
-      VENTAS: 2400,
-      amt: 2400,
-    },
-    {
-      name: "SEPTIEMBRE",
-      USUARIOS: 2780,
-      VENTAS: 3908,
-      amt: 2000,
-    },
-    {
-      name: "OCTUBRE",
-      USUARIOS: 1890,
-      VENTAS: 4800,
-      amt: 2181,
-    },
-    {
-      name: "NOVIEMBRE",
-      USUARIOS: 2390,
-      VENTAS: 3800,
-      amt: 2500,
-    },
-    {
-      name: "DICIEMBRE",
-      USUARIOS: 3490,
-      VENTAS: 4300,
-      amt: 2100,
-    },
-  ]);
+  const [chartData, setChartData] = useState([]);
+  const [year, setYear] = useState(new Date().getFullYear());
 
   useEffect(() => {
     getProducts();
@@ -252,6 +182,7 @@ const Dashboard = () => {
   }, [searchQuery]);
 
   useEffect(() => {
+    getTotalSalesByYear();
     fetchDataFromApi("/api/user/getAllUsers").then((res) => {
       if (res?.error === false) {
         setUsers(res?.users);
@@ -422,6 +353,48 @@ const Dashboard = () => {
     } else {
       setIsOpenOrderdProduct(index);
     }
+  };
+
+  const getTotalUsersByYear = () => {
+    fetchDataFromApi(`/api/order/users`).then((res) => {
+      const users = [];
+      res?.TotalUsers?.length !== 0 &&
+        res?.TotalUsers?.map((item) => {
+          users.push({
+            name: item?.name,
+            TotalUsers: parseInt(item?.TotalUsers),
+          });
+        });
+      const uniqueArr = users.filter(
+        (obj, index, self) =>
+          index === self.findIndex((t) => t.name === obj.name)
+      );
+      setChartData(uniqueArr);
+    });
+  };
+
+  const getTotalSalesByYear = () => {
+    fetchDataFromApi(`/api/order/sales`).then((res) => {
+      const sales = [];
+      res?.monthlySales?.length !== 0 &&
+        res?.monthlySales?.map((item) => {
+          sales.push({
+            name: item?.name,
+            TotalSales: parseInt(item?.TotalSales),
+          });
+        });
+
+      const uniqueArr = sales.filter(
+        (obj, index, self) =>
+          index === self.findIndex((t) => t.name === obj.name)
+      );
+      setChartData(uniqueArr);
+    });
+  };
+
+  const handleChangeYear = (event) => {
+    getTotalSalesByYear(event.target.value);
+    setYear(event.target.value);
   };
 
   return (
@@ -1493,55 +1466,75 @@ const Dashboard = () => {
         )}
       </div>
 
-      <div className="card !my-4 shadow-md sm:rounded-lg dark:!bg-gray-800">
-        <div class="flex !bg-gray-950 items-center justify-between !px-5 !py-5 !mb-5 border-b dark:border-gray-700">
+      <div className="card !my-4 shadow-md sm:rounded-lg dark:!bg-gray-100">
+        <div class="flex !bg-gray-950 items-center justify-between !px-5 !py-5 !mb-0 border-b dark:border-gray-700">
           <h2 class="text-white text-[20px] !font-[500] ">
             TASA DE CLIENTES REPETIDOS
           </h2>
         </div>
 
-        <div class="flex items-center !px-5 !py-5 !mb-5 !pt-0 !gap-8">
-          <span className="flex items-center !text-white !text-[15px] !font-bold !gap-3">
+        <div class="flex items-center !px-5 !py-5 !mb-5 !pt-5 !gap-8 !bg-gray-800">
+          <span
+            className="flex items-center !text-white !text-[15px] !font-bold !gap-3 !cursor-pointer"
+            onClick={getTotalUsersByYear}
+          >
             <span className="block w-[10px] h-[10px] rounded-full !bg-[#8884d8]"></span>
             TOTAL DE USUARIOS
           </span>
 
-          <span className="flex items-center !text-white !text-[15px] !font-bold !gap-3">
+          <span
+            className="flex items-center !text-white !text-[15px] !font-bold !gap-3 !cursor-pointer"
+            onClick={getTotalSalesByYear}
+          >
             <span className="block w-[10px] h-[10px] rounded-full !bg-[#82ca9d] "></span>
             TOTAL DE VENTAS
           </span>
         </div>
 
-        <LineChart
-          width={1000}
-          height={500}
-          data={chart1Data}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" tick={{ fontSize: 12 }} />
-          <YAxis tick={{ fontSize: 12 }} />
-          <Tooltip />
-          <Legend />
-          <Line
-            type="monotone"
-            dataKey="USUARIOS"
-            strokeWidth={3}
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-          <Line
-            type="monotone"
-            dataKey="VENTAS"
-            stroke="#82ca9d"
-            strokeWidth={3}
-          />
-        </LineChart>
+        {chartData?.length !== 0 && (
+          <BarChart
+            width={1000}
+            height={500}
+            data={chartData}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <XAxis
+              dataKey="name"
+              scale="point"
+              padding={{ left: 35, right: 10 }}
+              tick={{ fontSize: 12 }}
+              label={{ position: "insideBottom", fontSize: 14 }}
+              style={{ fill: context?.theme === "dark" ? "white" : "#000" }}
+            />
+            <YAxis
+              tick={{ fontSize: 12 }}
+              label={{ position: "insideBottom", fontSize: 14 }}
+              style={{ fill: context?.theme === "dark" ? "white" : "#000" }}
+            />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "#071739",
+                color: "white",
+              }}
+              labelStyle={{ color: "yellow" }}
+              itemStyle={{ color: "cyan" }}
+              cursor={{ fill: "white" }}
+            />
+            <Legend />
+            <CartesianGrid
+              strokeDasharray="3 3"
+              horizontal={false}
+              vertical={false}
+            />
+            <Bar dataKey="TotalSales" stackId="a" fill="#16a34a" />
+            <Bar dataKey="TotalUsers" stackId="b" fill="#0858f7" />
+          </BarChart>
+        )}
       </div>
     </>
   );
