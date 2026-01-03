@@ -121,6 +121,8 @@ const Dashboard = () => {
 
   const [chartData, setChartData] = useState([]);
   const [, /*year*/ setYear] = useState(new Date().getFullYear());
+  const [totalUsuarios, setTotalUsuarios] = useState(0);
+  const [totalVentas, setTotalVentas] = useState(0);
 
   useEffect(() => {
     getProducts();
@@ -186,6 +188,7 @@ const Dashboard = () => {
     fetchDataFromApi("/api/user/getAllUsers").then((res) => {
       if (res?.error === false) {
         setUsers(res?.users);
+        setTotalUsuarios(Array.isArray(res?.users) ? res.users.length : 0);
       }
     });
     fetchDataFromApi("/api/user/getAllReviews").then((res) => {
@@ -375,6 +378,7 @@ const Dashboard = () => {
 
   const getVENTASByYear = () => {
     fetchDataFromApi(`/api/order/sales`).then((res) => {
+      // Use backend-provided VENTAS (total all-time) for totalVentas
       const sales = [];
       res?.monthlySales?.length !== 0 &&
         res?.monthlySales?.map((item) => {
@@ -387,6 +391,11 @@ const Dashboard = () => {
       const uniqueArr = sales.filter(
         (obj, index, self) =>
           index === self.findIndex((t) => t.name === obj.name)
+      );
+      setTotalVentas(
+        res?.VENTAS
+          ? parseInt(res.VENTAS)
+          : uniqueArr.reduce((s, i) => s + (i.VENTAS || 0), 0)
       );
       setChartData(uniqueArr);
     });
@@ -1474,21 +1483,31 @@ const Dashboard = () => {
         </div>
 
         <div class="flex items-center !px-5 !py-5 !mb-5 !pt-5 !gap-8 !bg-gray-800">
-          <span
-            className="flex items-center !text-white !text-[15px] !font-bold !gap-3 !cursor-pointer"
-            onClick={getUSUARIOSByYear}
-          >
-            <span className="block w-[10px] h-[10px] rounded-full !bg-[#8884d8]"></span>
-            TOTAL DE USUARIOS
-          </span>
-
-          <span
+          <button
             className="flex items-center !text-white !text-[15px] !font-bold !gap-3 !cursor-pointer"
             onClick={getVENTASByYear}
           >
-            <span className="block w-[10px] h-[10px] rounded-full !bg-[#82ca9d] "></span>
-            TOTAL DE VENTAS
-          </span>
+            <span className="block w-[10px] h-[10px] rounded-full !bg-[#16a34a] "></span>
+            <div className="flex flex-col items-start ml-2">
+              <span>TOTAL DE VENTAS</span>
+              <span className="text-[20px] !font-[800] !text-[#16a34a]">
+                $ {totalVentas ? totalVentas.toLocaleString() : 0}
+              </span>
+            </div>
+          </button>
+
+          <button
+            className="flex items-center !text-white !text-[15px] !font-bold !gap-3 !cursor-pointer"
+            onClick={getUSUARIOSByYear}
+          >
+            <span className="block w-[10px] h-[10px] rounded-full !bg-[#4471ca]"></span>
+            <div className="flex flex-col items-start ml-2">
+              <span>TOTAL DE USUARIOS</span>
+              <span className="text-[20px] !font-[800] !text-[#4471ca]">
+                {totalUsuarios ?? 0}
+              </span>
+            </div>
+          </button>
         </div>
 
         {chartData?.length !== 0 && (
