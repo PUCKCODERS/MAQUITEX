@@ -6,8 +6,8 @@ import {
   createOrderPaypalController,
   getOrderDetailsController,
   getTotalOrdersCountController,
-  totalSalesController,
-  totalUsersController,
+  VENTASController,
+  USUARIOSController,
   updateOrderStatusController,
 } from "../controllers/order.controller.js";
 
@@ -19,7 +19,7 @@ orderRouter.get("/create-order-paypal", auth, createOrderPaypalController);
 orderRouter.post("/capture-order-paypal", auth, captureOrderPaypalController);
 orderRouter.put("/order-status/:id", auth, updateOrderStatusController);
 orderRouter.get("/count", auth, getTotalOrdersCountController);
-orderRouter.get("/sales", auth, totalSalesController);
-orderRouter.get("/users", auth, totalUsersController);
+orderRouter.get("/sales", auth, VENTASController);
+orderRouter.get("/users", auth, USUARIOSController);
 
 export default orderRouter;

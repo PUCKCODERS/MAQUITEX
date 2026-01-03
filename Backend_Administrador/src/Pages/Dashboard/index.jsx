@@ -182,7 +182,7 @@ const Dashboard = () => {
   }, [searchQuery]);
 
   useEffect(() => {
-    getTotalSalesByYear();
+    getVENTASByYear();
     fetchDataFromApi("/api/user/getAllUsers").then((res) => {
       if (res?.error === false) {
         setUsers(res?.users);
@@ -355,14 +355,14 @@ const Dashboard = () => {
     }
   };
 
-  const getTotalUsersByYear = () => {
+  const getUSUARIOSByYear = () => {
     fetchDataFromApi(`/api/order/users`).then((res) => {
       const users = [];
-      res?.TotalUsers?.length !== 0 &&
-        res?.TotalUsers?.map((item) => {
+      res?.USUARIOS?.length !== 0 &&
+        res?.USUARIOS?.map((item) => {
           users.push({
             name: item?.name,
-            TotalUsers: parseInt(item?.TotalUsers),
+            USUARIOS: parseInt(item?.USUARIOS),
           });
         });
       const uniqueArr = users.filter(
@@ -373,14 +373,14 @@ const Dashboard = () => {
     });
   };
 
-  const getTotalSalesByYear = () => {
+  const getVENTASByYear = () => {
     fetchDataFromApi(`/api/order/sales`).then((res) => {
       const sales = [];
       res?.monthlySales?.length !== 0 &&
         res?.monthlySales?.map((item) => {
           sales.push({
             name: item?.name,
-            TotalSales: parseInt(item?.TotalSales),
+            VENTAS: parseInt(item?.VENTAS),
           });
         });
 
@@ -393,7 +393,7 @@ const Dashboard = () => {
   };
 
   const handleChangeYear = (event) => {
-    getTotalSalesByYear(event.target.value);
+    getVENTASByYear(event.target.value);
     setYear(event.target.value);
   };
 
@@ -1476,7 +1476,7 @@ const Dashboard = () => {
         <div class="flex items-center !px-5 !py-5 !mb-5 !pt-5 !gap-8 !bg-gray-800">
           <span
             className="flex items-center !text-white !text-[15px] !font-bold !gap-3 !cursor-pointer"
-            onClick={getTotalUsersByYear}
+            onClick={getUSUARIOSByYear}
           >
             <span className="block w-[10px] h-[10px] rounded-full !bg-[#8884d8]"></span>
             TOTAL DE USUARIOS
@@ -1484,7 +1484,7 @@ const Dashboard = () => {
 
           <span
             className="flex items-center !text-white !text-[15px] !font-bold !gap-3 !cursor-pointer"
-            onClick={getTotalSalesByYear}
+            onClick={getVENTASByYear}
           >
             <span className="block w-[10px] h-[10px] rounded-full !bg-[#82ca9d] "></span>
             TOTAL DE VENTAS
@@ -1531,8 +1531,8 @@ const Dashboard = () => {
               horizontal={false}
               vertical={false}
             />
-            <Bar dataKey="TotalSales" stackId="a" fill="#16a34a" />
-            <Bar dataKey="TotalUsers" stackId="b" fill="#0858f7" />
+            <Bar dataKey="VENTAS" stackId="a" fill="#16a34a" />
+            <Bar dataKey="USUARIOS" stackId="b" fill="#0858f7" />
           </BarChart>
         )}
       </div>
