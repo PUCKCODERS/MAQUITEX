@@ -396,7 +396,16 @@ export const VENTASController = async (request, response) => {
 
 export const USUARIOSController = async (request, response) => {
   try {
+    const currentYear = new Date().getFullYear();
+
     const users = await UserModel.aggregate([
+      {
+        $match: {
+          $expr: {
+            $eq: [{ $year: "$createdAt" }, currentYear],
+          },
+        },
+      },
       {
         $group: {
           _id: {
@@ -463,77 +472,79 @@ export const USUARIOSController = async (request, response) => {
     ];
 
     for (let i = 0; i < users.length; i++) {
-      if (users[i]?._id?.month === 1) {
-        monthlyUsers[0] = {
-          name: "ENERO",
-          USUARIOS: users[i].count,
-        };
-      }
-      if (users[i]?._id?.month === 2) {
-        monthlyUsers[1] = {
-          name: "FEBRERO",
-          USUARIOS: users[i].count,
-        };
-      }
-      if (users[i]?._id?.month === 3) {
-        monthlyUsers[2] = {
-          name: "MARZO",
-          USUARIOS: users[i].count,
-        };
-      }
-      if (users[i]?._id?.month === 4) {
-        monthlyUsers[3] = {
-          name: "ABRIL",
-          USUARIOS: users[i].count,
-        };
-      }
-      if (users[i]?._id?.month === 5) {
-        monthlyUsers[4] = {
-          name: "MAYO",
-          USUARIOS: users[i].count,
-        };
-      }
-      if (users[i]?._id?.month === 6) {
-        monthlyUsers[5] = {
-          name: "JUNIO",
-          USUARIOS: users[i].count,
-        };
-      }
-      if (users[i]?._id?.month === 7) {
-        monthlyUsers[6] = {
-          name: "JULIO",
-          USUARIOS: users[i].count,
-        };
-      }
-      if (users[i]?._id?.month === 8) {
-        monthlyUsers[7] = {
-          name: "AGOSTO",
-          USUARIOS: users[i].count,
-        };
-      }
-      if (users[i]?._id?.month === 9) {
-        monthlyUsers[8] = {
-          name: "SEPTIEMBRE",
-          USUARIOS: users[i].count,
-        };
-      }
-      if (users[i]?._id?.month === 10) {
-        monthlyUsers[9] = {
-          name: "OCTUBRE",
-          USUARIOS: users[i].count,
-        };
-      }
-      if (users[i]?._id?.month === 11) {
-        monthlyUsers[10] = {
-          name: "NOVIEMBRE",
-          USUARIOS: users[i].count,
-        };
-      }
-      if (users[i]?._id?.month === 12) {
-        monthlyUsers[11] = {
-          name: "DICIEMBRE",
-          USUARIOS: users[i].count,
-        };
+      if (users[i]?._id?.year === currentYear) {
+        if (users[i]?._id?.month === 1) {
+          monthlyUsers[0] = {
+            name: "ENERO",
+            USUARIOS: users[i].count,
+          };
+        }
+        if (users[i]?._id?.month === 2) {
+          monthlyUsers[1] = {
+            name: "FEBRERO",
+            USUARIOS: users[i].count,
+          };
+        }
+        if (users[i]?._id?.month === 3) {
+          monthlyUsers[2] = {
+            name: "MARZO",
+            USUARIOS: users[i].count,
+          };
+        }
+        if (users[i]?._id?.month === 4) {
+          monthlyUsers[3] = {
+            name: "ABRIL",
+            USUARIOS: users[i].count,
+          };
+        }
+        if (users[i]?._id?.month === 5) {
+          monthlyUsers[4] = {
+            name: "MAYO",
+            USUARIOS: users[i].count,
+          };
+        }
+        if (users[i]?._id?.month === 6) {
+          monthlyUsers[5] = {
+            name: "JUNIO",
+            USUARIOS: users[i].count,
+          };
+        }
+        if (users[i]?._id?.month === 7) {
+          monthlyUsers[6] = {
+            name: "JULIO",
+            USUARIOS: users[i].count,
+          };
+        }
+        if (users[i]?._id?.month === 8) {
+          monthlyUsers[7] = {
+            name: "AGOSTO",
+            USUARIOS: users[i].count,
+          };
+        }
+        if (users[i]?._id?.month === 9) {
+          monthlyUsers[8] = {
+            name: "SEPTIEMBRE",
+            USUARIOS: users[i].count,
+          };
+        }
+        if (users[i]?._id?.month === 10) {
+          monthlyUsers[9] = {
+            name: "OCTUBRE",
+            USUARIOS: users[i].count,
+          };
+        }
+        if (users[i]?._id?.month === 11) {
+          monthlyUsers[10] = {
+            name: "NOVIEMBRE",
+            USUARIOS: users[i].count,
+          };
+        }
+        if (users[i]?._id?.month === 12) {
+          monthlyUsers[11] = {
+            name: "DICIEMBRE",
+            USUARIOS: users[i].count,
+          };
+        }
       }
     }
 
