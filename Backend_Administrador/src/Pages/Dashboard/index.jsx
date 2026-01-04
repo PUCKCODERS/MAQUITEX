@@ -116,6 +116,8 @@ const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [totalOrdersData, setTotalOrdersData] = useState([]);
 
+  const [productTotalData, setProductTotalData] = useState([]);
+
   const [users, setUsers] = useState([]);
   const [allReviews, setAllReviews] = useState([]);
 
@@ -127,6 +129,43 @@ const Dashboard = () => {
   useEffect(() => {
     getProducts();
   }, [context?.isOpenFullScreenPanel]);
+
+  useEffect(() => {
+    if (searchQuery !== "") {
+      const filteredOrders = productTotalData?.filter(
+        (product) =>
+          product._id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          product.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          product.catName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          product.subCat?.includes(searchQuery)
+      );
+      setProductData(filteredOrders);
+    } else {
+      fetchDataFromApi(`/api/product/getAllProducts`).then((res) => {
+        if (res?.error === false) {
+          setProductData(res?.products);
+        }
+      });
+    }
+  }, [searchQuery]);
+
+  const getProducts = async () => {
+    setIsloading(true);
+    fetchDataFromApi("/api/product/getAllProducts").then((res) => {
+      let productArr = [];
+      if (res?.error === false) {
+        for (let i = 0; i < res?.products?.length; i++) {
+          productArr[i] = res?.products[i];
+          productArr[i].checked = false;
+        }
+        setTimeout(() => {
+          setProductData(productArr);
+          setProductTotalData(res?.products);
+          setIsloading(false);
+        }, 300);
+      }
+    });
+  };
 
   useEffect(() => {
     fetchDataFromApi(`/api/order/order-list`).then((res) => {
@@ -228,23 +267,6 @@ const Dashboard = () => {
       .map((item) => item._id)
       .sort((a, b) => a - b);
     setSortedIds(selectedIds);
-  };
-
-  const getProducts = async () => {
-    setIsloading(true);
-    fetchDataFromApi("/api/product/getAllProducts").then((res) => {
-      let productArr = [];
-      if (res?.error === false) {
-        for (let i = 0; i < res?.products?.length; i++) {
-          productArr[i] = res?.products[i];
-          productArr[i].checked = false;
-        }
-        setTimeout(() => {
-          setProductData(productArr);
-          setIsloading(false);
-        }, 300);
-      }
-    });
   };
 
   const handleChangeProductCat = (event) => {
@@ -584,7 +606,11 @@ const Dashboard = () => {
           </div>
 
           <div className="col !w-[20%] ml-auto">
-            <SearchBox />
+            <SearchBox
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              setPageOrder={setPageOrder}
+            />
           </div>
         </div>
 
