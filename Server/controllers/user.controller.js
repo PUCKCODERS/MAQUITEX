@@ -805,3 +805,45 @@ export async function getAllUsers(request, response) {
     });
   }
 }
+
+export async function deleteMultiple(request, response) {
+  const { ids } = request.body;
+
+  if (!ids || !Array.isArray(ids)) {
+    return response
+      .status(400)
+      .json({ error: true, success: false, message: "ENTRADA NO VÁLIDA" });
+  }
+
+  try {
+    for (let i = 0; i < ids.length; i++) {
+      const user = await UserModel.findById(ids[i]);
+      if (!user) continue;
+
+      const images = user.images || [];
+      for (const img of images) {
+        try {
+          const urlArr = img.split("/");
+          const image = urlArr[urlArr.length - 1];
+          const imageName = image.split(".")[0];
+          if (imageName) {
+            await cloudinary.uploader.destroy(imageName).catch(() => {});
+          }
+        } catch (err) {}
+      }
+    }
+    await UserModel.deleteMany({ _id: { $in: ids } });
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      message: "USUARIOS ELIMINADOS",
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}

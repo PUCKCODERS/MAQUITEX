@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   addReview,
   authWithGoogle,
+  deleteMultiple,
   forgotPasswordController,
   getAllReviews,
   getAllUsers,
@@ -44,4 +45,5 @@ userRouter.post("/addReview", auth, addReview);
 userRouter.get("/getReviews", getReviews);
 userRouter.get("/getAllReviews", getAllReviews);
 userRouter.get("/getAllUsers", getAllUsers);
+userRouter.delete("/deleteMultiple", deleteMultiple);
 export default userRouter;

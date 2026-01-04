@@ -120,7 +120,7 @@ const Dashboard = () => {
   const [allReviews, setAllReviews] = useState([]);
 
   const [chartData, setChartData] = useState([]);
-  const [, /*year*/ setYear] = useState(new Date().getFullYear());
+  /*const [, year setYear] = useState(new Date().getFullYear());*/
   const [totalUsuarios, setTotalUsuarios] = useState(0);
   const [totalVentas, setTotalVentas] = useState(0);
 
@@ -401,11 +401,13 @@ const Dashboard = () => {
     });
   };
 
-  const handleChangeYear = (event) => {
+  {
+    /* const handleChangeYear = (event) => {
     getVENTASByYear(event.target.value);
     setYear(event.target.value);
   };
-
+*/
+  }
   return (
     <>
       <div className="w-full !bg-white !py-2 !px-5 border border-[#082c55] flex items-center !gap-8 !mb-5 justify-between rounded-md !shadow-[5px_5px_5px_#082c55]">
@@ -620,6 +622,7 @@ const Dashboard = () => {
                 productData?.length !== 0 &&
                 productData
                   ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  ?.reverse()
                   ?.map((product, index) => {
                     return (
                       <TableRow

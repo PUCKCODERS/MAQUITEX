@@ -71,6 +71,7 @@ export const Products = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [productData, setProductData] = useState([]);
+  const [productTotalData, setProductTotalData] = useState([]);
   const [productCat, setProductCat] = React.useState("");
   const [productSubCat, setProductSubCat] = React.useState("");
   const [productThirdLavelCat, setProductThirdLavelCat] = useState("");
@@ -80,11 +81,33 @@ export const Products = () => {
   const [productToDelete, setProductToDelete] = useState(null);
   const [isLoading, setIsloading] = useState(false);
 
+  const [/*pageOrder,*/ setPageOrder] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+
   const context = useContext(MyContext);
 
   useEffect(() => {
     getProducts();
   }, [context?.isOpenFullScreenPanel]);
+
+  useEffect(() => {
+    if (searchQuery !== "") {
+      const filteredOrders = productTotalData?.filter(
+        (product) =>
+          product._id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          product.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          product.catName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          product.subCat?.includes(searchQuery)
+      );
+      setProductData(filteredOrders);
+    } else {
+      fetchDataFromApi(`/api/product/getAllProducts`).then((res) => {
+        if (res?.error === false) {
+          setProductData(res?.products);
+        }
+      });
+    }
+  }, [searchQuery]);
 
   const handleSelectAll = (e) => {
     const isChecked = e.target.checked;
@@ -129,6 +152,7 @@ export const Products = () => {
         }
         setTimeout(() => {
           setProductData(productArr);
+          setProductTotalData(res?.products);
           setIsloading(false);
         }, 300);
       }
@@ -239,9 +263,7 @@ export const Products = () => {
       <div className="flex !bg-gray-950 items-center justify-between !px-5 !py-5 !mt-3 sm:rounded-lg border-b dark:border-gray-700 ">
         <h2 className="text-white text-[20px] !font-[500] ">
           PRODUCTOS
-          <span className="font-[400] text-[14px] !ml-3">
-            (MATERIAL UI DESCRIPCION)
-          </span>
+          <span className="font-[400] text-[14px] !ml-3"></span>
         </h2>
 
         <div className="col !w-[55%] !ml-auto flex items-center justify-end !gap-2">
@@ -371,7 +393,11 @@ export const Products = () => {
           </div>
 
           <div className="col !w-[20%] ml-auto">
-            <SearchBox />
+            <SearchBox
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
+              setPageOrder={setPageOrder}
+            />
           </div>
         </div>
 
@@ -409,6 +435,7 @@ export const Products = () => {
                 productData?.length !== 0 &&
                 productData
                   ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  ?.reverse()
                   ?.map((product, index) => {
                     return (
                       <TableRow
