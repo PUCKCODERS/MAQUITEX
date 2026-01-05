@@ -1461,3 +1461,49 @@ export async function sortBy(request, response) {
     page: 0,
   });
 }
+
+// BUSCADOR DE PRODUCTOS
+
+export async function searchProductController(request, response) {
+  try {
+    const { query, page, limit } = request.body;
+
+    if (!query) {
+      return response.status(400).json({
+        error: true,
+        success: false,
+        message: "SE REQUIERE CONSULTA",
+      });
+    }
+
+    const products = await ProductModel.find({
+      $or: [
+        { name: { $regex: query, $options: "i" } },
+        { brand: { $regex: query, $options: "i" } },
+        { catName: { $regex: query, $options: "i" } },
+        { subCat: { $regex: query, $options: "i" } },
+        { thirdsubCat: { $regex: query, $options: "i" } },
+      ],
+    })
+      .populate("category")
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit));
+
+    const total = await products?.length;
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      products: products,
+      total: total,
+      page: parseInt(page),
+      totalPages: Math.ceil(total / limit),
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}

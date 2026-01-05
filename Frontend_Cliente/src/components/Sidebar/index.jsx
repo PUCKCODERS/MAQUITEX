@@ -97,12 +97,22 @@ const Sidebar = (props) => {
 
   const filtesData = () => {
     props.setIsLoading(true);
-    postData(`/api/product/filters`, filters).then((res) => {
-      props.setProductsData(res);
+
+    // console.log(context?.searchData);
+
+    if (context?.searchData?.products?.length > 0) {
+      props.setProductsData(context?.searchData);
       props.setIsLoading(false);
-      props.setTotalPages(res?.totalPages);
+      props.setTotalPages(context?.searchData?.totalPages);
       window.scrollTo(0, 0);
-    });
+    } else {
+      postData(`/api/product/filters`, filters).then((res) => {
+        props.setProductsData(res);
+        props.setIsLoading(false);
+        props.setTotalPages(res?.totalPages);
+        window.scrollTo(0, 0);
+      });
+    }
   };
 
   useEffect(() => {
