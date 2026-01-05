@@ -35,6 +35,8 @@ const Sidebar = (props) => {
   const location = useLocation();
 
   const handleCheckboxChange = (field, value) => {
+    context?.setSearchData([]);
+
     const currentValues = filters[field] || [];
     const updatedValues = currentValues?.includes(value)
       ? currentValues.filter((item) => item !== value)
@@ -66,6 +68,7 @@ const Sidebar = (props) => {
       filters.subCatId = [];
       filters.thirdsubCatId = [];
       filters.rating = [];
+      context?.setSearchData([]);
     }
 
     if (url.includes("subCatId")) {
@@ -76,6 +79,7 @@ const Sidebar = (props) => {
       filters.catId = [];
       filters.thirdsubCatId = [];
       filters.rating = [];
+      context?.setSearchData([]);
     }
 
     if (url.includes("thirdLavelCatId")) {
@@ -86,6 +90,7 @@ const Sidebar = (props) => {
       filters.catId = [];
       filters.thirdsubCatId = thirdcatArr;
       filters.rating = [];
+      context?.setSearchData([]);
     }
 
     filters.page = 1;
@@ -93,6 +98,8 @@ const Sidebar = (props) => {
     setTimeout(() => {
       filtesData();
     }, 100);
+
+    //context?.setSearchData([]);
   }, [location]);
 
   const filtesData = () => {

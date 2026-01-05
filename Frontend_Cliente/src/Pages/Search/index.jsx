@@ -83,8 +83,6 @@ const SearchPage = () => {
             />
           </div>
 
-          {console.log(productsData)}
-
           <div className="rightContent w-[80%] !py-3">
             <div className="bg-[#d6e7f8] !p-2 w-full !mb-4 rounded-md flex items-center justify-between ">
               <div className="col1 flex items-center itemViewActions">

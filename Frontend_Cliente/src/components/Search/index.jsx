@@ -17,22 +17,21 @@ const Search = () => {
 
   const onChangeInput = (e) => {
     setSearchQuery(e.target.value);
-
-    const obj = {
-      page: 1,
-      limit: 3,
-      query: e.target.value,
-    };
-
-    if (e.target.value !== "") {
-      postData(`/api/product/search/get`, obj).then((res) => {
-        context?.setSearchData(res);
-      });
-    }
   };
 
   const search = () => {
-    history("/search");
+    const obj = {
+      page: 1,
+      limit: 3,
+      query: searchQuery,
+    };
+
+    if (searchQuery !== "") {
+      postData(`/api/product/search/get`, obj).then((res) => {
+        context?.setSearchData(res);
+        history("/search");
+      });
+    }
   };
 
   return (
