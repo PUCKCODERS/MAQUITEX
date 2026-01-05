@@ -104,8 +104,15 @@ export const deleteData = async (url) => {
       "Content-Type": "application/json",
     },
   };
-  const { res } = await axios.delete(apiUrl + url, params);
-  return res;
+  try {
+    const { data } = await axios.delete(apiUrl + url, params);
+    return data;
+  } catch (error) {
+    console.error("Error al eliminar datos:", error);
+    return error.response
+      ? error.response.data
+      : { error: true, message: error.message };
+  }
 };
 
 export const deleteMultipleData = async (url, dataToDelete) => {

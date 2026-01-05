@@ -3,6 +3,7 @@ import {
   addReview,
   authWithGoogle,
   deleteMultiple,
+  deleteUser,
   forgotPasswordController,
   getAllReviews,
   getAllUsers,
@@ -46,4 +47,6 @@ userRouter.get("/getReviews", getReviews);
 userRouter.get("/getAllReviews", getAllReviews);
 userRouter.get("/getAllUsers", getAllUsers);
 userRouter.delete("/deleteMultiple", deleteMultiple);
+userRouter.delete("/:id", deleteUser);
+
 export default userRouter;

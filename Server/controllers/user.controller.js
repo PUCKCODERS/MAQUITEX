@@ -806,6 +806,55 @@ export async function getAllUsers(request, response) {
   }
 }
 
+export async function deleteUser(request, response) {
+  try {
+    const user = await UserModel.findById(request.params.id);
+
+    if (!user) {
+      return response.status(404).json({
+        message: "USUARIO NO ENCONTRADO",
+        error: true,
+        success: false,
+      });
+    }
+
+    const images = user.images || [];
+
+    for (const imgUrl of images) {
+      try {
+        const urlArr = imgUrl.split("/");
+        const lastSeg = urlArr[urlArr.length - 1] || "";
+        const imageName = lastSeg.split(".")[0];
+        if (imageName) {
+          await cloudinary.uploader.destroy(imageName).catch(() => {});
+        }
+      } catch (err) {}
+    }
+
+    const deleteUser = await UserModel.findByIdAndDelete(request.params.id);
+
+    if (!deleteUser) {
+      return response.status(404).json({
+        message: "USUARIO NO ELIMINADO",
+        success: false,
+        error: true,
+      });
+    }
+
+    return response.status(200).json({
+      success: true,
+      error: false,
+      message: "USUARIO ELIMINADO",
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
 export async function deleteMultiple(request, response) {
   const { ids } = request.body;
 

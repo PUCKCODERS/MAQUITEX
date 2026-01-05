@@ -15,12 +15,17 @@ import TableRow from "@mui/material/TableRow";
 import { MdEmail } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import { BsFillCalendar2DateFill } from "react-icons/bs";
+import { FaTrashAlt } from "react-icons/fa";
 import { FcDeleteDatabase } from "react-icons/fc";
 import CircularProgress from "@mui/material/CircularProgress";
 
 import SearchBox from "../../Components/SearchBox";
 import { MyContext } from "../../App";
-import { deleteMultipleData, fetchDataFromApi } from "../../utils/api";
+import {
+  deleteData,
+  deleteMultipleData,
+  fetchDataFromApi,
+} from "../../utils/api";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -47,6 +52,11 @@ const columns = [
     label: "CREADO",
     minWidth: 130,
   },
+  {
+    id: "action",
+    label: "OPCIONES",
+    minWidth: 100,
+  },
 ];
 
 export const Users = () => {
@@ -61,6 +71,8 @@ export const Users = () => {
   const [sortedIds, setSortedIds] = useState([]);
 
   const [isMultiConfirmOpen, setIsMultiConfirmOpen] = useState(false);
+  const [userToDelete, setUserToDelete] = useState(null);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
 
   const context = useContext(MyContext);
 
@@ -155,6 +167,22 @@ export const Users = () => {
     } catch (error) {
       console.error(error);
       context.alertBox("error", "ERROR AL ELIMINAR ELEMENTOS");
+    }
+  };
+
+  const deleteUser = (id) => {
+    setUserToDelete(id);
+    setIsConfirmOpen(true);
+  };
+
+  const confirmDelete = () => {
+    if (userToDelete) {
+      deleteData(`/api/user/${userToDelete}`).then(() => {
+        getUsers();
+        setIsConfirmOpen(false);
+        setUserToDelete(null);
+        context.alertBox("success", "USUARIO ELIMINADO EXITOSAMENTE");
+      });
     }
   };
 
@@ -328,6 +356,19 @@ export const Users = () => {
                             {user?.updatedAt?.split("T")[0]}
                           </span>
                         </TableCell>
+                        <TableCell
+                          style={{ minWidth: columns.minWidth }}
+                          className="!text-white"
+                        >
+                          <div className="flex items-center justify-center !gap-1">
+                            <Button
+                              className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                              onClick={() => deleteUser(user?._id)}
+                            >
+                              <FaTrashAlt className="!text-[20px]" />
+                            </Button>
+                          </div>
+                        </TableCell>
                       </TableRow>
                     );
                   })
@@ -356,6 +397,46 @@ export const Users = () => {
           className="!bg-gray-100 !text-balck !border-t !border-gray-500"
         />
       </div>
+
+      <Dialog
+        open={isConfirmOpen}
+        onClose={() => setIsConfirmOpen(false)}
+        PaperProps={{
+          style: {
+            borderRadius: "15px",
+            padding: "20px",
+            textAlign: "center",
+            width: "!360px",
+          },
+        }}
+      >
+        <div className="flex flex-col items-center justify-center">
+          <FcDeleteDatabase className="text-[120px] !mb-2" />
+          <DialogTitle
+            className="!text-[20px] text-[#082c55] !font-bold !pb-1 !text-center"
+            sx={{ lineHeight: 1.2 }}
+          >
+            ¿DESEA ELIMINAR ESTE USUARIO?
+          </DialogTitle>
+          <p className="text-gray-800 text-[16px] !mb-4">
+            ESTA ACCIÓN NO SE PUEDE DESHACER
+          </p>
+        </div>
+        <div className="flex justify-center !gap-3 !pb-2">
+          <Button
+            onClick={confirmDelete}
+            className="!bg-[#1976d2] hover:!bg-[#0d47a1] !text-white !font-bold !px-4 !py-2"
+          >
+            Sí, eliminar
+          </Button>
+          <Button
+            onClick={() => setIsConfirmOpen(false)}
+            className="!bg-[#d32f2f] hover:!bg-[#9a0007] !text-white !font-bold !px-4 !py-2"
+          >
+            Cancelar
+          </Button>
+        </div>
+      </Dialog>
 
       <Dialog
         open={isMultiConfirmOpen}
