@@ -500,3 +500,8 @@ header {
   background: #082c55;
   font-weight: bold;
 }
+
+.searchBox .MuiCircularProgress-root {
+  width: 20px !important;
+  height: 20px !important;
+}

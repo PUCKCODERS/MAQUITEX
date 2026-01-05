@@ -1484,20 +1484,16 @@ export async function searchProductController(request, response) {
         { subCat: { $regex: query, $options: "i" } },
         { thirdsubCat: { $regex: query, $options: "i" } },
       ],
-    })
-      .populate("category")
-      .skip((page - 1) * limit)
-      .limit(parseInt(limit));
+    }).populate("category");
 
     const total = await products?.length;
-
     return response.status(200).json({
       error: false,
       success: true,
       products: products,
-      total: total,
+      total: 1,
       page: parseInt(page),
-      totalPages: Math.ceil(total / limit),
+      totalPages: 1,
     });
   } catch (error) {
     return response.status(500).json({

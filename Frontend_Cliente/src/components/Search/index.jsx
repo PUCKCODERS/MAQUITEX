@@ -7,9 +7,11 @@ import { useContext } from "react";
 import { MyContext } from "../../App";
 import { postData } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const context = useContext(MyContext);
 
@@ -20,6 +22,8 @@ const Search = () => {
   };
 
   const search = () => {
+    setIsLoading(true);
+
     const obj = {
       page: 1,
       limit: 3,
@@ -29,7 +33,10 @@ const Search = () => {
     if (searchQuery !== "") {
       postData(`/api/product/search/get`, obj).then((res) => {
         context?.setSearchData(res);
-        history("/search");
+        setTimeout(() => {
+          setIsLoading(false);
+          history("/search");
+        }, 1000);
       });
     }
   };
@@ -47,7 +54,11 @@ const Search = () => {
         className="!absolute !top-[8px] right-[5px] z-50 !w-[37px] !min-w-[37px] !h-[37px] !rounded-full !text-black"
         onClick={search}
       >
-        <FcSearch className="!text-[#082c55] !text-[25px]" />
+        {isLoading === true ? (
+          <CircularProgress />
+        ) : (
+          <FcSearch className="!text-[#082c55] !text-[25px]" />
+        )}
       </Button>
     </div>
   );
