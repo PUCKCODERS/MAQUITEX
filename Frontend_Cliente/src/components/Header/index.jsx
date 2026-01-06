@@ -223,7 +223,7 @@ const Header = () => {
                 </>
               )}
 
-              <li>
+              {/*<li>
                 <Tooltip title="COMPARTIR" placement="top">
                   <IconButton aria-label="cart">
                     <StyledBadge badgeContent={4} color="secondary">
@@ -231,7 +231,7 @@ const Header = () => {
                     </StyledBadge>
                   </IconButton>
                 </Tooltip>
-              </li>
+              </li>*/}
               <li>
                 <Tooltip title="ME GUSTA" placement="top">
                   <Link to="/my-list">

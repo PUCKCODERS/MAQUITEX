@@ -295,7 +295,7 @@ const Footer = () => {
             </li>
           </ul>
           <p className="text-[13px] text-[#000] text-center !mb-0">
-            © 2025 - PUCKCODERS - Todos los derechos reservados
+            © 2026 - PUCKCODERS - Todos los derechos reservados
           </p>
 
           <div className="flex items-center !gap-1">

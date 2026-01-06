@@ -9,6 +9,7 @@ import { MyContext } from "../../App";
 import { deleteData } from "../../utils/api";
 
 const MyListItems = (props) => {
+  window.scrollTo(0, 0);
   const context = useContext(MyContext);
 
   const removeItem = (id) => {

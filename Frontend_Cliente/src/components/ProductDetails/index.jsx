@@ -305,10 +305,10 @@ const ProductDetailsComponent = (props) => {
           AGREGAR A LISTA DE DESEOS
         </span>
 
-        <span className="flex items-center !gap-2 text-[14px] text-[#556f8d] font-bold link cursor-pointer">
+        {/*<span className="flex items-center !gap-2 text-[14px] text-[#556f8d] font-bold link cursor-pointer">
           <IoMdGitCompare className="text-[18px] text-[#274a72] hover:scale-125 transition-transform duration-200" />
           AGREGAR PARA COMPARAR
-        </span>
+        </span>*/}
       </div>
     </>
   );
