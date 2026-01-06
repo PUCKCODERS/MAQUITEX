@@ -85,7 +85,7 @@ const Header = () => {
     <>
       <header
         className={`!w-full !h-[auto] !py-2 ${
-          context.isSidebarOpen === true ? "!pl-80" : "!pl-5"
+          context.isSidebarOpen === true ? "!pl-[20%]" : "!pl-5"
         } shadow-md !pr-7 !bg-[#fff]  flex items-center justify-between transition-all duration-300 fixed !top-0 !left-0 z-[50]`}
       >
         <div className="part1">
