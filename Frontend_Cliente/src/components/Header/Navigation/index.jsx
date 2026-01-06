@@ -66,7 +66,7 @@ const Navigation = () => {
                       </Link>
 
                       {cat?.children?.length !== 0 && (
-                        <div className="submenu absolute !top-[135%] !left-[0%] min-w-[200px] bg-[#ebebeb] shadow-[3px_3px_3px_#274a72] opacity-0 transition-all z-10 ">
+                        <div className="submenu absolute !border-1 !border-[#758ba5]  !top-[135%] !left-[0%] min-w-[200px] bg-[#ebebeb] shadow-[3px_3px_3px_#274a72] opacity-0 transition-all z-10 ">
                           <ul>
                             {cat?.children?.map((subCat, index_) => {
                               return (
@@ -83,7 +83,7 @@ const Navigation = () => {
                                     </Button>
 
                                     {subCat?.children?.length !== 0 && (
-                                      <div className="submenu absolute !top-[0%] !left-[100%] min-w-[200px] bg-white shadow-[3px_3px_3px_#274a72] opacity-0 transition-all">
+                                      <div className="submenu absolute !border-1 !border-[#758ba5] !top-[-5%] !left-[100%] min-w-[200px] bg-white shadow-[3px_3px_3px_#274a72] opacity-0 transition-all">
                                         <ul>
                                           {subCat?.children?.map(
                                             (thirdLavelCat, index__) => {
