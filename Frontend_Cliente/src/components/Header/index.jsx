@@ -12,6 +12,7 @@ import Navigation from "./Navigation";
 import { MyContext } from "../../App";
 import { FaUser } from "react-icons/fa";
 import { GiExitDoor } from "react-icons/gi";
+import { MdMapsHomeWork } from "react-icons/md";
 
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -194,15 +195,16 @@ const Header = () => {
                         <span className="text-[14px]">MI CUENTA</span>
                       </MenuItem>
                     </Link>
-                    <Link to="/my-orders" className="w-full block">
+                    <Link to="/address" className="w-full block">
                       <MenuItem
                         onClick={handleClose}
                         className="flex !gap-2 !py-2 !text-[#274a72] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
                       >
-                        <FaShoppingCart className="text-[20px]" />{" "}
-                        <span className="text-[14px]">PEDIDOS</span>
+                        <MdMapsHomeWork className="text-[20px]" />{" "}
+                        <span className="text-[14px]">DIRECCIÓN</span>
                       </MenuItem>
                     </Link>
+
                     <Link to="/my-list" className="w-full block">
                       <MenuItem
                         onClick={handleClose}
@@ -210,6 +212,15 @@ const Header = () => {
                       >
                         <FaHeart className="text-[20px]" />
                         <span className="text-[14px]">MI LISTA</span>
+                      </MenuItem>
+                    </Link>
+                    <Link to="/my-orders" className="w-full block">
+                      <MenuItem
+                        onClick={handleClose}
+                        className="flex !gap-2 !py-2 !text-[#274a72] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
+                      >
+                        <FaShoppingCart className="text-[20px]" />{" "}
+                        <span className="text-[14px]">PEDIDOS</span>
                       </MenuItem>
                     </Link>
                     <MenuItem

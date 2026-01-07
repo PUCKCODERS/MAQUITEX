@@ -212,12 +212,20 @@ const Footer = () => {
                     </Link>
                   </li>
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <Link to="/" className="link">
+                    <Link
+                      to="/"
+                      className="link"
+                      onClick={() => (window.location.href = `Register`)}
+                    >
                       REGISTRARSE
                     </Link>
                   </li>
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <Link to="/" className="link">
+                    <Link
+                      to="/"
+                      className="link"
+                      onClick={() => (window.location.href = `Login`)}
+                    >
                       INICIAR SESIÓN
                     </Link>
                   </li>

@@ -8,12 +8,14 @@ import { NavLink } from "react-router-dom";
 import { Button } from "@mui/material";
 import { MyContext } from "../../App";
 import CircularProgress from "@mui/material/CircularProgress";
-import { uploadImage } from "../../utils/api";
+import { fetchDataFromApi, uploadImage } from "../../utils/api";
 import { MdMapsHomeWork } from "react-icons/md";
 
 const AccountSidebar = () => {
   const [previews, setPreviews] = useState([]);
   const [uploading, setUploading] = useState(false);
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
   const context = useContext(MyContext);
 
@@ -69,6 +71,26 @@ const AccountSidebar = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const logout = () => {
+    setAnchorEl(null);
+
+    fetchDataFromApi(
+      `/api/user/logout?token=${localStorage.getItem("accessToken")}`,
+      { withCredentials: true }
+    ).then((res) => {
+      console.log(res);
+      if (res?.error === false) {
+        context.setIsLogin(false);
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        context.setUserData(null);
+        context?.setCartData([]);
+        context?.setMyListData([]);
+        history("/");
+      }
+    });
   };
 
   return (
@@ -154,7 +176,10 @@ const AccountSidebar = () => {
           </NavLink>
         </li>
         <li className="w-full">
-          <Button className="w-full !text-left !justify-start !py-2 !px-5 !capitalize !text-[#274a72] hover:!text-[#fff] hover:!bg-[#274a72] !rounded-none flex items-center !gap-2">
+          <Button
+            className="w-full !text-left !justify-start !py-2 !px-5 !capitalize !text-[#274a72] hover:!text-[#fff] hover:!bg-[#274a72] !rounded-none flex items-center !gap-2"
+            onClick={logout}
+          >
             <GiExitDoor className="text-[25px]" />
             CERRAR SESION
           </Button>
