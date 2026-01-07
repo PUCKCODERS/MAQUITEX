@@ -15,8 +15,6 @@ const AccountSidebar = () => {
   const [previews, setPreviews] = useState([]);
   const [uploading, setUploading] = useState(false);
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
   const context = useContext(MyContext);
 
   useEffect(() => {
@@ -74,13 +72,10 @@ const AccountSidebar = () => {
   };
 
   const logout = () => {
-    setAnchorEl(null);
-
     fetchDataFromApi(
       `/api/user/logout?token=${localStorage.getItem("accessToken")}`,
       { withCredentials: true }
     ).then((res) => {
-      console.log(res);
       if (res?.error === false) {
         context.setIsLogin(false);
         localStorage.removeItem("accessToken");

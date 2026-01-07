@@ -8,6 +8,7 @@ import "swiper/css/pagination";
 
 import { EffectFade, Navigation, Pagination, Autoplay } from "swiper/modules";
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 const HomeBannerV2 = (props) => {
   return (
@@ -52,7 +53,7 @@ const HomeBannerV2 = (props) => {
 
                   <div className="w-full relative -bottom-[100%] opacity-0 btn_">
                     <Button className="btn-org !shadow-[4px_4px_2px_#000] border !border-[transparent]">
-                      COMPRAR AHORA
+                      <Link to={`/product/${item?._id}`}>COMPRAR AHORA</Link>
                     </Button>
                   </div>
                 </div>
