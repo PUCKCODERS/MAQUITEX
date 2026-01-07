@@ -7,6 +7,7 @@ import { FaHeart } from "react-icons/fa";
 import { IoGitCompare } from "react-icons/io5";
 import { MdZoomOutMap } from "react-icons/md";
 import { GiShoppingCart } from "react-icons/gi";
+import AddToCartControl from "../AddToCartControl";
 import { MyContext } from "../../App"; // Adjust the import path as necessary
 
 const ProductItem = (props) => {
@@ -14,19 +15,22 @@ const ProductItem = (props) => {
   return (
     <div className="productItem bg-white !rounded-md !overflow-hidden !border-1 !border-[#b1cdee] shadow-[5px_5px_5px_#274a72] flex items-center">
       <div className="group imgWrapper !w-[25%] !top-0 !overflow-hidden !rounded-md relative">
-        <Link to="/">
-          <div className="img !overflow-hidden">
-            <img
-              src={props?.item?.images[0]}
-              className="!left-0 !top-0 !w-[300px] !h-[200px] !rounded-md"
-            />
+        <div
+          className="img !overflow-hidden cursor-pointer pointer-events-auto"
+          onClick={() =>
+            (window.location.href = `/product/${props?.item?._id}`)
+          }
+        >
+          <img
+            src={props?.item?.images[0]}
+            className="!left-0 !top-0 !w-[300px] !h-[200px] !rounded-md"
+          />
 
-            <img
-              src={props?.item?.images[1]}
-              className="!left-0 !top-0 !w-[300px] !h-[200px] transition-all duration-700 !rounded-md absolute opacity-0 group-hover:opacity-100 group-hover:scale-105"
-            />
-          </div>
-        </Link>
+          <img
+            src={props?.item?.images[1]}
+            className="!left-0 !top-0 !w-[300px] !h-[200px] transition-all duration-700 !rounded-md absolute opacity-0 group-hover:opacity-100 group-hover:scale-105"
+          />
+        </div>
         <span className="discount flex items-center absolute !top-[0px] !left-[10px] !z-50 bg-[#e05e12] text-white !rounded-lg !p-1 text-[12px] font-[500]">
           {props?.item?.discount}%
         </span>
@@ -56,7 +60,10 @@ const ProductItem = (props) => {
           </Link>
         </h6>
         <h3 className="text-[18px] title !mt-3 font-[bold] font-bold !mb-1 !text-[#082c55]">
-          <Link to="/" className="link transition-all">
+          <Link
+            to={`/product/${props?.item?._id}`}
+            className="link transition-all"
+          >
             {props?.item?.name}
           </Link>
         </h3>
@@ -81,9 +88,7 @@ const ProductItem = (props) => {
           </span>
 
           <div className="!mt-0 ">
-            <Button className="btn-org btn-sm !text-[15px] !gap-2">
-              AGREGAR <GiShoppingCart class="text-[25px] scale-x-[-1]" />
-            </Button>
+            <AddToCartControl item={props?.item} />
           </div>
         </div>
       </div>
