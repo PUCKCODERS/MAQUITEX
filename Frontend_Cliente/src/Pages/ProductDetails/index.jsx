@@ -66,7 +66,7 @@ const ProductDetails = () => {
       <div className="!py-5">
         <div className="container">
           <Breadcrumbs aria-label="breadcrumb">
-            <Link
+            {/* <Link
               underline="hover"
               color="inherit"
               href="/"
@@ -91,7 +91,31 @@ const ProductDetails = () => {
               sx={{ fontSize: "16px" }}
             >
               MAQUINA DE COSER PORTATIL SINGER
-            </Link>
+            </Link>*/}
+
+            <div
+              color="inherit"
+              href="/"
+              className="link transition !font-[bold] !text-[#082c55] "
+              sx={{ fontSize: "16px" }}
+            >
+              {productData?.catName}
+            </div>
+            <div
+              color="inherit"
+              href="/"
+              className="link transition !font-[bold] !text-[#274a72] "
+              sx={{ fontSize: "16px" }}
+            >
+              {productData?.subCat}
+            </div>
+            <div
+              color="inherit"
+              className="link transition !font-[bold] !text-[#737475] "
+              sx={{ fontSize: "16px" }}
+            >
+              {productData?.thirdsubCat}
+            </div>
           </Breadcrumbs>
         </div>
       </div>

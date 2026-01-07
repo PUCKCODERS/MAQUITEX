@@ -4,7 +4,7 @@ import { FaCcVisa } from "react-icons/fa6";
 import { GiLaptop } from "react-icons/gi";
 import { FcMoneyTransfer } from "react-icons/fc";
 import { MdCurrencyExchange } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IoMdChatboxes } from "react-icons/io";
 import Button from "@mui/material/Button";
 
@@ -30,22 +30,6 @@ import AddAddress from "../../Pages/MyAccount/addAddress";
 
 const Footer = () => {
   const context = useContext(MyContext);
-  const navigate = useNavigate();
-
-  const scrollToSection = (sectionId) => {
-    navigate("/");
-    setTimeout(() => {
-      const element = document.getElementById(sectionId);
-      if (!element) return;
-
-      const y = element.getBoundingClientRect().top + window.pageYOffset - 120; // 👈 sube más (80, 100, 140…)
-
-      window.scrollTo({
-        top: y,
-        behavior: "smooth",
-      });
-    }, 100);
-  };
 
   return (
     <>
@@ -140,40 +124,44 @@ const Footer = () => {
                   PRODUCTOS
                 </h2>
                 <ul className="list">
-                  <li className="list-none text-[14px] text-[#000] !w-full !mb-2">
-                    <button
-                      onClick={() => scrollToSection("nuevos-productos")}
-                      className="link !bg-none !border-none !p-0 !cursor-pointer hover:text-[#0a7fec]"
-                    >
+                  <li className="list-none text-[14px] text-[#000] !mb-2">
+                    <button className="link hover:text-[#0a7fec]">
                       NUEVOS
                     </button>
                   </li>
-                  <li className="list-none text-[14px] text-[#000] !w-full !mb-2">
-                    <button
-                      onClick={() => scrollToSection("productos-recomendados")}
-                      className="link !bg-none !border-none !p-0 !cursor-pointer hover:text-[#0a7fec]"
-                    >
+                  <li className="list-none text-[14px] text-[#000] !mb-2">
+                    <button className="link hover:text-[#0a7fec]">
                       RECOMENDADOS
                     </button>
                   </li>
-                  <li className="list-none text-[14px] text-[#000] !w-full !mb-2">
-                    <button
-                      onClick={() => scrollToSection("productos-populares")}
-                      className="link !bg-none !border-none !p-0 !cursor-pointer hover:text-[#0a7fec]"
-                    >
+                  <li className="list-none text-[14px] text-[#000] !mb-2">
+                    <button className="link hover:text-[#0a7fec]">
                       POPULARES
                     </button>
                   </li>
-                  <li className="list-none text-[14px] text-[#000] !w-full !mb-2">
-                    <button
-                      onClick={() => scrollToSection("articulos-interes")}
-                      className="link !bg-none !border-none !p-0 !cursor-pointer hover:text-[#0a7fec]"
-                    >
-                      ARTICULOS DE INTERES
+
+                  <li className="list-none text-[14px] text-[#000] !mb-2">
+                    <button className="link hover:text-[#0a7fec]">
+                      OFERTAS
+                    </button>
+                  </li>
+                  <li className="list-none text-[14px] text-[#000] !mb-2">
+                    <button className="link hover:text-[#0a7fec]">
+                      MARCAS
+                    </button>
+                  </li>
+                  <li className="list-none text-[14px] text-[#000] !mb-2">
+                    <button className="link hover:text-[#0a7fec]">
+                      KITS DE COSTURA
                     </button>
                   </li>
 
-                  <li className="list-none text-[14px] text-[#000] w-full !mb-2">
+                  <li className="list-none text-[14px] text-[#000] !mb-2">
+                    <button className="link hover:text-[#0a7fec]">
+                      ARTICULOS DE INTERES
+                    </button>
+                  </li>
+                  <li className="list-none text-[14px] text-[#000] !mb-2">
                     <Link to="/" className="link">
                       SOPORTE TECNICO
                     </Link>
@@ -186,35 +174,51 @@ const Footer = () => {
                   NUESTRA TIENDA
                 </h2>
                 <ul className="list">
-                  <li className="list-none text-[14px] text-[#000] w-full !mb-2">
+                  <li className="list-none text-[14px] text-[#000] !mb-2">
                     <Link to="/" className="link">
                       ENVIOS A DOMICILIO
                     </Link>
                   </li>
-                  <li className="list-none text-[14px] text-[#000] w-full !mb-2">
+
+                  <li className="list-none text-[14px] text-[#000] !mb-2">
                     <Link to="/" className="link">
-                      ULTIMAS NOTICIAS
+                      SEGUIMIENTO DE PEDIDOS
                     </Link>
                   </li>
-                  <li className="list-none text-[14px] text-[#000] w-full !mb-2">
+                  <li className="list-none text-[14px] text-[#000] !mb-2">
                     <Link to="/" className="link">
-                      TERMINOS Y CONDICIONES
-                    </Link>
-                  </li>
-                  <li className="list-none text-[14px] text-[#000] w-full !mb-2">
-                    <Link to="/" className="link">
-                      ACERCA DE NOSOTROS
+                      GARANTÍA
                     </Link>
                   </li>
 
-                  <li className="list-none text-[14px] text-[#000] w-full !mb-2">
+                  <li className="list-none text-[14px] text-[#000] !mb-2">
                     <Link to="/" className="link">
                       PAGO SEGURO
                     </Link>
                   </li>
-                  <li className="list-none text-[14px] text-[#000] w-full !mb-2">
+                  <li className="list-none text-[14px] text-[#000] !mb-2">
+                    <Link to="/" className="link">
+                      ULTIMAS NOTICIAS
+                    </Link>
+                  </li>
+                  <li className="list-none text-[14px] text-[#000] !mb-2">
+                    <Link to="/" className="link">
+                      ACERCA DE NOSOTROS
+                    </Link>
+                  </li>
+                  <li className="list-none text-[14px] text-[#000] !mb-2">
+                    <Link to="/" className="link">
+                      CONTACTO
+                    </Link>
+                  </li>
+                  <li className="list-none text-[14px] text-[#000] !mb-2">
                     <Link to="/" className="link">
                       REGISTRARSE
+                    </Link>
+                  </li>
+                  <li className="list-none text-[14px] text-[#000] !mb-2">
+                    <Link to="/" className="link">
+                      INICIAR SESIÓN
                     </Link>
                   </li>
                 </ul>

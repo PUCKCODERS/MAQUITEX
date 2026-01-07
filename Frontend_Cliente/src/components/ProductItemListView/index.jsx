@@ -55,8 +55,9 @@ const ProductItem = (props) => {
       <div className="info !p-3 !py-4 !bg-white w-[75%]">
         <h6 className="text-[15px] !font-[500] text-[#556f8d]">
           <Link to="/" className="link transition-all">
-            {props?.item?.catName} / {props?.item?.subCat} /
-            {props?.item?.thirdsubCat} / {props?.item?.brand}
+            {/*{props?.item?.catName} / {props?.item?.subCat} /
+            {props?.item?.thirdsubCat}*/}{" "}
+            {props?.item?.brand}
           </Link>
         </h6>
         <h3 className="text-[18px] title !mt-3 font-[bold] font-bold !mb-1 !text-[#082c55]">
