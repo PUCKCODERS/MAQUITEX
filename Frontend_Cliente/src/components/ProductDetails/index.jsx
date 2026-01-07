@@ -26,6 +26,8 @@ const ProductDetailsComponent = (props) => {
   const context = useContext(MyContext);
   const [reviewsCountLocal, setReviewsCountLocal] = useState(0);
 
+  const [isAddedInMyList, setIsAddedInMyList] = useState(false);
+
   useEffect(() => {
     if (!props?.reviewsCount && props?.item?._id) {
       fetchDataFromApi(`/api/user/getReviews?productId=${props.item._id}`)
@@ -163,6 +165,38 @@ const ProductDetailsComponent = (props) => {
         "error",
         "TIENES QUE ESCOGER UNA OPCIÓN ANTES DE AGREGAR"
       );
+    }
+  };
+
+  const handleAddToMyList = (item) => {
+    if (context?.userData === null) {
+      context?.alertBox(
+        "error",
+        "NO HAS INICIADO SESIÓN, POR FAVOR INICIA SESIÓN"
+      );
+      return false;
+    } else {
+      const obj = {
+        productId: item?._id,
+        userId: context?.userData?._id,
+        productTitle: item?.name,
+        image: item?.images[0],
+        rating: item?.rating,
+        price: item?.price,
+        oldPrice: item?.oldPrice,
+        brand: item?.brand,
+        discount: item?.discount,
+      };
+
+      postData("/api/myList/add", obj).then((res) => {
+        if (res?.error === false) {
+          context?.alertBox("success", res?.message);
+          setIsAddedInMyList(true);
+          context?.getMyListData();
+        } else {
+          context?.alertBox("error", "PRODUCTO YA EN MI LISTA");
+        }
+      });
     }
   };
 
@@ -310,11 +344,21 @@ const ProductDetailsComponent = (props) => {
       </div>
 
       <div className="flex items-center !gap-4 !mt-4">
-        <span className="flex items-center !gap-2 text-[14px] text-[#556f8d] font-bold link cursor-pointer">
-          <FaHeart className="text-[18px] text-red-600 hover:scale-125 transition-transform duration-200" />
+        <Button
+          className={`flex items-center !gap-2 text-[14px] text-[#556f8d] font-bold link cursor-pointer
+              `}
+          onClick={() => handleAddToMyList(props?.item)}
+        >
+          {isAddedInMyList === true ? (
+            <FaHeart className="text-[18px] text-red-600 hover:scale-125 transition-transform duration-200 !bg-[transparent]" />
+          ) : (
+            <FaHeart className="text-[18px] text-red-600 hover:scale-125 transition-transform duration-200 !bg-[transparent]" />
+          )}
+        </Button>
+
+        <span className="flex items-center hover:!text-red-600 !gap-2 text-[14px]  font-bold link cursor-pointer">
           AGREGAR A LISTA DE DESEOS
         </span>
-
         {/*<span className="flex items-center !gap-2 text-[14px] text-[#556f8d] font-bold link cursor-pointer">
           <IoMdGitCompare className="text-[18px] text-[#274a72] hover:scale-125 transition-transform duration-200" />
           AGREGAR PARA COMPARAR
