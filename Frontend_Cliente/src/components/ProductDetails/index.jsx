@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { fetchDataFromApi } from "../../utils/api";
 import QtyBox from "../../components/QtyBox";
 import { GiShoppingCart } from "react-icons/gi";
 import { FaHeart } from "react-icons/fa";
@@ -23,6 +24,23 @@ const ProductDetailsComponent = (props) => {
   const [activeTabRam, setActiveTabRam] = useState(null);
 
   const context = useContext(MyContext);
+  const [reviewsCountLocal, setReviewsCountLocal] = useState(0);
+
+  useEffect(() => {
+    if (!props?.reviewsCount && props?.item?._id) {
+      fetchDataFromApi(`/api/user/getReviews?productId=${props.item._id}`)
+        .then((res) => {
+          if (res?.error === false) {
+            setReviewsCountLocal(res?.reviews?.length || 0);
+          }
+        })
+        .catch(() => setReviewsCountLocal(0));
+    }
+  }, [props?.item?._id, props?.reviewsCount]);
+
+  const displayedReviewsCount = props?.reviewsCount ?? reviewsCountLocal;
+
+  const safeGotoReviews = props?.gotoReviews ? props.gotoReviews : () => {};
 
   const handleSelecteQty = (qty) => {
     setQuantity(qty);
@@ -46,17 +64,14 @@ const ProductDetailsComponent = (props) => {
     setTabError(false);
   };
 
-  // <-- NUEVO: autoseleccionar opciones cuando solo hay 1
   useEffect(() => {
     const item = props?.item || {};
 
-    // TAMAÑO
     if (Array.isArray(item.size)) {
       if (item.size.length === 1) {
         setActiveTabSize(0);
         setSelectedSize(item.size[0]);
       } else {
-        // si cambió el producto, resetear selección si ahora hay múltiples opciones
         setActiveTabSize(null);
         setSelectedSize(null);
       }
@@ -65,7 +80,6 @@ const ProductDetailsComponent = (props) => {
       setSelectedSize(null);
     }
 
-    // COLOR (productRams)
     if (Array.isArray(item.productRams)) {
       if (item.productRams.length === 1) {
         setActiveTabRam(0);
@@ -79,7 +93,6 @@ const ProductDetailsComponent = (props) => {
       setSelectedRam(null);
     }
 
-    // PESO (productWeight)
     if (Array.isArray(item.productWeight)) {
       if (item.productWeight.length === 1) {
         setActiveTabWeight(0);
@@ -93,7 +106,6 @@ const ProductDetailsComponent = (props) => {
       setSelectedWeight(null);
     }
 
-    // si autoseleccionó, quitar el error visual
     setTabError(false);
   }, [props?.item]);
 
@@ -173,11 +185,9 @@ const ProductDetailsComponent = (props) => {
           size="small"
           readOnly
         />
-        <span
-          className="text-[13px] cursor-pointer"
-          onClick={props.gotoReviews}
-        >
-          RESEÑAS ({props.reviewsCount})
+
+        <span className="text-[13px] cursor-pointer" onClick={safeGotoReviews}>
+          RESEÑAS ({displayedReviewsCount})
         </span>
       </div>
 
