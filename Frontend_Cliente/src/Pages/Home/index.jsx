@@ -94,7 +94,7 @@ const Home = () => {
         <HomeCatSlider data={context?.catData} />
       )}
 
-      <section className="!py-8 bg-white">
+      <section id="productos-populares" className="!py-8 bg-white">
         <div className="container">
           <div className="flex items-center justify-between">
             <div className="leftSec">
@@ -184,7 +184,7 @@ const Home = () => {
           )}
         </div>
       </section>
-      <section className="!py-5 !pt-4 bg-white">
+      <section id="nuevos-productos" className="!py-5 !pt-4 bg-white">
         <div className="container">
           <h2 className="text-[20px] font-bold">NUEVOS PRODUCTOS</h2>
 
@@ -199,7 +199,7 @@ const Home = () => {
           )}
         </div>
       </section>
-      <section className="!py-5 !pt-0 bg-white">
+      <section id="productos-recomendados" className="!py-5 !pt-0 bg-white">
         <div className="container">
           <h2 className="text-[20px] font-bold">PRODUCTOS RECOMENDADOS</h2>
 
@@ -221,7 +221,10 @@ const Home = () => {
       </section>
 
       {blogData?.length !== 0 && (
-        <section className="!py-5 !pb-8 !pt-0 bg-white blogSection">
+        <section
+          id="articulos-interes"
+          className="!py-5 !pb-8 !pt-0 bg-white blogSection"
+        >
           <div className="container">
             <h2 className="text-[20px] font-bold !mb-4">
               ARTICULOS DE INTERES

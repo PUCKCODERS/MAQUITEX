@@ -4,7 +4,7 @@ import { FaCcVisa } from "react-icons/fa6";
 import { GiLaptop } from "react-icons/gi";
 import { FcMoneyTransfer } from "react-icons/fc";
 import { MdCurrencyExchange } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoMdChatboxes } from "react-icons/io";
 import Button from "@mui/material/Button";
 
@@ -30,6 +30,23 @@ import AddAddress from "../../Pages/MyAccount/addAddress";
 
 const Footer = () => {
   const context = useContext(MyContext);
+  const navigate = useNavigate();
+
+  const scrollToSection = (sectionId) => {
+    navigate("/");
+    setTimeout(() => {
+      const element = document.getElementById(sectionId);
+      if (!element) return;
+
+      const y = element.getBoundingClientRect().top + window.pageYOffset - 120; // 👈 sube más (80, 100, 140…)
+
+      window.scrollTo({
+        top: y,
+        behavior: "smooth",
+      });
+    }, 100);
+  };
+
   return (
     <>
       <footer className="!py-6 bg-[#eef0f3] border border-[#fff] shadow-[0_-4px_6px_-1px_#b1cdee,0_4px_6px_-1px_#b1cdee]">
@@ -117,42 +134,45 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="part1 w-[40%] flex !pl-8">
+            <div className="part1 w-[40%] !flex !pl-8">
               <div className="part2_col1 w-[50%]">
                 <h2 className="text-[20px] font-bold font-[bold] text-[#082c55] !mb-4">
                   PRODUCTOS
                 </h2>
                 <ul className="list">
-                  <li className="list-none text-[14px] text-[#000] w-full !mb-2">
-                    <Link to="/" className="link ">
-                      NUEVOS PRODUCTOS
-                    </Link>
+                  <li className="list-none text-[14px] text-[#000] !w-full !mb-2">
+                    <button
+                      onClick={() => scrollToSection("nuevos-productos")}
+                      className="link !bg-none !border-none !p-0 !cursor-pointer hover:text-[#0a7fec]"
+                    >
+                      NUEVOS
+                    </button>
                   </li>
-                  <li className="list-none text-[14px] text-[#000] w-full !mb-2">
-                    <Link to="/" className="link">
-                      PRODUCTOS RECOMENDADOS
-                    </Link>
+                  <li className="list-none text-[14px] text-[#000] !w-full !mb-2">
+                    <button
+                      onClick={() => scrollToSection("productos-recomendados")}
+                      className="link !bg-none !border-none !p-0 !cursor-pointer hover:text-[#0a7fec]"
+                    >
+                      RECOMENDADOS
+                    </button>
                   </li>
-                  <li className="list-none text-[14px] text-[#000] w-full !mb-2">
-                    <Link to="/" className="link">
+                  <li className="list-none text-[14px] text-[#000] !w-full !mb-2">
+                    <button
+                      onClick={() => scrollToSection("productos-populares")}
+                      className="link !bg-none !border-none !p-0 !cursor-pointer hover:text-[#0a7fec]"
+                    >
+                      POPULARES
+                    </button>
+                  </li>
+                  <li className="list-none text-[14px] text-[#000] !w-full !mb-2">
+                    <button
+                      onClick={() => scrollToSection("articulos-interes")}
+                      className="link !bg-none !border-none !p-0 !cursor-pointer hover:text-[#0a7fec]"
+                    >
                       ARTICULOS DE INTERES
-                    </Link>
+                    </button>
                   </li>
-                  <li className="list-none text-[14px] text-[#000] w-full !mb-2">
-                    <Link to="/" className="link">
-                      BLOGS
-                    </Link>
-                  </li>
-                  <li className="list-none text-[14px] text-[#000] w-full !mb-2">
-                    <Link to="/" className="link">
-                      REPUESTOS
-                    </Link>
-                  </li>
-                  <li className="list-none text-[14px] text-[#000] w-full !mb-2">
-                    <Link to="/" className="link">
-                      CONTACTANOS
-                    </Link>
-                  </li>
+
                   <li className="list-none text-[14px] text-[#000] w-full !mb-2">
                     <Link to="/" className="link">
                       SOPORTE TECNICO
