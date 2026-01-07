@@ -125,22 +125,22 @@ const AddToCartControl = ({ item }) => {
               <CircularProgress />
             </Button>
           ) : (
-            <div className="flex items-center overflow-hidden rounded-full border-2 border-[#082c55] w-[140px] h-[40px]">
+            <div className="flex items-center overflow-hidden rounded-full border-1 border-[#082c55] w-[120px] h-[30px]">
               <Button
-                className="!min-w-[40px] !w-[40px] !h-[40px] !bg-[#556f8d] !text-white !rounded-l-full !flex !items-center !justify-center"
+                className="!min-w-[30px] !w-[30px] !h-[30px] !bg-[#556f8d] !text-white !rounded-l-full !flex !items-center !justify-center"
                 onClick={minusQty}
               >
                 <ImMinus />
               </Button>
 
               <div className="flex-1 bg-white h-full flex items-center justify-center">
-                <span className="text-[18px] font-[700] text-[#082c55]">
+                <span className="!text-[20px] !text-bold text-[#082c55]">
                   {quantity}
                 </span>
               </div>
 
               <Button
-                className="!min-w-[40px] !w-[40px] !h-[40px] !bg-[#082c55] !text-white !rounded-r-full !flex !items-center !justify-center"
+                className="!min-w-[30px] !w-[30px] !h-[30px] !bg-[#082c55] !text-white !rounded-r-full !flex !items-center !justify-center"
                 onClick={addQty}
               >
                 <ImPlus />
