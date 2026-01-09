@@ -1,13 +1,44 @@
-Mira para darte contexto al agregar un producto funciona perfectamente en eso no tengo ningún problema, lo que si me esta dando problema es en:
+Documentacion E-commerce
 
-Cuando estoy creando un producto y por ejemplo subo 4 fotos incluso antes de guardar el producto y quiero borrar una foto que ya no quiero que se vea en el producto visualmente lo borra ósea se ven solo 3 fotos pero al guardar el producto y volver a ver el producto guardado o al editar el producto aparecen las 4 fotos ese seria el primer problema por correguir quiero que borre normalmente como debería ser
+CUENTA DE GMAIL
 
-Cuando por ejemplo voy a editar un producto que tiene por ejemplo 5 fotos y quiero borrar 1 como en el ejemplo anterior solo la borra visualmente ósea me deja ver cuatro fotos pero al guardar y ver el producto guardado nuevamente me reflejan las 5 fotos 
+Usuario: MaquitextQuevedo316@gmail.com
+Contraseña: Maquitext316@
 
-Cuando por ejemplo tengo 5 fotos y quiero añadir por ejemplo 3 fotos mas visualmente me permite ósea se ven 8 fotos pero al guardar el producto me borra las 5 ya existentes y solo me deja guardadadas las 3 nuevas fotos y quisiera que se vean todas las 8
+----------------------------------------------------------------------
 
-En conclusión me deja guaradar fotos al crear o editar el producto pero no me deja borrarlas normalmente si quisiera o agregarlas normalmente si quisiera 
+CREACION BASE DATOS Y REGISTRO EN MONGO DB VIDEO 28
+COMPLEMENTOS A INSTALAR =>
+bcryptjs cloudinary cookie-parser cors dotenv express helmet jsonwebtoken mongose morgan multer nodemon
 
-ayúdame a correguir esto porfavor sin cambiar mucho la lógica del código ya que estoy siguiendo un tutorial y no quiero perder el contexto 
+En MONGO
+Proyecto: MaquitextQuevedo
+NOMBRE USUARIO: maquitextquevedo316_db_user
+CONTRASEÑA: maquitext316
+
+Para en ENV del SERVER
+ASI queda en SERVER para Mongo 
+PORT = 8000
+MONGODB_URI = 'mongodb+srv://maquitextquevedo316_db_user:maquitext316@maquitextquevedo.rbgb581.mongodb.net/MaquitextQuevedo?appName=MaquitextQuevedo'
+-------------------------------------------------------------------------------------------------------
+
+Email Para Eniviar Mensajes como remitente para Todo OSEA correo principal Video 29 (27:00)
+EMAIL = maquitextquevedo316@gmail.com
+APP PASWORDS
+
+MaquitextQuevedo
+EMAIL_PASS = lfmchmgaoqngbzgx
+Video tutorial=> https://www.youtube.com/watch?v=xnbGakU7vhE
+
+---------------------------------------------------------------------------------------------------
+
+JSON_WEB_TOKEN_SECRET_KEY = "maquitext316" => es una clave inventada Token
+
+SECRET_KEY_ACCESS_TOKEN = abcdefg => es una clave inventada Token
+SECRET_KEY_REFRESH_TOKEN = hijklmn => es una clave inventada Token
+
+
 
 firebase con cuenta puckcoders video 61
+
+
