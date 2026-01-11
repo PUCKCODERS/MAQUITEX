@@ -439,11 +439,7 @@ const Dashboard = () => {
             <br />
             {context?.user?.name?.toUpperCase() ||
               context?.userData?.name?.toUpperCase() ||
-              JSON.parse(
-                localStorage.getItem("user") || "{}"
-              )?.name?.toUpperCase() ||
               "USUARIO"}
-            <br /> {context?.user?.name?.toUpperCase()}
           </h1>
           <p className="!font-[500">
             ESTO ES LO QUE PASA HOY EN TU TIENDA. CONSULTA LAS ESTADÍSTICAS
