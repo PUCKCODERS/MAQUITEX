@@ -436,7 +436,14 @@ const Dashboard = () => {
         <div className="info ">
           <h1 className="text-[35px] !font-bold !font-[bold] leading-10 !mb-3 ">
             BUENOS DIAS,
-            <br /> JONATHAN
+            <br />
+            {context?.user?.name?.toUpperCase() ||
+              context?.userData?.name?.toUpperCase() ||
+              JSON.parse(
+                localStorage.getItem("user") || "{}"
+              )?.name?.toUpperCase() ||
+              "USUARIO"}
+            <br /> {context?.user?.name?.toUpperCase()}
           </h1>
           <p className="!font-[500">
             ESTO ES LO QUE PASA HOY EN TU TIENDA. CONSULTA LAS ESTADÍSTICAS
