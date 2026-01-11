@@ -400,7 +400,6 @@ const Dashboard = () => {
 
   const getVENTASByYear = () => {
     fetchDataFromApi(`/api/order/sales`).then((res) => {
-      // Use backend-provided VENTAS (total all-time) for totalVentas
       const sales = [];
       res?.monthlySales?.length !== 0 &&
         res?.monthlySales?.map((item) => {
