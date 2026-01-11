@@ -21,3 +21,23 @@ const firebaseConfig = {
 };
 
 export const firebaseApp = initializeApp(firebaseConfig);
+
+{
+  /*// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAZ1RdjeZtE9ZmmrdVfVpnawS90BQN-OxI",
+  authDomain: "maquitext-quevedo.firebaseapp.com",
+  projectId: "maquitext-quevedo",
+  storageBucket: "maquitext-quevedo.firebasestorage.app",
+  messagingSenderId: "749913266060",
+  appId: "1:749913266060:web:5851813665fb82bb88e8a9"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig); */
+}

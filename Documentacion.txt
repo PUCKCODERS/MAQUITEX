@@ -48,4 +48,14 @@ cloudinary_Config_api_secret = "WUffrGXCLjgSWb6rmgdmVEjf_u0"
 
 firebase con cuenta puckcoders video 61
 
+NOMBRE de Proyecto: Maquitext Quevedo
+
+ID del proyecto: maquitext-quevedo
+
+npm isntall firebase 
+
+
+
+
+
 
