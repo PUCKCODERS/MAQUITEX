@@ -19,6 +19,14 @@ const MyAccount = () => {
   const [phone, setPhone] = useState("");
   const [address /*, setAddress*/] = useState([]);
 
+  const [selectedValue, setSelectedValue] = useState("");
+
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
+
+  const label = { inputProps: { "aria-label": "Radio demo" } };
+
   const [formFields, setFormFields] = useState({
     name: "",
     email: "",
@@ -63,16 +71,19 @@ const MyAccount = () => {
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    setFormFields(() => {
+    setFormFields((prevState) => {
       return {
-        ...formFields,
+        ...prevState,
         [name]: value,
       };
     });
+  };
 
-    setChangePassword(() => {
+  const onChangeInputPassword = (e) => {
+    const { name, value } = e.target;
+    setChangePassword((prevState) => {
       return {
-        ...formFields,
+        ...prevState,
         [name]: value,
       };
     });
@@ -130,7 +141,7 @@ const MyAccount = () => {
     );
   };
 
-  const valideValue2 = Object.values(formFields).every((el) => el);
+  // const valideValue2 = Object.values(formFields).every((el) => el);
 
   const handleSubmitChangePassword = (e) => {
     e.preventDefault();
@@ -236,9 +247,10 @@ const MyAccount = () => {
                     disabled={isLoading === true ? true : false}
                     onChange={(phone) => {
                       setPhone(phone);
-                      setFormFields({
+                      setFormFields((prevState) => ({
+                        ...prevState,
                         mobile: phone,
-                      });
+                      }));
                     }}
                   />
                 </div>
@@ -258,18 +270,6 @@ const MyAccount = () => {
                 </Button>
               </div>
             </form>
-          </div>
-
-          <div
-            className="flex items-center justify-center !p-5 rounded-md border  border-[#082c55] bg-[#526b86] hover:bg-[#082c55] text-[#fff] hover:text-[#fff] !mt-5 cursor-pointer "
-            onClick={() =>
-              context.setIsOpenFullScreenPanel({
-                open: true,
-                model: "NUEVA DIRECCIÓN",
-              })
-            }
-          >
-            <span className="text-[16px]  font-[500]">AÑADIR DIRECCIÓN</span>
           </div>
 
           <div className="flex !gap-2 flex-col !mt-4">
@@ -324,7 +324,7 @@ const MyAccount = () => {
                         name="oldPassword"
                         value={changePassword.oldPassword}
                         disabled={isLoading2 === true ? true : false}
-                        onChange={onChangeInput}
+                        onChange={onChangeInputPassword}
                       />
                     </div>
                   )}
@@ -338,7 +338,7 @@ const MyAccount = () => {
                       className="w-full"
                       name="newPassword"
                       value={changePassword.newPassword}
-                      onChange={onChangeInput}
+                      onChange={onChangeInputPassword}
                     />
                   </div>
 
@@ -350,7 +350,7 @@ const MyAccount = () => {
                       className="w-full"
                       name="confirmPassword"
                       value={changePassword.confirmPassword}
-                      onChange={onChangeInput}
+                      onChange={onChangeInputPassword}
                     />
                   </div>
                 </div>
