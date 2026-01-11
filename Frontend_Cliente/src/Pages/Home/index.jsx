@@ -15,7 +15,7 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 import BlogItem from "../../components/BlogItem";
 import HomeBannerV2 from "../../components/HomeSliderV2";
-import BannerBoxV2 from "../../components/bannerBoxV2";
+import BannerBoxV2 from "../../components/BannerBoxV2";
 import AdsBannerSliderV2 from "../../components/AdsBannerSliderV2";
 import AdsBannerSliderV3 from "../../components/AdsBannerSliderV3";
 import { useEffect } from "react";
