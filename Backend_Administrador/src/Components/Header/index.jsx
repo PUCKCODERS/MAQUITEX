@@ -111,11 +111,11 @@ const Header = () => {
           {context.isLogin === true ? (
             <div className="relative">
               <div
-                className="!rounded-full !w-[35px] !h-[35px] overflow-hidden cursor-pointer"
+                className="!rounded-full !w-[35px] !h-[35px] overflow-hidden cursor-pointer border-1 border-[#082c55]"
                 onClick={handleClickMyAcc}
               >
                 <img
-                  src="../../../imagenes/user.jpg"
+                  src={context?.userData?.avatar}
                   className="!w-full !h-full object-cover "
                 />
               </div>
@@ -159,9 +159,9 @@ const Header = () => {
               >
                 <MenuItem onClick={handleCloseMyAcc} className="!bg-[#fff]">
                   <div className="flex items-center !gap-3">
-                    <div className="!rounded-full !w-[35px] !h-[35px] overflow-hidden cursor-pointer border border-[#082c55]">
+                    <div className="!rounded-full !w-[35px] !h-[35px] overflow-hidden cursor-pointer border-1 border-[#082c55]">
                       <img
-                        src="../../../imagenes/user.jpg"
+                        src={context?.userData?.avatar}
                         className="!w-full !h-full object-cover "
                       />
                     </div>

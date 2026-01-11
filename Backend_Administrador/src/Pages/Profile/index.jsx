@@ -280,7 +280,7 @@ const Profile = () => {
 
         <div
           className="w-[110px] h-[110px] rounded-full overflow-hidden !mb-4 relative group
-                    flex items-center justify-center bg-[#f5f4f4]"
+                    flex items-center justify-center bg-[#f5f4f4] border-1 border-[#082c55]"
         >
           {uploading === true ? (
             <CircularProgress color="inherit" />
@@ -292,7 +292,7 @@ const Profile = () => {
                     <img
                       src={img}
                       key={index}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover "
                     />
                   );
                 })
