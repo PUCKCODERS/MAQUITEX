@@ -53,7 +53,7 @@ const HomeBannerV2 = (props) => {
 
                   <div className="w-full relative -bottom-[100%] opacity-0 btn_">
                     <Button className="btn-org !shadow-[4px_4px_2px_#000] border !border-[transparent]">
-                      <Link to={`/product/${item?._id}`}>COMPRAR AHORA</Link>
+                      <Link to={`/product/${item?._id}`}>VER PRODUCTO</Link>
                     </Button>
                   </div>
                 </div>

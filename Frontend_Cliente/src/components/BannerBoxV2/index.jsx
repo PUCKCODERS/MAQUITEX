@@ -30,7 +30,7 @@ const BannerBoxV2 = (props) => {
             to="/"
             className="text-[10px] font-[bold] font-bold link text-[#000]"
           >
-            COMPRAR AHORA
+            VER PRODUCTO
           </Link>
         </div>
       </div>
