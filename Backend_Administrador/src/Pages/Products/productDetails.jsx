@@ -24,6 +24,8 @@ const ProductDetails = () => {
   const zoomSliderBig = useRef();
   const zoomSliderSml = useRef();
 
+  const [reviews, setReviews] = useState([]);
+
   const { id } = useParams();
 
   const goto = (index) => {
@@ -41,6 +43,26 @@ const ProductDetails = () => {
       }
     });
   }, []);
+
+  const getReviews = () => {
+    fetchDataFromApi(`/api/user/getReviews?productId=${id}`).then((res) => {
+      if (res?.error === false) {
+        setReviews(res.reviews);
+      }
+    });
+  };
+
+  useEffect(() => {
+    fetchDataFromApi(`/api/product/${id}`).then((res) => {
+      if (res?.error === false) {
+        setTimeout(() => {
+          setProduct(res?.product);
+        }, 1000);
+      }
+    });
+
+    getReviews();
+  }, [id]);
 
   return (
     <>
@@ -222,8 +244,7 @@ const ProductDetails = () => {
                   RESEÑAS :
                 </span>
                 <span className="!font-bold text-[#082c55] text-[14px]">
-                  ({product?.reviews?.length > 0 ? product?.reviews?.length : 0}
-                  ) RESEÑAS
+                  ({reviews.length}) RESEÑAS
                 </span>
               </div>
 
@@ -251,67 +272,48 @@ const ProductDetails = () => {
 
           <h2 className="text-[20px] font-bold">RESEÑAS DE CLIENTES</h2>
 
-          <div className="reviewsWrap !mt-3">
-            <div className="reviews w-full h-auto !mb-3 !p-4 bg-white sm:rounded-lg border-b dark:!border-gray-700 shadow-[5px_4px_7px_#082c55] flex items-center justify-between">
-              <div className="flex items-center !gap-8">
-                <div className="img !w-[85px] !h-[85px] rounded-full overflow-hidden border-2 border-[#082c55]">
-                  <img
-                    src="https://res.cloudinary.com/dkzbtz2rz/image/upload/v1761977733/1761977731463_ProductZoom1_-_copia_2.jpg"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
+          <div className="!mt-3">
+            {reviews.length > 0 ? (
+              reviews.map((review, index) => (
+                <div
+                  key={index}
+                  className="w-full !mb-3 !p-4 bg-white rounded-lg shadow-[5px_4px_7px_#082c55]"
+                >
+                  <div className="flex gap-6 w-full">
+                    <div className="w-[85px] h-[85px] rounded-full overflow-hidden border">
+                      <img
+                        src={review.image}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
 
-                <div className="info w-[80%]">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-[16px] font-bold">
-                      JONATHAN RODRIGUEZ
-                    </h4>
-                    <Rating name="read-only" value={5} readOnly size="small" />
+                    <div className="flex-1">
+                      <div className="flex w-full items-start">
+                        <h4 className="text-[16px] font-bold">
+                          {review.userName}
+                        </h4>
+
+                        <div className="ml-auto">
+                          <Rating value={review.rating} readOnly size="small" />
+                        </div>
+                      </div>
+
+                      <span className="text-[13px] font-bold">
+                        {review.createdAt?.split("T")[0]}
+                      </span>
+
+                      <p className="text-[13px] text-[#4e4e4e] !mt-2">
+                        {review.review}
+                      </p>
+                    </div>
                   </div>
-
-                  <span className="text-[13px] font-bold">2025-11-01</span>
-                  <p className="text-[13px] text-[#4e4e4e] !mt-2">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Laboriosam delectus dolorum cumque recusandae facere
-                    temporibus, facilis laborum perferendis impedit unde
-                    incidunt eius quod, inventore veniam iure maiores adipisci
-                    explicabo nam minima tenetur culpa reiciendis. Sit aperiam
-                    quam harum ex possimus neque officiis. Eligendi illo
-                    voluptas officia, iusto ea eveniet cupiditate!
-                  </p>
                 </div>
-              </div>
-            </div>
-            <div className="reviews w-full h-auto !mb-3 !p-4 bg-white sm:rounded-lg border-b dark:!border-gray-700 shadow-[5px_4px_7px_#082c55] flex items-center justify-between">
-              <div className="flex items-center !gap-8">
-                <div className="img !w-[85px] !h-[85px] rounded-full overflow-hidden border-2 border-[#082c55]">
-                  <img
-                    src="https://res.cloudinary.com/dkzbtz2rz/image/upload/v1761977733/1761977731463_ProductZoom1_-_copia_2.jpg"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                <div className="info w-[80%]">
-                  <div className="flex items-center justify-between">
-                    <h4 className="text-[16px] font-bold">
-                      JONATHAN RODRIGUEZ
-                    </h4>
-                    <Rating name="read-only" value={5} readOnly size="small" />
-                  </div>
-
-                  <span className="text-[13px] font-bold">2025-11-01</span>
-                  <p className="text-[13px] text-[#4e4e4e] !mt-2">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Laboriosam delectus dolorum cumque recusandae facere
-                    temporibus, facilis laborum perferendis impedit unde
-                    incidunt eius quod, inventore veniam iure maiores adipisci
-                    explicabo nam minima tenetur culpa reiciendis. Sit aperiam
-                    quam harum ex possimus neque officiis. Eligendi illo
-                    voluptas officia, iusto ea eveniet cupiditate!
-                  </p>
-                </div>
-              </div>
-            </div>
+              ))
+            ) : (
+              <p className="text-[14px] text-[#4e4e4e]">
+                Este producto aún no tiene reseñas.
+              </p>
+            )}
           </div>
         </>
       ) : (
