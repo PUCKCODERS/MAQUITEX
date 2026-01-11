@@ -276,7 +276,7 @@ export const Products = () => {
               ELIMINAR
             </Button>
           )}
-          <Button className="btn btn-sm flex items-center">EXPORTAR</Button>
+
           <Button
             className="btn btn-sm "
             onClick={() =>

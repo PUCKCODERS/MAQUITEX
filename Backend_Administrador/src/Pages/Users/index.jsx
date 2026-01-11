@@ -29,7 +29,7 @@ import {
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
-const columns = [
+const columnsUser = [
   { id: "userImg", label: "IMAGEN ", minWidth: 80 },
   { id: "userName", label: "NOMBRE", minWidth: 100 },
   {
@@ -68,11 +68,11 @@ export const Users = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [userTotalData, setUserTotalData] = useState([]);
 
-  const [sortedIds, setSortedIds] = useState([]);
+  const [sortedIdsUser, setSortedIdsUser] = useState([]);
 
-  const [isMultiConfirmOpen, setIsMultiConfirmOpen] = useState(false);
+  const [isMultiConfirmOpenUser, setIsMultiConfirmOpenUser] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
-  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isConfirmOpenUser, setIsConfirmOpenUser] = useState(false);
 
   const context = useContext(MyContext);
 
@@ -115,7 +115,7 @@ export const Users = () => {
     }
   }, [searchQuery]);
 
-  const handleSelectAll = (e) => {
+  const handleSelectAllUser = (e) => {
     const isChecked = e.target.checked;
 
     const updatedItems = userData.map((item) => ({
@@ -127,13 +127,13 @@ export const Users = () => {
     if (isChecked) {
       const ids = updatedItems.map((item) => item._id).sort((a, b) => a - b);
 
-      setSortedIds(ids);
+      setSortedIdsUser(ids);
     } else {
-      setSortedIds([]);
+      setSortedIdsUser([]);
     }
   };
 
-  const handleCheckboxChange = (e, id /*, index*/) => {
+  const handleCheckboxChangeUser = (e, id /*, index*/) => {
     const updatedItems = userData.map((item) =>
       item._id === id ? { ...item, checked: !item.checked } : item
     );
@@ -144,25 +144,25 @@ export const Users = () => {
       .filter((item) => item.checked)
       .map((item) => item._id)
       .sort((a, b) => a - b);
-    setSortedIds(selectedIds);
+    setSortedIdsUser(selectedIds);
   };
 
-  const deleteMultiple = async () => {
-    if (sortedIds.length === 0) {
+  const deleteMultipleUser = async () => {
+    if (sortedIdsUser.length === 0) {
       context.alertBox("error", "SELECCIONE LOS ELEMENTOS QUE DESEA ELIMINAR");
       return;
     }
-    setIsMultiConfirmOpen(true);
+    setIsMultiConfirmOpenUser(true);
   };
 
-  const confirmDeleteMultiple = async () => {
+  const confirmDeleteMultipleUser = async () => {
     try {
       await deleteMultipleData(`/api/user/deleteMultiple`, {
-        ids: sortedIds,
+        ids: sortedIdsUser,
       });
       getUsers();
-      setSortedIds([]);
-      setIsMultiConfirmOpen(false);
+      setSortedIdsUser([]);
+      setIsMultiConfirmOpenUser(false);
       context.alertBox("success", "USUARIOS ELIMINADOS");
     } catch (error) {
       console.error(error);
@@ -172,14 +172,14 @@ export const Users = () => {
 
   const deleteUser = (id) => {
     setUserToDelete(id);
-    setIsConfirmOpen(true);
+    setIsConfirmOpenUser(true);
   };
 
-  const confirmDelete = () => {
+  const confirmDeleteUser = () => {
     if (userToDelete) {
       deleteData(`/api/user/${userToDelete}`).then(() => {
         getUsers();
-        setIsConfirmOpen(false);
+        setIsConfirmOpenUser(false);
         setUserToDelete(null);
         context.alertBox("success", "USUARIO ELIMINADO EXITOSAMENTE");
       });
@@ -216,11 +216,11 @@ export const Users = () => {
           </div>
 
           <div className="col w-[40%]  !ml-auto flex items-center justify-end !gap-2">
-            {sortedIds?.length > 0 && (
+            {sortedIdsUser?.length > 0 && (
               <Button
                 variant="contained"
                 className="btn btn-sm !bg-red-800 hover:!bg-red-950 !font-bold transition-all duration-300"
-                onClick={deleteMultiple}
+                onClick={deleteMultipleUser}
               >
                 ELIMINAR
               </Button>
@@ -242,7 +242,7 @@ export const Users = () => {
                     {...label}
                     size="small"
                     className="!text-white"
-                    onChange={handleSelectAll}
+                    onChange={handleSelectAllUser}
                     checked={
                       userData?.length > 0
                         ? userData.every((item) => item.checked)
@@ -251,7 +251,7 @@ export const Users = () => {
                   />
                 </TableCell>
 
-                {columns.map((column) => (
+                {columnsUser.map((column) => (
                   <TableCell
                     key={column.id}
                     align={column.align}
@@ -271,18 +271,18 @@ export const Users = () => {
                   .map((user, index) => {
                     return (
                       <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
-                        <TableCell style={{ minWidth: columns.minWidth }}>
+                        <TableCell style={{ minWidth: columnsUser.minWidth }}>
                           <Checkbox
                             {...label}
                             size="small"
                             className="!text-white"
                             checked={user.checked === true ? true : false}
                             onChange={(e) =>
-                              handleCheckboxChange(e, user._id, index)
+                              handleCheckboxChangeUser(e, user._id, index)
                             }
                           />
                         </TableCell>
-                        <TableCell style={{ minWidth: columns.minWidth }}>
+                        <TableCell style={{ minWidth: columnsUser.minWidth }}>
                           <div className="flex items-center !gap-4 w-[70px] ">
                             <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
                               <Link to="/product/45745">
@@ -300,13 +300,13 @@ export const Users = () => {
                           </div>
                         </TableCell>
                         <TableCell
-                          style={{ minWidth: columns.minWidth }}
+                          style={{ minWidth: columnsUser.minWidth }}
                           className="!text-white"
                         >
                           {user?.name}
                         </TableCell>
                         <TableCell
-                          style={{ minWidth: columns.minWidth }}
+                          style={{ minWidth: columnsUser.minWidth }}
                           className="!text-white"
                         >
                           <span className="flex items-center !gap-2">
@@ -315,7 +315,7 @@ export const Users = () => {
                         </TableCell>
 
                         <TableCell
-                          style={{ minWidth: columns.minWidth }}
+                          style={{ minWidth: columnsUser.minWidth }}
                           className="!text-white"
                         >
                           <span className="flex items-center !gap-2">
@@ -325,7 +325,7 @@ export const Users = () => {
                         </TableCell>
 
                         <TableCell
-                          style={{ minWidth: columns.minWidth }}
+                          style={{ minWidth: columnsUser.minWidth }}
                           className="!text-white"
                         >
                           {user?.verify_email === false ? (
@@ -348,7 +348,7 @@ export const Users = () => {
                         </TableCell>
 
                         <TableCell
-                          style={{ minWidth: columns.minWidth }}
+                          style={{ minWidth: columnsUser.minWidth }}
                           className="!text-white"
                         >
                           <span className="flex items-center !gap-2">
@@ -357,7 +357,7 @@ export const Users = () => {
                           </span>
                         </TableCell>
                         <TableCell
-                          style={{ minWidth: columns.minWidth }}
+                          style={{ minWidth: columnsUser.minWidth }}
                           className="!text-white"
                         >
                           <div className="flex items-center justify-center !gap-1">
@@ -399,8 +399,8 @@ export const Users = () => {
       </div>
 
       <Dialog
-        open={isConfirmOpen}
-        onClose={() => setIsConfirmOpen(false)}
+        open={isConfirmOpenUser}
+        onClose={() => setIsConfirmOpenUser(false)}
         PaperProps={{
           style: {
             borderRadius: "15px",
@@ -424,13 +424,13 @@ export const Users = () => {
         </div>
         <div className="flex justify-center !gap-3 !pb-2">
           <Button
-            onClick={confirmDelete}
+            onClick={confirmDeleteUser}
             className="!bg-[#1976d2] hover:!bg-[#0d47a1] !text-white !font-bold !px-4 !py-2"
           >
             Sí, eliminar
           </Button>
           <Button
-            onClick={() => setIsConfirmOpen(false)}
+            onClick={() => setIsConfirmOpenUser(false)}
             className="!bg-[#d32f2f] hover:!bg-[#9a0007] !text-white !font-bold !px-4 !py-2"
           >
             Cancelar
@@ -439,8 +439,8 @@ export const Users = () => {
       </Dialog>
 
       <Dialog
-        open={isMultiConfirmOpen}
-        onClose={() => setIsMultiConfirmOpen(false)}
+        open={isMultiConfirmOpenUser}
+        onClose={() => setIsMultiConfirmOpenUser(false)}
         PaperProps={{
           style: {
             borderRadius: "15px",
@@ -464,13 +464,13 @@ export const Users = () => {
         </div>
         <div className="flex justify-center !gap-3 !pb-2">
           <Button
-            onClick={confirmDeleteMultiple}
+            onClick={confirmDeleteMultipleUser}
             className="!bg-[#1976d2] hover:!bg-[#0d47a1] !text-white !font-bold !px-4 !py-2"
           >
             Sí, eliminar
           </Button>
           <Button
-            onClick={() => setIsMultiConfirmOpen(false)}
+            onClick={() => setIsMultiConfirmOpenUser(false)}
             className="!bg-[#d32f2f] hover:!bg-[#9a0007] !text-white !font-bold !px-4 !py-2"
           >
             Cancelar

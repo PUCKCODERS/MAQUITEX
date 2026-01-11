@@ -84,7 +84,6 @@ export const CategoryList = () => {
         </h2>
 
         <div className="col !w-[40%] !ml-auto flex items-center justify-end !gap-3">
-          <Button className="btn btn-sm flex items-center ">EXPORTAR</Button>
           <Button
             className="btn btn-sm"
             onClick={() =>

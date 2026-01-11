@@ -1,0 +1,129 @@
+  const [isLoading, setIsloading] = useState(false);
+  const [productData, setProductData] = useState([]);
+  const [selectedProductIds, setSelectedProductIds] = useState([]);
+  const [selectedUserIds, setSelectedUserIds] = useState([]);
+  const [productToDelete, setProductToDelete] = useState(null);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isMultiProductConfirmOpen, setIsMultiProductConfirmOpen] = useState(false);
+  const [isMultiUserConfirmOpen, setIsMultiUserConfirmOpen] = useState(false);
+
+  const context = useContext(MyContext);
+    if (isChecked) {
+      const ids = updatedItems.map((item) => item._id).sort((a, b) => a - b);
+
+      setSelectedProductIds(ids);
+    } else {
+      setSelectedProductIds([]);
+    }
+  };
+
+      .filter((item) => item.checked)
+      .map((item) => item._id)
+      .sort((a, b) => a - b);
+    setSelectedProductIds(selectedIds);
+  };
+
+  const handleChangeProductCat = (event) => {
+  };
+
+  const deleteMultipleProduct = async () => {
+    if (selectedProductIds.length === 0) {
+      context.alertBox("error", "SELECCIONE LOS ELEMENTOS QUE DESEA ELIMINAR");
+      return;
+    }
+    setIsMultiProductConfirmOpen(true);
+  };
+
+  const confirmDeleteMultiple = async () => {
+    try {
+      await deleteMultipleData(`/api/product/deleteMultiple`, {
+        ids: selectedProductIds,
+      });
+      getProducts();
+      setSelectedProductIds([]);
+      setIsMultiProductConfirmOpen(false);
+      context.alertBox("success", "PRODUCTOS ELIMINADOS");
+    } catch (error) {
+      console.error(error);
+      .filter((item) => item.checked)
+      .map((item) => item._id)
+      .sort((a, b) => a - b);
+    setSelectedUserIds(selectedIds);
+  };
+
+  const deleteUser = (id) => {
+  };
+
+  const deleteMultipleUser = async () => {
+    if (selectedUserIds.length === 0) {
+      context.alertBox("error", "SELECCIONE LOS ELEMENTOS QUE DESEA ELIMINAR");
+      return;
+    }
+    setIsMultiUserConfirmOpen(true);
+  };
+
+  useEffect(() => {
+  const confirmDeleteMultipleUser = async () => {
+    try {
+      await deleteMultipleData(`/api/user/deleteMultiple`, {
+        ids: selectedUserIds,
+      });
+      getUsers();
+      setSelectedUserIds([]);
+      setIsMultiUserConfirmOpen(false);
+      context.alertBox("success", "USUARIOS ELIMINADOS");
+    } catch (error) {
+      console.error(error);
+    if (isChecked) {
+      const ids = updatedItems.map((item) => item._id).sort((a, b) => a - b);
+
+      setSelectedUserIds(ids);
+    } else {
+      setSelectedUserIds([]);
+    }
+  };
+
+          </h2>
+
+          <div className="col !w-[55%] !ml-auto flex items-center justify-end !gap-2">
+            {selectedProductIds?.length > 0 && (
+              <Button
+                variant="contained"
+                className="btn btn-sm !bg-red-800 hover:!bg-red-950 !font-bold transition-all duration-300"
+          </div>
+
+          <div className="col w-[40%]  !ml-auto flex items-center justify-end !gap-2">
+            {selectedUserIds?.length > 0 && (
+              <Button
+                variant="contained"
+                className="btn btn-sm !bg-red-800 hover:!bg-red-950 !font-bold transition-all duration-300"
+      </Dialog>
+
+      <Dialog
+        open={isMultiUserConfirmOpen}
+        onClose={() => setIsMultiUserConfirmOpen(false)}
+        PaperProps={{
+          style: {
+            borderRadius: "15px",
+            Sí, eliminar
+          </Button>
+          <Button
+            onClick={() => setIsMultiUserConfirmOpen(false)}
+            className="!bg-[#d32f2f] hover:!bg-[#9a0007] !text-white !font-bold !px-4 !py-2"
+          >
+            Cancelar
+      </Dialog>
+
+      <Dialog
+        open={isMultiProductConfirmOpen}
+        onClose={() => setIsMultiProductConfirmOpen(false)}
+        PaperProps={{
+          style: {
+            borderRadius: "15px",
+            Sí, eliminar
+          </Button>
+          <Button
+            onClick={() => setIsMultiProductConfirmOpen(false)}
+            className="!bg-[#d32f2f] hover:!bg-[#9a0007] !text-white !font-bold !px-4 !py-2"
+          >
+            Cancelar
