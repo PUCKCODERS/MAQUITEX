@@ -24,6 +24,9 @@ import Address from "./Pages/MyAccount/address";
 import OrderSuccess from "./Pages/Orders/success";
 import OrderFailed from "./Pages/Orders/failed";
 import SearchPage from "./Pages/Search";
+import ServicioTecnico from "./Pages/S.Tecnico";
+import Nosotros from "./Pages/Nosotros";
+import Contacto from "./Pages/Contacto";
 
 const MyContext = createContext();
 
@@ -297,6 +300,13 @@ function App() {
             />
             <Route path={"/address"} exact={true} element={<Address />} />
             <Route path={"/search"} exact={true} element={<SearchPage />} />
+            <Route
+              path={"/s.tecnico"}
+              exact={true}
+              element={<ServicioTecnico />}
+            />
+            <Route path={"/nosotros"} exact={true} element={<Nosotros />} />
+            <Route path={"/contacto"} exact={true} element={<Contacto />} />
           </Routes>
           <Footer />
         </MyContext.Provider>

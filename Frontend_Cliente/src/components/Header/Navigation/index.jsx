@@ -119,7 +119,7 @@ const Navigation = () => {
                 })}
 
               <li className="list-none !text-[#082c55] font-bold font-[bold]">
-                <Link to="/" className="link transition">
+                <Link to="/s.tecnico" className="link transition">
                   <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
                     S.TECNICO
                   </Button>
@@ -127,14 +127,14 @@ const Navigation = () => {
               </li>
 
               <li className="list-none !text-[#082c55] font-bold font-[bold]">
-                <Link to="/" className="link transition">
+                <Link to="/nosotros" className="link transition">
                   <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
                     NOSOTROS
                   </Button>
                 </Link>
               </li>
               <li className="list-none !text-[#082c55] font-bold font-[bold]">
-                <Link to="/" className="link transition">
+                <Link to="/contacto" className="link transition">
                   <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
                     CONTACTO
                   </Button>

@@ -37,7 +37,7 @@ const HomeCatSlider = (props) => {
           })}
 
           <SwiperSlide>
-            <Link to="/">
+            <Link to="/s.tecnico">
               <div className="item !py-1 !px-3 bg-white !text-[#556f8d] shadow-[5px_4px_7px_#556f8d] !border-1 !border-[#b1cdee] rounded-lg text-center flex items-center justify-center flex-col">
                 <img
                   src="https://marcimex.vtexassets.com/arquivos/ids/217717/48946.png?v=638741894549100000"
@@ -50,7 +50,7 @@ const HomeCatSlider = (props) => {
             </Link>
           </SwiperSlide>
           <SwiperSlide>
-            <Link to="/">
+            <Link to="/nosotros">
               <div className="item !py-1 !px-3 bg-white !text-[#556f8d] shadow-[5px_4px_7px_#556f8d] !border-1 !border-[#b1cdee] rounded-lg text-center flex items-center justify-center flex-col">
                 <img
                   src="https://marcimex.vtexassets.com/arquivos/ids/217717/48946.png?v=638741894549100000"
@@ -63,7 +63,7 @@ const HomeCatSlider = (props) => {
             </Link>
           </SwiperSlide>
           <SwiperSlide>
-            <Link to="/">
+            <Link to="/contacto">
               <div className="item !py-1 !px-3 bg-white !text-[#556f8d] shadow-[5px_4px_7px_#556f8d] !border-1 !border-[#b1cdee] rounded-lg text-center flex items-center justify-center flex-col">
                 <img
                   src="https://marcimex.vtexassets.com/arquivos/ids/217717/48946.png?v=638741894549100000"
