@@ -82,19 +82,20 @@ const Nosotros = () => {
                   />
                 </div>
                 <p className="label-2 section-subtitle slider-reveal !text-[20px]">
-                  Tradational & Hygine
+                  TECNOLOGÍA Y PRECISIÓN
                 </p>
-                <h1 className="display-1 hero-title slider-reveal">
-                  For the love of <br />
-                  delicious food
+                <h1 className="display-1 hero-title slider-reveal !text-[75px]">
+                  TODO PARA TU PASIÓN <br />
+                  POR LA COSTURA
                 </h1>
                 <p className="body-2 hero-text slider-reveal">
-                  Come with family & feel the joy of mouthwatering food
+                  MÁQUINAS DE COSER, ACCESORIOS Y REPUESTOS PARA PROFESIONALES Y
+                  AFICIONADOS
                 </p>
                 <a href="#" className="btn btn-primary slider-reveal">
-                  <span className="text text-1">View Our Menu</span>
+                  <span className="text text-1">VER CATÁLOGO</span>
                   <span className="text text-2" aria-hidden="true">
-                    View Our Menu
+                    VER CATÁLOGO
                   </span>
                 </a>
               </li>
@@ -114,19 +115,20 @@ const Nosotros = () => {
                   />
                 </div>
                 <p className="label-2 section-subtitle slider-reveal !text-[20px]">
-                  delightful experience
+                  CALIDAD QUE PERDURA
                 </p>
-                <h1 className="display-1 hero-title slider-reveal">
-                  Flavors Inspired by <br />
-                  the Seasons
+                <h1 className="display-1 hero-title slider-reveal !text-[75px]">
+                  MÁQUINAS DE COSER <br />
+                  PARA CADA NECESIDAD
                 </h1>
                 <p className="body-2 hero-text slider-reveal">
-                  Come with family & feel the joy of mouthwatering food
+                  DOMÉSTICAS, INDUSTRIALES Y ELECTRÓNICAS CON GARANTÍA Y SOPORTE
+                  TÉCNICO
                 </p>
                 <a href="#" className="btn btn-primary slider-reveal">
-                  <span className="text text-1">View Our Menu</span>
+                  <span className="text text-1">EXPLORAR PRODUCTOS</span>
                   <span className="text text-2" aria-hidden="true">
-                    View Our Menu
+                    EXPLORAR PRODUCTOS
                   </span>
                 </a>
               </li>
@@ -146,19 +148,19 @@ const Nosotros = () => {
                   />
                 </div>
                 <p className="label-2 section-subtitle slider-reveal !text-[20px]">
-                  amazing & delicious
+                  SERVICIO Y CONFIANZA
                 </p>
-                <h1 className="display-1 hero-title slider-reveal">
-                  Where every flavor <br />
-                  tells a story
+                <h1 className="display-1 hero-title slider-reveal !text-[75px]">
+                  REPUESTOS Y SERVICIO <br />
+                  TÉCNICO ESPECIALIZADO
                 </h1>
                 <p className="body-2 hero-text slider-reveal">
-                  Come with family & feel the joy of mouthwatering food
+                  MANTENIMIENTO, REPARACIÓN Y ENVÍO A DOMICILIO A TODO EL PAÍS
                 </p>
                 <a href="#" className="btn btn-primary slider-reveal">
-                  <span className="text text-1">View Our Menu</span>
+                  <span className="text text-1">CONTÁCTANOS</span>
                   <span className="text text-2" aria-hidden="true">
-                    View Our Menu
+                    CONTÁCTANOS
                   </span>
                 </a>
               </li>
@@ -197,13 +199,12 @@ const Nosotros = () => {
           >
             <div className="container">
               <p className="section-subtitle label-2 !text-[20px]">
-                Flavors For Royalty
+                LO QUE OFRECEMOS
               </p>
-              <h2 className="headline-1 section-title">We Offer Top Notch</h2>
+              <h2 className="headline-1 section-title">OFRECEMOS LO MEJOR</h2>
               <p className="section-text">
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry lorem Ipsum has been the industrys standard dummy text
-                ever.
+                SOLUCIONES COMPLETAS PARA EL MUNDO DE LA COSTURA, DESDE LA VENTA
+                HASTA EL SOPORTE TÉCNICO
               </p>
               <ul className="grid-list">
                 <li>
@@ -225,10 +226,10 @@ const Nosotros = () => {
                     </a>
                     <div className="card-content">
                       <h3 className="title-4 card-title">
-                        <a href="#">Breakfast</a>
+                        <a href="#">MÁQUINAS DE COSER</a>
                       </h3>
                       <a href="#" className="btn-text hover-underline label-2">
-                        View Menu
+                        VER MODELOS
                       </a>
                     </div>
                   </div>
@@ -252,10 +253,10 @@ const Nosotros = () => {
                     </a>
                     <div className="card-content">
                       <h3 className="title-4 card-title">
-                        <a href="#">Appetizers</a>
+                        <a href="#">ACCESORIOS Y REPUESTOS</a>
                       </h3>
                       <a href="#" className="btn-text hover-underline label-2">
-                        View Menu
+                        VER ACCESORIOS
                       </a>
                     </div>
                   </div>
@@ -279,10 +280,10 @@ const Nosotros = () => {
                     </a>
                     <div className="card-content">
                       <h3 className="title-4 card-title">
-                        <a href="#">Drinks</a>
+                        <a href="#">SERVICIO TÉCNICO</a>
                       </h3>
                       <a href="#" className="btn-text hover-underline label-2">
-                        View Menu
+                        SOLICITAR SERVICIO
                       </a>
                     </div>
                   </div>
@@ -317,21 +318,19 @@ const Nosotros = () => {
                   className="label-2 section-subtitle !text-[20px]"
                   id="about-label"
                 >
-                  Our Story
+                  NUESTRA EXPERIENCIA
                 </p>
-                <h2 className="headline-1 section-title !text-[#082c55]">
-                  Every Fla vor Tells a Story
+                <h2 className="headline-1 section-title !text-[#082c55] !text-[40px]">
+                  EXPERTOS EN MÁQUINAS DE COSER
                 </h2>
                 <p className="section-text !text-[#000]">
-                  Lorem Ipsum is simply dummy text of the printingand
-                  typesetting industry lorem Ipsum has been the industrys
-                  standard dummy text ever since the when an unknown printer
-                  took a galley of type and scrambled it to make a type specimen
-                  book It has survived not only five centuries, but also the
-                  leap into.
+                  SOMOS UNA EMPRESA ESPECIALIZADA EN LA VENTA DE MÁQUINAS DE
+                  COSER, ACCESORIOS Y REPUESTOS. BRINDAMOS SERVICIO TÉCNICO
+                  PROFESIONAL Y ENVÍO A DOMICILIO, GARANTIZANDO CALIDAD,
+                  RESPALDO Y ATENCIÓN PERSONALIZADA PARA CADA CLIENTE.
                 </p>
                 <div className="contact-label !text-[#082c55]">
-                  Book Through Call
+                  ATENCIÓN PERSONALIZADA
                 </div>
                 <a
                   href="tel:+804001234567"
@@ -343,9 +342,9 @@ const Nosotros = () => {
                   href="#"
                   className="btn btn-primary !text-[#082c55] !border-2 !border-[#082c55] hover:!border-white"
                 >
-                  <span className="text text-1 ">Read More</span>
+                  <span className="text text-1 ">CONÓCENOS</span>
                   <span className="text text-2" aria-hidden="true">
-                    Read More
+                    CONÓCENOS
                   </span>
                 </a>
               </div>
@@ -421,23 +420,24 @@ const Nosotros = () => {
                 />
 
                 <p className="section-subtitle label-2 !text-[20px]">
-                  Special Dish
+                  PRODUCTO DESTACADO
                 </p>
-                <h2 className="headline-1 section-title">Lobster Tortellini</h2>
+                <h2 className="headline-1 section-title !text-[40px]">
+                  MÁQUINA DE COSER PROFESIONAL
+                </h2>
                 <p className="section-text">
-                  Lorem Ipsum is simply dummy text of the printingand
-                  typesetting industry lorem Ipsum has been the industrys
-                  standard dummy text ever since the when an unknown printer
-                  took a galley of type.
+                  ALTO RENDIMIENTO, PRECISIÓN Y DURABILIDAD PARA TRABAJOS
+                  EXIGENTES DE COSTURA. IDEAL PARA TALLERES Y CONFECCIÓN
+                  PROFESIONAL.
                 </p>
                 <div className="wrapper">
                   <del className="del body-3 !text-[#000]">$40.00</del>
                   <span className="span body-1 ">$20.00</span>
                 </div>
                 <a href="#" className="btn btn-primary">
-                  <span className="text text-1">View All Menu</span>
+                  <span className="text text-1">VER DETALLES</span>
                   <span className="text text-2" aria-hidden="true">
-                    View All Menu
+                    VER DETALLES
                   </span>
                 </a>
               </div>
@@ -468,10 +468,10 @@ const Nosotros = () => {
           >
             <div className="container">
               <p className="section-subtitle text-center !text-[20px] label-2">
-                Special Selection
+                NUESTRO CATÁLOGO
               </p>
               <h2 className="headline-1 section-title text-center !text-[#082c55]">
-                Delicious Menu
+                PRODUCTOS DISPONIBLES
               </h2>
               <ul className="grid-list">
                 <li>
@@ -695,10 +695,10 @@ const Nosotros = () => {
             aria-label="testimonials"
           >
             <div className="container">
-              <div className="quote">”</div>
+              <div className="quote"></div>
               <p className="headline-2 testi-text">
-                I wanted to thank you for inviting me down for that amazing
-                dinner the other night. The food was extraordinary.
+                EXCELENTE ATENCIÓN Y SERVICIO TÉCNICO, SUS MÁQUINAS QUEDAN COMO
+                NUEVAS Y EL ENVÍO ES RÁPIDO
               </p>
             </div>
           </section>
@@ -708,26 +708,30 @@ const Nosotros = () => {
             <div className="container">
               <div className="form reservation-form bg-black-10">
                 <form action="" className="form-left">
-                  <h2 className="headline-1 text-center">Online Reservation</h2>
+                  <h2 className="headline-1 text-center !text-[40px]">
+                    SOLICITUD DE SERVICIO TÉCNICO
+                  </h2>
                   <p className="form-text text-center">
-                    Booking request{" "}
+                    SOLICITA ATENCIÓN TÉCNICA AL{" "}
                     <a href="tel:+88123123456" className="link">
                       +88-123-123456
-                    </a>
-                    or fill out the order form
+                    </a>{" "}
+                    O COMPLETA EL FORMULARIO DE SERVICIO
                   </p>
                   <div className="input-wrapper">
                     <input
                       type="text"
                       name="name"
-                      placeholder="Your Name"
+                      placeholder="TU NOMBRE
+"
                       autoComplete="off"
                       className="input-field"
                     />
                     <input
                       type="tel"
                       name="phone"
-                      placeholder="Phone Number"
+                      placeholder="NÚMERO DE TELÉFONO
+"
                       autoComplete="off"
                       className="input-field"
                     />
@@ -738,14 +742,20 @@ const Nosotros = () => {
                         name="person-outline"
                         aria-hidden="true"
                       ></ion-icon>
-                      <select name="person" className="input-field">
-                        <option value="1-person">1 Person</option>
-                        <option value="2-person">2 Person</option>
-                        <option value="3-person">3 Person</option>
-                        <option value="4-person">4 Person</option>
-                        <option value="5-person">5 Person</option>
-                        <option value="6-person">6 Person</option>
-                        <option value="7-person">7 Person</option>
+                      <select
+                        name="person"
+                        className="input-field !text-[13px]"
+                      >
+                        <option value="1-person">TIPO DE SERVICIO</option>
+                        <option value="2-person">SERVICIO TÉCNICO</option>
+                        <option value="3-person">
+                          MANTENIMIENTO PREVENTIVO
+                        </option>
+                        <option value="4-person">REPARACIÓN DE MÁQUINA</option>
+                        <option value="5-person">REPUESTOS</option>
+                        <option value="6-person">ACCESORIOS</option>
+                        <option value="7-person">ENVÍO A DOMICILIO</option>
+                        <option value="7-person">ASESORÍA TÉCNICA</option>
                       </select>
                       <ion-icon
                         name="chevron-down"
@@ -774,7 +784,11 @@ const Nosotros = () => {
                         name="time-outline"
                         aria-hidden="true"
                       ></ion-icon>
-                      <select name="person" className="input-field">
+                      <select
+                        name="person"
+                        className="input-field !text-[11px]"
+                      >
+                        <option value="08:00am">HORARIO DE ATENCIÓN</option>
                         <option value="08:00am">08 : 00 am</option>
                         <option value="09:00am">09 : 00 am</option>
                         <option value="010:00am">10 : 00 am</option>
@@ -800,14 +814,15 @@ const Nosotros = () => {
                   </div>
                   <textarea
                     name="message"
-                    placeholder="Message"
+                    placeholder="DESCRIBE TU SOLICITUD O EL PROBLEMA DE TU MÁQUINA
+"
                     autoComplete="off"
                     className="input-field"
                   ></textarea>
                   <button type="submit" className="btn btn-secondary">
-                    <span className="text text-1">Book A Table</span>
+                    <span className="text text-1">ENVIAR SOLICITUD</span>
                     <span className="text text-2" aria-hidden="true">
-                      Book A Table
+                      ENVIAR SOLICITUD
                     </span>
                   </button>
                 </form>
@@ -817,8 +832,10 @@ const Nosotros = () => {
                     backgroundImage: `url(${formPattern})`,
                   }}
                 >
-                  <h2 className="headline-1 text-center">Contact Us</h2>
-                  <p className="contact-label">Booking Request</p>
+                  <h2 className="headline-1 text-center !text-[25px]">
+                    CONTÁCTANOS
+                  </h2>
+                  <p className="contact-label">ATENCIÓN TÉCNICA Y VENTAS</p>
                   <a
                     href="tel:+88123123456"
                     className="body-1 contact-number hover-underline"
@@ -826,20 +843,20 @@ const Nosotros = () => {
                     +88-123-123456
                   </a>
                   <div className="separator"></div>
-                  <p className="contact-label">Location</p>
+                  <p className="contact-label">UBICACIÓN</p>
                   <address className="body-4">
                     Restaurant St, Delicious City, <br />
                     London 9578, UK
                   </address>
-                  <p className="contact-label">Lunch Time</p>
+                  <p className="contact-label">HORARIO DE ATENCIÓN</p>
                   <p className="body-4">
-                    Monday to Sunday <br />
-                    11.00 am - 2.30pm
+                    LUNES A SÁBADO <br />
+                    09:00 AM - 18:00 PM
                   </p>
-                  <p className="contact-label">Dinner Time</p>
+                  <p className="contact-label">FINES DE SEMANA</p>
                   <p className="body-4">
-                    Monday to Sunday <br />
-                    05.00 pm - 10.00pm
+                    SABADOS <br />
+                    9.00 pm - 15.00pm
                   </p>
                 </div>
               </div>
@@ -862,7 +879,7 @@ const Nosotros = () => {
                     <div className="card-icon">
                       <GiSewingMachine className="text-[75px]" />
                     </div>
-                    <h3 className="title-2 card-title">Hygienic Food</h3>
+                    <h3 className="title-2 card-title">PRODUCTOS DE CALIDAD</h3>
                     <p className="label-1 card-text">
                       Lorem Ipsum is simply dummy printing and typesetting.
                     </p>
@@ -873,7 +890,10 @@ const Nosotros = () => {
                     <div className="card-icon">
                       <GiSewingNeedle className="text-[75px]" />
                     </div>
-                    <h3 className="title-2 card-title"> Environment</h3>
+                    <h3 className="title-2 card-title">
+                      {" "}
+                      SERVICIO ESPECIALIZADO
+                    </h3>
                     <p className="label-1 card-text">
                       Lorem Ipsum is simply dummy printing and typesetting.
                     </p>
@@ -884,7 +904,9 @@ const Nosotros = () => {
                     <div className="card-icon">
                       <GiSewingString className="text-[75px]" />
                     </div>
-                    <h3 className="title-2 card-title">Skilled Chefs</h3>
+                    <h3 className="title-2 card-title">
+                      REPUESTOS GARANTIZADOS
+                    </h3>
                     <p className="label-1 card-text">
                       Lorem Ipsum is simply dummy printing and typesetting.
                     </p>
@@ -897,7 +919,7 @@ const Nosotros = () => {
                         <GiSewingMachine className="text-[75px]" />
                       </div>
                     </div>
-                    <h3 className="title-2 card-title">Event & Party</h3>
+                    <h3 className="title-2 card-title">ENVÍO A DOMICILIO</h3>
                     <p className="label-1 card-text">
                       Lorem Ipsum is simply dummy printing and typesetting.
                     </p>
@@ -926,10 +948,10 @@ const Nosotros = () => {
           <section className="section event bg-gray-600" aria-label="event">
             <div className="container">
               <p className="section-subtitle label-2 text-center !text-[20px]">
-                Recent Updates
+                NOVEDADES
               </p>
               <h2 className="section-title headline-1 text-center">
-                Upcoming Event
+                ÚLTIMAS ACTUALIZACIONES
               </h2>
               <ul className="grid-list">
                 <li>
@@ -946,19 +968,13 @@ const Nosotros = () => {
                         alt="Flavour so good you’ll try to eat with your eyes."
                         className="img-cover"
                       />
-                      <time
-                        className="publish-date label-2"
-                        dateTime="2022-09-15"
-                      >
-                        15/09/2022
-                      </time>
                     </div>
                     <div className="card-content">
                       <p className="card-subtitle label-2 text-center">
-                        Food, Flavour
+                        MAQUINAS
                       </p>
                       <h3 className="card-title title-2 text-center">
-                        Flavour so good you’ll try to eat with your eyes.
+                        NUEVOS MODELOS DE MÁQUINAS DISPONIBLES
                       </h3>
                     </div>
                   </div>
@@ -977,19 +993,13 @@ const Nosotros = () => {
                         alt="Flavour so good you’ll try to eat with your eyes."
                         className="img-cover"
                       />
-                      <time
-                        className="publish-date label-2"
-                        dateTime="2022-09-08"
-                      >
-                        08/09/2022
-                      </time>
                     </div>
                     <div className="card-content">
                       <p className="card-subtitle label-2 text-center">
-                        Healthy Food
+                        ACCESORIOS Y REPUESTOS
                       </p>
                       <h3 className="card-title title-2 text-center">
-                        Flavour so good you’ll try to eat with your eyes.
+                        PROMOCIONES EN ACCESORIOS Y REPUESTOS
                       </h3>
                     </div>
                   </div>
@@ -1008,28 +1018,22 @@ const Nosotros = () => {
                         alt="Flavour so good you’ll try to eat with your eyes."
                         className="logo"
                       />
-                      <time
-                        className="publish-date label-2"
-                        dateTime="2022-09-03"
-                      >
-                        03/09/2022
-                      </time>
                     </div>
                     <div className="card-content">
                       <p className="card-subtitle label-2 text-center">
-                        Recipie
+                        SERVICIO TECNICO Y ENVIO GRATS
                       </p>
                       <h3 className="card-title title-2 text-center">
-                        Flavour so good you’ll try to eat with your eyes.
+                        SERVICIO TÉCNICO AHORA A DOMICILIO
                       </h3>
                     </div>
                   </div>
                 </li>
               </ul>
               <a href="#" className="btn btn-primary">
-                <span class="text text-1">View Our Blog</span>
+                <span class="text text-1">PRODUCTOS NUEVOS</span>
                 <span class="text text-2" aria-hidden="true">
-                  View Our Blog
+                  PRODUCTOS NUEVOS
                 </span>
               </a>
             </div>
@@ -1071,7 +1075,10 @@ const Nosotros = () => {
                 <div className="separator"></div>
                 <div className="separator"></div>
               </div>
-              <p className="title-1 !text-[#082c55]">Get News & Offers</p>
+              <p className="title-1 !text-[#082c55] !text-[15px]">
+                ESPECIALISTAS EN MÁQUINAS DE COSER, ACCESORIOS, REPUESTOS Y
+                SERVICIO TÉCNICO PROFESIONAL.
+              </p>
               <p className="label-1 !text-[#082c55]">
                 Subscribe us & Get{" "}
                 <span class="span !text-[#082c55]">25% Off.</span>
