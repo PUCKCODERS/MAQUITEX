@@ -1189,7 +1189,8 @@
 }
 
 .nosotros-page .hover\:card .card-banner {
-  background-color: var(--gold-crayola);
+  background-color: #082c55;
+  padding: 1rem;
 }
 
 .nosotros-page .hover\:card .card-banner .img-cover {
@@ -1197,8 +1198,9 @@
 }
 
 .nosotros-page .hover\:card:is(:hover, :focus-within) .card-banner .img-cover {
-  opacity: 0.7;
-  transform: scale(1.05);
+  transform: scale(1.1);
+  color: white;
+  transition: 0.4s ease-in-out;
 }
 
 .nosotros-page .menu-card .card-banner {
@@ -1578,8 +1580,8 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: var(--gold-crayola);
-  color: var(--smoky-black-1);
+  background-color: #082c55;
+  color: white;
   font-size: 22px;
   width: 50px;
   height: 50px;
@@ -1594,8 +1596,8 @@
 }
 
 .nosotros-page .back-top-btn:is(:hover, :focus-visible) {
-  background-color: var(--white);
-  color: var(--gold-crayola);
+  background-color: white;
+  color: #082c55;
 }
 
 .nosotros-page .back-top-btn.active {

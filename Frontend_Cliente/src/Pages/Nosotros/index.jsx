@@ -19,16 +19,16 @@ import specialDishBanner from "./images/special-dish-banner.jpg";
 //import badge1 from "./images/badge-1.png";
 import shape4 from "./images/shape-4.png";
 import shape9 from "./images/shape-9.png";
-import menu1 from "./images/menu-1.png";
-import menu2 from "./images/menu-2.png";
-import menu3 from "./images/menu-3.png";
-import menu4 from "./images/menu-4.png";
-import menu5 from "./images/menu-5.png";
-import menu6 from "./images/menu-6.png";
-import shape5 from "./images/shape-5.png";
-import shape6 from "./images/shape-6.png";
+//import menu1 from "./images/menu-1.png";
+//import menu2 from "./images/menu-2.png";
+//import menu3 from "./images/menu-3.png";
+//import menu4 from "./images/menu-4.png";
+//import menu5 from "./images/menu-5.png";
+//import menu6 from "./images/menu-6.png";
+//import shape5 from "./images/fondo1.jpeg";
+//import shape6 from "./images/shape-6.png";
 import testimonialBg from "./images/testimonial-bg.jpg";
-import testiAvatar from "./images/testi-avatar.jpg";
+//import testiAvatar from "./images/testi-avatar.jpg";
 import formPattern from "./images/form-pattern.png";
 //import shape7 from "./images/shape-7.png";
 //import shape8 from "./images/shape-8.png";
@@ -43,6 +43,7 @@ import { GrPrevious } from "react-icons/gr";
 import { GiSewingMachine } from "react-icons/gi";
 import { GiSewingNeedle } from "react-icons/gi";
 import { GiSewingString } from "react-icons/gi";
+import { FaChevronUp } from "react-icons/fa";
 
 const Nosotros = () => {
   const [currentSlidePos, setCurrentSlidePos] = useState(0);
@@ -80,7 +81,7 @@ const Nosotros = () => {
                     className="img-cover"
                   />
                 </div>
-                <p className="label-2 section-subtitle slider-reveal">
+                <p className="label-2 section-subtitle slider-reveal !text-[20px]">
                   Tradational & Hygine
                 </p>
                 <h1 className="display-1 hero-title slider-reveal">
@@ -109,10 +110,10 @@ const Nosotros = () => {
                     width="1880"
                     height="950"
                     alt=""
-                    className="img-cover"
+                    className="img-cover "
                   />
                 </div>
-                <p className="label-2 section-subtitle slider-reveal">
+                <p className="label-2 section-subtitle slider-reveal !text-[20px]">
                   delightful experience
                 </p>
                 <h1 className="display-1 hero-title slider-reveal">
@@ -144,7 +145,7 @@ const Nosotros = () => {
                     className="img-cover"
                   />
                 </div>
-                <p className="label-2 section-subtitle slider-reveal">
+                <p className="label-2 section-subtitle slider-reveal !text-[20px]">
                   amazing & delicious
                 </p>
                 <h1 className="display-1 hero-title slider-reveal">
@@ -169,7 +170,7 @@ const Nosotros = () => {
               data-prev-btn
               onClick={slidePrev}
             >
-              <GrPrevious />
+              <GrPrevious className="" />
             </button>
 
             <button
@@ -195,7 +196,9 @@ const Nosotros = () => {
             aria-label="service"
           >
             <div className="container">
-              <p className="section-subtitle label-2">Flavors For Royalty</p>
+              <p className="section-subtitle label-2 !text-[20px]">
+                Flavors For Royalty
+              </p>
               <h2 className="headline-1 section-title">We Offer Top Notch</h2>
               <p className="section-text">
                 Lorem Ipsum is simply dummy text of the printing and typesetting
@@ -310,13 +313,16 @@ const Nosotros = () => {
           >
             <div className="container">
               <div className="about-content">
-                <p className="label-2 section-subtitle" id="about-label">
+                <p
+                  className="label-2 section-subtitle !text-[20px]"
+                  id="about-label"
+                >
                   Our Story
                 </p>
-                <h2 className="headline-1 section-title">
+                <h2 className="headline-1 section-title !text-[#082c55]">
                   Every Fla vor Tells a Story
                 </h2>
-                <p className="section-text">
+                <p className="section-text !text-[#000]">
                   Lorem Ipsum is simply dummy text of the printingand
                   typesetting industry lorem Ipsum has been the industrys
                   standard dummy text ever since the when an unknown printer
@@ -324,15 +330,20 @@ const Nosotros = () => {
                   book It has survived not only five centuries, but also the
                   leap into.
                 </p>
-                <div className="contact-label">Book Through Call</div>
+                <div className="contact-label !text-[#082c55]">
+                  Book Through Call
+                </div>
                 <a
                   href="tel:+804001234567"
-                  className="body-1 contact-number hover-underline"
+                  className="body-1 contact-number hover-underline !text-[#000]"
                 >
                   +80 (400) 123 4567
                 </a>
-                <a href="#" className="btn btn-primary">
-                  <span className="text text-1">Read More</span>
+                <a
+                  href="#"
+                  className="btn btn-primary !text-[#082c55] !border-2 !border-[#082c55] hover:!border-white"
+                >
+                  <span className="text text-1 ">Read More</span>
                   <span className="text text-2" aria-hidden="true">
                     Read More
                   </span>
@@ -409,7 +420,9 @@ const Nosotros = () => {
                   className="abs-img text-[50px] "
                 />
 
-                <p className="section-subtitle label-2">Special Dish</p>
+                <p className="section-subtitle label-2 !text-[20px]">
+                  Special Dish
+                </p>
                 <h2 className="headline-1 section-title">Lobster Tortellini</h2>
                 <p className="section-text">
                   Lorem Ipsum is simply dummy text of the printingand
@@ -418,8 +431,8 @@ const Nosotros = () => {
                   took a galley of type.
                 </p>
                 <div className="wrapper">
-                  <del className="del body-3">$40.00</del>
-                  <span className="span body-1">$20.00</span>
+                  <del className="del body-3 !text-[#000]">$40.00</del>
+                  <span className="span body-1 ">$20.00</span>
                 </div>
                 <a href="#" className="btn btn-primary">
                   <span className="text text-1">View All Menu</span>
@@ -454,39 +467,40 @@ const Nosotros = () => {
             id="menu"
           >
             <div className="container">
-              <p className="section-subtitle text-center label-2">
+              <p className="section-subtitle text-center !text-[20px] label-2">
                 Special Selection
               </p>
-              <h2 className="headline-1 section-title text-center">
+              <h2 className="headline-1 section-title text-center !text-[#082c55]">
                 Delicious Menu
               </h2>
               <ul className="grid-list">
                 <li>
-                  <div className="menu-card hover:card">
+                  <div className="menu-card hover:card ">
                     <figure
-                      className="card-banner img-holder"
+                      className="card-banner img-holder !shadow-[6px_5px_6px_#000]"
                       style={{ "--width": "100", "--height": "100" }}
                     >
-                      <img
-                        src={menu1}
+                      <GiSewingMachine
                         width="100"
                         height="100"
                         loading="lazy"
                         alt="Greek Salad"
-                        className="img-cover"
+                        className="img-cover text-[100px] "
                       />
                     </figure>
                     <div>
                       <div className="title-wrapper">
                         <h3 className="title-3">
-                          <a href="#" className="card-title">
+                          <a href="#" className="card-title !text-[#082c55]">
                             Greek Salad
                           </a>
                         </h3>
                         <span className="badge label-1">Seasonal</span>
-                        <span className="span title-2">$25.50</span>
+                        <span className="span title-2 !text-[#082c55]">
+                          $25.50
+                        </span>
                       </div>
-                      <p className="card-text label-1">
+                      <p className="card-text label-1 !text-black">
                         Tomatoes, green bell pepper, sliced cucumber onion,
                         olives, and feta cheese.
                       </p>
@@ -496,28 +510,30 @@ const Nosotros = () => {
                 <li>
                   <div className="menu-card hover:card">
                     <figure
-                      className="card-banner img-holder"
+                      className="card-banner img-holder !shadow-[6px_5px_6px_#000]"
                       style={{ "--width": "100", "--height": "100" }}
                     >
-                      <img
-                        src={menu2}
+                      <GiSewingMachine
                         width="100"
                         height="100"
                         loading="lazy"
-                        alt="Lasagne"
-                        className="img-cover"
+                        alt="Greek Salad"
+                        className="img-cover text-[100px] "
                       />
                     </figure>
                     <div>
                       <div className="title-wrapper">
                         <h3 className="title-3">
-                          <a href="#" className="card-title">
+                          <a href="#" className="card-title !text-[#082c55]">
                             Lasagne
                           </a>
                         </h3>
-                        <span className="span title-2">$40.00</span>
+                        <span className="badge label-1">Seasonal</span>
+                        <span className="span title-2 !text-[#082c55]">
+                          $40.00
+                        </span>
                       </div>
-                      <p className="card-text label-1">
+                      <p className="card-text label-1 !text-[#000]">
                         Vegetables, cheeses, ground meats, tomato sauce,
                         seasonings and spices
                       </p>
@@ -527,28 +543,30 @@ const Nosotros = () => {
                 <li>
                   <div className="menu-card hover:card">
                     <figure
-                      className="card-banner img-holder"
+                      className="card-banner img-holder !shadow-[6px_5px_6px_#000]"
                       style={{ "--width": "100", "--height": "100" }}
                     >
-                      <img
-                        src={menu3}
+                      <GiSewingMachine
                         width="100"
                         height="100"
                         loading="lazy"
-                        alt="Butternut Pumpkin"
-                        className="img-cover"
+                        alt="Greek Salad"
+                        className="img-cover text-[100px] "
                       />
                     </figure>
                     <div>
                       <div className="title-wrapper">
                         <h3 className="title-3">
-                          <a href="#" className="card-title">
-                            Butternut Pumpkin
+                          <a href="#" className="card-title !text-[#082c55]">
+                            Butternut
                           </a>
                         </h3>
-                        <span className="span title-2">$10.00</span>
+                        <span className="badge label-1">Seasonal</span>
+                        <span className="span title-2 !text-[#082c55]">
+                          $10.00
+                        </span>
                       </div>
-                      <p className="card-text label-1">
+                      <p className="card-text label-1 !text-[#000]">
                         Typesetting industry lorem Lorem Ipsum is simply dummy
                         text of the priand.
                       </p>
@@ -558,29 +576,30 @@ const Nosotros = () => {
                 <li>
                   <div className="menu-card hover:card">
                     <figure
-                      className="card-banner img-holder"
+                      className="card-banner img-holder !shadow-[6px_5px_6px_#000]"
                       style={{ "--width": "100", "--height": "100" }}
                     >
-                      <img
-                        src={menu4}
+                      <GiSewingMachine
                         width="100"
                         height="100"
                         loading="lazy"
-                        alt="Tokusen Wagyu"
-                        className="img-cover"
+                        alt="Greek Salad"
+                        className="img-cover text-[100px] "
                       />
                     </figure>
                     <div>
                       <div className="title-wrapper">
                         <h3 className="title-3">
-                          <a href="#" className="card-title">
+                          <a href="#" className="card-title !text-[#082c55]">
                             Tokusen Wagyu
                           </a>
                         </h3>
                         <span className="badge label-1">New</span>
-                        <span className="span title-2">$39.00</span>
+                        <span className="span title-2 !text-[#082c55]">
+                          $39.00
+                        </span>
                       </div>
-                      <p className="card-text label-1">
+                      <p className="card-text label-1 !text-[#000]">
                         Vegetables, cheeses, ground meats, tomato sauce,
                         seasonings and spices.
                       </p>
@@ -590,28 +609,30 @@ const Nosotros = () => {
                 <li>
                   <div className="menu-card hover:card">
                     <figure
-                      className="card-banner img-holder"
+                      className="card-banner img-holder !shadow-[6px_5px_6px_#000]"
                       style={{ "--width": "100", "--height": "100" }}
                     >
-                      <img
-                        src={menu5}
+                      <GiSewingMachine
                         width="100"
                         height="100"
                         loading="lazy"
-                        alt="Olivas Rellenas"
-                        className="img-cover"
+                        alt="Greek Salad"
+                        className="img-cover text-[100px] "
                       />
                     </figure>
                     <div>
                       <div className="title-wrapper">
                         <h3 className="title-3">
-                          <a href="#" className="card-title">
-                            Olivas Rellenas
+                          <a href="#" className="card-title !text-[#082c55]">
+                            Rellenas
                           </a>
                         </h3>
-                        <span className="span title-2">$25.00</span>
+                        <span className="badge label-1">Seasonal</span>
+                        <span className="span title-2 !text-[#082c55]">
+                          $25.00
+                        </span>
                       </div>
-                      <p className="card-text label-1">
+                      <p className="card-text label-1 !text-[#000]">
                         Avocados with crab meat, red onion, crab salad stuffed
                         red bell pepper and green bell pepper.
                       </p>
@@ -621,28 +642,30 @@ const Nosotros = () => {
                 <li>
                   <div className="menu-card hover:card">
                     <figure
-                      className="card-banner img-holder"
+                      className="card-banner img-holder !shadow-[6px_5px_6px_#000]"
                       style={{ "--width": "100", "--height": "100" }}
                     >
-                      <img
-                        src={menu6}
+                      <GiSewingMachine
                         width="100"
                         height="100"
                         loading="lazy"
-                        alt="Opu Fish"
-                        className="img-cover"
+                        alt="Greek Salad"
+                        className="img-cover text-[100px] "
                       />
                     </figure>
                     <div>
                       <div className="title-wrapper">
                         <h3 className="title-3">
-                          <a href="#" className="card-title">
+                          <a href="#" className="card-title !text-[#082c55]">
                             Opu Fish
                           </a>
                         </h3>
-                        <span className="span title-2">$49.00</span>
+                        <span className="badge label-1">Seasonal</span>
+                        <span className="span title-2 !text-[#082c55]">
+                          $49.00
+                        </span>
                       </div>
-                      <p className="card-text label-1">
+                      <p className="card-text label-1 !text-[#000]">
                         Vegetables, cheeses, ground meats, tomato sauce,
                         seasonings and spices
                       </p>
@@ -650,32 +673,16 @@ const Nosotros = () => {
                   </div>
                 </li>
               </ul>
-              <p className="menu-text text-center">
-                During winter daily from <span className="span">7:00 pm</span>{" "}
-                to <span className="span">9:00 pm</span>
-              </p>
-              <a href="#" className="btn btn-primary">
+
+              <a
+                href="#"
+                className="btn btn-primary !text-[#082c55] !border-2 !border-[#082c55] hover:!border-white"
+              >
                 <span class="text text-1">View All Menu</span>
                 <span class="text text-2" aria-hidden="true">
                   View All Menu
                 </span>
               </a>
-              <img
-                src={shape5}
-                width="921"
-                height="1036"
-                loading="lazy"
-                alt="shape"
-                className="shape shape-2 move-anim"
-              />
-              <img
-                src={shape6}
-                width="343"
-                height="345"
-                loading="lazy"
-                alt="shape"
-                className="shape shape-3 move-anim"
-              />
             </div>
           </section>
 
@@ -693,22 +700,6 @@ const Nosotros = () => {
                 I wanted to thank you for inviting me down for that amazing
                 dinner the other night. The food was extraordinary.
               </p>
-              <div className="wrapper">
-                <div className="separator"></div>
-                <div className="separator"></div>
-                <div className="separator"></div>
-              </div>
-              <div className="profile">
-                <img
-                  src={testiAvatar}
-                  width="100"
-                  height="100"
-                  loading="lazy"
-                  alt="Sam Jhonson"
-                  className="img"
-                />
-                <p className="label-2 profile-name">Sam Jhonson</p>
-              </div>
             </div>
           </section>
 
@@ -861,7 +852,9 @@ const Nosotros = () => {
             aria-label="features"
           >
             <div className="container">
-              <p className="section-subtitle label-2">Why Choose Us</p>
+              <p className="section-subtitle label-2 !text-[20px]">
+                Why Choose Us
+              </p>
               <h2 className="headline-1 section-title">Our Strength</h2>
               <ul className="grid-list">
                 <li className="feature-item !shadow-[6px_5px_6px_#000]">
@@ -932,7 +925,7 @@ const Nosotros = () => {
           {/* EVENT */}
           <section className="section event bg-gray-600" aria-label="event">
             <div className="container">
-              <p className="section-subtitle label-2 text-center">
+              <p className="section-subtitle label-2 text-center !text-[20px]">
                 Recent Updates
               </p>
               <h2 className="section-title headline-1 text-center">
@@ -1187,18 +1180,6 @@ const Nosotros = () => {
               </li>
             </ul>
           </div>
-          <div className="footer-bottom">
-            <p className="copyright">
-              &copy; 2022 Grilli. All Rights Reserved | Crafted by{" "}
-              <a
-                href="https://github.com/codewithsadee"
-                target="_blank"
-                className="link"
-              >
-                codewithsadee
-              </a>
-            </p>
-          </div>
         </div>
       </footer>
 
@@ -1209,11 +1190,7 @@ const Nosotros = () => {
         aria-label="back to top"
         data-back-top-btn
       >
-        <ion-icon
-          name="chevron-up"
-          aria-hidden="true"
-          style={{ color: "white" }}
-        ></ion-icon>
+        <FaChevronUp />
       </a>
     </div>
   );
