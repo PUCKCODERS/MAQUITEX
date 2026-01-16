@@ -2,23 +2,23 @@ import { useEffect, useState } from "react";
 import "./style.css";
 import React from "react";
 
-import heroSlider1 from "./images/hero-slider-1.jpg";
-import heroSlider2 from "./images/hero-slider-2.jpg";
-import heroSlider3 from "./images/hero-slider-3.jpg";
+import heroSlider1 from "./images/tiendaSlider.png";
+import heroSlider2 from "./images/maquinasSlider.png";
+import heroSlider3 from "./images/accesoriosYmantenimiento.png";
 //import machine from "./images/maquinacoser.jpeg";
-import service1 from "./images/service-1.jpg";
-import service2 from "./images/service-2.jpg";
-import service3 from "./images/service-3.jpg";
+import service1 from "./images/maquinascoserServices.png";
+import service2 from "./images/accesoriosYrepuestosServices.png";
+import service3 from "./images/mantenimientoServices.png";
 //import shape1 from "./images/shape-1.png";
 //import shape2 from "./images/shape-2.png";
-import aboutBanner from "./images/about-banner.jpg";
-import aboutAbsImage from "./images/about-abs-image.jpg";
-import badge2 from "./images/badge-2.png";
+import aboutBanner from "./images/grandeAbout.png";
+import aboutAbsImage from "./images/pequeñaAbout.png";
+//import badge2 from "./images/badge-2.png";
 //import shape3 from "./images/shape-3.png";
-import specialDishBanner from "./images/special-dish-banner.jpg";
+import specialDishBanner from "./images/specialProduct.png";
 //import badge1 from "./images/badge-1.png";
-import shape4 from "./images/shape-4.png";
-import shape9 from "./images/shape-9.png";
+//import shape4 from "./images/shape-4.png";
+import shape9 from "./images/specialMaquina.png";
 //import menu1 from "./images/menu-1.png";
 //import menu2 from "./images/menu-2.png";
 //import menu3 from "./images/menu-3.png";
@@ -44,6 +44,12 @@ import { GiSewingMachine } from "react-icons/gi";
 import { GiSewingNeedle } from "react-icons/gi";
 import { GiSewingString } from "react-icons/gi";
 import { FaChevronUp } from "react-icons/fa";
+import { GiBoltSaw } from "react-icons/gi";
+import { FaScrewdriverWrench } from "react-icons/fa6";
+import { GiAncientScrew } from "react-icons/gi";
+import { FcShipped } from "react-icons/fc";
+import { FcApproval } from "react-icons/fc";
+import { PiCertificateFill } from "react-icons/pi";
 
 const Nosotros = () => {
   const [currentSlidePos, setCurrentSlidePos] = useState(0);
@@ -84,7 +90,7 @@ const Nosotros = () => {
                 <p className="label-2 section-subtitle slider-reveal !text-[20px]">
                   TECNOLOGÍA Y PRECISIÓN
                 </p>
-                <h1 className="display-1 hero-title slider-reveal !text-[75px]">
+                <h1 className="display-1 hero-title slider-reveal ">
                   TODO PARA TU PASIÓN <br />
                   POR LA COSTURA
                 </h1>
@@ -96,39 +102,6 @@ const Nosotros = () => {
                   <span className="text text-1">VER CATÁLOGO</span>
                   <span className="text text-2" aria-hidden="true">
                     VER CATÁLOGO
-                  </span>
-                </a>
-              </li>
-              <li
-                className={`slider-item ${
-                  currentSlidePos === 1 ? "active" : ""
-                }`}
-                data-hero-slider-item
-              >
-                <div className="slider-bg">
-                  <img
-                    src={heroSlider2}
-                    width="1880"
-                    height="950"
-                    alt=""
-                    className="img-cover "
-                  />
-                </div>
-                <p className="label-2 section-subtitle slider-reveal !text-[20px]">
-                  CALIDAD QUE PERDURA
-                </p>
-                <h1 className="display-1 hero-title slider-reveal !text-[75px]">
-                  MÁQUINAS DE COSER <br />
-                  PARA CADA NECESIDAD
-                </h1>
-                <p className="body-2 hero-text slider-reveal">
-                  DOMÉSTICAS, INDUSTRIALES Y ELECTRÓNICAS CON GARANTÍA Y SOPORTE
-                  TÉCNICO
-                </p>
-                <a href="#" className="btn btn-primary slider-reveal">
-                  <span className="text text-1">EXPLORAR PRODUCTOS</span>
-                  <span className="text text-2" aria-hidden="true">
-                    EXPLORAR PRODUCTOS
                   </span>
                 </a>
               </li>
@@ -150,7 +123,7 @@ const Nosotros = () => {
                 <p className="label-2 section-subtitle slider-reveal !text-[20px]">
                   SERVICIO Y CONFIANZA
                 </p>
-                <h1 className="display-1 hero-title slider-reveal !text-[75px]">
+                <h1 className="display-1 hero-title slider-reveal ">
                   REPUESTOS Y SERVICIO <br />
                   TÉCNICO ESPECIALIZADO
                 </h1>
@@ -164,6 +137,39 @@ const Nosotros = () => {
                   </span>
                 </a>
               </li>
+              <li
+                className={`slider-item ${
+                  currentSlidePos === 1 ? "active" : ""
+                }`}
+                data-hero-slider-item
+              >
+                <div className="slider-bg">
+                  <img
+                    src={heroSlider2}
+                    width="1880"
+                    height="950"
+                    alt=""
+                    className="img-cover "
+                  />
+                </div>
+                <p className="label-2 section-subtitle slider-reveal !text-[20px]">
+                  CALIDAD QUE PERDURA
+                </p>
+                <h1 className="display-1 hero-title slider-reveal ">
+                  MÁQUINAS DE COSER <br />
+                  PARA CADA NECESIDAD
+                </h1>
+                <p className="body-2 hero-text slider-reveal">
+                  DOMÉSTICAS, INDUSTRIALES Y ELECTRÓNICAS CON GARANTÍA Y SOPORTE
+                  TÉCNICO
+                </p>
+                <a href="#" className="btn btn-primary slider-reveal">
+                  <span className="text text-1">EXPLORAR PRODUCTOS</span>
+                  <span className="text text-2" aria-hidden="true">
+                    EXPLORAR PRODUCTOS
+                  </span>
+                </a>
+              </li>
             </ul>
 
             <button
@@ -172,7 +178,7 @@ const Nosotros = () => {
               data-prev-btn
               onClick={slidePrev}
             >
-              <GrPrevious className="" />
+              <GrPrevious className="rotate-[-45deg]" />
             </button>
 
             <button
@@ -181,7 +187,7 @@ const Nosotros = () => {
               data-next-btn
               onClick={slideNext}
             >
-              <GrNext />
+              <GrNext className="rotate-[-45deg]" />
             </button>
 
             <a href="#" className="hero-btn has-after">
@@ -355,7 +361,7 @@ const Nosotros = () => {
                   height="570"
                   loading="lazy"
                   alt="about banner"
-                  className="w-100"
+                  className="w-100 !shadow-[6px_5px_6px_#000]"
                   data-parallax-item
                   data-parallax-speed="1"
                 />
@@ -370,18 +376,18 @@ const Nosotros = () => {
                     height="285"
                     loading="lazy"
                     alt=""
-                    className="w-100"
+                    className="w-100 border-1 border-[#000] !shadow-[6px_5px_6px_#000]"
                   />
                 </div>
-                <div className="abs-img abs-img-2 has-before">
-                  <img
-                    src={badge2}
-                    width="133"
-                    height="134"
-                    loading="lazy"
-                    alt=""
-                  />
-                </div>
+                <a
+                  href="#"
+                  className="hero-btn has-after has-before  !top-[3%] !right-[3%]"
+                >
+                  <GiSewingMachine className="text-[75px] !text-[#082c55]" />
+                  <span className="label-2 text-center !text-[#082c55]  span">
+                    MAQUITEXT
+                  </span>
+                </a>
               </figure>
               <GiSewingString
                 width="197"
@@ -420,43 +426,33 @@ const Nosotros = () => {
                 />
 
                 <p className="section-subtitle label-2 !text-[20px]">
-                  PRODUCTO DESTACADO
+                  NUESTROS PRODUCTOS
                 </p>
                 <h2 className="headline-1 section-title !text-[40px]">
-                  MÁQUINA DE COSER PROFESIONAL
+                  MÁQUINAS DE COSER DE ALTA CALIDAD
                 </h2>
                 <p className="section-text">
-                  ALTO RENDIMIENTO, PRECISIÓN Y DURABILIDAD PARA TRABAJOS
-                  EXIGENTES DE COSTURA. IDEAL PARA TALLERES Y CONFECCIÓN
-                  PROFESIONAL.
+                  OFRECEMOS UNA AMPLIA VARIEDAD DE MÁQUINAS DE COSER CASERAS E
+                  INDUSTRIALES, DISEÑADAS PARA GARANTIZAR PRECISIÓN, DURABILIDAD
+                  Y EXCELENTE DESEMPEÑO.
                 </p>
-                <div className="wrapper">
-                  <del className="del body-3 !text-[#000]">$40.00</del>
-                  <span className="span body-1 ">$20.00</span>
-                </div>
+
                 <a href="#" className="btn btn-primary">
-                  <span className="text text-1">VER DETALLES</span>
+                  <span className="text text-1">VER CATÁLOGO</span>
                   <span className="text text-2" aria-hidden="true">
-                    VER DETALLES
+                    VER CATÁLOGO
                   </span>
                 </a>
               </div>
             </div>
-            <img
-              src={shape4}
-              width="179"
-              height="359"
-              loading="lazy"
-              alt=""
-              className="shape shape-1"
-            />
+
             <img
               src={shape9}
               width="351"
               height="462"
               loading="lazy"
               alt=""
-              className="shape shape-2"
+              className="shape shape-2 "
             />
           </section>
 
@@ -468,10 +464,10 @@ const Nosotros = () => {
           >
             <div className="container">
               <p className="section-subtitle text-center !text-[20px] label-2">
-                NUESTRO CATÁLOGO
+                NUESTROS PRODUCTOS Y SERVICIOS
               </p>
               <h2 className="headline-1 section-title text-center !text-[#082c55]">
-                PRODUCTOS DISPONIBLES
+                SOLUCIONES PARA LA COSTURA
               </h2>
               <ul className="grid-list">
                 <li>
@@ -489,20 +485,21 @@ const Nosotros = () => {
                       />
                     </figure>
                     <div>
-                      <div className="title-wrapper">
+                      <div className="title-wrapper ">
                         <h3 className="title-3">
                           <a href="#" className="card-title !text-[#082c55]">
-                            Greek Salad
+                            MÁQUINAS DE COSER INDUSTRIALES
                           </a>
                         </h3>
-                        <span className="badge label-1">Seasonal</span>
-                        <span className="span title-2 !text-[#082c55]">
-                          $25.50
+                        <span className="badge label-1">PROFESIONAL</span>
+                        <span className="span title-2 !text-[#082c55] ">
+                          ALTA POTENCIA
                         </span>
                       </div>
-                      <p className="card-text label-1 !text-black">
-                        Tomatoes, green bell pepper, sliced cucumber onion,
-                        olives, and feta cheese.
+
+                      <p className="card-text label-1 !text-black ">
+                        EQUIPOS INDUSTRIALES DE ALTO RENDIMIENTO PARA TALLERES,
+                        FÁBRICAS Y PRODUCCIÓN CONTINUA
                       </p>
                     </div>
                   </div>
@@ -525,17 +522,17 @@ const Nosotros = () => {
                       <div className="title-wrapper">
                         <h3 className="title-3">
                           <a href="#" className="card-title !text-[#082c55]">
-                            Lasagne
+                            MÁQUINAS DE COSER DOMÉSTICAS
                           </a>
                         </h3>
-                        <span className="badge label-1">Seasonal</span>
+                        <span className="badge label-1">HOGAR</span>
                         <span className="span title-2 !text-[#082c55]">
-                          $40.00
+                          USO DIARIO
                         </span>
                       </div>
                       <p className="card-text label-1 !text-[#000]">
-                        Vegetables, cheeses, ground meats, tomato sauce,
-                        seasonings and spices
+                        IDEALES PARA COSTURA EN CASA, EMPRENDIMIENTOS PEQUEÑOS Y
+                        TRABAJOS PERSONALIZADOS
                       </p>
                     </div>
                   </div>
@@ -546,7 +543,7 @@ const Nosotros = () => {
                       className="card-banner img-holder !shadow-[6px_5px_6px_#000]"
                       style={{ "--width": "100", "--height": "100" }}
                     >
-                      <GiSewingMachine
+                      <GiBoltSaw
                         width="100"
                         height="100"
                         loading="lazy"
@@ -558,17 +555,17 @@ const Nosotros = () => {
                       <div className="title-wrapper">
                         <h3 className="title-3">
                           <a href="#" className="card-title !text-[#082c55]">
-                            Butternut
+                            MÁQUINAS DE CORTE
                           </a>
                         </h3>
-                        <span className="badge label-1">Seasonal</span>
+                        <span className="badge label-1">PRECISIÓN</span>
                         <span className="span title-2 !text-[#082c55]">
-                          $10.00
+                          PROFESIONAL
                         </span>
                       </div>
                       <p className="card-text label-1 !text-[#000]">
-                        Typesetting industry lorem Lorem Ipsum is simply dummy
-                        text of the priand.
+                        SOLUCIONES DE CORTE PRECISAS PARA TELAS, CUERO Y
+                        MATERIALES TEXTILES
                       </p>
                     </div>
                   </div>
@@ -579,7 +576,7 @@ const Nosotros = () => {
                       className="card-banner img-holder !shadow-[6px_5px_6px_#000]"
                       style={{ "--width": "100", "--height": "100" }}
                     >
-                      <GiSewingMachine
+                      <GiSewingString
                         width="100"
                         height="100"
                         loading="lazy"
@@ -591,17 +588,17 @@ const Nosotros = () => {
                       <div className="title-wrapper">
                         <h3 className="title-3">
                           <a href="#" className="card-title !text-[#082c55]">
-                            Tokusen Wagyu
+                            ACCESORIOS DE COSTURA
                           </a>
                         </h3>
-                        <span className="badge label-1">New</span>
+                        <span className="badge label-1">NUEVO</span>
                         <span className="span title-2 !text-[#082c55]">
-                          $39.00
+                          VARIEDAD
                         </span>
                       </div>
                       <p className="card-text label-1 !text-[#000]">
-                        Vegetables, cheeses, ground meats, tomato sauce,
-                        seasonings and spices.
+                        PRENSATELAS, AGUJAS, BOBINAS, HILOS Y HERRAMIENTAS
+                        ESENCIALES PARA LA COSTURA
                       </p>
                     </div>
                   </div>
@@ -612,7 +609,7 @@ const Nosotros = () => {
                       className="card-banner img-holder !shadow-[6px_5px_6px_#000]"
                       style={{ "--width": "100", "--height": "100" }}
                     >
-                      <GiSewingMachine
+                      <GiAncientScrew
                         width="100"
                         height="100"
                         loading="lazy"
@@ -624,17 +621,17 @@ const Nosotros = () => {
                       <div className="title-wrapper">
                         <h3 className="title-3">
                           <a href="#" className="card-title !text-[#082c55]">
-                            Rellenas
+                            REPUESTOS PARA MÁQUINAS DE COSER
                           </a>
                         </h3>
-                        <span className="badge label-1">Seasonal</span>
+                        <span className="badge label-1">ORIGINALES</span>
                         <span className="span title-2 !text-[#082c55]">
-                          $25.00
+                          CALIDAD
                         </span>
                       </div>
                       <p className="card-text label-1 !text-[#000]">
-                        Avocados with crab meat, red onion, crab salad stuffed
-                        red bell pepper and green bell pepper.
+                        REPUESTOS ORIGINALES Y COMPATIBLES PARA MANTENER TUS
+                        MÁQUINAS SIEMPRE OPERATIVAS
                       </p>
                     </div>
                   </div>
@@ -645,7 +642,7 @@ const Nosotros = () => {
                       className="card-banner img-holder !shadow-[6px_5px_6px_#000]"
                       style={{ "--width": "100", "--height": "100" }}
                     >
-                      <GiSewingMachine
+                      <FaScrewdriverWrench
                         width="100"
                         height="100"
                         loading="lazy"
@@ -657,17 +654,17 @@ const Nosotros = () => {
                       <div className="title-wrapper">
                         <h3 className="title-3">
                           <a href="#" className="card-title !text-[#082c55]">
-                            Opu Fish
+                            SERVICIO TÉCNICO ESPECIALIZADO
                           </a>
                         </h3>
-                        <span className="badge label-1">Seasonal</span>
+                        <span className="badge label-1">GARANTIZADO</span>
                         <span className="span title-2 !text-[#082c55]">
-                          $49.00
+                          SOPORTE
                         </span>
                       </div>
                       <p className="card-text label-1 !text-[#000]">
-                        Vegetables, cheeses, ground meats, tomato sauce,
-                        seasonings and spices
+                        MANTENIMIENTO, REPARACIÓN Y DIAGNÓSTICO PROFESIONAL PARA
+                        TODO TIPO DE MÁQUINAS
                       </p>
                     </div>
                   </div>
@@ -678,9 +675,9 @@ const Nosotros = () => {
                 href="#"
                 className="btn btn-primary !text-[#082c55] !border-2 !border-[#082c55] hover:!border-white"
               >
-                <span class="text text-1">View All Menu</span>
+                <span class="text text-1">VER TODO EL CATÁLOGO</span>
                 <span class="text text-2" aria-hidden="true">
-                  View All Menu
+                  VER TODO EL CATÁLOGO
                 </span>
               </a>
             </div>
@@ -870,45 +867,50 @@ const Nosotros = () => {
           >
             <div className="container">
               <p className="section-subtitle label-2 !text-[20px]">
-                Why Choose Us
+                POR QUÉ ELEGIRNOS
               </p>
-              <h2 className="headline-1 section-title">Our Strength</h2>
+              <h2 className="headline-1 section-title">NUESTRAS FORTALEZAS</h2>
               <ul className="grid-list">
                 <li className="feature-item !shadow-[6px_5px_6px_#000]">
                   <div className="feature-card ">
                     <div className="card-icon">
-                      <GiSewingMachine className="text-[75px]" />
+                      <FcApproval className="text-[75px]" />
                     </div>
-                    <h3 className="title-2 card-title">PRODUCTOS DE CALIDAD</h3>
+                    <h3 className="title-2 card-title">
+                      PRODUCTOS DE ALTA CALIDAD
+                    </h3>
                     <p className="label-1 card-text">
-                      Lorem Ipsum is simply dummy printing and typesetting.
+                      INSUMOS SELECCIONADOS PARA GARANTIZAR DURABILIDAD Y
+                      RENDIMIENTO
                     </p>
                   </div>
                 </li>
                 <li className="feature-item !shadow-[6px_5px_6px_#000]">
                   <div className="feature-card">
                     <div className="card-icon">
-                      <GiSewingNeedle className="text-[75px]" />
+                      <FaScrewdriverWrench className="text-[75px] !text-green-400" />
                     </div>
                     <h3 className="title-2 card-title">
                       {" "}
-                      SERVICIO ESPECIALIZADO
+                      SERVICIO TÉCNICO ESPECIALIZADO
                     </h3>
                     <p className="label-1 card-text">
-                      Lorem Ipsum is simply dummy printing and typesetting.
+                      ATENCIÓN PROFESIONAL EN MANTENIMIENTO, REPARACIÓN Y
+                      ASESORÍA TÉCNICA
                     </p>
                   </div>
                 </li>
                 <li className="feature-item !shadow-[6px_5px_6px_#000]">
                   <div className="feature-card">
                     <div className="card-icon">
-                      <GiSewingString className="text-[75px]" />
+                      <PiCertificateFill className="text-[75px] !text-green-400" />
                     </div>
                     <h3 className="title-2 card-title">
-                      REPUESTOS GARANTIZADOS
+                      REPUESTOS ORIGINALES Y GARANTIZADOS
                     </h3>
                     <p className="label-1 card-text">
-                      Lorem Ipsum is simply dummy printing and typesetting.
+                      REPUESTOS CONFIABLES Y COMPATIBLES PARA DIFERENTES MODELOS
+                      DE MÁQUINAS
                     </p>
                   </div>
                 </li>
@@ -916,12 +918,15 @@ const Nosotros = () => {
                   <div className="feature-card">
                     <div className="card-icon">
                       <div className="card-icon">
-                        <GiSewingMachine className="text-[75px]" />
+                        <FcShipped className="text-[75px]" />
                       </div>
                     </div>
-                    <h3 className="title-2 card-title">ENVÍO A DOMICILIO</h3>
+                    <h3 className="title-2 card-title">
+                      ENVÍOS A DOMICILIO A TODO EL PAÍS
+                    </h3>
                     <p className="label-1 card-text">
-                      Lorem Ipsum is simply dummy printing and typesetting.
+                      DESPACHAMOS TUS PRODUCTOS DE FORMA RÁPIDA Y SEGURA HASTA
+                      TU PUERTA
                     </p>
                   </div>
                 </li>
@@ -1079,28 +1084,6 @@ const Nosotros = () => {
                 ESPECIALISTAS EN MÁQUINAS DE COSER, ACCESORIOS, REPUESTOS Y
                 SERVICIO TÉCNICO PROFESIONAL.
               </p>
-              <p className="label-1 !text-[#082c55]">
-                Subscribe us & Get{" "}
-                <span class="span !text-[#082c55]">25% Off.</span>
-              </p>
-              <form action="" className="input-wrapper">
-                <div className="icon-wrapper">
-                  <ion-icon name="mail-outline" aria-hidden="true"></ion-icon>
-                  <input
-                    type="email"
-                    name="email_address"
-                    placeholder="Your email"
-                    autoComplete="off"
-                    className="input-field "
-                  />
-                </div>
-                <button type="submit" className="btn btn-secondary">
-                  <span className="text text-1 ">Subscribe</span>
-                  <span className="text text-2" aria-hidden="true">
-                    Subscribe
-                  </span>
-                </button>
-              </form>
             </div>
             <ul className="footer-list">
               <li>

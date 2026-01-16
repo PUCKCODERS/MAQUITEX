@@ -59,18 +59,18 @@
   --fontFamily-dm_sans: "DM Sans", sans-serif;
 
   /* font-size */
-  --fontSize-display-1: calc(13px + 6.7vw);
+  --fontSize-display-1: calc(13px + 4.7vw);
   --fontSize-headline-1: calc(20px + 2.5vw);
   --fontSize-headline-2: calc(13px + 2.4vw);
   --fontSize-title-1: calc(16px + 1.2vw);
-  --fontSize-title-2: 22px;
-  --fontSize-title-3: 21px;
+  --fontSize-title-2: 15px;
+  --fontSize-title-3: 15px;
   --fontSize-title-4: calc(16px + 1.2vw);
   --fontSize-body-1: 24px;
   --fontSize-body-2: 16px;
   --fontSize-body-3: 18px;
   --fontSize-body-4: 16px;
-  --fontSize-label-1: 14px;
+  --fontSize-label-1: 12px;
   --fontSize-label-2: 12px;
 
   /* font-weight */
@@ -1758,6 +1758,7 @@
     justify-content: flex-start;
     align-items: center;
     gap: 15px;
+    margin-bottom: 1rem;
   }
 
   .nosotros-page .menu-card .badge {
@@ -2083,7 +2084,7 @@
      * typography
      */
 
-    --fontSize-title-2: 25px;
+    --fontSize-title-2: 15px;
   }
 
   /**
@@ -2295,9 +2296,9 @@
   }
 
   .nosotros-page .special-dish .shape-2 {
-    bottom: 0;
+    bottom: 15%;
     transform: translateY(50%);
-    width: max-content;
+    width: 20%;
   }
 
   /**
