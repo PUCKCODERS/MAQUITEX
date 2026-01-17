@@ -32,9 +32,9 @@ import testimonialBg from "./images/testimonial-bg.jpg";
 import formPattern from "./images/form-pattern.png";
 //import shape7 from "./images/shape-7.png";
 //import shape8 from "./images/shape-8.png";
-import event1 from "./images/event-1.jpg";
-import event2 from "./images/event-2.jpg";
-import event3 from "./images/event-3.jpg";
+//import event1 from "./images/event-1.jpg";
+//import event2 from "./images/event-2.jpg";
+//import event3 from "./images/event-3.jpg";
 import footerBg from "./images/footer-bg.jpg";
 import logo from "./images/image.png";
 
@@ -198,7 +198,7 @@ const Nosotros = () => {
             </a>
           </section>
 
-          {/* SERVICE */}
+          {/* SERVICE 
           <section
             className="section service bg-gray-600 text-center"
             aria-label="service"
@@ -309,6 +309,110 @@ const Nosotros = () => {
                 alt="shape"
                 className="shape shape-2 move-anim text-[75px]"
               />
+            </div>
+          </section>
+          */}
+
+          {/* EVENT */}
+          <section className="section event bg-gray-600" aria-label="event">
+            <div className="container">
+              <p className="section-subtitle label-2 text-center !text-[20px]">
+                LO QUE OFRECEMOS
+              </p>
+
+              <h2 className="section-title headline-1 text-center ">
+                OFRECEMOS LO MEJOR
+              </h2>
+
+              <p className="section-subtitle label-2 text-center !text-[20px] !text-white">
+                SOLUCIONES COMPLETAS PARA EL MUNDO DE LA COSTURA, DESDE LA VENTA
+                HASTA EL SOPORTE TÉCNICO
+              </p>
+
+              <ul className="grid-list">
+                <li>
+                  <div className="event-card has-before hover:shine border-1 !shadow-[12px_12px_12px_#000]">
+                    <div
+                      className="card-banner img-holder "
+                      style={{ "--width": "350", "--height": "450" }}
+                    >
+                      <img
+                        src={service1}
+                        width="350"
+                        height="450"
+                        loading="lazy"
+                        alt="Flavour so good you’ll try to eat with your eyes."
+                        className="img-cover w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="card-content">
+                      <p className="card-subtitle label-2 text-center">
+                        MAQUINAS
+                      </p>
+                      <h3 className="card-title title-2 text-center">
+                        NUEVOS MODELOS DE MÁQUINAS DISPONIBLES
+                      </h3>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div className="event-card has-before hover:shine border-1 !shadow-[12px_12px_12px_#000]">
+                    <div
+                      className="card-banner img-holder"
+                      style={{ "--width": "350", "--height": "450" }}
+                    >
+                      <img
+                        src={service2}
+                        width="350"
+                        height="450"
+                        loading="lazy"
+                        alt="Flavour so good you’ll try to eat with your eyes."
+                        className="img-cover w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="card-content">
+                      <p className="card-subtitle label-2 text-center">
+                        ACCESORIOS Y REPUESTOS
+                      </p>
+                      <h3 className="card-title title-2 text-center">
+                        PROMOCIONES EN ACCESORIOS Y REPUESTOS
+                      </h3>
+                    </div>
+                  </div>
+                </li>
+                <li>
+                  <div className="event-card has-before hover:shine border-1 !shadow-[12px_12px_12px_#000]">
+                    <div
+                      className="card-banner img-holder"
+                      style={{ "--width": "350", "--height": "450" }}
+                    >
+                      <img
+                        src={service3}
+                        width="350"
+                        height="450"
+                        loading="lazy"
+                        alt="Flavour so good you’ll try to eat with your eyes."
+                        className="img-cover w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="card-content">
+                      <p className="card-subtitle label-2 text-center">
+                        SERVICIO TECNICO Y ENVIO GRATS
+                      </p>
+                      <h3 className="card-title title-2 text-center">
+                        SERVICIO TÉCNICO AHORA A DOMICILIO
+                      </h3>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+              <a href="#" className="btn btn-primary">
+                <span class="text text-1">PRODUCTOS NUEVOS</span>
+                <span class="text text-2" aria-hidden="true">
+                  PRODUCTOS NUEVOS
+                </span>
+              </a>
             </div>
           </section>
 
@@ -946,101 +1050,6 @@ const Nosotros = () => {
                 alt="shape"
                 className="shape shape-2 text-[100px] text-[#082c55]"
               />
-            </div>
-          </section>
-
-          {/* EVENT */}
-          <section className="section event bg-gray-600" aria-label="event">
-            <div className="container">
-              <p className="section-subtitle label-2 text-center !text-[20px]">
-                NOVEDADES
-              </p>
-              <h2 className="section-title headline-1 text-center">
-                ÚLTIMAS ACTUALIZACIONES
-              </h2>
-              <ul className="grid-list">
-                <li>
-                  <div className="event-card has-before hover:shine border-1 !shadow-[12px_12px_12px_#000]">
-                    <div
-                      className="card-banner img-holder "
-                      style={{ "--width": "350", "--height": "450" }}
-                    >
-                      <img
-                        src={event1}
-                        width="350"
-                        height="450"
-                        loading="lazy"
-                        alt="Flavour so good you’ll try to eat with your eyes."
-                        className="img-cover"
-                      />
-                    </div>
-                    <div className="card-content">
-                      <p className="card-subtitle label-2 text-center">
-                        MAQUINAS
-                      </p>
-                      <h3 className="card-title title-2 text-center">
-                        NUEVOS MODELOS DE MÁQUINAS DISPONIBLES
-                      </h3>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div className="event-card has-before hover:shine border-1 !shadow-[12px_12px_12px_#000]">
-                    <div
-                      className="card-banner img-holder"
-                      style={{ "--width": "350", "--height": "450" }}
-                    >
-                      <img
-                        src={event2}
-                        width="350"
-                        height="450"
-                        loading="lazy"
-                        alt="Flavour so good you’ll try to eat with your eyes."
-                        className="img-cover"
-                      />
-                    </div>
-                    <div className="card-content">
-                      <p className="card-subtitle label-2 text-center">
-                        ACCESORIOS Y REPUESTOS
-                      </p>
-                      <h3 className="card-title title-2 text-center">
-                        PROMOCIONES EN ACCESORIOS Y REPUESTOS
-                      </h3>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div className="event-card has-before hover:shine border-1 !shadow-[12px_12px_12px_#000]">
-                    <div
-                      className="card-banner img-holder"
-                      style={{ "--width": "350", "--height": "450" }}
-                    >
-                      <img
-                        src={event3}
-                        width="350"
-                        height="450"
-                        loading="lazy"
-                        alt="Flavour so good you’ll try to eat with your eyes."
-                        className="logo"
-                      />
-                    </div>
-                    <div className="card-content">
-                      <p className="card-subtitle label-2 text-center">
-                        SERVICIO TECNICO Y ENVIO GRATS
-                      </p>
-                      <h3 className="card-title title-2 text-center">
-                        SERVICIO TÉCNICO AHORA A DOMICILIO
-                      </h3>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-              <a href="#" className="btn btn-primary">
-                <span class="text text-1">PRODUCTOS NUEVOS</span>
-                <span class="text text-2" aria-hidden="true">
-                  PRODUCTOS NUEVOS
-                </span>
-              </a>
             </div>
           </section>
         </article>
