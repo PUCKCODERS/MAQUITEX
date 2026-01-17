@@ -27,7 +27,7 @@ import shape9 from "./images/specialMaquina.png";
 //import menu6 from "./images/menu-6.png";
 //import shape5 from "./images/fondo1.jpeg";
 //import shape6 from "./images/shape-6.png";
-import testimonialBg from "./images/testimonial-bg.jpg";
+import testimonialBg from "./images/testimonial-bg.png";
 //import testiAvatar from "./images/testi-avatar.jpg";
 import formPattern from "./images/form-pattern.png";
 //import shape7 from "./images/shape-7.png";
@@ -35,7 +35,7 @@ import formPattern from "./images/form-pattern.png";
 //import event1 from "./images/event-1.jpg";
 //import event2 from "./images/event-2.jpg";
 //import event3 from "./images/event-3.jpg";
-import footerBg from "./images/footer-bg.jpg";
+import footerBg from "./images/footer-form-bg.png";
 import logo from "./images/image.png";
 
 import { GrNext } from "react-icons/gr";
@@ -324,7 +324,7 @@ const Nosotros = () => {
                 OFRECEMOS LO MEJOR
               </h2>
 
-              <p className="section-subtitle label-2 text-center !text-[20px] !text-white">
+              <p className="label-2 text-center !text-[20px] !text-white !mb-6">
                 SOLUCIONES COMPLETAS PARA EL MUNDO DE LA COSTURA, DESDE LA VENTA
                 HASTA EL SOPORTE TÉCNICO
               </p>
@@ -407,12 +407,12 @@ const Nosotros = () => {
                 </li>
               </ul>
 
-              <a href="#" className="btn btn-primary">
+              {/* <a href="#" className="btn btn-primary">
                 <span class="text text-1">PRODUCTOS NUEVOS</span>
                 <span class="text text-2" aria-hidden="true">
                   PRODUCTOS NUEVOS
                 </span>
-              </a>
+              </a>*/}
             </div>
           </section>
 
@@ -439,7 +439,7 @@ const Nosotros = () => {
                   PROFESIONAL Y ENVÍO A DOMICILIO, GARANTIZANDO CALIDAD,
                   RESPALDO Y ATENCIÓN PERSONALIZADA PARA CADA CLIENTE.
                 </p>
-                <div className="contact-label !text-[#082c55]">
+                {/* <div className="contact-label !text-[#082c55]">
                   ATENCIÓN PERSONALIZADA
                 </div>
                 <a
@@ -456,7 +456,7 @@ const Nosotros = () => {
                   <span className="text text-2" aria-hidden="true">
                     CONÓCENOS
                   </span>
-                </a>
+                </a>*/}
               </div>
               <figure className="about-banner">
                 <img
@@ -480,7 +480,7 @@ const Nosotros = () => {
                     height="285"
                     loading="lazy"
                     alt=""
-                    className="w-100 border-1 border-[#000] !shadow-[6px_5px_6px_#000]"
+                    className="w-100 border-1 border-[#000] !shadow-[6px_5px_6px_#000] "
                   />
                 </div>
                 <a
@@ -775,7 +775,7 @@ const Nosotros = () => {
                 </li>
               </ul>
 
-              <a
+              {/*<a
                 href="#"
                 className="btn btn-primary !text-[#082c55] !border-2 !border-[#082c55] hover:!border-white"
               >
@@ -783,7 +783,7 @@ const Nosotros = () => {
                 <span class="text text-2" aria-hidden="true">
                   VER TODO EL CATÁLOGO
                 </span>
-              </a>
+              </a>*/}
             </div>
           </section>
 
@@ -797,7 +797,7 @@ const Nosotros = () => {
           >
             <div className="container">
               <div className="quote"></div>
-              <p className="headline-2 testi-text">
+              <p className="headline-2 testi-text ">
                 EXCELENTE ATENCIÓN Y SERVICIO TÉCNICO, SUS MÁQUINAS QUEDAN COMO
                 NUEVAS Y EL ENVÍO ES RÁPIDO
               </p>
@@ -1100,7 +1100,7 @@ const Nosotros = () => {
                   href="#"
                   className="label-2 footer-link hover-underline !text-white"
                 >
-                  Home
+                  MAQUINAS
                 </a>
               </li>
               <li>
@@ -1108,7 +1108,7 @@ const Nosotros = () => {
                   href="#"
                   className="label-2 footer-link hover-underline !text-white"
                 >
-                  Menus
+                  CORTE
                 </a>
               </li>
               <li>
@@ -1116,7 +1116,7 @@ const Nosotros = () => {
                   href="#"
                   className="label-2 footer-link hover-underline !text-white"
                 >
-                  About Us
+                  PLANCHADO
                 </a>
               </li>
               <li>
@@ -1124,7 +1124,7 @@ const Nosotros = () => {
                   href="#"
                   className="label-2 footer-link hover-underline !text-white"
                 >
-                  Our Chefs
+                  ACCESORIOS
                 </a>
               </li>
               <li>
@@ -1132,7 +1132,23 @@ const Nosotros = () => {
                   href="#"
                   className="label-2 footer-link hover-underline !text-white"
                 >
-                  Contact
+                  REPUESTOS
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="label-2 footer-link hover-underline !text-white"
+                >
+                  S.TECNICO
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="label-2 footer-link hover-underline !text-white"
+                >
+                  CONTACTO
                 </a>
               </li>
             </ul>

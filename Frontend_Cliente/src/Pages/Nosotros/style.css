@@ -61,7 +61,7 @@
   /* font-size */
   --fontSize-display-1: calc(13px + 4.7vw);
   --fontSize-headline-1: calc(20px + 2.5vw);
-  --fontSize-headline-2: calc(13px + 2.4vw);
+  --fontSize-headline-2: calc(10px + 2.4vw);
   --fontSize-title-1: calc(16px + 1.2vw);
   --fontSize-title-2: 15px;
   --fontSize-title-3: 15px;
@@ -2037,7 +2037,7 @@
    */
 
   .nosotros-page .testi-text {
-    max-width: 910px;
+    max-width: max-content;
     margin-inline: auto;
   }
 
