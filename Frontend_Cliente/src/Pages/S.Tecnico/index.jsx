@@ -19,15 +19,78 @@ export default function ServicioTecnico() {
   const prevRef = useRef(null);
 
   const items = [
-    { id: 1, img: image1 },
-    { id: 2, img: image2 },
-    { id: 3, img: image3 },
-    { id: 4, img: image4 },
-    { id: 5, img: image5 },
-    { id: 6, img: image6 },
-    { id: 7, img: image7 },
-    { id: 8, img: image8 },
-    { id: 9, img: image9 },
+    {
+      id: 1,
+      img: image1,
+      author: "MAQUINAS",
+      title: "MAQUINAS CASERAS",
+      topic: "SERVICIO DE MANTENIMIENTO",
+      desc: "Mantenimiento preventivo y correctivo para todo tipo de máquinas de coser domésticas.",
+    },
+    {
+      id: 2,
+      img: image2,
+      author: "MAQUINAS",
+      title: "MAQUINAS INDUSTRIALES",
+      topic: "REPARACIÓN ESPECIALIZADA",
+      desc: "Servicio técnico experto para maquinaria industrial de confección y textiles.",
+    },
+    {
+      id: 3,
+      img: image3,
+      author: "REPUESTOS",
+      title: "REFACCIONES ORIGINALES",
+      topic: "VENTA Y ASESORÍA",
+      desc: "Contamos con un amplio catálogo de repuestos originales para garantizar la durabilidad.",
+    },
+    {
+      id: 4,
+      img: image4,
+      author: "MAQUINAS",
+      title: "BORDADORAS",
+      topic: "SOPORTE TÉCNICO",
+      desc: "Diagnóstico y reparación de bordadoras computarizadas de múltiples cabezales.",
+    },
+    {
+      id: 5,
+      img: image5,
+      author: "MAQUINAS",
+      title: "REMALLADORAS",
+      topic: "AJUSTE Y CALIBRACIÓN",
+      desc: "Puesta a punto de remalladoras para asegurar costuras perfectas y eficientes.",
+    },
+    {
+      id: 6,
+      img: image6,
+      author: "SERVICIO",
+      title: "VISITAS TÉCNICAS",
+      topic: "ATENCIÓN A DOMICILIO",
+      desc: "Nuestros técnicos visitan tu taller o domicilio para solucionar problemas in situ.",
+    },
+    {
+      id: 7,
+      img: image7,
+      author: "MAQUINAS",
+      title: "RECUBRIDORAS",
+      topic: "MANTENIMIENTO INTEGRAL",
+      desc: "Servicio completo para recubridoras, optimizando el rendimiento de tu producción.",
+    },
+    {
+      id: 8,
+      img: image8,
+      author: "MAQUINAS",
+      title: "CORTADORAS DE TELA",
+      topic: "AFILADO Y REPARACIÓN",
+      desc: "Mantenimiento de cortadoras verticales y circulares para cortes precisos.",
+    },
+    {
+      id: 9,
+      img: image9,
+      author: "CONSULTAS",
+      title: "ASESORÍA TÉCNICA",
+      topic: "SOLUCIONES TEXTILES",
+      desc: "Te orientamos en la compra y mantenimiento de tu parque de maquinaria.",
+    },
   ];
 
   useEffect(() => {
@@ -90,13 +153,10 @@ export default function ServicioTecnico() {
             <div className="st-item" key={item.id}>
               <img src={item.img} alt={`Imagen ${item.id}`} />
               <div className="st-content">
-                <div className="author">MAQUINAS</div>
-                <div className="title">MAQUINAS CASERAS</div>
-                <div className="topic">SERVICIO DE MANTENIMIENTO</div>
-                <div className="des">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Laboriosam optio eligendi necessitatibus ex.
-                </div>
+                <div className="author">{item.author}</div>
+                <div className="title">{item.title}</div>
+                <div className="topic">{item.topic}</div>
+                <div className="des">{item.desc}</div>
                 <div className="buttons">
                   <button>SOLICITAR MANTENIMIENTO</button>
                   <button>SOLICITAR UNA CONSULTA</button>
@@ -113,8 +173,8 @@ export default function ServicioTecnico() {
             <div className="st-item" key={item.id}>
               <img src={item.img} alt={`Thumbnail ${item.id}`} />
               <div className="st-content">
-                <div className="title">MAQUINAS CASERAS</div>
-                <div className="des">MANTENIMIENTO</div>
+                <div className="title">{item.title}</div>
+                <div className="des">{item.topic}</div>
               </div>
             </div>
           ))}
