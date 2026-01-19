@@ -320,6 +320,19 @@
 }
 
 /* RESPONSIVE */
+
+@media screen and (max-width: 1024px) {
+  .st-wrapper .st-carousel .st-list .st-item .st-content {
+    padding-right: 0;
+    width: 90%;
+  }
+  .st-wrapper .st-carousel .st-list .st-item .st-content .title {
+    font-size: 2em;
+  }
+  .st-wrapper .st-carousel .st-list .st-item .st-content .topic {
+    font-size: 2em;
+  }
+}
 @media screen and (max-width: 678px) {
   .st-wrapper .st-carousel .st-list .st-item .st-content {
     padding-right: 0;
