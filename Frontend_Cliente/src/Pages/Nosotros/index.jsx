@@ -1172,16 +1172,6 @@ const Nosotros = () => {
           </div>
         </div>
       </footer>*/}
-
-      {/* BACK TO TOP */}
-      <a
-        href="#top"
-        className="back-top-btn active"
-        aria-label="back to top"
-        data-back-top-btn
-      >
-        <FaChevronUp />
-      </a>
     </div>
   );
 };

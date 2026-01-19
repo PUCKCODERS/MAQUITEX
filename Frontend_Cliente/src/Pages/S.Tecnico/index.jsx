@@ -11,6 +11,10 @@ import image7 from "./images/image7.png";
 import image8 from "./images/image8.png";
 import image9 from "./images/image9.png";
 
+import service1 from "./images/image1.png";
+import service2 from "./images/image2.png";
+import service3 from "./images/image3.png";
+
 export default function ServicioTecnico() {
   const carouselRef = useRef(null);
   const listRef = useRef(null);
@@ -146,53 +150,147 @@ export default function ServicioTecnico() {
   }, []);
 
   return (
-    <section className="st-wrapper">
-      <div className="st-carousel" ref={carouselRef}>
-        <div className="st-list" ref={listRef}>
-          {items.map((item) => (
-            <div className="st-item" key={item.id}>
-              <img src={item.img} alt={`Imagen ${item.id}`} />
-              <div className="st-content">
-                <div className="author">{item.author}</div>
-                <div className="title">{item.title}</div>
-                <div className="topic">{item.topic}</div>
-                <div className="des">{item.desc}</div>
-                <div className="buttons">
-                  <button>SOLICITAR MANTENIMIENTO</button>
-                  <button>SOLICITAR MANTENIMIENTO</button>
+    <>
+      <section className="st-wrapper">
+        <div className="st-carousel" ref={carouselRef}>
+          <div className="st-list" ref={listRef}>
+            {items.map((item) => (
+              <div className="st-item" key={item.id}>
+                <img src={item.img} alt={`Imagen ${item.id}`} />
+                <div className="st-content">
+                  <div className="author">{item.author}</div>
+                  <div className="title">{item.title}</div>
+                  <div className="topic">{item.topic}</div>
+                  <div className="des">{item.desc}</div>
+                  <div className="buttons">
+                    <button>SOLICITAR MANTENIMIENTO</button>
+                    <button>SOLICITAR MANTENIMIENTO</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        {/* THUMBNAILS (Miniaturas) */}
-        <div className="st-thumbnail" ref={thumbnailRef}>
-          {/* Rotamos el array para que la miniatura empiece desde la segunda imagen (efecto visual original) */}
-          {[...items.slice(1), items[0]].map((item) => (
-            <div className="st-item" key={item.id}>
-              <img src={item.img} alt={`Thumbnail ${item.id}`} />
-              <div className="st-content">
-                <div className="title">{item.title}</div>
-                <div className="des">{item.topic}</div>
+          {/* THUMBNAILS (Miniaturas) */}
+          <div className="st-thumbnail" ref={thumbnailRef}>
+            {[...items.slice(1), items[0]].map((item) => (
+              <div className="st-item" key={item.id}>
+                <img src={item.img} alt={`Thumbnail ${item.id}`} />
+                <div className="st-content">
+                  <div className="title">{item.title}</div>
+                  <div className="des">{item.topic}</div>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        {/* FLECHAS */}
-        <div className="st-arrows">
-          <button ref={prevRef} id="prev">
-            {"<"}
-          </button>
-          <button ref={nextRef} id="next">
-            {">"}
-          </button>
-        </div>
+          {/* FLECHAS */}
+          <div className="st-arrows">
+            <button ref={prevRef} id="prev">
+              {"<"}
+            </button>
+            <button ref={nextRef} id="next">
+              {">"}
+            </button>
+          </div>
 
-        {/* BARRA DE TIEMPO */}
-        <div className="st-time"></div>
-      </div>
-    </section>
+          {/* BARRA DE TIEMPO */}
+          <div className="st-time"></div>
+        </div>
+      </section>
+
+      <section className="section event bg-gray-600" aria-label="event">
+        <div className="container mx-auto px-4">
+          <p className="section-subtitle label-2 text-center !text-[20px] mb-4">
+            LO QUE OFRECEMOS
+          </p>
+
+          <h2 className="section-title headline-1 text-center !mb-12">
+            OFRECEMOS LO MEJOR
+          </h2>
+
+          <p className="label-2 text-center !text-[20px] !text-white !mb-12">
+            SOLUCIONES COMPLETAS PARA EL MUNDO DE LA COSTURA, DESDE LA VENTA
+            HASTA EL SOPORTE TÉCNICO
+          </p>
+
+          <ul className="grid-list grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <li>
+              <div className="event-card has-before hover:shine border-1 !shadow-[6px_5px_6px_#000]">
+                <div
+                  className="card-banner img-holder "
+                  style={{ "--width": "350", "--height": "450" }}
+                >
+                  <img
+                    src={service1}
+                    width="350"
+                    height="450"
+                    loading="lazy"
+                    alt="Flavour so good you’ll try to eat with your eyes."
+                    className="img-cover w-full h-full object-cover"
+                  />
+                </div>
+                <div className="card-content">
+                  <p className="card-subtitle label-2 text-center">MAQUINAS</p>
+                  <h3 className="card-title title-2 text-center">
+                    NUEVOS MODELOS DE MÁQUINAS DISPONIBLES
+                  </h3>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div className="event-card has-before hover:shine border-1 !shadow-[6px_5px_6px_#000]">
+                <div
+                  className="card-banner img-holder"
+                  style={{ "--width": "350", "--height": "450" }}
+                >
+                  <img
+                    src={service2}
+                    width="350"
+                    height="450"
+                    loading="lazy"
+                    alt="Flavour so good you’ll try to eat with your eyes."
+                    className="img-cover w-full h-full object-cover"
+                  />
+                </div>
+                <div className="card-content">
+                  <p className="card-subtitle label-2 text-center">
+                    ACCESORIOS Y REPUESTOS
+                  </p>
+                  <h3 className="card-title title-2 text-center">
+                    PROMOCIONES EN ACCESORIOS Y REPUESTOS
+                  </h3>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div className="event-card has-before hover:shine border-1 !shadow-[6px_5px_6px_#000]">
+                <div
+                  className="card-banner img-holder"
+                  style={{ "--width": "350", "--height": "450" }}
+                >
+                  <img
+                    src={service3}
+                    width="350"
+                    height="450"
+                    loading="lazy"
+                    alt="Flavour so good you’ll try to eat with your eyes."
+                    className="img-cover w-full h-full object-cover"
+                  />
+                </div>
+                <div className="card-content">
+                  <p className="card-subtitle label-2 text-center">
+                    SERVICIO TECNICO Y ENVIO GRATS
+                  </p>
+                  <h3 className="card-title title-2 text-center">
+                    SERVICIO TÉCNICO AHORA A DOMICILIO
+                  </h3>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </>
   );
 }
