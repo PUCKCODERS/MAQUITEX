@@ -12,10 +12,6 @@ import aboutBanner from "./images/grandeAbout.png";
 import aboutAbsImage from "./images/pequeñaAbout.png";
 import specialDishBanner from "./images/specialProduct.png";
 import shape9 from "./images/specialMaquina.png";
-import testimonialBg from "./images/testimonial-bg.png";
-import formPattern from "./images/form-pattern.png";
-import footerBg from "./images/footer-form-bg.png";
-import logo from "./images/image.png";
 
 import { GrNext } from "react-icons/gr";
 import { GrPrevious } from "react-icons/gr";
@@ -766,7 +762,7 @@ const Nosotros = () => {
             </div>
           </section>
 
-          {/* TESTIMONIALS */}
+          {/* TESTIMONIALS 
           <section
             className="section testi text-center has-bg-image"
             style={{
@@ -781,9 +777,9 @@ const Nosotros = () => {
                 NUEVAS Y EL ENVÍO ES RÁPIDO
               </p>
             </div>
-          </section>
+          </section>*/}
 
-          {/* RESERVATION */}
+          {/* RESERVATION 
           <section className="reservation">
             <div className="container">
               <div className="form reservation-form bg-black-10">
@@ -941,7 +937,7 @@ const Nosotros = () => {
                 </div>
               </div>
             </div>
-          </section>
+          </section>*/}
 
           {/* FEATURES */}
           <section
@@ -1034,7 +1030,7 @@ const Nosotros = () => {
         </article>
       </main>
 
-      {/* FOOTER */}
+      {/* FOOTER 
       <footer
         className="footer section has-bg-image text-center"
         style={{ backgroundImage: `url(${footerBg})` }}
@@ -1175,7 +1171,7 @@ const Nosotros = () => {
             </ul>
           </div>
         </div>
-      </footer>
+      </footer>*/}
 
       {/* BACK TO TOP */}
       <a
