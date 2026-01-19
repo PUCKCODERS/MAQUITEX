@@ -65,7 +65,7 @@
 .st-wrapper .st-carousel .st-list .st-item .st-content .title,
 .st-wrapper .st-carousel .st-list .st-item .st-content .topic {
   font-weight: bold;
-  font-size: 5em;
+  font-size: 3.5em;
   line-height: 1.3em;
 }
 
@@ -76,7 +76,7 @@
 .st-wrapper .st-carousel .st-list .st-item .st-content .buttons {
   display: grid;
   grid-template-columns: repeat(2, 240px);
-  grid-template-rows: 40px;
+  grid-template-rows: 30px;
   gap: 5px;
   margin-top: 20px;
 }
@@ -92,7 +92,7 @@
 }
 
 .st-wrapper .st-carousel .st-list .st-item .st-content button:nth-child(2) {
-  background-color: transparent;
+  background-color: #f1683a;
   border: 1px solid #fff;
   color: #fff;
 }
@@ -325,15 +325,19 @@
     padding-right: 0;
   }
   .st-wrapper .st-carousel .st-list .st-item .st-content .title {
-    font-size: 25px;
+    font-size: 20px;
   }
   .st-wrapper .st-carousel .st-list .st-item .st-content .topic {
-    font-size: 30px;
+    font-size: 25px;
   }
-  .st-wrapper .st-carousel .st-list .st-item .st-content .des {
-    font-size: 13px;
+
+  .st-wrapper .st-carousel .st-list .st-item .st-content .buttons {
+    grid-template-columns: repeat(2, 130px);
   }
+
   .st-wrapper .st-carousel .st-list .st-item .st-content button {
-    width: 95%;
+    width: 100%;
+    height: 30px;
+    font-size: 8px;
   }
 }

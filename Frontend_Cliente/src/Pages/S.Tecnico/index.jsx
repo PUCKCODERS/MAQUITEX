@@ -159,7 +159,7 @@ export default function ServicioTecnico() {
                 <div className="des">{item.desc}</div>
                 <div className="buttons">
                   <button>SOLICITAR MANTENIMIENTO</button>
-                  <button>SOLICITAR UNA CONSULTA</button>
+                  <button>SOLICITAR MANTENIMIENTO</button>
                 </div>
               </div>
             </div>
