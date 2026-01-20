@@ -24,11 +24,6 @@ const bannerV1Schema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    price: {
-      type: Number,
-      default: "",
-      required: true,
-    },
     alignInfo: {
       type: String,
       default: "",
@@ -37,7 +32,7 @@ const bannerV1Schema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const BannerV1Model = mongoose.model("bannerV1", bannerV1Schema);

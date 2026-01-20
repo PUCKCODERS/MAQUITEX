@@ -22,17 +22,15 @@ const BannerBoxV3 = (props) => {
         <h2 className="text-[25px] font-[bold] text-[#082c55]">
           {props?.item?.bannerTitle}
         </h2>
-        {/*<span className="text-[18px] text-[#082c55] font-[bold] !w-full">
-          &#36; {props?.item?.price}
-        </span>
+
         <div className="!w-full">
           <Link
             to="/"
             className="text-[10px] font-[bold] font-bold link text-[#000]"
           >
-            COMPRAR AHORA
+            SUB CATEGORIA
           </Link>
-        </div>*/}
+        </div>
       </div>
     </div>
   );

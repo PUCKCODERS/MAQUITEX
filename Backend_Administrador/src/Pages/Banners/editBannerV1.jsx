@@ -113,12 +113,6 @@ const EditBannerV1 = () => {
       return false;
     }
 
-    if (formFields.price === "") {
-      context.alertBox("error", "POR FAVOR INTRODUZCA EL PRECIO DEL BANNER");
-      setIsLoading(false);
-      return false;
-    }
-
     if (previews?.length === 0) {
       context.alertBox("error", "POR FAVOR SELECCIONE LA IMAGEN DEL BANNER");
       setIsLoading(false);
@@ -127,7 +121,7 @@ const EditBannerV1 = () => {
 
     editData(
       `/api/bannerV1/${context?.isOpenFullScreenPanel?.id}`,
-      formFields
+      formFields,
     ).then(() => {
       setTimeout(() => {
         setIsLoading(false);
@@ -262,19 +256,6 @@ const EditBannerV1 = () => {
             )}
           </div>
 
-          <div className="col ">
-            <h3 className="text-[#082c55] font-bold text-[14px] !mb-2">
-              PRECIO
-            </h3>
-            <input
-              type="text"
-              className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
-              name="price"
-              value={formFields.price}
-              onChange={onChangeInput}
-            />
-          </div>
-
           <div className="col">
             <h3 className="text-[#082c55] font-bold text-[14px] !mb-2">
               ALINEAR INFORMACIÓN
@@ -352,7 +333,7 @@ const EditBannerV1 = () => {
             ) : (
               <>
                 <GiSave className="text-[25px] text-white" />
-                CREAR Y PUBLICAR
+                GUARDAR Y PUBLICAR
               </>
             )}
           </Button>

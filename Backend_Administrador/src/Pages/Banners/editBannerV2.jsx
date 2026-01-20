@@ -110,7 +110,7 @@ const EditBannerV2 = () => {
     if (formFields.bannerTitle === "") {
       context.alertBox(
         "error",
-        "POR FAVOR INTRODUZCA EL NOMBRE DEL BANNER PROMO"
+        "POR FAVOR INTRODUZCA EL NOMBRE DEL BANNER PROMO",
       );
       setIsLoading(false);
       return false;
@@ -119,7 +119,7 @@ const EditBannerV2 = () => {
     if (formFields.price === "") {
       context.alertBox(
         "error",
-        "POR FAVOR INTRODUZCA EL PRECIO DEL BANNER PROMO"
+        "POR FAVOR INTRODUZCA EL PRECIO DEL BANNER PROMO",
       );
       setIsLoading(false);
       return false;
@@ -128,7 +128,7 @@ const EditBannerV2 = () => {
     if (previews?.length === 0) {
       context.alertBox(
         "error",
-        "POR FAVOR SELECCIONE LA IMAGEN DEL BANNER PROMO"
+        "POR FAVOR SELECCIONE LA IMAGEN DEL BANNER PROMO",
       );
       setIsLoading(false);
       return false;
@@ -136,7 +136,7 @@ const EditBannerV2 = () => {
 
     editData(
       `/api/bannerV2/${context?.isOpenFullScreenPanel?.id}`,
-      formFields
+      formFields,
     ).then(() => {
       setTimeout(() => {
         setIsLoading(false);
@@ -361,7 +361,7 @@ const EditBannerV2 = () => {
             ) : (
               <>
                 <GiSave className="text-[25px] text-white" />
-                CREAR Y PUBLICAR
+                GUARDAR Y PUBLICAR
               </>
             )}
           </Button>
