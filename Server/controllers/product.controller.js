@@ -653,6 +653,31 @@ export async function getAllFeaturedProducts(request, response) {
   }
 }
 
+export async function getAllBrands(request, response) {
+  try {
+    const brands = await ProductModel.distinct("brand");
+
+    if (!brands) {
+      response.status(500).json({
+        error: true,
+        success: false,
+      });
+    }
+
+    return response.status(200).json({
+      error: false,
+      success: true,
+      brands: brands,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
 export async function deleteProduct(request, response) {
   try {
     const product = await ProductModel.findById(request.params.id).populate(
@@ -1379,6 +1404,7 @@ export async function filters(request, response) {
     catId,
     subCatId,
     thirdsubCatId,
+    brand,
     minPrice,
     maxPrice,
     rating,
@@ -1398,6 +1424,10 @@ export async function filters(request, response) {
 
   if (thirdsubCatId?.length) {
     filters.thirdsubCatId = { $in: thirdsubCatId };
+  }
+
+  if (brand?.length) {
+    filters.brand = { $in: brand };
   }
 
   if (minPrice || maxPrice) {

@@ -15,6 +15,7 @@ import {
   deleteProductSize,
   deleteProductWeight,
   filters,
+  getAllBrands,
   getAllFeaturedProducts,
   getAllProducts,
   getAllProductsByCatId,
@@ -77,6 +78,7 @@ productRouter.get("/getAllProductsByPrice", getAllProductsByPrice);
 productRouter.get("/getAllProductsByRating", getAllProductsByRating);
 productRouter.get("/getAllProductsCount", getProductsCount);
 productRouter.get("/getAllFeaturedProducts", getAllFeaturedProducts);
+productRouter.get("/getAllBrands", getAllBrands);
 productRouter.get("/productRams/get", getProductRams);
 productRouter.get("/productWeight/get", getProductWeight);
 productRouter.get("/productSize/get", getProductSize);
