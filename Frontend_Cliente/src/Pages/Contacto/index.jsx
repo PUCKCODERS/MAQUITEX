@@ -19,7 +19,7 @@ const Contacto = () => {
   }, []);
 
   return (
-    <div className="nosotros-page ">
+    <div className="contacto-page ">
       <main>
         <article>
           {/* TESTIMONIALS */}
