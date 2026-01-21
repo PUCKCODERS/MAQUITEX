@@ -14,7 +14,7 @@ const Orders = () => {
   const [orderStatus] = useState("");
 
   const [ordersData, setOrdersData] = useState([]);
-  const [orders, setOrders] = useState([]);
+  const [paginationInfo, setPaginationInfo] = useState([]);
   const [pageOrder, setPageOrder] = React.useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [totalOrdersData, setTotalOrdersData] = useState([]);
@@ -44,14 +44,14 @@ const Orders = () => {
         setOrdersData((prevOrdersData) => ({
           ...prevOrdersData,
           data: prevOrdersData.data.map((order) =>
-            order._id === id ? { ...order, order_status: newStatus } : order
+            order._id === id ? { ...order, order_status: newStatus } : order,
           ),
         }));
 
         setTotalOrdersData((prevTotal) =>
           prevTotal.map((order) =>
-            order._id === id ? { ...order, order_status: newStatus } : order
-          )
+            order._id === id ? { ...order, order_status: newStatus } : order,
+          ),
         );
       }
     });
@@ -60,7 +60,7 @@ const Orders = () => {
   useEffect(() => {
     fetchDataFromApi("/api/order/order-list?admin=true").then((res) => {
       if (res?.error === false) {
-        setOrders(res?.data);
+        setPaginationInfo(res?.data);
       }
     });
   }, [orderStatus]);
@@ -70,10 +70,10 @@ const Orders = () => {
       if (res?.error === false) {
         const all = res?.data || [];
         setTotalOrdersData(all);
-        const totalPages = Math.max(1, Math.ceil(all.length / 10));
-        const start = (pageOrder - 1) * 10;
-        const pageData = all.slice(start, start + 10);
-        setOrders({ totalPages });
+        const totalPages = Math.max(1, Math.ceil(all.length / 25));
+        const start = (pageOrder - 1) * 25;
+        const pageData = all.slice(start, start + 25);
+        setPaginationInfo({ totalPages });
         setOrdersData({ data: pageData });
       }
     });
@@ -82,10 +82,10 @@ const Orders = () => {
   useEffect(() => {
     if (!searchQuery) {
       const all = totalOrdersData || [];
-      const totalPages = Math.max(1, Math.ceil(all.length / 10));
-      const start = (pageOrder - 1) * 10;
-      const pageData = all.slice(start, start + 10);
-      setOrders({ totalPages });
+      const totalPages = Math.max(1, Math.ceil(all.length / 25));
+      const start = (pageOrder - 1) * 25;
+      const pageData = all.slice(start, start + 25);
+      setPaginationInfo({ totalPages });
       setOrdersData({ data: pageData });
     }
   }, [pageOrder, totalOrdersData, searchQuery]);
@@ -106,13 +106,13 @@ const Orders = () => {
           (order?.createdAt || "")
         )
           .toLowerCase()
-          .includes(searchQuery.toLowerCase())
+          .includes(searchQuery.toLowerCase()),
       );
 
-      const totalPages = Math.max(1, Math.ceil(filteredOrders.length / 10));
-      const start = (pageOrder - 1) * 10;
-      const pageData = filteredOrders.slice(start, start + 10);
-      setOrders({ totalPages });
+      const totalPages = Math.max(1, Math.ceil(filteredOrders.length / 25));
+      const start = (pageOrder - 1) * 25;
+      const pageData = filteredOrders.slice(start, start + 25);
+      setPaginationInfo({ totalPages });
       setOrdersData({ data: pageData });
       if (pageOrder > totalPages) setPageOrder(1);
     } else {
@@ -368,12 +368,12 @@ const Orders = () => {
         </table>
       </div>
 
-      {orders?.totalPages > 1 && (
+      {paginationInfo?.totalPages > 0 && (
         <div className="flex items-center justify-center  !mt-0 !pb-3 !bg-gray-100 !text-balck !border-t !border-gray-500">
           <Pagination
             showFirstButton
             showLastButton
-            count={orders?.totalPages}
+            count={paginationInfo?.totalPages}
             page={pageOrder}
             onChange={(e, value) => setPageOrder(value)}
           />
