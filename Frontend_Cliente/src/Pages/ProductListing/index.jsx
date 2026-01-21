@@ -107,39 +107,47 @@ const ProductListing = () => {
   return (
     <section className="!py-5 !pb-0">
       <div className="container">
-                <Breadcrumbs aria-label="breadcrumb">
-                    {breadcrumbs.map((crumb, index) => {
-                        const isLast = index === breadcrumbs.length - 1;
-                        let href = '/productListing?';
-                        
-                        if (index === 0) {
-                            href += `catId=${crumb._id}`;
-                        } else if (index === 1) {
-                            href += `subCatId=${crumb._id}`;
-                        } else if (index === 2) {
-                            href += `thirdLavelCatId=${crumb._id}`;
-                        }
-        
-                        if(isLast) {
-                            return (
-                                 <Typography color="text.primary" key={crumb._id} className="font-[bold]" sx={{ fontSize: "16px" }}>{crumb.name}</Typography>
-                            )
-                        }
-        
-                        return (
-                            <Link
-                                key={crumb._id}
-                                underline="hover"
-                                color="inherit"
-                                href={href}
-                                className="link transition !font-[bold] !text-[#082c55] hover:!text-[#0a7fec]"
-                                sx={{ fontSize: "16px" }}
-                            >
-                                {crumb.name}
-                            </Link>
-                        );
-                    })}
-                </Breadcrumbs>      </div>
+        <Breadcrumbs aria-label="breadcrumb">
+          {breadcrumbs.map((crumb, index) => {
+            const isLast = index === breadcrumbs.length - 1;
+            let href = "/productListing?";
+
+            if (index === 0) {
+              href += `catId=${crumb._id}`;
+            } else if (index === 1) {
+              href += `subCatId=${crumb._id}`;
+            } else if (index === 2) {
+              href += `thirdLavelCatId=${crumb._id}`;
+            }
+
+            if (isLast) {
+              return (
+                <Typography
+                  color="text.primary"
+                  key={crumb._id}
+                  className="font-[bold]"
+                  sx={{ fontSize: "16px" }}
+                >
+                  {crumb.name}
+                </Typography>
+              );
+            }
+
+            return (
+              <Link
+                key={crumb._id}
+                underline="hover"
+                color="inherit"
+                href={href}
+                className="link transition !font-[bold] !text-[#082c55] hover:!text-[#0a7fec]"
+                sx={{ fontSize: "16px" }}
+              >
+                {crumb.name}
+              </Link>
+            );
+          })}
+        </Breadcrumbs>{" "}
+      </div>
       <div className="bg-white !p-2 !mt-4">
         <div className="container flex !gap-3">
           <div className="sidebarWrapper !w-[20%] bg-white ">
