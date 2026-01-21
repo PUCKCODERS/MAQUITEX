@@ -23,7 +23,7 @@ const AddBannerV2 = () => {
   const [previews, setPreviews] = useState([]);
   const [productCat, setProductCat] = useState("");
   const [productSubCat, setProductSubCat] = React.useState("");
-  const [productThirdLavelCat, setProductThirdLavelCat] = useState("");
+  /* const [productThirdLavelCat, setProductThirdLavelCat] = useState("");*/
   const [alignInfo, setAlignInfo] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const history = useNavigate();
@@ -50,10 +50,12 @@ const AddBannerV2 = () => {
     formFields.subCatId = event.target.value;
   };
 
-  const handleChangeProductThirdLavelSubCat = (event) => {
+  {
+    /*const handleChangeProductThirdLavelSubCat = (event) => {
     setProductThirdLavelCat(event.target.value);
     formFields.thirdsubCatId = event.target.value;
-  };
+  };*/
+  }
 
   const handleChangeAlignInfo = (event) => {
     setAlignInfo(event.target.value);
@@ -92,7 +94,7 @@ const AddBannerV2 = () => {
     if (formFields.bannerTitle === "") {
       context.alertBox(
         "error",
-        "POR FAVOR INTRODUZCA EL NOMBRE DEL BANNER PROMO"
+        "POR FAVOR INTRODUZCA EL NOMBRE DEL BANNER PROMO",
       );
       setIsLoading(false);
       return false;
@@ -110,7 +112,7 @@ const AddBannerV2 = () => {
     if (previews?.length === 0) {
       context.alertBox(
         "error",
-        "POR FAVOR SELECCIONE LA IMAGEN DEL BANNER PROMO"
+        "POR FAVOR SELECCIONE LA IMAGEN DEL BANNER PROMO",
       );
       setIsLoading(false);
       return false;
@@ -210,7 +212,7 @@ const AddBannerV2 = () => {
             )}
           </div>
 
-          <div className="col">
+          {/*<div className="col">
             <h3 className="text-[#082c55] font-bold text-[14px] !mb-2">
               SUBCATEGORÍA TERCER NIVEL
             </h3>
@@ -250,7 +252,7 @@ const AddBannerV2 = () => {
             )}
           </div>
 
-          {/*<div className="col ">
+          <div className="col ">
             <h3 className="text-[#082c55] font-bold text-[14px] !mb-2">
               PRECIO
             </h3>

@@ -30,7 +30,7 @@ export async function uploadImages(request, response) {
         function (error, result) {
           imagesArr.push(result.secure_url);
           fs.unlinkSync(`uploads/${request.files[i].filename}`);
-        }
+        },
       );
     }
 
@@ -53,7 +53,6 @@ export async function addBanner(request, response) {
       images: imagesArr,
       catId: request.body.catId,
       subCatId: request.body.subCatId,
-      thirdsubCatId: request.body.thirdsubCatId,
 
       alignInfo: request.body.alignInfo,
     });
@@ -129,7 +128,7 @@ export async function deleteBanner(request, response) {
   }
 
   const deletedBanner = await BannerV2Model.findByIdAndDelete(
-    request.params.id
+    request.params.id,
   );
   if (!deletedBanner) {
     response.status(400).json({
@@ -153,11 +152,10 @@ export async function updatedBanner(request, response) {
       images: imagesArr.length > 0 ? imagesArr[0] : request.body.images,
       catId: request.body.catId,
       subCatId: request.body.subCatId,
-      thirdsubCatId: request.body.thirdsubCatId,
 
       alignInfo: request.body.alignInfo,
     },
-    { new: true }
+    { new: true },
   );
 
   if (!banner) {

@@ -20,11 +20,6 @@ const bannerV2Schema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    thirdsubCatId: {
-      type: String,
-      default: "",
-    },
-
     alignInfo: {
       type: String,
       default: "",
@@ -33,7 +28,7 @@ const bannerV2Schema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const BannerV2Model = mongoose.model("bannerV2", bannerV2Schema);

@@ -19,18 +19,14 @@ const BannerBoxV3 = (props) => {
         ${props.info === "left" ? "" : "!pl-8"} 
         `}
       >
-        <h2 className="text-[25px] font-[bold] text-[#082c55]">
-          {props?.item?.bannerTitle}
-        </h2>
-
-        <div className="!w-full">
-          <Link
-            to="/"
-            className="text-[10px] font-[bold] font-bold link text-[#000]"
-          >
-            SUB CATEGORIA
-          </Link>
-        </div>
+        <Link
+          to={`/productListing?subCatId=${props?.item?.subCatId}`}
+          className="no-underline"
+        >
+          <h2 className="text-[25px] font-[bold] text-[#082c55]">
+            {props?.item?.bannerTitle}
+          </h2>
+        </Link>
       </div>
     </div>
   );
