@@ -594,7 +594,7 @@
 \*-----------------------------------*/
 
 .contacto-page .reservation-form {
-  /* margin-block-start: -270px; */
+  margin-block-start: -270px;
 }
 
 .contacto-page .form-text {
@@ -880,7 +880,8 @@
    * REUSED STYLE
    */
 
-  /* SPECIAL DISH */ .contacto-page .special-dish {
+  /* SPECIAL DISH */
+  .contacto-page .special-dish {
     display: grid;
     grid-template-columns: 1fr 1fr;
     text-align: left;
