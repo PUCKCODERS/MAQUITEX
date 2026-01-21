@@ -46,7 +46,7 @@ userRouter.post("/addReview", auth, addReview);
 userRouter.get("/getReviews", getReviews);
 userRouter.get("/getAllReviews", getAllReviews);
 userRouter.get("/getAllUsers", getAllUsers);
-userRouter.delete("/deleteMultiple", deleteMultiple);
-userRouter.delete("/:id", deleteUser);
+userRouter.delete("/deleteMultiple", auth, deleteMultiple);
+userRouter.delete("/:id", auth, deleteUser);
 
 export default userRouter;

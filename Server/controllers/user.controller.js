@@ -808,6 +808,16 @@ export async function getAllUsers(request, response) {
 
 export async function deleteUser(request, response) {
   try {
+    console.log("deleteUser: Logged-in User ID:", request.userId);
+    console.log("deleteUser: User ID to Delete:", request.params.id);
+    if (request.params.id === request.userId) {
+      return response.status(403).json({
+        message: "NO PUEDES ELIMINAR TU PROPIA CUENTA",
+        error: true,
+        success: false,
+      });
+    }
+
     const user = await UserModel.findById(request.params.id);
 
     if (!user) {
@@ -856,12 +866,28 @@ export async function deleteUser(request, response) {
 }
 
 export async function deleteMultiple(request, response) {
-  const { ids } = request.body;
+  let { ids } = request.body;
 
   if (!ids || !Array.isArray(ids)) {
     return response
       .status(400)
       .json({ error: true, success: false, message: "ENTRADA NO VÁLIDA" });
+  }
+
+  const loggedInUserId = request.userId;
+  console.log("deleteMultiple: Logged-in User ID:", loggedInUserId);
+  console.log("deleteMultiple: Original IDs to Delete:", ids);
+  const originalIdsLength = ids.length;
+
+  // Filter out the logged-in user's ID
+  ids = ids.filter(id => id !== loggedInUserId);
+
+  if (ids.length === 0 && originalIdsLength > 0) {
+    return response.status(403).json({
+      message: "NO PUEDES ELIMINAR TU PROPIA CUENTA",
+      error: true,
+      success: false,
+    });
   }
 
   try {
@@ -883,10 +909,15 @@ export async function deleteMultiple(request, response) {
     }
     await UserModel.deleteMany({ _id: { $in: ids } });
 
+    let message = "USUARIOS ELIMINADOS";
+    if (originalIdsLength > ids.length) {
+      message = "Algunos usuarios fueron eliminados. El usuario logueado no puede ser eliminado.";
+    }
+
     return response.status(200).json({
       error: false,
       success: true,
-      message: "USUARIOS ELIMINADOS",
+      message: message,
     });
   } catch (error) {
     return response.status(500).json({
