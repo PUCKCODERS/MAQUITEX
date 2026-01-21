@@ -75,6 +75,10 @@ export const Users = () => {
   const [isConfirmOpenUser, setIsConfirmOpenUser] = useState(false);
 
   const context = useContext(MyContext);
+  console.log("Users Component - context.userData:", context.userData);
+  const loggedInUserIdForDebug = context.userData?._id;
+  console.log("Users Component - loggedInUserIdForDebug:", loggedInUserIdForDebug);
+
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -86,29 +90,47 @@ export const Users = () => {
   };
 
   useEffect(() => {
-    getUsers();
-    setIsloading(true);
-    fetchDataFromApi(`/api/user/getAllUsers`).then((res) => {
-      setUserData(res?.users);
-      setUserTotalData(res?.users);
-      setIsloading(false);
-    });
+    getUsers(); // This calls fetchDataFromApi inside, so this first one is redundant
   }, []);
 
   useEffect(() => {
+    setIsloading(true);
+    fetchDataFromApi(`/api/user/getAllUsers`).then((res) => {
+      console.log("All users from API (initial load):", res?.users);
+      if (res?.error === false) {
+        const loggedInUserId = context.userData?._id;
+        console.log("Logged in user ID (initial load):", loggedInUserId);
+        const filteredUsers = res?.users.filter(user => user._id !== loggedInUserId);
+        console.log("Filtered users (initial load):", filteredUsers);
+        setUserData(filteredUsers);
+        setUserTotalData(filteredUsers);
+        setIsloading(false);
+      }
+    });
+  }, []); // Empty dependency array means it runs once on mount.
+
+  useEffect(() => {
+    const loggedInUserId = context.userData?._id;
+    console.log("Logged in user ID (search query effect):", loggedInUserId);
     if (searchQuery !== "") {
       const filteredItems = userTotalData?.filter(
         (user) =>
-          user._id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          (user._id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
           user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
           user.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          user.createdAt?.toLowerCase().includes(searchQuery.toLowerCase())
+          user.createdAt?.toLowerCase().includes(searchQuery.toLowerCase())) &&
+          user._id !== loggedInUserId
       );
+      console.log("Filtered users by search (excluding logged in user):", filteredItems);
       setUserData(filteredItems);
     } else {
       fetchDataFromApi(`/api/user/getAllUsers`).then((res) => {
+        console.log("All users from API (search query effect, no search query):", res?.users);
         if (res?.error === false) {
-          setUserData(res?.users);
+          const allUsers = res?.users || [];
+          const filteredUsers = allUsers.filter(user => user._id !== loggedInUserId);
+          console.log("Filtered users (search query effect, no search query):", filteredUsers);
+          setUserData(filteredUsers);
           setIsloading(false);
         }
       });
@@ -191,13 +213,16 @@ export const Users = () => {
     fetchDataFromApi("/api/user/getAllUsers").then((res) => {
       let userArr = [];
       if (res?.error === false) {
-        for (let i = 0; i < res?.users?.length; i++) {
-          userArr[i] = res?.users[i];
+        const loggedInUserId = context.userData?._id;
+        const filteredUsers = res?.users.filter(user => user._id !== loggedInUserId);
+
+        for (let i = 0; i < filteredUsers.length; i++) {
+          userArr[i] = filteredUsers[i];
           userArr[i].checked = false;
         }
         setTimeout(() => {
           setUserData(userArr);
-          setUserTotalData(res?.users);
+          setUserTotalData(filteredUsers);
           setIsloading(false);
         }, 300);
       }

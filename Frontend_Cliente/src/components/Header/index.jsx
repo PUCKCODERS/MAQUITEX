@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Search from "../Search";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
@@ -33,6 +33,7 @@ const Header = () => {
   const open = Boolean(anchorEl);
 
   const context = useContext(MyContext);
+  const navigate = useNavigate();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -56,7 +57,7 @@ const Header = () => {
         context.setUserData(null);
         context?.setCartData([]);
         context?.setMyListData([]);
-        history("/");
+        navigate("/");
       }
     });
   };

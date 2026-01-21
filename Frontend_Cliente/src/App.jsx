@@ -27,6 +27,7 @@ import SearchPage from "./Pages/Search";
 import ServicioTecnico from "./Pages/S.Tecnico";
 import Nosotros from "./Pages/Nosotros";
 import Contacto from "./Pages/Contacto";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 const MyContext = createContext();
 
@@ -286,8 +287,8 @@ function App() {
             />
             <Route path={"/checkout"} exact={true} element={<Checkout />} />
             <Route path={"/my-account"} exact={true} element={<MyAccount />} />
-            <Route path={"/my-list"} exact={true} element={<MyList />} />
-            <Route path={"/my-orders"} exact={true} element={<Orders />} />
+            <Route path={"/my-list"} exact={true} element={<ProtectedRoute><MyList /></ProtectedRoute>} />
+            <Route path={"/my-orders"} exact={true} element={<ProtectedRoute><Orders /></ProtectedRoute>} />
             <Route
               path={"/order/success"}
               exact={true}
@@ -298,7 +299,7 @@ function App() {
               exact={true}
               element={<OrderFailed />}
             />
-            <Route path={"/address"} exact={true} element={<Address />} />
+            <Route path={"/address"} exact={true} element={<ProtectedRoute><Address /></ProtectedRoute>} />
             <Route path={"/search"} exact={true} element={<SearchPage />} />
             <Route
               path={"/s.tecnico"}

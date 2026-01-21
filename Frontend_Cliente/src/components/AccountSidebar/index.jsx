@@ -4,7 +4,7 @@ import { BsFilePersonFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
 import { GiExitDoor } from "react-icons/gi";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { MyContext } from "../../App";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -16,6 +16,7 @@ const AccountSidebar = () => {
   const [uploading, setUploading] = useState(false);
 
   const context = useContext(MyContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const userAvatar = [];
@@ -83,7 +84,7 @@ const AccountSidebar = () => {
         context.setUserData(null);
         context?.setCartData([]);
         context?.setMyListData([]);
-        history("/");
+        navigate("/");
       }
     });
   };

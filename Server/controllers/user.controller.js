@@ -808,8 +808,6 @@ export async function getAllUsers(request, response) {
 
 export async function deleteUser(request, response) {
   try {
-    console.log("deleteUser: Logged-in User ID:", request.userId);
-    console.log("deleteUser: User ID to Delete:", request.params.id);
     if (request.params.id === request.userId) {
       return response.status(403).json({
         message: "NO PUEDES ELIMINAR TU PROPIA CUENTA",
@@ -875,8 +873,6 @@ export async function deleteMultiple(request, response) {
   }
 
   const loggedInUserId = request.userId;
-  console.log("deleteMultiple: Logged-in User ID:", loggedInUserId);
-  console.log("deleteMultiple: Original IDs to Delete:", ids);
   const originalIdsLength = ids.length;
 
   // Filter out the logged-in user's ID
