@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Sidebar from "../../components/Sidebar";
 import Typography from "@mui/material/Typography";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
@@ -13,6 +13,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Pagination from "@mui/material/Pagination";
 import ProductLoadingGrid from "../../components/ProductLoading/productLoadingGrid";
 import { postData } from "../../utils/api";
+import { MyContext } from "../../App";
+import { useLocation } from "react-router-dom";
 
 const ProductListing = () => {
   const [itemView, setItemView] = useState("grid");
@@ -25,6 +27,62 @@ const ProductListing = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   const [selectedSortVal, setSelectedSortVal] = useState("POR NOMBRE, A....Z");
+
+  const context = useContext(MyContext);
+  const location = useLocation();
+  const [breadcrumbs, setBreadcrumbs] = useState([]);
+
+  useEffect(() => {
+    const queryParameters = new URLSearchParams(location.search);
+    const catId = queryParameters.get("catId");
+    const subCatId = queryParameters.get("subCatId");
+    const thirdLevelCatId = queryParameters.get("thirdLavelCatId");
+
+    const nestedCats = context?.catData;
+
+    if (!nestedCats || nestedCats.length === 0) {
+      setBreadcrumbs([]);
+      return;
+    }
+
+    const allCats = [];
+    const flatten = (categories) => {
+      categories.forEach((category) => {
+        const { children, ...rest } = category;
+        allCats.push(rest);
+        if (children && children.length > 0) {
+          flatten(children);
+        }
+      });
+    };
+    flatten(nestedCats);
+
+    const path = [];
+
+    const findCategoryById = (id) => {
+      if (!id) return null;
+      return allCats.find((cat) => cat._id === id);
+    };
+
+    let currentId = null;
+    if (thirdLevelCatId) {
+      currentId = thirdLevelCatId;
+    } else if (subCatId) {
+      currentId = subCatId;
+    } else if (catId) {
+      currentId = catId;
+    }
+
+    if (currentId) {
+      let currentCat = findCategoryById(currentId);
+      while (currentCat) {
+        path.unshift(currentCat);
+        currentCat = findCategoryById(currentCat.parentId);
+      }
+    }
+
+    setBreadcrumbs(path);
+  }, [location.search, context?.catData]);
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -59,15 +117,44 @@ const ProductListing = () => {
           >
             INICIO
           </Link>
-          <Link
-            underline="hover"
-            color="inherit"
-            href="/"
-            className="link transition !font-[bold] !text-[#274a72] hover:!text-[#0a7fec]"
-            sx={{ fontSize: "16px" }}
-          >
-            MAQUINAS
-          </Link>
+          {breadcrumbs.map((crumb, index) => {
+            const isLast = index === breadcrumbs.length - 1;
+            let href = "/productListing?";
+
+            if (index === 0) {
+              href += `catId=${crumb._id}`;
+            } else if (index === 1) {
+              href += `subCatId=${crumb._id}`;
+            } else if (index === 2) {
+              href += `thirdLavelCatId=${crumb._id}`;
+            }
+
+            if (isLast) {
+              return (
+                <Typography
+                  color="text.primary"
+                  key={crumb._id}
+                  className="font-[bold]"
+                  sx={{ fontSize: "16px" }}
+                >
+                  {crumb.name}
+                </Typography>
+              );
+            }
+
+            return (
+              <Link
+                key={crumb._id}
+                underline="hover"
+                color="inherit"
+                href={href}
+                className="link transition !font-[bold] !text-[#082c55] hover:!text-[#0a7fec]"
+                sx={{ fontSize: "16px" }}
+              >
+                {crumb.name}
+              </Link>
+            );
+          })}
         </Breadcrumbs>
       </div>
       <div className="bg-white !p-2 !mt-4">
@@ -141,7 +228,7 @@ const ProductListing = () => {
                         "name",
                         "asc",
                         productsData,
-                        "POR NOMBRE, A....Z"
+                        "POR NOMBRE, A....Z",
                       )
                     }
                     className="!text-[#556f8d] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
@@ -155,7 +242,7 @@ const ProductListing = () => {
                         "name",
                         "desc",
                         productsData,
-                        "POR NOMBRE, Z....A"
+                        "POR NOMBRE, Z....A",
                       )
                     }
                     className="!text-[#556f8d] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
@@ -169,7 +256,7 @@ const ProductListing = () => {
                         "price",
                         "asc",
                         productsData,
-                        "PRECIO, DE MENOR A MAYOR"
+                        "PRECIO, DE MENOR A MAYOR",
                       )
                     }
                     className="!text-[#556f8d] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
@@ -183,7 +270,7 @@ const ProductListing = () => {
                         "price",
                         "desc",
                         productsData,
-                        "PRECIO, DE MAYOR A MENOR"
+                        "PRECIO, DE MAYOR A MENOR",
                       )
                     }
                     className="!text-[#556f8d] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
