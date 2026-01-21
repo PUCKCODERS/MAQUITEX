@@ -73,11 +73,6 @@ const columns = [
     minWidth: 130,
   },
   {
-    id: "sales",
-    label: "VENTAS",
-    minWidth: 100,
-  },
-  {
     id: "rating",
     label: "CALIFICACIÓN",
     minWidth: 100,
@@ -177,7 +172,7 @@ const Dashboard = () => {
           product._id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
           product.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
           product.catName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          product.subCat?.includes(searchQuery)
+          product.subCat?.includes(searchQuery),
       );
       setProductData(filteredOrders);
     } else {
@@ -248,7 +243,7 @@ const Dashboard = () => {
           (order?.createdAt || "")
         )
           .toLowerCase()
-          .includes(searchQuery.toLowerCase())
+          .includes(searchQuery.toLowerCase()),
       );
 
       const totalPages = Math.max(1, Math.ceil(filteredOrders.length / 6));
@@ -297,7 +292,7 @@ const Dashboard = () => {
 
   const handleCheckboxChange = (e, id /*, index*/) => {
     const updatedItems = productData.map((item) =>
-      item._id === id ? { ...item, checked: !item.checked } : item
+      item._id === id ? { ...item, checked: !item.checked } : item,
     );
 
     setProductData(updatedItems);
@@ -315,7 +310,7 @@ const Dashboard = () => {
     setProductThirdLavelCat("");
     setIsloading(true);
     fetchDataFromApi(
-      `/api/product/getAllProductsByCatId/${event.target.value}`
+      `/api/product/getAllProductsByCatId/${event.target.value}`,
     ).then((res) => {
       if (res?.error === false) {
         setProductData(res?.products);
@@ -332,7 +327,7 @@ const Dashboard = () => {
     setProductThirdLavelCat("");
     setIsloading(true);
     fetchDataFromApi(
-      `/api/product/getAllProductsBySubCatId/${event.target.value}`
+      `/api/product/getAllProductsBySubCatId/${event.target.value}`,
     ).then((res) => {
       if (res?.error === false) {
         setProductData(res?.products);
@@ -349,7 +344,7 @@ const Dashboard = () => {
     setProductSubCat("");
     setIsloading(true);
     fetchDataFromApi(
-      `/api/product/getAllProductsByThirdLavelCat/${event.target.value}`
+      `/api/product/getAllProductsByThirdLavelCat/${event.target.value}`,
     ).then((res) => {
       if (res?.error === false) {
         setProductData(res?.products);
@@ -428,7 +423,7 @@ const Dashboard = () => {
         });
       const uniqueArr = users.filter(
         (obj, index, self) =>
-          index === self.findIndex((t) => t.name === obj.name)
+          index === self.findIndex((t) => t.name === obj.name),
       );
       setChartData(uniqueArr);
     });
@@ -447,12 +442,12 @@ const Dashboard = () => {
 
       const uniqueArr = sales.filter(
         (obj, index, self) =>
-          index === self.findIndex((t) => t.name === obj.name)
+          index === self.findIndex((t) => t.name === obj.name),
       );
       setTotalVentas(
         res?.VENTAS
           ? parseInt(res.VENTAS)
-          : uniqueArr.reduce((s, i) => s + (i.VENTAS || 0), 0)
+          : uniqueArr.reduce((s, i) => s + (i.VENTAS || 0), 0),
       );
       setChartData(uniqueArr);
     });
@@ -496,7 +491,7 @@ const Dashboard = () => {
 
   const handleCheckboxChangeUser = (e, id /*, index*/) => {
     const updatedItems = userData.map((item) =>
-      item._id === id ? { ...item, checked: !item.checked } : item
+      item._id === id ? { ...item, checked: !item.checked } : item,
     );
 
     setUserData(updatedItems);
@@ -528,7 +523,7 @@ const Dashboard = () => {
           user._id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
           user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
           user.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          user.createdAt?.toLowerCase().includes(searchQuery.toLowerCase())
+          user.createdAt?.toLowerCase().includes(searchQuery.toLowerCase()),
       );
       setUserData(filteredItems);
     } else {
@@ -883,15 +878,7 @@ const Dashboard = () => {
                             </span>
                           </div>
                         </TableCell>
-                        <TableCell
-                          style={{ minWidth: columns.minWidth }}
-                          className="!text-white"
-                        >
-                          <p className="text-[15px] !w-[100px] ">
-                            <span className="font-[600]">{product?.sale}</span>
-                            <span> VENTAS</span>
-                          </p>
-                        </TableCell>
+
                         <TableCell
                           style={{ minWidth: columns.minWidth }}
                           className="!text-white"
@@ -1445,10 +1432,10 @@ const Dashboard = () => {
                                order?.order_status === "CONFIRMADO"
                                  ? "bg-green-600"
                                  : order?.order_status === "PENDIENTE"
-                                 ? "bg-red-500"
-                                 : order?.order_status === "ENVIADO"
-                                 ? "bg-orange-500"
-                                 : "bg-gray-500"
+                                   ? "bg-red-500"
+                                   : order?.order_status === "ENVIADO"
+                                     ? "bg-orange-500"
+                                     : "bg-gray-500"
                              }
                            `}
                           >
@@ -1539,7 +1526,7 @@ const Dashboard = () => {
                                             {
                                               style: "currency",
                                               currency: "USD",
-                                            }
+                                            },
                                           )}
                                         </td>
                                         <td class="!px-6 !py-4 font-[500] ">

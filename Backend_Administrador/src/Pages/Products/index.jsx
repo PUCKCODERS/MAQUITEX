@@ -51,11 +51,6 @@ const columns = [
     minWidth: 130,
   },
   {
-    id: "sales",
-    label: "VENTAS",
-    minWidth: 100,
-  },
-  {
     id: "rating",
     label: "CALIFICACIÓN",
     minWidth: 100,
@@ -97,7 +92,7 @@ export const Products = () => {
           product._id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
           product.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
           product.catName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          product.subCat?.includes(searchQuery)
+          product.subCat?.includes(searchQuery),
       );
       setProductData(filteredOrders);
     } else {
@@ -129,7 +124,7 @@ export const Products = () => {
 
   const handleCheckboxChange = (e, id /*, index*/) => {
     const updatedItems = productData.map((item) =>
-      item._id === id ? { ...item, checked: !item.checked } : item
+      item._id === id ? { ...item, checked: !item.checked } : item,
     );
 
     setProductData(updatedItems);
@@ -165,7 +160,7 @@ export const Products = () => {
     setProductThirdLavelCat("");
     setIsloading(true);
     fetchDataFromApi(
-      `/api/product/getAllProductsByCatId/${event.target.value}`
+      `/api/product/getAllProductsByCatId/${event.target.value}`,
     ).then((res) => {
       if (res?.error === false) {
         setProductData(res?.products);
@@ -182,7 +177,7 @@ export const Products = () => {
     setProductThirdLavelCat("");
     setIsloading(true);
     fetchDataFromApi(
-      `/api/product/getAllProductsBySubCatId/${event.target.value}`
+      `/api/product/getAllProductsBySubCatId/${event.target.value}`,
     ).then((res) => {
       if (res?.error === false) {
         setProductData(res?.products);
@@ -199,7 +194,7 @@ export const Products = () => {
     setProductSubCat("");
     setIsloading(true);
     fetchDataFromApi(
-      `/api/product/getAllProductsByThirdLavelCat/${event.target.value}`
+      `/api/product/getAllProductsByThirdLavelCat/${event.target.value}`,
     ).then((res) => {
       if (res?.error === false) {
         setProductData(res?.products);
@@ -512,15 +507,7 @@ export const Products = () => {
                             </span>
                           </div>
                         </TableCell>
-                        <TableCell
-                          style={{ minWidth: columns.minWidth }}
-                          className="!text-white"
-                        >
-                          <p className="text-[15px] !w-[100px] ">
-                            <span className="font-[600]">{product?.sale}</span>
-                            <span> VENTAS</span>
-                          </p>
-                        </TableCell>
+
                         <TableCell
                           style={{ minWidth: columns.minWidth }}
                           className="!text-white"
