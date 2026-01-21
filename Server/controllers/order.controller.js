@@ -55,8 +55,15 @@ export const createOrderController = async (request, response) => {
 export const getOrderDetailsController = async (request, response) => {
   try {
     const userId = request.userId;
+    const isAdminRequest = request.query.admin === "true"; // Check for admin query parameter
 
-    const orderlist = await OrderModel.find()
+    let query = {};
+    if (!isAdminRequest) {
+      // If it's not an admin request, filter by the authenticated user's ID
+      query = { userId: userId };
+    }
+
+    const orderlist = await OrderModel.find(query)
       .sort({ createdAt: -1 })
       .populate("delivery_address userId");
 

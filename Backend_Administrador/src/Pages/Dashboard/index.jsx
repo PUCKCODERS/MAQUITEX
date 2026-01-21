@@ -208,7 +208,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    fetchDataFromApi(`/api/order/order-list`).then((res) => {
+    fetchDataFromApi(`/api/order/order-list?admin=true`).then((res) => {
       if (res?.error === false) {
         const all = res?.data || [];
         setTotalOrdersData(all);
