@@ -54,7 +54,7 @@ const AccountSidebar = () => {
         } else {
           context.alertBox(
             "error",
-            "Por favor, seleccione un archivo de imagen válido en formato JPG, JPEG, WEBP o PNG."
+            "Por favor, seleccione un archivo de imagen válido en formato JPG, JPEG, WEBP o PNG.",
           );
           setUploading(false);
           return false;
@@ -75,7 +75,7 @@ const AccountSidebar = () => {
   const logout = () => {
     fetchDataFromApi(
       `/api/user/logout?token=${localStorage.getItem("accessToken")}`,
-      { withCredentials: true }
+      { withCredentials: true },
     ).then((res) => {
       if (res?.error === false) {
         context.setIsLogin(false);
@@ -93,8 +93,8 @@ const AccountSidebar = () => {
     <div className="card bg-white shadow-md rounded-md sticky !top-[170px]">
       <div className="w-full !p-3 flex items-center justify-center flex-col">
         <div
-          className="w-[110px] h-[110px] rounded-full overflow-hidden !mb-4 relative group
-            flex items-center justify-center bg-[#f5f4f4]"
+          className="w-[110px] h-[110px] !rounded-full overflow-hidden !mb-4 relative group
+            flex items-center justify-center bg-[#f5f4f4] border-2"
         >
           {uploading === true ? (
             <CircularProgress color="inherit" />
@@ -106,7 +106,7 @@ const AccountSidebar = () => {
                     <img
                       src={img}
                       key={index}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover "
                     />
                   );
                 })

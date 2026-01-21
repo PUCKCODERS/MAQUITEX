@@ -47,7 +47,7 @@ const Header = () => {
 
     fetchDataFromApi(
       `/api/user/logout?token=${localStorage.getItem("accessToken")}`,
-      { withCredentials: true }
+      { withCredentials: true },
     ).then((res) => {
       console.log(res);
       if (res?.error === false) {
