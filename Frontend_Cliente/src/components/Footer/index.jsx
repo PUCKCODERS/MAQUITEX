@@ -197,17 +197,17 @@ const Footer = () => {
                     </Link>
                   </li>
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <Link to="/" className="link">
+                    <Link to="/nosotros" className="link">
                       ACERCA DE NOSOTROS
                     </Link>
                   </li>
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <Link to="/" className="link">
+                    <Link to="/contacto" className="link">
                       CONTACTO
                     </Link>
                   </li>
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <Link to="/" className="link">
+                    <Link to="/s.tecnico" className="link">
                       SOPORTE TECNICO
                     </Link>
                   </li>

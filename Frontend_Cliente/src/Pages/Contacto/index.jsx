@@ -13,6 +13,7 @@ import logo from "./images/image.png";
 import { GiSewingString } from "react-icons/gi";
 
 const Contacto = () => {
+  window.scrollTo(0, 0);
   useEffect(() => {
     const interval = setInterval(() => {}, 7000);
     return () => clearInterval(interval);
