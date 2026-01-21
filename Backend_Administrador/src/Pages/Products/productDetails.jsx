@@ -311,7 +311,7 @@ const ProductDetails = () => {
               ))
             ) : (
               <p className="text-[14px] text-[#4e4e4e]">
-                Este producto aún no tiene reseñas.
+                ESTE PRODUCTO NO TIENE RESEÑAS
               </p>
             )}
           </div>
