@@ -132,6 +132,7 @@ const Profile = () => {
 
     editData(`/api/user/${userId}`, formFields, { withCredentials: true }).then(
       (res) => {
+        console.log("API Response on profile update:", res);
         if (res?.error !== true) {
           setIsLoading(false);
           context.alertBox("success", res?.data?.message);
@@ -350,9 +351,10 @@ const Profile = () => {
                 disabled={isLoading === true ? true : false}
                 onChange={(phone) => {
                   setPhone(phone);
-                  setFormFields({
+                  setFormFields((prev) => ({
+                    ...prev,
                     mobile: phone,
-                  });
+                  }));
                 }}
               />
             </div>
