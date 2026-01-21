@@ -125,7 +125,7 @@ const ProductListing = () => {
                 <Typography
                   color="text.primary"
                   key={crumb._id}
-                  className="font-[bold]"
+                  className="!font-[bold] !text-[#082c55]"
                   sx={{ fontSize: "16px" }}
                 >
                   {crumb.name}
