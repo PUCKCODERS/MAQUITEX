@@ -808,7 +808,18 @@ export async function getAllUsers(request, response) {
 
 export async function deleteUser(request, response) {
   try {
-    const user = await UserModel.findById(request.params.id);
+    const userIdToDelete = request.params.id;
+    const currentUserId = request.userId; // ID del usuario logueado
+
+    if (userIdToDelete === currentUserId.toString()) {
+      return response.status(403).json({
+        message: "NO PUEDES ELIMINAR TU PROPIO USUARIO",
+        error: true,
+        success: false,
+      });
+    }
+
+    const user = await UserModel.findById(userIdToDelete);
 
     if (!user) {
       return response.status(404).json({
@@ -857,11 +868,20 @@ export async function deleteUser(request, response) {
 
 export async function deleteMultiple(request, response) {
   const { ids } = request.body;
+  const currentUserId = request.userId; // ID del usuario logueado
 
   if (!ids || !Array.isArray(ids)) {
     return response
       .status(400)
       .json({ error: true, success: false, message: "ENTRADA NO VÁLIDA" });
+  }
+
+  if (ids.includes(currentUserId.toString())) {
+    return response.status(403).json({
+      message: "NO PUEDES ELIMINAR TU PROPIO USUARIO DE LA SELECCIÓN",
+      error: true,
+      success: false,
+    });
   }
 
   try {
