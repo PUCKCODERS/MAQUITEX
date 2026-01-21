@@ -58,7 +58,7 @@ export async function registerUserController(request, response) {
       email,
       "VERIFICAR CORREO ELECTRÓNICO DESDE LA APLICACION DE MAQUITEXT",
       "",
-      VerificationEmail(name, verifyCode)
+      VerificationEmail(name, verifyCode),
     );
 
     const token = jwt.sign(
@@ -66,7 +66,7 @@ export async function registerUserController(request, response) {
         email: user.email,
         id: user._id,
       },
-      process.env.JSON_WEB_TOKEN_SECRET_KEY
+      process.env.JSON_WEB_TOKEN_SECRET_KEY,
     );
 
     return response.status(200).json({
@@ -342,7 +342,7 @@ export async function userAvatarController(request, response) {
     if (imageName) {
       const res = await cloudinary.uploader.destroy(
         imageName,
-        (error, result) => {}
+        (error, result) => {},
       );
     }
 
@@ -359,7 +359,7 @@ export async function userAvatarController(request, response) {
         function (error, result) {
           imagesArr.push(result.secure_url);
           fs.unlinkSync(`uploads/${request.files[i].filename}`);
-        }
+        },
       );
     }
 
@@ -390,7 +390,7 @@ export async function removeImageFromCloudinary(request, response) {
   if (imageName) {
     const res = await cloudinary.uploader.destroy(
       imageName,
-      (error, result) => {}
+      (error, result) => {},
     );
 
     if (res) {
@@ -415,7 +415,7 @@ export async function updateUserDetails(request, response) {
         mobile: mobile,
         email: email,
       },
-      { new: true }
+      { new: true },
     );
 
     if (email !== userExist.email) {
@@ -472,7 +472,7 @@ export async function forgotPasswordController(request, response) {
         email,
         "VERIFICAR CÓDIGO DESDE LA APLICACIÓN MAQUITEXT",
         "",
-        VerificationEmail(user.name, verifyCode)
+        VerificationEmail(user.name, verifyCode),
       );
 
       return response.json({
@@ -578,7 +578,7 @@ export async function resetpassword(request, response) {
       if (oldPassword) {
         const checkPassword = await bcryptjs.compare(
           oldPassword,
-          user.password
+          user.password,
         );
         if (!checkPassword) {
           return response.status(400).json({
@@ -638,7 +638,7 @@ export async function refreshToken(request, response) {
 
     const verifyToken = await jwt.verify(
       refreshToken,
-      process.env.SECRET_KEY_REFRESH_TOKEN
+      process.env.SECRET_KEY_REFRESH_TOKEN,
     );
 
     if (!verifyToken) {
@@ -808,18 +808,7 @@ export async function getAllUsers(request, response) {
 
 export async function deleteUser(request, response) {
   try {
-    const userIdToDelete = request.params.id;
-    const currentUserId = request.userId; // ID del usuario logueado
-
-    if (userIdToDelete === currentUserId.toString()) {
-      return response.status(403).json({
-        message: "NO PUEDES ELIMINAR TU PROPIO USUARIO",
-        error: true,
-        success: false,
-      });
-    }
-
-    const user = await UserModel.findById(userIdToDelete);
+    const user = await UserModel.findById(request.params.id);
 
     if (!user) {
       return response.status(404).json({
@@ -868,20 +857,11 @@ export async function deleteUser(request, response) {
 
 export async function deleteMultiple(request, response) {
   const { ids } = request.body;
-  const currentUserId = request.userId; // ID del usuario logueado
 
   if (!ids || !Array.isArray(ids)) {
     return response
       .status(400)
       .json({ error: true, success: false, message: "ENTRADA NO VÁLIDA" });
-  }
-
-  if (ids.includes(currentUserId.toString())) {
-    return response.status(403).json({
-      message: "NO PUEDES ELIMINAR TU PROPIO USUARIO DE LA SELECCIÓN",
-      error: true,
-      success: false,
-    });
   }
 
   try {
