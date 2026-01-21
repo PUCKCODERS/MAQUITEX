@@ -355,6 +355,14 @@
   margin-block-end: 12px;
 }
 
+.contacto-page .section-subtitle::after {
+  content: url("../images/separator.svg");
+  display: block;
+  width: 100px;
+  margin-inline: auto;
+  margin-block-start: 5px;
+}
+
 .contacto-page .btn {
   position: relative;
   color: white;
@@ -586,7 +594,7 @@
 \*-----------------------------------*/
 
 .contacto-page .reservation-form {
-  margin-block-start: -270px;
+  /* margin-block-start: -270px; */
 }
 
 .contacto-page .form-text {
@@ -872,7 +880,7 @@
    * REUSED STYLE
    */
 
-  * SPECIAL DISH */ .contacto-page .special-dish {
+  /* SPECIAL DISH */ .contacto-page .special-dish {
     display: grid;
     grid-template-columns: 1fr 1fr;
     text-align: left;
