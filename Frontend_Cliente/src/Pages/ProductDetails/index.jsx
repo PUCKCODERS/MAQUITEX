@@ -149,17 +149,16 @@ const ProductDetails = () => {
               }
 
               return (
-                <Link
-                  key={crumb._id}
-                  underline="hover"
-                  color="inherit"
-                  href={href}
-                  className="link transition !font-[bold] !text-[#082c55] hover:!text-[#0a7fec]"
-                  sx={{ fontSize: "16px" }}
-                >
-                  {crumb.name}
-                </Link>
-              );
+                                    <Link
+                                        key={crumb._id}
+                                        underline="none"
+                                        color="inherit"
+                                        href={href}
+                                        className="link transition !font-[bold] !text-[#082c55] hover:!text-[#0a7fec]"
+                                        sx={{ fontSize: "16px" }}
+                                    >
+                                        {crumb.name}
+                                    </Link>              );
             })}
           </Breadcrumbs>
         </div>

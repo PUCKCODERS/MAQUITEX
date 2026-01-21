@@ -136,7 +136,7 @@ const ProductListing = () => {
             return (
               <Link
                 key={crumb._id}
-                underline="hover"
+                underline="none"
                 color="inherit"
                 href={href}
                 className="link transition !font-[bold] !text-[#082c55] hover:!text-[#0a7fec]"
