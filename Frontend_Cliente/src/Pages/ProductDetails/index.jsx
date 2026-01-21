@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Link from "@mui/material/Link";
 import ProductZoom from "../../components/ProductZoom";
@@ -18,6 +18,63 @@ const ProductDetails = () => {
   const [reviewsCount, setReviewsCount] = useState(0);
   const [relatedProductData, setRelatedProductData] = useState([]);
 
+  const [breadcrumbs, setBreadcrumbs] = useState([]);
+  const context = useContext(MyContext);
+
+  useEffect(() => {
+    if (!productData || !context?.catData) {
+        setBreadcrumbs([]);
+        return;
+    }
+
+    const { catId, subCatId, thirdsubCatId } = productData;
+    const nestedCats = context?.catData;
+
+    if (!nestedCats || nestedCats.length === 0) {
+      setBreadcrumbs([]);
+      return;
+    }
+
+    const allCats = [];
+    const flatten = (categories) => {
+        categories.forEach(category => {
+            const { children, ...rest } = category;
+            allCats.push(rest);
+            if (children && children.length > 0) {
+                flatten(children);
+            }
+        });
+    };
+    flatten(nestedCats);
+    
+    const path = [];
+
+    const findCategoryById = (id) => {
+        if (!id) return null;
+        return allCats.find(cat => cat._id === id);
+    };
+
+    let currentId = null;
+    if (thirdsubCatId) {
+        currentId = thirdsubCatId;
+    } else if (subCatId) {
+        currentId = subCatId;
+    } else if (catId) {
+        currentId = catId;
+    }
+
+    if (currentId) {
+        let currentCat = findCategoryById(currentId);
+        while (currentCat) {
+            path.unshift(currentCat);
+            currentCat = findCategoryById(currentCat.parentId);
+        }
+    }
+
+    setBreadcrumbs(path);
+
+  }, [productData, context?.catData]);
+
   const { id } = useParams();
 
   const reviewSec = useRef();
@@ -36,11 +93,11 @@ const ProductDetails = () => {
       if (res?.error === false) {
         setProductData(res?.product);
         fetchDataFromApi(
-          `/api/product/getAllProductsBySubCatId/${res?.product?.subCatId}`
+          `/api/product/getAllProductsBySubCatId/${res?.product?.subCatId}`,
         ).then((res) => {
           if (res?.error === false) {
             const filteredData = res?.products?.filter(
-              (item) => item._id !== id
+              (item) => item._id !== id,
             );
             setRelatedProductData(filteredData);
           }
@@ -66,56 +123,37 @@ const ProductDetails = () => {
       <div className="!py-5">
         <div className="container">
           <Breadcrumbs aria-label="breadcrumb">
-            {/* <Link
-              underline="hover"
-              color="inherit"
-              href="/"
-              className="link transition !font-[bold] !text-[#082c55] hover:!text-[#0a7fec]"
-              sx={{ fontSize: "16px" }}
-            >
-              INICIO
-            </Link>
-            <Link
-              underline="hover"
-              color="inherit"
-              href="/"
-              className="link transition !font-[bold] !text-[#274a72] hover:!text-[#0a7fec]"
-              sx={{ fontSize: "16px" }}
-            >
-              MAQUINAS
-            </Link>
-            <Link
-              underline="hover"
-              color="inherit"
-              className="link transition !font-[bold] !text-[#737475] hover:!text-[#0a7fec] !cursor-pointer"
-              sx={{ fontSize: "16px" }}
-            >
-              MAQUINA DE COSER PORTATIL SINGER
-            </Link>*/}
+            {breadcrumbs.map((crumb, index) => {
+                const isLast = index === breadcrumbs.length - 1;
+                let href = '/productListing?';
+                
+                if (index === 0) {
+                    href += `catId=${crumb._id}`;
+                } else if (index === 1) {
+                    href += `subCatId=${crumb._id}`;
+                } else if (index === 2) {
+                    href += `thirdLavelCatId=${crumb._id}`;
+                }
 
-            <div
-              color="inherit"
-              href="/"
-              className="link transition !font-[bold] !text-[#082c55] "
-              sx={{ fontSize: "16px" }}
-            >
-              {productData?.catName}
-            </div>
-            <div
-              color="inherit"
-              href="/"
-              className="link transition !font-[bold] !text-[#274a72] "
-              sx={{ fontSize: "16px" }}
-            >
-              {productData?.subCat}
-            </div>
-            <div
-              color="inherit"
-              className="link transition !font-[bold] !text-[#737475] "
-              sx={{ fontSize: "16px" }}
-            >
-              {productData?.thirdsubCat}
-            </div>
+                if(isLast) {
+                    return (
+                         <Typography color="text.primary" key={crumb._id} className="font-[bold]" sx={{ fontSize: "16px" }}>{crumb.name}</Typography>
+                    )
+                }
+
+                return (
+                    <Link
+                        key={crumb._id}
+                        underline="hover"
+                        color="inherit"
+                        href={href}
+                        className="link transition !font-[bold] !text-[#082c55] hover:!text-[#0a7fec]"
+                        sx={{ fontSize: "16px" }}
+                    >
+                        {crumb.name}
+                    </Link>
+                );
+            })}
           </Breadcrumbs>
         </div>
       </div>
