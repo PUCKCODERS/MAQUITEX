@@ -28,6 +28,7 @@ import ServicioTecnico from "./Pages/S.Tecnico";
 import Nosotros from "./Pages/Nosotros";
 import Contacto from "./Pages/Contacto";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Factura from "./Pages/Factura";
 
 const MyContext = createContext();
 
@@ -100,7 +101,7 @@ function App() {
 
           alertBox(
             "error",
-            "SU SESIÓN HA EXPIRADO, POR FAVOR INICIE SESIÓN DE NUEVO"
+            "SU SESIÓN HA EXPIRADO, POR FAVOR INICIE SESIÓN DE NUEVO",
           );
 
           window.location.href = "/login";
@@ -287,8 +288,24 @@ function App() {
             />
             <Route path={"/checkout"} exact={true} element={<Checkout />} />
             <Route path={"/my-account"} exact={true} element={<MyAccount />} />
-            <Route path={"/my-list"} exact={true} element={<ProtectedRoute><MyList /></ProtectedRoute>} />
-            <Route path={"/my-orders"} exact={true} element={<ProtectedRoute><Orders /></ProtectedRoute>} />
+            <Route
+              path={"/my-list"}
+              exact={true}
+              element={
+                <ProtectedRoute>
+                  <MyList />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={"/my-orders"}
+              exact={true}
+              element={
+                <ProtectedRoute>
+                  <Orders />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path={"/order/success"}
               exact={true}
@@ -299,7 +316,15 @@ function App() {
               exact={true}
               element={<OrderFailed />}
             />
-            <Route path={"/address"} exact={true} element={<ProtectedRoute><Address /></ProtectedRoute>} />
+            <Route
+              path={"/address"}
+              exact={true}
+              element={
+                <ProtectedRoute>
+                  <Address />
+                </ProtectedRoute>
+              }
+            />
             <Route path={"/search"} exact={true} element={<SearchPage />} />
             <Route
               path={"/s.tecnico"}
@@ -308,6 +333,7 @@ function App() {
             />
             <Route path={"/nosotros"} exact={true} element={<Nosotros />} />
             <Route path={"/contacto"} exact={true} element={<Contacto />} />
+            <Route path={"/factura"} exact={true} element={<Factura />} />
           </Routes>
           <Footer />
         </MyContext.Provider>
