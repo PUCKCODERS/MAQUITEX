@@ -28,7 +28,6 @@ import ServicioTecnico from "./Pages/S.Tecnico";
 import Nosotros from "./Pages/Nosotros";
 import Contacto from "./Pages/Contacto";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Factura from "./Pages/Factura";
 
 const MyContext = createContext();
 
@@ -333,7 +332,6 @@ function App() {
             />
             <Route path={"/nosotros"} exact={true} element={<Nosotros />} />
             <Route path={"/contacto"} exact={true} element={<Contacto />} />
-            <Route path={"/factura"} exact={true} element={<Factura />} />
           </Routes>
           <Footer />
         </MyContext.Provider>
