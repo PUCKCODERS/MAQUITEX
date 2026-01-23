@@ -51,7 +51,7 @@ const Factura = () => {
   }
 
   return (
-    <section className="w-full !p-10 bg-[#f9f9f9]">
+    <section className="w-full !p-10 bg-[#f9f9f9] flex items-center justify-center">
       <style>
         {`
           @media print {
