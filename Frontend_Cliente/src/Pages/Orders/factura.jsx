@@ -52,7 +52,38 @@ const Factura = () => {
 
   return (
     <section className="w-full !p-10 bg-[#f9f9f9]">
-      <div className="max-w-[900px] mx-auto bg-white shadow-md rounded-md !p-10 border border-[#e0e0e0]">
+      <style>
+        {`
+          @media print {
+            @page {
+              margin: 0;
+              size: auto;
+            }
+            body * {
+              visibility: hidden;
+            }
+            .invoice-card, .invoice-card * {
+              visibility: visible;
+            }
+            .invoice-card {
+              position: absolute;
+              left: 0;
+              top: 0;
+              width: 100%;
+              margin: 0 !important;
+              padding: 20px !important;
+              box-shadow: none !important;
+              border: none !important;
+              background: white !important;
+              z-index: 9999;
+            }
+            .hide-on-print {
+              display: none !important;
+            }
+          }
+        `}
+      </style>
+      <div className="invoice-card max-w-[900px] mx-auto bg-white shadow-md rounded-md !p-10 border border-[#e0e0e0]">
         <div className="flex justify-between items-center !mb-8 border-b pb-4">
           <div>
             <img
@@ -179,7 +210,7 @@ const Factura = () => {
           </div>
         </div>
 
-        <div className="text-center">
+        <div className="text-center hide-on-print">
           <Button
             className="btn-org flex gap-2 items-center mx-auto !px-8 !py-2"
             onClick={() => window.print()}
