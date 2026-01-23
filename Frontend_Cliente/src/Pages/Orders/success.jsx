@@ -10,7 +10,7 @@ const OrderSuccess = () => {
       <h3 className="!mb-0 text-[25]">SU PEDIDO ESTÁ REALIZADO</h3>
       <p className="!mt-0">GRACIAS POR SU PREFERENCIA</p>
       <Link to="/">
-        <Button className="btn-org btn-border">REGRESAR AL INICIO</Button>
+        <Button className="btn-org btn-border">VER FACTURA</Button>
       </Link>
     </section>
   );
