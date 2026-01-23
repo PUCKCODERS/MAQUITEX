@@ -1,13 +1,12 @@
 import React, { useContext, useState } from "react";
 import Button from "@mui/material/Button";
-import { FaAnglesDown } from "react-icons/fa6";
-import { FaAnglesUp } from "react-icons/fa6";
-import Badge from "../../components/Badge";
+import { FaAnglesDown, FaAnglesUp, FaFileInvoice } from "react-icons/fa6";
 import SearchBox from "../../Components/SearchBox";
 import { editData, fetchDataFromApi } from "../../utils/api";
 import { useEffect } from "react";
-import { MenuItem, Pagination, Select } from "@mui/material";
+import { MenuItem, Pagination, Select, Tooltip } from "@mui/material";
 import { MyContext } from "../../App";
+import { Link } from "react-router-dom";
 
 const Orders = () => {
   const [isOpenOrderdProduct, setIsOpenOrderdProduct] = useState(null);
@@ -172,6 +171,9 @@ const Orders = () => {
                 ESTADO PEDIDO
               </th>
               <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
+                ACCIÓN
+              </th>
+              <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
                 FECHA
               </th>
             </tr>
@@ -259,6 +261,18 @@ const Orders = () => {
                           <MenuItem value={"CONFIRMADO"}>CONFIRMADO</MenuItem>
                           <MenuItem value={"ENVIADO"}>ENVIADO</MenuItem>
                         </Select>
+                      </td>
+                      <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
+                        <Tooltip title="Ver Factura">
+                          <Link
+                            to={`/factura/${order._id}`}
+                            state={{ order: order }}
+                          >
+                            <Button className="!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-[#274a72] hover:!text-[#fff] !bg-[#fff] hover:!bg-[#274a72] !shadow-[0px_0px_0px_3px_#7994b1] transition-all duration-300">
+                              <FaFileInvoice className="text-[18px]" />
+                            </Button>
+                          </Link>
+                        </Tooltip>
                       </td>
                       <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
                         {order?.createdAt?.split("T")[0]}

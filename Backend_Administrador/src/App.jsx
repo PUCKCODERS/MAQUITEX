@@ -31,6 +31,7 @@ import AddSize from "./Pages/Products/addSize.jsx";
 import BannerV1List from "./Pages/Banners/bannerV1List.jsx";
 import BlogList from "./Pages/Blog/index.jsx";
 import BannerV2List from "./Pages/Banners/bannerV2List.jsx";
+import Factura from "./Pages/Orders/factura.jsx";
 
 const MyContext = createContext();
 
@@ -275,6 +276,33 @@ function App() {
                 } transition-all duration-300`}
               >
                 <Orders />
+              </div>
+            </div>
+          </section>
+        </>
+      ),
+    },
+    {
+      path: "/factura/:id",
+      exact: true,
+      element: (
+        <>
+          <section className="main">
+            <Header />
+            <div className="contentMain flex">
+              <div
+                className={`overflow-hidden sidebarWrapper ${
+                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                } transition-all duration-300`}
+              >
+                <Sidebar />
+              </div>
+              <div
+                className={`contentRight !py-4 !px-5 ${
+                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
+                } transition-all duration-300`}
+              >
+                <Factura />
               </div>
             </div>
           </section>
@@ -567,7 +595,7 @@ function App() {
 
           alertBox(
             "error",
-            "SU SESIÓN HA EXPIRADO, POR FAVOR INICIE SESIÓN DE NUEVO"
+            "SU SESIÓN HA EXPIRADO, POR FAVOR INICIE SESIÓN DE NUEVO",
           );
           window.location.href = "/login";
         }
