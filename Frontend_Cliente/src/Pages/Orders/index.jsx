@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import AccountSidebar from "../../components/AccountSidebar";
 import { Button } from "@mui/material";
-import { FaAnglesDown } from "react-icons/fa6";
-import { FaAnglesUp } from "react-icons/fa6";
+import { FaAnglesDown, FaAnglesUp, FaFileInvoice } from "react-icons/fa6";
 import Badge from "../../components/Badge";
 import { fetchDataFromApi } from "../../utils/api";
+import { Link } from "react-router-dom";
+import Tooltip from "@mui/material/Tooltip";
 
 const Orders = () => {
   const [isOpenOrderdProduct, setIsOpenOrderdProduct] = useState(null);
@@ -87,6 +88,9 @@ const Orders = () => {
                       <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
                         FECHA
                       </th>
+                      <th scope="col" className="!px-6 !py-3 whitespace-nowrap">
+                        ACCIÓN
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -158,6 +162,15 @@ const Orders = () => {
                               </td>
                               <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
                                 {order?.createdAt?.split("T")[0]}
+                              </td>
+                              <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
+                                <Tooltip title="Ver Factura">
+                                  <Link to={`/factura/${order._id}`}>
+                                    <Button className="!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-[#274a72] hover:!text-[#fff] !bg-[#fff] hover:!bg-[#274a72] !shadow-[0px_0px_0px_3px_#7994b1] transition-all duration-300">
+                                      <FaFileInvoice className="text-[18px]" />
+                                    </Button>
+                                  </Link>
+                                </Tooltip>
                               </td>
                             </tr>
 
@@ -243,7 +256,7 @@ const Orders = () => {
                                                   {
                                                     style: "currency",
                                                     currency: "USD",
-                                                  }
+                                                  },
                                                 )}
                                               </td>
                                               <td class="!px-6 !py-4 font-[500] ">
