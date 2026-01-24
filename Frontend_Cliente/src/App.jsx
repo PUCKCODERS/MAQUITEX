@@ -38,7 +38,11 @@ function App() {
     item: {},
   });
 
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(() => {
+    const token = localStorage.getItem("accessToken");
+    return !!token;
+  });
+
   const [userData, setUserData] = useState(null);
   const [address, setAddress] = useState([]);
   const [catData, setCatData] = useState([]);
