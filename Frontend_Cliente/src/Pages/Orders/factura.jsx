@@ -6,6 +6,7 @@ import { FaPrint } from "react-icons/fa6";
 import logo from "./images/logo.jpg";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import { RiMailSendLine } from "react-icons/ri";
 
 const Factura = () => {
   const { id } = useParams();
@@ -17,12 +18,12 @@ const Factura = () => {
     const input = document.querySelector(".invoice-card");
     if (!input) {
       alert("No se encontró el contenido de la factura para generar el PDF.");
-      return;
+      return Promise.resolve();
     }
 
     window.scrollTo(0, 0);
 
-    html2canvas(input, {
+    return html2canvas(input, {
       scale: 2,
       useCORS: true,
       backgroundColor: "#ffffff",
@@ -83,6 +84,13 @@ const Factura = () => {
       });
   };
 
+  const sendWhatsApp = () => {
+    const phoneNumber = "593968873896";
+    const message = `HOLA, ADJUNTO EL CODIGO DE MI PEDIDO: ${order?._id}`;
+    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+    window.open(url, "_blank");
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
@@ -122,7 +130,7 @@ const Factura = () => {
   }
 
   return (
-    <section className="w-full !p-10 bg-[#f9f9f9] flex items-center justify-center">
+    <section className="w-full !p-10 bg-[#f9f9f9] flex flex-col items-center justify-center gap-5">
       <style>
         {`
           @media print {
@@ -292,9 +300,21 @@ const Factura = () => {
             className="btn-org flex gap-2 items-center mx-auto !px-8 !py-2"
             onClick={downloadPDF}
           >
-            <FaPrint className="text-[18px]" /> DESCARGAR FACTURA
+            <FaPrint className="text-[18px]" /> DESCARGAR PEDIDO
           </Button>
         </div>
+      </div>
+
+      <div className="flex flex-col items-center gap-2 hide-on-print">
+        <span className="font-bold text-[#274a72]">
+          AL ENVIAR ESTE PEDIDO PERMITIRA AL VENDEDOR EMPEZAR A PREPARARLO
+        </span>
+        <Button
+          className="btn-org flex gap-2 items-center mx-auto !px-8 !py-2"
+          onClick={sendWhatsApp}
+        >
+          <RiMailSendLine className="text-[18px]" /> ENVIAR PEDIDO
+        </Button>
       </div>
     </section>
   );

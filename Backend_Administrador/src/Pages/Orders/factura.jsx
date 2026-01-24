@@ -255,7 +255,7 @@ const Factura = () => {
             className="btn-org flex gap-2 items-center mx-auto !px-8 !py-2"
             onClick={downloadPDF}
           >
-            <FaPrint className="text-[18px]" /> DESCARGAR FACTURA
+            <FaPrint className="text-[18px]" /> DESCARGAR PEDIDO
           </Button>
         </div>
       </div>
