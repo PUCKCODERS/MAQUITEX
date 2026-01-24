@@ -28,8 +28,6 @@ const Factura = () => {
       backgroundColor: "#ffffff",
       ignoreElements: (element) => element.classList?.contains("hide-on-print"),
       onclone: (clonedDoc) => {
-        // Solución robusta: Extraer todo el CSS, sanear 'oklch' y reinyectar.
-        // Esto evita que se rompa el diseño al eliminar reglas completas.
         let cssText = "";
         try {
           Array.from(document.styleSheets).forEach((sheet) => {
@@ -47,27 +45,20 @@ const Factura = () => {
           console.warn("Error procesando CSS:", e);
         }
 
-        // Reemplazar oklch por un color seguro para evitar el crash
         const sanitizedCss = cssText.replace(/oklch\([^)]+\)/g, "#000000");
 
-        // Eliminar estilos originales del clon para evitar conflictos
         clonedDoc
           .querySelectorAll("link[rel='stylesheet'], style")
           .forEach((el) => el.remove());
 
-        // Inyectar CSS saneado
         const styleEl = clonedDoc.createElement("style");
         styleEl.textContent = sanitizedCss;
         clonedDoc.head.appendChild(styleEl);
-
-        // Ajustar contenedor para asegurar renderizado de escritorio
         const clonedCard = clonedDoc.querySelector(".invoice-card");
         if (clonedCard) {
           clonedCard.style.width = "900px";
           clonedCard.style.maxWidth = "none";
           clonedCard.style.backgroundColor = "#ffffff";
-
-          // Forzar fuente estándar y espaciado para corregir el error visual de "palabras pegadas"
           clonedCard.style.fontFamily = "bold";
           const allElements = clonedCard.querySelectorAll("*");
           allElements.forEach((el) => {
@@ -100,7 +91,6 @@ const Factura = () => {
       setLoading(false);
     } else {
       setLoading(true);
-      // Buscamos la orden específica en la lista de órdenes
       fetchDataFromApi("/api/order/order-list").then((res) => {
         if (res?.error === false) {
           const foundOrder = res?.data?.find((o) => o._id === id);
