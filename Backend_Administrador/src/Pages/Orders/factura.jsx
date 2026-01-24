@@ -4,12 +4,39 @@ import { fetchDataFromApi } from "../../utils/api";
 import { Button } from "@mui/material";
 import { FaPrint } from "react-icons/fa6";
 import logo from "./images/logo.jpg";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const Factura = () => {
   const { id } = useParams();
   const location = useLocation();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const downloadPDF = () => {
+    const input = document.querySelector(".invoice-card");
+    if (!input) return;
+
+    html2canvas(input, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+      ignoreElements: (element) => element.classList?.contains("hide-on-print"),
+    })
+      .then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4");
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.save(`factura_${order?._id || id}.pdf`);
+      })
+      .catch((err) => {
+        console.error("Error al generar el PDF:", err);
+      });
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -93,7 +120,10 @@ const Factura = () => {
           }
         `}
       </style>
-      <div className="invoice-card max-w-[900px] mx-auto bg-white shadow-md rounded-md !p-10 border border-[#e0e0e0]">
+      <div
+        className="invoice-card max-w-[900px] mx-auto bg-white shadow-md rounded-md !p-10 border border-[#e0e0e0]"
+        style={{ backgroundColor: "#ffffff" }}
+      >
         <div className="flex justify-between items-center !mb-8 border-b pb-4">
           <div>
             <img
@@ -223,9 +253,9 @@ const Factura = () => {
         <div className="text-center hide-on-print">
           <Button
             className="btn-org flex gap-2 items-center mx-auto !px-8 !py-2"
-            onClick={() => window.print()}
+            onClick={downloadPDF}
           >
-            <FaPrint className="text-[18px]" /> IMPRIMIR FACTURA
+            <FaPrint className="text-[18px]" /> DESCARGAR FACTURA
           </Button>
         </div>
       </div>

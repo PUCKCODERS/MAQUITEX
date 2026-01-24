@@ -4,12 +4,93 @@ import { fetchDataFromApi } from "../../utils/api";
 import { Button } from "@mui/material";
 import { FaPrint } from "react-icons/fa6";
 import logo from "./images/logo.jpg";
+import html2canvas from "html2canvas";
+import jsPDF from "jspdf";
 
 const Factura = () => {
   const { id } = useParams();
   const location = useLocation();
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const downloadPDF = () => {
+    const input = document.querySelector(".invoice-card");
+    if (!input) {
+      alert("No se encontró el contenido de la factura para generar el PDF.");
+      return;
+    }
+
+    window.scrollTo(0, 0);
+
+    html2canvas(input, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#ffffff",
+      ignoreElements: (element) => element.classList?.contains("hide-on-print"),
+      onclone: (clonedDoc) => {
+        // Solución robusta: Extraer todo el CSS, sanear 'oklch' y reinyectar.
+        // Esto evita que se rompa el diseño al eliminar reglas completas.
+        let cssText = "";
+        try {
+          Array.from(document.styleSheets).forEach((sheet) => {
+            try {
+              if (sheet.cssRules) {
+                Array.from(sheet.cssRules).forEach((rule) => {
+                  cssText += rule.cssText + "\n";
+                });
+              }
+            } catch (e) {
+              // Ignorar errores de CORS en hojas externas
+            }
+          });
+        } catch (e) {
+          console.warn("Error procesando CSS:", e);
+        }
+
+        // Reemplazar oklch por un color seguro para evitar el crash
+        const sanitizedCss = cssText.replace(/oklch\([^)]+\)/g, "#000000");
+
+        // Eliminar estilos originales del clon para evitar conflictos
+        clonedDoc
+          .querySelectorAll("link[rel='stylesheet'], style")
+          .forEach((el) => el.remove());
+
+        // Inyectar CSS saneado
+        const styleEl = clonedDoc.createElement("style");
+        styleEl.textContent = sanitizedCss;
+        clonedDoc.head.appendChild(styleEl);
+
+        // Ajustar contenedor para asegurar renderizado de escritorio
+        const clonedCard = clonedDoc.querySelector(".invoice-card");
+        if (clonedCard) {
+          clonedCard.style.width = "900px";
+          clonedCard.style.maxWidth = "none";
+          clonedCard.style.backgroundColor = "#ffffff";
+
+          // Forzar fuente estándar y espaciado para corregir el error visual de "palabras pegadas"
+          clonedCard.style.fontFamily = "bold";
+          const allElements = clonedCard.querySelectorAll("*");
+          allElements.forEach((el) => {
+            el.style.fontFamily = "bold";
+            el.style.letterSpacing = "normal";
+          });
+        }
+      },
+    })
+      .then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+        const pdf = new jsPDF("p", "mm", "a4");
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const imgProps = pdf.getImageProperties(imgData);
+        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+        pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+        pdf.save(`factura_${order?._id || id}.pdf`);
+      })
+      .catch((err) => {
+        console.error("Error al generar el PDF:", err);
+      });
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -81,10 +162,16 @@ const Factura = () => {
               display: none !important;
             }
           }
+          /* Forzar colores HEX para evitar error 'oklch' en html2canvas */
+          .invoice-card .bg-white { background-color: #ffffff !important; }
+          .invoice-card .text-white { color: #ffffff !important; }
         `}
       </style>
-      <div className="invoice-card max-w-[900px] mx-auto bg-white shadow-md rounded-md !p-10 border border-[#e0e0e0]">
-        <div className="flex justify-between items-center !mb-8 border-b pb-4">
+      <div
+        className="invoice-card max-w-[900px] !mx-auto bg-white shadow-md !rounded-md !p-10 !border border-[#e0e0e0]"
+        style={{ backgroundColor: "#ffffff" }}
+      >
+        <div className="flex justify-between items-center !mb-8 !border-b !pb-4">
           <div>
             <img
               src={logo}
@@ -198,7 +285,7 @@ const Factura = () => {
 
         <div className="flex justify-end !mb-10">
           <div className="w-[300px]">
-            <div className="flex justify-between !mb-2 py-2 border-b">
+            <div className="flex justify-between !mb-2 !py-2 border-b">
               <span className="text-[16px] font-bold text-[#333]">TOTAL:</span>
               <span className="text-[20px] font-bold text-[#ec370a]">
                 {order?.totalAmt?.toLocaleString("en-US", {
@@ -213,9 +300,9 @@ const Factura = () => {
         <div className="text-center hide-on-print">
           <Button
             className="btn-org flex gap-2 items-center mx-auto !px-8 !py-2"
-            onClick={() => window.print()}
+            onClick={downloadPDF}
           >
-            <FaPrint className="text-[18px]" /> IMPRIMIR FACTURA
+            <FaPrint className="text-[18px]" /> DESCARGAR FACTURA
           </Button>
         </div>
       </div>

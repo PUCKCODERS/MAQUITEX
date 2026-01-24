@@ -18,6 +18,8 @@
     "axios": "^1.11.0",
     "firebase": "^12.6.0",
     "frontend-cliente": "file:",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.0.0",
     "react": "^19.1.0",
     "react-collapse": "^5.1.1",
     "react-dom": "^19.1.0",

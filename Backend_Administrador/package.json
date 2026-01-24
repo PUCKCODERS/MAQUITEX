@@ -17,6 +17,8 @@
     "@mui/material": "^7.1.1",
     "axios": "^1.12.2",
     "backend-administrador": "file:",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^4.0.0",
     "react": "^19.1.0",
     "react-collapse": "^5.1.1",
     "react-dom": "^19.1.0",
