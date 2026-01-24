@@ -39,7 +39,7 @@ const Factura = () => {
                   cssText += rule.cssText + "\n";
                 });
               }
-            } catch (e) {
+            } catch {
               // Ignorar errores de CORS en hojas externas
             }
           });
