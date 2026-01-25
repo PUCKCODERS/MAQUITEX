@@ -144,7 +144,9 @@ const Dashboard = () => {
   const [ordersData, setOrdersData] = useState([]);
   const [orders, setOrders] = useState([]);
   const [pageOrder, setPageOrder] = React.useState(1);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [productSearchQuery, setProductSearchQuery] = useState("");
+  const [userSearchQuery, setUserSearchQuery] = useState("");
+  const [orderSearchQuery, setOrderSearchQuery] = useState("");
   const [totalOrdersData, setTotalOrdersData] = useState([]);
 
   const [productTotalData, setProductTotalData] = useState([]);
@@ -166,13 +168,13 @@ const Dashboard = () => {
   }, [context?.isOpenFullScreenPanel]);
 
   useEffect(() => {
-    if (searchQuery !== "") {
+    if (productSearchQuery !== "") {
       const filteredOrders = productTotalData?.filter(
         (product) =>
-          product._id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          product.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          product.catName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          product.subCat?.includes(searchQuery),
+          product._id?.toLowerCase().includes(productSearchQuery.toLowerCase()) ||
+          product.name?.toLowerCase().includes(productSearchQuery.toLowerCase()) ||
+          product.catName?.toLowerCase().includes(productSearchQuery.toLowerCase()) ||
+          product.subCat?.includes(productSearchQuery),
       );
       setProductData(filteredOrders);
     } else {
@@ -182,7 +184,7 @@ const Dashboard = () => {
         }
       });
     }
-  }, [searchQuery]);
+  }, [productSearchQuery]);
 
   const getProducts = async () => {
     setIsloading(true);
@@ -217,22 +219,12 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    if (!searchQuery) {
-      const all = totalOrdersData || [];
-      const totalPages = Math.max(1, Math.ceil(all.length / 6));
-      const start = (pageOrder - 1) * 6;
-      const pageData = all.slice(start, start + 6);
-      setOrders({ totalPages });
-      setOrdersData({ data: pageData });
-    }
-  }, [pageOrder, totalOrdersData, searchQuery]);
-
-  useEffect(() => {
-    if (searchQuery !== "") {
-      const dataArr = Array.isArray(totalOrdersData)
-        ? totalOrdersData
-        : totalOrdersData?.data || [];
-      const filteredOrders = dataArr.filter((order) =>
+    const dataArr = Array.isArray(totalOrdersData)
+      ? totalOrdersData
+      : totalOrdersData?.data || [];
+    let filteredOrders = dataArr;
+    if (orderSearchQuery !== "") {
+      filteredOrders = dataArr.filter((order) =>
         (
           order?._id?.toString() +
           " " +
@@ -243,19 +235,17 @@ const Dashboard = () => {
           (order?.createdAt || "")
         )
           .toLowerCase()
-          .includes(searchQuery.toLowerCase()),
+          .includes(orderSearchQuery.toLowerCase()),
       );
-
-      const totalPages = Math.max(1, Math.ceil(filteredOrders.length / 6));
-      const start = (pageOrder - 1) * 6;
-      const pageData = filteredOrders.slice(start, start + 6);
-      setOrders({ totalPages });
-      setOrdersData({ data: pageData });
-      if (pageOrder > totalPages) setPageOrder(1);
-    } else {
-      // ())
     }
-  }, [searchQuery]);
+
+    const totalPages = Math.max(1, Math.ceil(filteredOrders.length / 6));
+    const start = (pageOrder - 1) * 6;
+    const pageData = filteredOrders.slice(start, start + 6);
+    setOrders({ totalPages });
+    setOrdersData({ data: pageData });
+    if (pageOrder > totalPages) setPageOrder(1);
+  }, [pageOrder, totalOrdersData, orderSearchQuery]);
 
   useEffect(() => {
     getVENTASByYear();
@@ -517,13 +507,13 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    if (searchQuery !== "") {
+    if (userSearchQuery !== "") {
       const filteredItems = userTotalData?.filter(
         (user) =>
-          user._id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          user.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          user.createdAt?.toLowerCase().includes(searchQuery.toLowerCase()),
+          user._id?.toLowerCase().includes(userSearchQuery.toLowerCase()) ||
+          user.name?.toLowerCase().includes(userSearchQuery.toLowerCase()) ||
+          user.email?.toLowerCase().includes(userSearchQuery.toLowerCase()) ||
+          user.createdAt?.toLowerCase().includes(userSearchQuery.toLowerCase()),
       );
       setUserData(filteredItems);
     } else {
@@ -534,7 +524,7 @@ const Dashboard = () => {
         }
       });
     }
-  }, [searchQuery]);
+  }, [userSearchQuery]);
 
   const confirmDeleteUser = () => {
     if (userToDelete) {
@@ -760,9 +750,8 @@ const Dashboard = () => {
 
           <div className="col !w-[20%] ml-auto">
             <SearchBox
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-              setPageOrder={setPageOrder}
+              searchQuery={productSearchQuery}
+              setSearchQuery={setProductSearchQuery}
             />
           </div>
         </div>
@@ -1052,8 +1041,8 @@ const Dashboard = () => {
             )}
 
             <SearchBox
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
+              searchQuery={userSearchQuery}
+              setSearchQuery={setUserSearchQuery}
             />
           </div>
         </div>
@@ -1310,8 +1299,8 @@ const Dashboard = () => {
           </h2>
           <div className="w-[25%]">
             <SearchBox
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
+              searchQuery={orderSearchQuery}
+              setSearchQuery={setOrderSearchQuery}
               setPageOrder={setPageOrder}
             />
           </div>
