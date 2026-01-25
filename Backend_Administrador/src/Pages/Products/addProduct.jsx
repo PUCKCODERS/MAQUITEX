@@ -221,14 +221,14 @@ const AddProduct = () => {
     if (formFields.description === "") {
       context.alertBox(
         "error",
-        "POR FAVOR INGRESE LA DESCRIPCIÓN DEL PRODUCTO"
+        "POR FAVOR INGRESE LA DESCRIPCIÓN DEL PRODUCTO",
       );
       return false;
     }
     if (formFields.catId === "") {
       context.alertBox(
         "error",
-        "POR FAVOR SELECCIONE LA CATEGORÍA DEL PRODUCTO"
+        "POR FAVOR SELECCIONE LA CATEGORÍA DEL PRODUCTO",
       );
       return false;
     }
@@ -236,7 +236,7 @@ const AddProduct = () => {
     if (formFields.subCatId === "") {
       context.alertBox(
         "error",
-        "POR FAVOR SELECCIONE LA SUBCATEGORÍA DEL PRODUCTO"
+        "POR FAVOR SELECCIONE LA SUBCATEGORÍA DEL PRODUCTO",
       );
       return false;
     }
@@ -244,7 +244,7 @@ const AddProduct = () => {
     if (formFields.thirdsubCatId === "") {
       context.alertBox(
         "error",
-        "POR FAVOR SELECCIONE LA SUBCATEGORÍA DE TERCER NIVEL DEL PRODUCTO"
+        "POR FAVOR SELECCIONE LA SUBCATEGORÍA DE TERCER NIVEL DEL PRODUCTO",
       );
       return false;
     }
@@ -257,7 +257,7 @@ const AddProduct = () => {
     if (formFields.oldPrice === "") {
       context.alertBox(
         "error",
-        "POR FAVOR INGRESE EL PRECIO ANTERIOR DEL PRODUCTO"
+        "POR FAVOR INGRESE EL PRECIO ANTERIOR DEL PRODUCTO",
       );
       return false;
     }
@@ -387,23 +387,20 @@ const AddProduct = () => {
                   label="Sub Category"
                   onChange={handleChangeProductSubCat}
                 >
-                  {context?.catData?.map((cat) => {
-                    return (
-                      cat?.children?.length !== 0 &&
-                      cat?.children?.map((subCat, index) => {
-                        return (
-                          <MenuItem
-                            key={index}
-                            value={subCat?._id}
-                            onClick={() => selectSubCatByName(subCat?.name)}
-                            className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                          >
-                            {subCat?.name}
-                          </MenuItem>
-                        );
-                      })
-                    );
-                  })}
+                  {context?.catData?.find((cat) => cat._id === productCat)
+                    ?.children?.length > 0 &&
+                    context?.catData
+                      ?.find((cat) => cat._id === productCat)
+                      ?.children?.map((subCat) => (
+                        <MenuItem
+                          key={subCat._id}
+                          value={subCat._id}
+                          onClick={() => selectSubCatByName(subCat.name)}
+                          className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                        >
+                          {subCat.name}
+                        </MenuItem>
+                      ))}
                 </Select>
               )}
             </div>
@@ -423,30 +420,25 @@ const AddProduct = () => {
                   label="Sub Category"
                   onChange={handleChangeProductThirdLavelSubCat}
                 >
-                  {context?.catData?.map((cat) => {
-                    return (
-                      cat?.children?.length !== 0 &&
-                      cat?.children?.map((subCat) => {
-                        return (
-                          subCat?.children?.length !== 0 &&
-                          subCat?.children?.map((thirdLavelCat, index) => {
-                            return (
-                              <MenuItem
-                                value={thirdLavelCat?._id}
-                                key={index}
-                                onClick={() =>
-                                  selectSubCatByThirdLavel(thirdLavelCat?.name)
-                                }
-                                className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                              >
-                                {thirdLavelCat?.name}
-                              </MenuItem>
-                            );
-                          })
-                        );
-                      })
-                    );
-                  })}
+                  {context?.catData
+                    ?.find((cat) => cat._id === productCat)
+                    ?.children?.find((subCat) => subCat._id === productSubCat)
+                    ?.children?.length > 0 &&
+                    context?.catData
+                      ?.find((cat) => cat._id === productCat)
+                      ?.children?.find((subCat) => subCat._id === productSubCat)
+                      ?.children?.map((thirdLavelCat) => (
+                        <MenuItem
+                          key={thirdLavelCat._id}
+                          value={thirdLavelCat._id}
+                          onClick={() =>
+                            selectSubCatByThirdLavel(thirdLavelCat?.name)
+                          }
+                          className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                        >
+                          {thirdLavelCat.name}
+                        </MenuItem>
+                      ))}
                 </Select>
               )}
             </div>
