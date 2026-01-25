@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./style.css";
 import React from "react";
 
@@ -13,11 +13,47 @@ import logo from "./images/image.png";
 import { GiSewingString } from "react-icons/gi";
 
 const Contacto = () => {
-  window.scrollTo(0, 0);
+  // Estado para guardar los datos del formulario
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    serviceType: "",
+    date: "",
+    time: "",
+    message: "",
+  });
+
   useEffect(() => {
     const interval = setInterval(() => {}, 7000);
     return () => clearInterval(interval);
   }, []);
+
+  // Función para manejar cambios en los inputs
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  // Función para enviar el formulario
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { name, phone, serviceType, date, time, message } = formData;
+
+    // Validación: Verificar que todos los campos estén llenos
+    if (!name || !phone || !serviceType || !date || !time || !message) {
+      return alert(
+        "Por favor, completa todos los campos y selecciona las opciones faltantes antes de enviar.",
+      );
+    }
+
+    // Construir mensaje de WhatsApp
+    // Asumiendo código de país Ecuador (593) para el número 0968873896 -> 593968873896
+    const phoneNumber = "593968873896";
+    const text = `*SOLICITUD DE SERVICIO TÉCNICO*%0A--------------------------------%0A*Nombre:* ${name}%0A*Teléfono:* ${phone}%0A*Servicio:* ${serviceType}%0A*Fecha:* ${date}%0A*Hora:* ${time}%0A*Mensaje:* ${message}`;
+
+    // Abrir WhatsApp
+    window.open(`https://wa.me/${phoneNumber}?text=${text}`, "_blank");
+  };
 
   return (
     <div className="contacto-page ">
@@ -44,7 +80,7 @@ const Contacto = () => {
           <section className="reservation">
             <div className="container">
               <div className="form reservation-form bg-black-10">
-                <form action="" className="form-left">
+                <form action="" className="form-left" onSubmit={handleSubmit}>
                   <h2 className="headline-1 text-center !text-[40px]">
                     SOLICITUD DE SERVICIO TÉCNICO
                   </h2>
@@ -59,16 +95,18 @@ const Contacto = () => {
                     <input
                       type="text"
                       name="name"
-                      placeholder="TU NOMBRE
-  "
+                      value={formData.name}
+                      onChange={handleChange}
+                      placeholder="TU NOMBRE "
                       autoComplete="off"
                       className="input-field"
                     />
                     <input
                       type="tel"
                       name="phone"
-                      placeholder="NÚMERO DE TELÉFONO
-  "
+                      value={formData.phone}
+                      onChange={handleChange}
+                      placeholder="NÚMERO DE TELÉFONO"
                       autoComplete="off"
                       className="input-field"
                     />
@@ -80,19 +118,29 @@ const Contacto = () => {
                         aria-hidden="true"
                       ></ion-icon>
                       <select
-                        name="person"
+                        name="serviceType"
+                        value={formData.serviceType}
+                        onChange={handleChange}
                         className="input-field !text-[13px]"
                       >
-                        <option value="1-person">TIPO DE SERVICIO</option>
-                        <option value="2-person">SERVICIO TÉCNICO</option>
-                        <option value="3-person">
+                        <option value="">TIPO DE SERVICIO</option>
+                        <option value="SERVICIO TÉCNICO">
+                          SERVICIO TÉCNICO
+                        </option>
+                        <option value="MANTENIMIENTO PREVENTIVO">
                           MANTENIMIENTO PREVENTIVO
                         </option>
-                        <option value="4-person">REPARACIÓN DE MÁQUINA</option>
-                        <option value="5-person">REPUESTOS</option>
-                        <option value="6-person">ACCESORIOS</option>
-                        <option value="7-person">ENVÍO A DOMICILIO</option>
-                        <option value="7-person">ASESORÍA TÉCNICA</option>
+                        <option value="REPARACIÓN DE MÁQUINA">
+                          REPARACIÓN DE MÁQUINA
+                        </option>
+                        <option value="REPUESTOS">REPUESTOS</option>
+                        <option value="ACCESORIOS">ACCESORIOS</option>
+                        <option value="ENVÍO A DOMICILIO">
+                          ENVÍO A DOMICILIO
+                        </option>
+                        <option value="ASESORÍA TÉCNICA">
+                          ASESORÍA TÉCNICA
+                        </option>
                       </select>
                       <ion-icon
                         name="chevron-down"
@@ -107,7 +155,9 @@ const Contacto = () => {
                       ></ion-icon>
                       <input
                         type="date"
-                        name="reservation-date"
+                        name="date"
+                        value={formData.date}
+                        onChange={handleChange}
                         className="input-field"
                       />
                       <ion-icon
@@ -122,25 +172,23 @@ const Contacto = () => {
                         aria-hidden="true"
                       ></ion-icon>
                       <select
-                        name="person"
+                        name="time"
+                        value={formData.time}
+                        onChange={handleChange}
                         className="input-field !text-[11px]"
                       >
-                        <option value="08:00am">HORARIO DE ATENCIÓN</option>
-                        <option value="08:00am">08 : 00 am</option>
-                        <option value="09:00am">09 : 00 am</option>
-                        <option value="010:00am">10 : 00 am</option>
-                        <option value="011:00am">11 : 00 am</option>
-                        <option value="012:00am">12 : 00 am</option>
-                        <option value="01:00pm">01 : 00 pm</option>
-                        <option value="02:00pm">02 : 00 pm</option>
-                        <option value="03:00pm">03 : 00 pm</option>
-                        <option value="04:00pm">04 : 00 pm</option>
-                        <option value="05:00pm">05 : 00 pm</option>
-                        <option value="06:00pm">06 : 00 pm</option>
-                        <option value="07:00pm">07 : 00 pm</option>
-                        <option value="08:00pm">08 : 00 pm</option>
-                        <option value="09:00pm">09 : 00 pm</option>
-                        <option value="10:00pm">10 : 00 pm</option>
+                        <option value="">HORARIO DE ATENCIÓN</option>
+                        <option value="08:00 am">08 : 00 am</option>
+                        <option value="09:00 am">09 : 00 am</option>
+                        <option value="10:00 am">10 : 00 am</option>
+                        <option value="11:00 am">11 : 00 am</option>
+                        <option value="12:00 am">12 : 00 am</option>
+                        <option value="01:00 pm">01 : 00 pm</option>
+                        <option value="02:00 pm">02 : 00 pm</option>
+                        <option value="03:00 pm">03 : 00 pm</option>
+                        <option value="04:00 pm">04 : 00 pm</option>
+                        <option value="05:00 pm">05 : 00 pm</option>
+                        <option value="06:00 pm">06 : 00 pm</option>
                       </select>
                       <ion-icon
                         name="chevron-down"
@@ -151,8 +199,9 @@ const Contacto = () => {
                   </div>
                   <textarea
                     name="message"
-                    placeholder="DESCRIBE TU SOLICITUD O EL PROBLEMA DE TU MÁQUINA
-  "
+                    value={formData.message}
+                    onChange={handleChange}
+                    placeholder="DESCRIBE TU SOLICITUD O EL PROBLEMA DE TU MÁQUINA"
                     autoComplete="off"
                     className="input-field"
                   ></textarea>
