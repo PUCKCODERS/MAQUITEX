@@ -128,6 +128,8 @@ const Dashboard = () => {
   const [page, setPage] = React.useState(0);
 
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [pageUser, setPageUser] = React.useState(0);
+  const [rowsPerPageUser, setRowsPerPageUser] = React.useState(10);
 
   const [isLoading, setIsloading] = useState(false);
   const [productData, setProductData] = useState([]);
@@ -357,6 +359,11 @@ const Dashboard = () => {
     setPage(0);
   };
 
+  const handleChangeRowsPerPageUser = (event) => {
+    setRowsPerPageUser(+event.target.value);
+    setPageUser(0);
+  };
+
   const deleteProduct = (id) => {
     setProductToDelete(id);
     setIsConfirmOpen(true);
@@ -398,6 +405,10 @@ const Dashboard = () => {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+  };
+
+  const handleChangePageUser = (event, newPage) => {
+    setPageUser(newPage);
   };
 
   const isShowOrderdProduct = (index) => {
@@ -1086,7 +1097,7 @@ const Dashboard = () => {
               {isLoading === false ? (
                 userData?.length !== 0 &&
                 userData
-                  ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  ?.slice(pageUser * rowsPerPageUser, pageUser * rowsPerPageUser + rowsPerPageUser)
                   ?.reverse()
                   .map((user, index) => {
                     return (
@@ -1210,10 +1221,10 @@ const Dashboard = () => {
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
           count={userData?.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
+          rowsPerPage={rowsPerPageUser}
+          page={pageUser}
+          onPageChange={handleChangePageUser}
+          onRowsPerPageChange={handleChangeRowsPerPageUser}
           className="!bg-gray-100 !text-balck !border-t !border-gray-500"
         />
       </div>
