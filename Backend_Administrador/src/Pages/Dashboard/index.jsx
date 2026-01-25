@@ -171,16 +171,22 @@ const Dashboard = () => {
     if (productSearchQuery !== "") {
       const filteredOrders = productTotalData?.filter(
         (product) =>
-          product._id?.toLowerCase().includes(productSearchQuery.toLowerCase()) ||
-          product.name?.toLowerCase().includes(productSearchQuery.toLowerCase()) ||
-          product.catName?.toLowerCase().includes(productSearchQuery.toLowerCase()) ||
+          product._id
+            ?.toLowerCase()
+            .includes(productSearchQuery.toLowerCase()) ||
+          product.name
+            ?.toLowerCase()
+            .includes(productSearchQuery.toLowerCase()) ||
+          product.catName
+            ?.toLowerCase()
+            .includes(productSearchQuery.toLowerCase()) ||
           product.subCat?.includes(productSearchQuery),
       );
       setProductData(filteredOrders);
     } else {
       fetchDataFromApi(`/api/product/getAllProducts`).then((res) => {
         if (res?.error === false) {
-          setProductData(res?.products);
+          setProductData(res?.products?.reverse());
         }
       });
     }
@@ -191,6 +197,7 @@ const Dashboard = () => {
     fetchDataFromApi("/api/product/getAllProducts").then((res) => {
       let productArr = [];
       if (res?.error === false) {
+        res?.products?.reverse();
         for (let i = 0; i < res?.products?.length; i++) {
           productArr[i] = res?.products[i];
           productArr[i].checked = false;
@@ -303,7 +310,7 @@ const Dashboard = () => {
       `/api/product/getAllProductsByCatId/${event.target.value}`,
     ).then((res) => {
       if (res?.error === false) {
-        setProductData(res?.products);
+        setProductData(res?.products?.reverse());
         setTimeout(() => {
           setIsloading(false);
         }, 300);
@@ -320,7 +327,7 @@ const Dashboard = () => {
       `/api/product/getAllProductsBySubCatId/${event.target.value}`,
     ).then((res) => {
       if (res?.error === false) {
-        setProductData(res?.products);
+        setProductData(res?.products?.reverse());
         setTimeout(() => {
           setIsloading(false);
         }, 300);
@@ -337,7 +344,7 @@ const Dashboard = () => {
       `/api/product/getAllProductsByThirdLavelCat/${event.target.value}`,
     ).then((res) => {
       if (res?.error === false) {
-        setProductData(res?.products);
+        setProductData(res?.products?.reverse());
         setTimeout(() => {
           setIsloading(false);
         }, 300);
@@ -790,7 +797,6 @@ const Dashboard = () => {
                 productData?.length !== 0 &&
                 productData
                   ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  ?.reverse()
                   ?.map((product, index) => {
                     return (
                       <TableRow

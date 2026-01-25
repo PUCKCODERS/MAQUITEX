@@ -98,7 +98,7 @@ export const Products = () => {
     } else {
       fetchDataFromApi(`/api/product/getAllProducts`).then((res) => {
         if (res?.error === false) {
-          setProductData(res?.products);
+          setProductData(res?.products?.reverse());
         }
       });
     }
@@ -141,6 +141,7 @@ export const Products = () => {
     fetchDataFromApi("/api/product/getAllProducts").then((res) => {
       let productArr = [];
       if (res?.error === false) {
+        res?.products?.reverse();
         for (let i = 0; i < res?.products?.length; i++) {
           productArr[i] = res?.products[i];
           productArr[i].checked = false;
@@ -163,7 +164,7 @@ export const Products = () => {
       `/api/product/getAllProductsByCatId/${event.target.value}`,
     ).then((res) => {
       if (res?.error === false) {
-        setProductData(res?.products);
+        setProductData(res?.products?.reverse());
         setTimeout(() => {
           setIsloading(false);
         }, 300);
@@ -180,7 +181,7 @@ export const Products = () => {
       `/api/product/getAllProductsBySubCatId/${event.target.value}`,
     ).then((res) => {
       if (res?.error === false) {
-        setProductData(res?.products);
+        setProductData(res?.products?.reverse());
         setTimeout(() => {
           setIsloading(false);
         }, 300);
@@ -197,7 +198,7 @@ export const Products = () => {
       `/api/product/getAllProductsByThirdLavelCat/${event.target.value}`,
     ).then((res) => {
       if (res?.error === false) {
-        setProductData(res?.products);
+        setProductData(res?.products?.reverse());
         setTimeout(() => {
           setIsloading(false);
         }, 300);
@@ -430,7 +431,6 @@ export const Products = () => {
                 productData?.length !== 0 &&
                 productData
                   ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  ?.reverse()
                   ?.map((product, index) => {
                     return (
                       <TableRow
