@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./style.css";
 import React from "react";
+import { Link } from "react-router-dom";
 
 import heroSlider1 from "./images/tiendaSlider.png";
 import heroSlider2 from "./images/maquinasSlider.png";
@@ -27,7 +28,6 @@ import { FcApproval } from "react-icons/fc";
 import { PiCertificateFill } from "react-icons/pi";
 
 const Nosotros = () => {
-  window.scrollTo(0, 0);
   const [currentSlidePos, setCurrentSlidePos] = useState(0);
 
   useEffect(() => {
@@ -75,10 +75,12 @@ const Nosotros = () => {
                   AFICIONADOS
                 </p>
                 <a href="#" className="btn btn-primary slider-reveal">
-                  <span className="text text-1">VER CATÁLOGO</span>
-                  <span className="text text-2" aria-hidden="true">
-                    VER CATÁLOGO
-                  </span>
+                  <Link to="/productListing">
+                    <span className="text text-1">VER CATÁLOGO</span>
+                    <span className="text text-2" aria-hidden="true">
+                      VER CATÁLOGO
+                    </span>
+                  </Link>
                 </a>
               </li>
               <li
@@ -106,11 +108,14 @@ const Nosotros = () => {
                 <p className="body-2 hero-text slider-reveal">
                   MANTENIMIENTO, REPARACIÓN Y ENVÍO A DOMICILIO A TODO EL PAÍS
                 </p>
+
                 <a href="#" className="btn btn-primary slider-reveal">
-                  <span className="text text-1">CONTÁCTANOS</span>
-                  <span className="text text-2" aria-hidden="true">
-                    CONTÁCTANOS
-                  </span>
+                  <Link to="/contacto">
+                    <span className="text text-1">CONTÁCTANOS</span>
+                    <span className="text text-2" aria-hidden="true">
+                      CONTÁCTANOS
+                    </span>
+                  </Link>
                 </a>
               </li>
               <li
@@ -140,10 +145,12 @@ const Nosotros = () => {
                   TÉCNICO
                 </p>
                 <a href="#" className="btn btn-primary slider-reveal">
-                  <span className="text text-1">EXPLORAR PRODUCTOS</span>
-                  <span className="text text-2" aria-hidden="true">
-                    EXPLORAR PRODUCTOS
-                  </span>
+                  <Link to="/productListing">
+                    <span className="text text-1">EXPLORAR PRODUCTOS</span>
+                    <span className="text text-2" aria-hidden="true">
+                      EXPLORAR PRODUCTOS
+                    </span>
+                  </Link>
                 </a>
               </li>
             </ul>
@@ -403,10 +410,12 @@ const Nosotros = () => {
                 </p>
 
                 <a href="#" className="btn btn-primary">
-                  <span className="text text-1">VER CATÁLOGO</span>
-                  <span className="text text-2" aria-hidden="true">
-                    VER CATÁLOGO
-                  </span>
+                  <Link to="/productListing">
+                    <span className="text text-1">VER CATÁLOGO</span>
+                    <span className="text text-2" aria-hidden="true">
+                      VER CATÁLOGO
+                    </span>
+                  </Link>
                 </a>
               </div>
             </div>

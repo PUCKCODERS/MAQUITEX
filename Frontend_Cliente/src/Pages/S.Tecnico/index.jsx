@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import "./style.css";
+import { Link } from "react-router-dom";
 
 import image1 from "./images/image1.png";
 import image2 from "./images/image2.png";
@@ -164,8 +165,9 @@ export default function ServicioTecnico() {
                   <div className="topic">{item.topic}</div>
                   <div className="des">{item.desc}</div>
                   <div className="buttons">
-                    <button>SOLICITAR MANTENIMIENTO</button>
-                    <button>SOLICITAR MANTENIMIENTO</button>
+                    <Link to="/contacto" className="buttons">
+                      <button>SOLICITAR MANTENIMIENTO</button>
+                    </Link>
                   </div>
                 </div>
               </div>
