@@ -100,6 +100,7 @@ export default function ServicioTecnico() {
   ];
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const nextDom = nextRef.current;
     const prevDom = prevRef.current;
     const carouselDom = carouselRef.current;

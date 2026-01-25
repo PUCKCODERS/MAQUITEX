@@ -31,6 +31,7 @@ const Nosotros = () => {
   const [currentSlidePos, setCurrentSlidePos] = useState(0);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const interval = setInterval(() => {
       setCurrentSlidePos((prev) => (prev + 1) % 3);
     }, 7000);

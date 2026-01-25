@@ -500,6 +500,15 @@
   border-color: var(--gold-crayola);
 }
 
+.contacto-page .error-text {
+  color: #ff6b6b;
+  font-size: 14px;
+  text-align: left;
+  margin-top: -15px;
+  margin-bottom: 10px;
+  padding-left: 5px;
+}
+
 .contacto-page .icon-wrapper {
   position: relative;
   margin-block-end: 20px;

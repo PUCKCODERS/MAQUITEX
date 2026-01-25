@@ -13,7 +13,6 @@ import logo from "./images/image.png";
 import { GiSewingString } from "react-icons/gi";
 
 const Contacto = () => {
-  // Estado para guardar los datos del formulario
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -23,35 +22,49 @@ const Contacto = () => {
     message: "",
   });
 
+  const [errors, setErrors] = useState({});
+
   useEffect(() => {
-    const interval = setInterval(() => {}, 7000);
-    return () => clearInterval(interval);
+    window.scrollTo(0, 0);
   }, []);
 
-  // Función para manejar cambios en los inputs
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: null });
+    }
   };
 
-  // Función para enviar el formulario
+  const validate = () => {
+    const newErrors = {};
+    if (!formData.name.trim())
+      newErrors.name = "El campo 'Nombre' es obligatorio.";
+    if (!formData.phone.trim())
+      newErrors.phone = "El campo 'Teléfono' es obligatorio.";
+    if (!formData.serviceType)
+      newErrors.serviceType = "Debes seleccionar un tipo de servicio.";
+    if (!formData.date) newErrors.date = "Debes seleccionar una fecha.";
+    if (!formData.time) newErrors.time = "Debes seleccionar un horario.";
+    if (!formData.message.trim())
+      newErrors.message = "Por favor, describe tu solicitud.";
+    return newErrors;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const formErrors = validate();
+    if (Object.keys(formErrors).length > 0) {
+      setErrors(formErrors);
+      return;
+    }
+    setErrors({});
+
     const { name, phone, serviceType, date, time, message } = formData;
 
-    // Validación: Verificar que todos los campos estén llenos
-    if (!name || !phone || !serviceType || !date || !time || !message) {
-      return alert(
-        "Por favor, completa todos los campos y selecciona las opciones faltantes antes de enviar.",
-      );
-    }
-
-    // Construir mensaje de WhatsApp
-    // Asumiendo código de país Ecuador (593) para el número 0968873896 -> 593968873896
     const phoneNumber = "593968873896";
     const text = `*SOLICITUD DE SERVICIO TÉCNICO*%0A--------------------------------%0A*Nombre:* ${name}%0A*Teléfono:* ${phone}%0A*Servicio:* ${serviceType}%0A*Fecha:* ${date}%0A*Hora:* ${time}%0A*Mensaje:* ${message}`;
 
-    // Abrir WhatsApp
     window.open(`https://wa.me/${phoneNumber}?text=${text}`, "_blank");
   };
 
@@ -92,109 +105,134 @@ const Contacto = () => {
                     O COMPLETA EL FORMULARIO DE SERVICIO
                   </p>
                   <div className="input-wrapper">
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      placeholder="TU NOMBRE "
-                      autoComplete="off"
-                      className="input-field"
-                    />
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      placeholder="NÚMERO DE TELÉFONO"
-                      autoComplete="off"
-                      className="input-field"
-                    />
-                  </div>
-                  <div className="input-wrapper">
-                    <div className="icon-wrapper">
-                      <ion-icon
-                        name="person-outline"
-                        aria-hidden="true"
-                      ></ion-icon>
-                      <select
-                        name="serviceType"
-                        value={formData.serviceType}
-                        onChange={handleChange}
-                        className="input-field !text-[13px]"
-                      >
-                        <option value="">TIPO DE SERVICIO</option>
-                        <option value="SERVICIO TÉCNICO">
-                          SERVICIO TÉCNICO
-                        </option>
-                        <option value="MANTENIMIENTO PREVENTIVO">
-                          MANTENIMIENTO PREVENTIVO
-                        </option>
-                        <option value="REPARACIÓN DE MÁQUINA">
-                          REPARACIÓN DE MÁQUINA
-                        </option>
-                        <option value="REPUESTOS">REPUESTOS</option>
-                        <option value="ACCESORIOS">ACCESORIOS</option>
-                        <option value="ENVÍO A DOMICILIO">
-                          ENVÍO A DOMICILIO
-                        </option>
-                        <option value="ASESORÍA TÉCNICA">
-                          ASESORÍA TÉCNICA
-                        </option>
-                      </select>
-                      <ion-icon
-                        name="chevron-down"
-                        aria-hidden="true"
-                        style={{ color: "white" }}
-                      ></ion-icon>
-                    </div>
-                    <div className="icon-wrapper">
-                      <ion-icon
-                        name="calendar-clear-outline"
-                        aria-hidden="true"
-                      ></ion-icon>
+                    <div>
                       <input
-                        type="date"
-                        name="date"
-                        value={formData.date}
+                        type="text"
+                        name="name"
+                        value={formData.name}
                         onChange={handleChange}
+                        placeholder="TU NOMBRE "
+                        autoComplete="off"
                         className="input-field"
                       />
-                      <ion-icon
-                        name="chevron-down"
-                        aria-hidden="true"
-                        style={{ color: "white" }}
-                      ></ion-icon>
+                      {errors.name && (
+                        <p className="error-text">{errors.name}</p>
+                      )}
                     </div>
-                    <div className="icon-wrapper">
-                      <ion-icon
-                        name="time-outline"
-                        aria-hidden="true"
-                      ></ion-icon>
-                      <select
-                        name="time"
-                        value={formData.time}
+                    <div>
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
                         onChange={handleChange}
-                        className="input-field !text-[11px]"
-                      >
-                        <option value="">HORARIO DE ATENCIÓN</option>
-                        <option value="08:00 am">08 : 00 am</option>
-                        <option value="09:00 am">09 : 00 am</option>
-                        <option value="10:00 am">10 : 00 am</option>
-                        <option value="11:00 am">11 : 00 am</option>
-                        <option value="12:00 am">12 : 00 am</option>
-                        <option value="01:00 pm">01 : 00 pm</option>
-                        <option value="02:00 pm">02 : 00 pm</option>
-                        <option value="03:00 pm">03 : 00 pm</option>
-                        <option value="04:00 pm">04 : 00 pm</option>
-                        <option value="05:00 pm">05 : 00 pm</option>
-                        <option value="06:00 pm">06 : 00 pm</option>
-                      </select>
-                      <ion-icon
-                        name="chevron-down"
-                        aria-hidden="true"
-                        style={{ color: "white" }}
-                      ></ion-icon>
+                        placeholder="NÚMERO DE TELÉFONO"
+                        autoComplete="off"
+                        className="input-field"
+                      />
+                      {errors.phone && (
+                        <p className="error-text">{errors.phone}</p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="input-wrapper">
+                    <div>
+                      <div className="icon-wrapper">
+                        <ion-icon
+                          name="person-outline"
+                          aria-hidden="true"
+                        ></ion-icon>
+                        <select
+                          name="serviceType"
+                          value={formData.serviceType}
+                          onChange={handleChange}
+                          className="input-field !text-[13px]"
+                        >
+                          <option value="">TIPO DE SERVICIO</option>
+                          <option value="SERVICIO TÉCNICO">
+                            SERVICIO TÉCNICO
+                          </option>
+                          <option value="MANTENIMIENTO PREVENTIVO">
+                            MANTENIMIENTO PREVENTIVO
+                          </option>
+                          <option value="REPARACIÓN DE MÁQUINA">
+                            REPARACIÓN DE MÁQUINA
+                          </option>
+                          <option value="REPUESTOS">REPUESTOS</option>
+                          <option value="ACCESORIOS">ACCESORIOS</option>
+                          <option value="ENVÍO A DOMICILIO">
+                            ENVÍO A DOMICILIO
+                          </option>
+                          <option value="ASESORÍA TÉCNICA">
+                            ASESORÍA TÉCNICA
+                          </option>
+                        </select>
+                        <ion-icon
+                          name="chevron-down"
+                          aria-hidden="true"
+                          style={{ color: "white" }}
+                        ></ion-icon>
+                      </div>
+                      {errors.serviceType && (
+                        <p className="error-text">{errors.serviceType}</p>
+                      )}
+                    </div>
+                    <div>
+                      <div className="icon-wrapper">
+                        <ion-icon
+                          name="calendar-clear-outline"
+                          aria-hidden="true"
+                        ></ion-icon>
+                        <input
+                          type="date"
+                          name="date"
+                          value={formData.date}
+                          onChange={handleChange}
+                          className="input-field"
+                        />
+                        <ion-icon
+                          name="chevron-down"
+                          aria-hidden="true"
+                          style={{ color: "white" }}
+                        ></ion-icon>
+                      </div>
+                      {errors.date && (
+                        <p className="error-text">{errors.date}</p>
+                      )}
+                    </div>
+                    <div>
+                      <div className="icon-wrapper">
+                        <ion-icon
+                          name="time-outline"
+                          aria-hidden="true"
+                        ></ion-icon>
+                        <select
+                          name="time"
+                          value={formData.time}
+                          onChange={handleChange}
+                          className="input-field !text-[11px]"
+                        >
+                          <option value="">HORARIO DE ATENCIÓN</option>
+                          <option value="08:00 am">08 : 00 am</option>
+                          <option value="09:00 am">09 : 00 am</option>
+                          <option value="10:00 am">10 : 00 am</option>
+                          <option value="11:00 am">11 : 00 am</option>
+                          <option value="12:00 am">12 : 00 am</option>
+                          <option value="01:00 pm">01 : 00 pm</option>
+                          <option value="02:00 pm">02 : 00 pm</option>
+                          <option value="03:00 pm">03 : 00 pm</option>
+                          <option value="04:00 pm">04 : 00 pm</option>
+                          <option value="05:00 pm">05 : 00 pm</option>
+                          <option value="06:00 pm">06 : 00 pm</option>
+                        </select>
+                        <ion-icon
+                          name="chevron-down"
+                          aria-hidden="true"
+                          style={{ color: "white" }}
+                        ></ion-icon>
+                      </div>
+                      {errors.time && (
+                        <p className="error-text">{errors.time}</p>
+                      )}
                     </div>
                   </div>
                   <textarea
@@ -205,6 +243,9 @@ const Contacto = () => {
                     autoComplete="off"
                     className="input-field"
                   ></textarea>
+                  {errors.message && (
+                    <p className="error-text">{errors.message}</p>
+                  )}
                   <button type="submit" className="btn btn-secondary">
                     <span className="text text-1">ENVIAR SOLICITUD</span>
                     <span className="text text-2" aria-hidden="true">
