@@ -64,7 +64,7 @@ const VerifyAccount = () => {
 
   return (
     <section className="!bg-[#fff] !w-full !h-[100vh]">
-      <header className="w-full fixed top-0 left-0 !px-4 !py-3 flex items-center justify-between z-50">
+      <header className="w-full static lg:fixed top-0 left-0 !px-4 !py-3 flex items-center justify-center sm:justify-between z-50 bg-none">
         <Link to="/">
           <img
             src="../../../imagenes/logo1.png"
@@ -72,7 +72,7 @@ const VerifyAccount = () => {
           />
         </Link>
 
-        <div className="flex items-center !gap-2">
+        <div className="hidden sm:flex items-center !gap-2">
           <NavLink to="/login" exact={true} activeClassName="isActive">
             <Button className="!rounded-full !px-5 !text-gray-200 !bg-gray-800 flex !gap-2 ">
               <FiLogIn className="!text-[20px]" />
@@ -90,23 +90,23 @@ const VerifyAccount = () => {
       </header>
       <img
         src="../../../imagenes/Login/fondo8.jpg"
-        className="w-full fixed top-0 left-0 opacity-25"
+        className="!w-full !h-full fixed !top-0 !left-0 opacity-5 "
       />
 
-      <div className="loginBox card !w-[600px] !h-[auto] !pb-20 mx-auto !pt-20 relative z-50 ">
+      <div className="loginBox card w-full md:w-[600px] !h-[auto] !pb-20 mx-auto !pt-0 lg:!pt-20 relative z-50 ">
         <div className="text-center">
           <img
             src="../../../imagenes/verify.png "
-            className="w-[150px] m-auto"
+            className="w-[50px] sm:w-[150px] m-auto"
           />
         </div>
 
-        <h1 className="!text-center !text-gray-800 !text-[25px] !font-bold !mt-4">
+        <h1 className="!text-center !text-gray-800  text-[15px] sm:text-[25px] !font-bold !mt-4 ">
           ¡BIENVENIDOS DE NUEVO! <br />
           <span className="text-blue-800">POR FAVOR VERIFIQUE SU CUENTA</span>
         </h1>
 
-        <p className="text-center text-black font-[600] !mt-0 !mb-4 text-[15px]">
+        <p className="text-center text-black font-[600]  !mb-4 text-[12px] sm:text-[15px] !mt-4">
           ENVIADO A: &nbsp;
           <span className="!ml-3 !text-[#274a72] font-bold">
             {localStorage.getItem("userEmail")}
@@ -115,7 +115,7 @@ const VerifyAccount = () => {
         <br />
 
         <form onSubmit={verityOTP}>
-          <div className="text-center flex items-center justify-center flex-col">
+          <div className="text-center flex items-center justify-center flex-col ">
             <OtpBox length={6} onchange={handleOtpChange} />
           </div>
           <div className="w-[300px] m-auto !mt-4">
