@@ -13,6 +13,7 @@ import { Button, Radio, TextField } from "@mui/material";
 import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { Collapse } from "react-collapse";
+import { FaUser } from "react-icons/fa";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
@@ -70,7 +71,7 @@ const Profile = () => {
   useEffect(() => {
     if (context?.userData?._id !== "" && context?.userData?._id !== undefined) {
       fetchDataFromApi(
-        `/api/address/get?userId=${context?.userData?._id}`
+        `/api/address/get?userId=${context?.userData?._id}`,
       ).then((res) => {
         setAddress(res.data);
         context?.setAddress(res.data);
@@ -157,7 +158,7 @@ const Profile = () => {
           context.alertBox("error", res?.data?.message);
           setIsLoading(false);
         }
-      }
+      },
     );
   };
 
@@ -186,7 +187,7 @@ const Profile = () => {
     if (changePassword.confirmPassword !== changePassword.newPassword) {
       context.alertBox(
         "error",
-        "CONTRASEÑA Y CONFIRMAR CONTRASEÑA NO COINCIDE"
+        "CONTRASEÑA Y CONFIRMAR CONTRASEÑA NO COINCIDE",
       );
       return false;
     }
@@ -207,14 +208,11 @@ const Profile = () => {
 
   useEffect(() => {
     const userAvatar = [];
-
-    if (
-      context?.userData?.avatar !== "" &&
-      context?.userData?.avatar !== undefined
-    ) {
-      userAvatar.push(context?.userData?.avatar);
-      setPreviews(userAvatar);
+    const avatar = context?.userData?.avatar;
+    if (avatar && avatar !== "null") {
+      userAvatar.push(avatar);
     }
+    setPreviews(userAvatar);
   }, [context?.userData]);
 
   let selectedImages = [];
@@ -241,7 +239,7 @@ const Profile = () => {
         } else {
           context.alertBox(
             "error",
-            "Por favor, seleccione un archivo de imagen válido en formato JPG, JPEG, WEBP o PNG."
+            "Por favor, seleccione un archivo de imagen válido en formato JPG, JPEG, WEBP o PNG.",
           );
           setUploading(false);
           return false;
@@ -250,9 +248,11 @@ const Profile = () => {
 
       uploadImage("/api/user/user-avatar", formdata).then((res) => {
         setUploading(false);
-        let avatar = [];
-        avatar.push(res?.data?.avatar);
-        setPreviews(avatar);
+        if (res?.data?.avatar) {
+          let avatar = [];
+          avatar.push(res?.data?.avatar);
+          setPreviews(avatar);
+        }
       });
     } catch (error) {
       console.log(error);
@@ -287,18 +287,19 @@ const Profile = () => {
             <CircularProgress color="inherit" />
           ) : (
             <>
-              {previews?.length !== 0 ? (
+              {previews?.length > 0 ? (
                 previews?.map((img, index) => {
                   return (
                     <img
                       src={img}
                       key={index}
                       className="w-full h-full object-cover "
+                      onError={() => setPreviews([])}
                     />
                   );
                 })
               ) : (
-                <img src={"/user.jpg"} className="w-full h-full object-cover" />
+                <FaUser className="text-[60px] text-[#082c55]" />
               )}
             </>
           )}

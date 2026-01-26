@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import { ImMenu } from "react-icons/im";
 import { ImMenu2 } from "react-icons/im";
@@ -54,6 +54,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 const Header = () => {
   const [anchorMyAcc, setAnchorMyAcc] = useState(null);
   const openMyAcc = Boolean(anchorMyAcc);
+  const [isAvatarError, setIsAvatarError] = useState(false);
 
   const history = useNavigate();
   const handleClickMyAcc = (event) => {
@@ -65,12 +66,16 @@ const Header = () => {
 
   const context = useContext(MyContext);
 
+  useEffect(() => {
+    setIsAvatarError(false);
+  }, [context?.userData?.avatar]);
+
   const logout = () => {
     setAnchorMyAcc(null);
 
     fetchDataFromApi(
       `/api/user/logout?token=${localStorage.getItem("accessToken")}`,
-      { withCredentials: true }
+      { withCredentials: true },
     ).then((res) => {
       if (res?.error === false) {
         context.setIsLogin(false);
@@ -111,13 +116,20 @@ const Header = () => {
           {context.isLogin === true ? (
             <div className="relative">
               <div
-                className="!rounded-full !w-[35px] !h-[35px] overflow-hidden cursor-pointer border-1 border-[#082c55]"
+                className="!rounded-full !w-[35px] !h-[35px] overflow-hidden cursor-pointer border-1 border-[#082c55] flex items-center justify-center"
                 onClick={handleClickMyAcc}
               >
-                <img
-                  src={context?.userData?.avatar}
-                  className="!w-full !h-full object-cover "
-                />
+                {context?.userData?.avatar &&
+                context?.userData?.avatar !== "null" &&
+                !isAvatarError ? (
+                  <img
+                    src={context?.userData?.avatar}
+                    className="!w-full !h-full object-cover "
+                    onError={() => setIsAvatarError(true)}
+                  />
+                ) : (
+                  <FaUser className="text-[20px] text-[#082c55]" />
+                )}
               </div>
 
               <Menu
@@ -159,11 +171,18 @@ const Header = () => {
               >
                 <MenuItem onClick={handleCloseMyAcc} className="!bg-[#fff]">
                   <div className="flex items-center !gap-3">
-                    <div className="!rounded-full !w-[35px] !h-[35px] overflow-hidden cursor-pointer border-1 border-[#082c55]">
-                      <img
-                        src={context?.userData?.avatar}
-                        className="!w-full !h-full object-cover "
-                      />
+                    <div className="!rounded-full !w-[35px] !h-[35px] overflow-hidden cursor-pointer border-1 border-[#082c55] flex items-center justify-center">
+                      {context?.userData?.avatar &&
+                      context?.userData?.avatar !== "null" &&
+                      !isAvatarError ? (
+                        <img
+                          src={context?.userData?.avatar}
+                          className="!w-full !h-full object-cover "
+                          onError={() => setIsAvatarError(true)}
+                        />
+                      ) : (
+                        <FaUser className="text-[20px] text-[#082c55]" />
+                      )}
                     </div>
 
                     <div className="info">
