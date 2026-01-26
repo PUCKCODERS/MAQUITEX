@@ -7,7 +7,7 @@ import { MdAssignmentInd } from "react-icons/md";
 const ForgotPassword = () => {
   return (
     <section className="!bg-[#fff] !w-full !h-[100vh]">
-      <header className="w-full fixed top-0 left-0 !px-4 !py-3 flex items-center justify-between z-50">
+      <header className="w-full static lg:fixed top-0 left-0 !px-4 !py-3 flex items-center justify-center sm:justify-between z-50 bg-none">
         <Link to="/">
           <img
             src="../../../imagenes/logo1.png"
@@ -15,7 +15,7 @@ const ForgotPassword = () => {
           />
         </Link>
 
-        <div className="flex items-center !gap-2">
+        <div className="hidden sm:flex items-center !gap-2">
           <NavLink to="/login" exact={true} activeClassName="isActive">
             <Button className="!rounded-full !px-5 !text-gray-200 !bg-gray-800 flex !gap-2 ">
               <FiLogIn className="!text-[20px]" />
@@ -33,15 +33,15 @@ const ForgotPassword = () => {
       </header>
       <img
         src="../../../imagenes/Login/fondo8.jpg"
-        className="w-full fixed top-0 left-0 opacity-25"
+        className="!w-full !h-full fixed !top-0 !left-0 opacity-5 "
       />
 
-      <div className="loginBox card !w-[600px] !h-[auto] !pb-20 mx-auto !pt-20 relative z-50 ">
+      <div className="loginBox card w-full md:w-[600px] !h-[auto] !pb-20 mx-auto !pt-0 lg:!pt-20 relative z-50 ">
         <div className="text-center">
           <img src="../../../imagenes/logoMaquina1.png" className="m-auto " />
         </div>
 
-        <h1 className="!text-center !text-gray-800 !text-[25px] !font-bold !mt-4">
+        <h1 className="!text-center !text-gray-800  text-[15px] sm:text-[25px] !font-bold !mt-4">
           TIENES PROBLEMAS PARA INICIAR SESIÓN ? <br />
           <span className="text-blue-800">RESTABLECE TU CONTRASEÑA</span>
         </h1>
@@ -61,11 +61,11 @@ const ForgotPassword = () => {
 
           <Button className="btn-lg !w-full">RESTABLECER CONTRASEÑA</Button>
 
-          <div className="text-center !mt-3 flex items-center justify-center !gap-4">
+          <div className="text-center !mt-3 flex items-center !justify-between text-[12px] sm:text-[15px] !gap-4">
             <span>NO QUIERES RESTABLECER ?</span>
             <Link
-              to="/forgot-password"
-              className="text-blue-950 font-[600] !text-[15px] hover:underline hover:!text-gray-950
+              to="/login"
+              className="text-blue-950 font-[600] text-[12px] sm:text-[15px] hover:underline hover:!text-gray-950
                           transition-all duration-300"
             >
               INICIAR SESIÓN
