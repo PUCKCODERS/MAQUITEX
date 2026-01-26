@@ -16,7 +16,6 @@ import { MyContext } from "../../App.jsx";
 
 const Login = () => {
   const [loadingGoogle, setLoadingGoogle] = React.useState(false);
-  const [loadingFb, setLoadingFb] = React.useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const [isPasswordShow, setIsPasswordShow] = useState(false);
@@ -31,10 +30,6 @@ const Login = () => {
 
   function handleClickGoogle() {
     setLoadingGoogle(true);
-  }
-
-  function handleClickfb() {
-    setLoadingFb(true);
   }
 
   const onChangeInput = (e) => {
@@ -56,7 +51,7 @@ const Login = () => {
     } else {
       context.alertBox(
         "success",
-        `POR FAVOR INTRODUZCA EL CODIGO ENVIADO A : ${formFields.email}`
+        `POR FAVOR INTRODUZCA EL CODIGO ENVIADO A : ${formFields.email}`,
       );
       localStorage.setItem("userEmail", formFields.email);
       localStorage.setItem("actionType", "forgot-password");
@@ -111,13 +106,13 @@ const Login = () => {
           context.alertBox("error", res?.message);
           setIsLoading(false);
         }
-      }
+      },
     );
   };
 
   return (
     <section className="!bg-[#fff] !w-full ">
-      <header className="w-full fixed top-0 left-0 !px-4 !py-3 flex items-center justify-between z-50">
+      <header className="w-full static lg:fixed top-0 left-0 !px-4 !py-3 flex items-center justify-center sm:justify-between z-50 bg-none">
         <Link to="/">
           <img
             src="../../../imagenes/logo1.png"
@@ -125,7 +120,7 @@ const Login = () => {
           />
         </Link>
 
-        <div className="flex items-center !gap-2">
+        <div className="hidden sm:flex items-center !gap-2">
           <NavLink to="/login" exact={true} activeClassName="isActive">
             <Button className="!rounded-full !px-5 !text-gray-200 !bg-gray-800 flex !gap-2 ">
               <FiLogIn className="!text-[20px]" />
@@ -143,15 +138,15 @@ const Login = () => {
       </header>
       <img
         src="../../../imagenes/Login/fondo8.jpg"
-        className="w-full fixed top-0 left-0 opacity-25"
+        className="!w-full !h-full fixed !top-0 !left-0 opacity-5 "
       />
 
-      <div className="loginBox card !w-[600px] !h-[auto] !pb-20 mx-auto !pt-20 relative z-50 ">
+      <div className="loginBox card w-full md:w-[600px] !h-[auto] !pb-20 mx-auto !pt-0 lg:!pt-20 relative z-50 ">
         <div className="text-center">
           <img src="../../../imagenes/logoMaquina1.png" className="m-auto " />
         </div>
 
-        <h1 className="!text-center !text-gray-800 !text-[25px] !font-bold !mt-4">
+        <h1 className="!text-center !text-gray-800  text-[15px] sm:text-[25px] !font-bold !mt-4">
           ¡BIENVENIDOS DE NUEVO! <br />
           <span className="text-blue-800">
             INICIE SESIÓN CON SUS CREDENCIALES.
@@ -170,25 +165,13 @@ const Login = () => {
           >
             INICIE SESION CON GOOGLE
           </LoadingButton>
-
-          <LoadingButton
-            className="  !text-gray-800 !border-gray-800  hover:!text-white hover:!bg-gray-800 !px-5 !py-3 !text-[14px] flex items-center justify-center transition-all duration-300"
-            size="small"
-            onClick={handleClickfb}
-            endIcon={<FaSquareFacebook />}
-            loading={loadingFb}
-            loadingPosition="end"
-            variant="outlined"
-          >
-            INICIE SESION CON FACEBOOK
-          </LoadingButton>
         </div>
 
         <br />
 
         <div className="w-full flex items-center justify-center !gap-3">
           <span className="flex items-center w-[100px] h-[1px] !bg-gray-400"></span>
-          <span className="text-[15px]">
+          <span className="text-[10px] lg:text-[15px] font-bold ">
             O INICIA SESIÓN CON TU CORREO ELECTRÓNICO
           </span>
           <span className="flex items-center w-[100px] h-[1px] !bg-gray-400"></span>
@@ -236,7 +219,7 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="form-group !mb-4 w-full flex items-center justify-between">
+          <div className="form-group !mb-4 !w-full flex items-center !justify-between !gap-12">
             <FormControlLabel
               control={<Checkbox defaultChecked />}
               label="RECORDARME"
@@ -245,11 +228,22 @@ const Login = () => {
             <a
               onClick={forgotPassword}
               to="/forgot-password"
-              className="text-blue-950 font-[600] !text-[15px] hover:underline hover:!text-gray-950
+              className="text-blue-950 !font-[600] text-[10px] lg:text-[15px] hover:underline hover:!text-gray-950
               transition-all duration-300 !cursor-pointer"
             >
               HAS OLVIDADO TU CONTRASEÑA ?
             </a>
+          </div>
+
+          <div className="flex items-center justify-between !mb-4">
+            <span className="text-[13px]">NO TIENES UNA CUENTA ?</span>
+            <Link
+              to="/sign-up"
+              className="text-blue-950 !font-[600] text-[12px] lg:text-[15px] hover:underline hover:!text-gray-950
+              transition-all duration-300 !cursor-pointer"
+            >
+              REGISTRATE
+            </Link>
           </div>
 
           <Button
