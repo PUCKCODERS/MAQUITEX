@@ -43,6 +43,7 @@ function App() {
   const [addres, setAddress] = useState([]);
   const [catData, setCatData] = useState([]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [sidebarWidth, setSidebarWidth] = useState(20);
 
   const [isOpenFullScreenPanel, setIsOpenFullScreenPanel] = useState({
     open: false,
@@ -66,7 +67,9 @@ function App() {
             <div className="contentMain flex">
               <div
                 className={`overflow-hidden sidebarWrapper ${
-                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                  isSidebarOpen === true
+                    ? `w-[${sidebarWidth}%]`
+                    : "!w-[0px] opacity-0"
                 } transition-all duration-300`}
               >
                 <Sidebar />
@@ -650,7 +653,8 @@ function App() {
     setCatData,
     getCat,
     windowWidth,
-    setWindowWidth,
+    setSidebarWidth,
+    sidebarWidth,
   };
 
   return (

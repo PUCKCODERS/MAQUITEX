@@ -617,7 +617,10 @@ const Dashboard = () => {
           </Button>
         </div>
 
-        <img src="../../../imagenes/Saludo/Saludo4.png" className="w-[250px]" />
+        <img
+          src="../../../imagenes/Saludo/Saludo4.png"
+          className="w-[250px] hidden lg:block"
+        />
       </div>
 
       {productData?.length !== 0 &&
