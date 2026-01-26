@@ -315,10 +315,10 @@ const Contacto = () => {
                 />
 
                 <p className="section-subtitle label-2 !text-[20px]">
-                  NUESTROS PRODUCTOS
+                  NUESTRA UBICACIÓN
                 </p>
                 <h2 className="headline-1 section-title !text-[40px]">
-                  MÁQUINAS DE COSER DE ALTA CALIDAD
+                  VISÍTANOS EN NUESTRA TIENDA FÍSICA
                 </h2>
                 <p className="section-text">
                   OFRECEMOS UNA AMPLIA VARIEDAD DE MÁQUINAS DE COSER CASERAS E
@@ -326,10 +326,15 @@ const Contacto = () => {
                   Y EXCELENTE DESEMPEÑO.
                 </p>
 
-                <a href="#" className="btn btn-primary">
-                  <span className="text text-1">VER CATÁLOGO</span>
+                <a
+                  href="https://maps.app.goo.gl/uqvtTFPukRfZUWHs8"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                >
+                  <span className="text text-1">VER DIRECCIÓN</span>
                   <span className="text text-2" aria-hidden="true">
-                    VER CATÁLOGO
+                    VER DIRECCIÓN
                   </span>
                 </a>
               </div>
