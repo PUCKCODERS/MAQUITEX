@@ -1577,8 +1577,8 @@ const Dashboard = () => {
 
       <div className="card !my-4 shadow-md sm:rounded-lg dark:!bg-gray-100">
         <div class="flex !bg-gray-950 items-center justify-between !px-5 !py-5 !mb-0 border-b dark:border-gray-700">
-          <h2 class="text-white text-[20px] !font-[500] ">
-            TASA DE CLIENTES REPETIDOS
+          <h2 class="text-white text-[12px] sm:text-[20px] !font-[500] ">
+            TASA DE CLIENTES Y VENTAS DEL AÑO ACTUAL
           </h2>
         </div>
 
