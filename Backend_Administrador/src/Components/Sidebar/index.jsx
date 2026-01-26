@@ -29,13 +29,9 @@ const Sidebar = () => {
   return (
     <>
       <div
-        className={`sidebar fixed !top-0 !left-0 z-[50] !bg-[#fff] border-r border-[rgba(0,0,0,0.32)] h-full !py-2 !px-4 transition-all duration-300`}
-        style={{
-          width:
-            context.isSidebarOpen === true
-              ? `${context?.sidebarWidth}%`
-              : "0px",
-        }}
+        className={`sidebar fixed !top-0 !left-0 z-[50] !bg-[#fff] border-r border-[rgba(0,0,0,0.32)] h-full !py-2 !px-4 !w-[${
+          context.isSidebarOpen === true ? `${context?.sidebarWidth}%` : "0px"
+        }]`}
       >
         <div className="!py-2 !w-full">
           <Link to="/">
