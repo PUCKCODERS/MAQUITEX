@@ -3,6 +3,7 @@ import { RiFileUploadFill } from "react-icons/ri";
 import { BsFilePersonFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { FaShoppingCart } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { GiExitDoor } from "react-icons/gi";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
@@ -20,14 +21,11 @@ const AccountSidebar = () => {
 
   useEffect(() => {
     const userAvatar = [];
-
-    if (
-      context?.userData?.avatar !== "" &&
-      context?.userData?.avatar !== undefined
-    ) {
-      userAvatar.push(context?.userData?.avatar);
-      setPreviews(userAvatar);
+    const avatar = context?.userData?.avatar;
+    if (avatar && avatar !== "null") {
+      userAvatar.push(avatar);
     }
+    setPreviews(userAvatar);
   }, [context?.userData]);
 
   let selectedImages = [];
@@ -100,18 +98,19 @@ const AccountSidebar = () => {
             <CircularProgress color="inherit" />
           ) : (
             <>
-              {previews?.length !== 0 ? (
+              {previews?.length > 0 ? (
                 previews?.map((img, index) => {
                   return (
                     <img
                       src={img}
                       key={index}
                       className="w-full h-full object-cover "
+                      onError={() => setPreviews([])}
                     />
                   );
                 })
               ) : (
-                <img src={"/user.jpg"} className="w-full h-full object-cover" />
+                <FaUser className="text-[60px] text-[#082c55]" />
               )}
             </>
           )}
