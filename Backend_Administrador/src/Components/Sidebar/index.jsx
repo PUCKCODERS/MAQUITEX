@@ -30,14 +30,16 @@ const Sidebar = () => {
     <>
       <div
         className={`sidebar fixed !top-0 !left-0 z-[50] !bg-[#fff] border-r border-[rgba(0,0,0,0.32)] h-full !py-2 !px-4 !w-[${
-          context.isSidebarOpen === true ? `${context?.sidebarWidth}%` : "0px"
+          context.isSidebarOpen === true
+            ? `${context?.sidebarWidth / 2}%`
+            : "0px"
         }]`}
       >
         <div className="!py-2 !w-full">
           <Link to="/">
             <img
               src="../../../imagenes/logo.jpg"
-              className="!w-full !h-[80px]"
+              className="!w-full !h-[60px]"
             />
           </Link>
         </div>

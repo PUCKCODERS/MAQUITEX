@@ -53,6 +53,9 @@ function App() {
   useEffect(() => {
     if (windowWidth < 992) {
       setisSidebarOpen(false);
+      setSidebarWidth(100);
+    } else {
+      setSidebarWidth(20);
     }
   }, [windowWidth]);
 
