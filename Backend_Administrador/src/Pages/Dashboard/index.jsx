@@ -1097,7 +1097,10 @@ const Dashboard = () => {
               {isLoading === false ? (
                 userData?.length !== 0 &&
                 userData
-                  ?.slice(pageUser * rowsPerPageUser, pageUser * rowsPerPageUser + rowsPerPageUser)
+                  ?.slice(
+                    pageUser * rowsPerPageUser,
+                    pageUser * rowsPerPageUser + rowsPerPageUser,
+                  )
                   ?.reverse()
                   .map((user, index) => {
                     return (
@@ -1584,10 +1587,9 @@ const Dashboard = () => {
             className="flex items-center !text-white !text-[15px] !font-bold !gap-3 !cursor-pointer"
             onClick={getVENTASByYear}
           >
-            <span className="block w-[10px] h-[10px] rounded-full !bg-[#16a34a] "></span>
-            <div className="flex flex-col items-start ml-2">
+            <div className="flex flex-col items-center text-[12px] sm:text-[20px] ml-2">
               <span>TOTAL DE VENTAS</span>
-              <span className="text-[20px] !font-[800] !text-[#16a34a]">
+              <span className="!font-[800] !text-[#16a34a]">
                 $ {totalVentas ? totalVentas.toLocaleString() : 0}
               </span>
             </div>
@@ -1597,10 +1599,9 @@ const Dashboard = () => {
             className="flex items-center !text-white !text-[15px] !font-bold !gap-3 !cursor-pointer"
             onClick={getUSUARIOSByYear}
           >
-            <span className="block w-[10px] h-[10px] rounded-full !bg-[#4471ca]"></span>
-            <div className="flex flex-col items-start ml-2">
+            <div className="flex flex-col items-center text-[12px] sm:text-[20px] ml-2">
               <span>TOTAL DE USUARIOS</span>
-              <span className="text-[20px] !font-[800] !text-[#4471ca]">
+              <span className="!font-[800] !text-[#4471ca]">
                 {totalUsuarios ?? 0}
               </span>
             </div>
@@ -1609,7 +1610,11 @@ const Dashboard = () => {
 
         {chartData?.length !== 0 && (
           <BarChart
-            width={1000}
+            width={
+              context?.windowWidth > 992
+                ? context?.windowWidth - 300
+                : context?.windowWidth - 100
+            }
             height={500}
             data={chartData}
             margin={{

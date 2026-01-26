@@ -42,11 +42,18 @@ function App() {
   const [userData, setUserData] = useState(null);
   const [addres, setAddress] = useState([]);
   const [catData, setCatData] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const [isOpenFullScreenPanel, setIsOpenFullScreenPanel] = useState({
     open: false,
     id: "",
   });
+
+  useEffect(() => {
+    if (windowWidth < 992) {
+      setisSidebarOpen(false);
+    }
+  }, [windowWidth]);
 
   const router = createBrowserRouter([
     {
@@ -608,6 +615,16 @@ function App() {
 
   useEffect(() => {
     getCat();
+
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   const getCat = () => {
@@ -632,6 +649,8 @@ function App() {
     catData,
     setCatData,
     getCat,
+    windowWidth,
+    setWindowWidth,
   };
 
   return (
