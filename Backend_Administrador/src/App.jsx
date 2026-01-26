@@ -67,17 +67,20 @@ function App() {
             <div className="contentMain flex">
               <div
                 className={`overflow-hidden sidebarWrapper ${
-                  isSidebarOpen === true
-                    ? `w-[${sidebarWidth}%]`
-                    : "!w-[0px] opacity-0"
+                  isSidebarOpen === true ? "" : "opacity-0"
                 } transition-all duration-300`}
+                style={{
+                  width: isSidebarOpen === true ? `${sidebarWidth}%` : "0px",
+                }}
               >
                 <Sidebar />
               </div>
               <div
-                className={`contentRight !py-4 !px-5 ${
-                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
-                } transition-all duration-300`}
+                className={`contentRight !py-4 !px-5 transition-all duration-300`}
+                style={{
+                  width:
+                    isSidebarOpen === true ? `${100 - sidebarWidth}%` : "100%",
+                }}
               >
                 <Dashboard />
               </div>
@@ -141,15 +144,20 @@ function App() {
             <div className="contentMain flex">
               <div
                 className={`overflow-hidden sidebarWrapper ${
-                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                  isSidebarOpen === true ? "" : "opacity-0"
                 } transition-all duration-300`}
+                style={{
+                  width: isSidebarOpen === true ? `${sidebarWidth}%` : "0px",
+                }}
               >
                 <Sidebar />
               </div>
               <div
-                className={`contentRight !py-4 !px-5 ${
-                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
-                } transition-all duration-300`}
+                className={`contentRight !py-4 !px-5 transition-all duration-300`}
+                style={{
+                  width:
+                    isSidebarOpen === true ? `${100 - sidebarWidth}%` : "100%",
+                }}
               >
                 <Products />
               </div>
@@ -168,15 +176,20 @@ function App() {
             <div className="contentMain flex">
               <div
                 className={`overflow-hidden sidebarWrapper ${
-                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                  isSidebarOpen === true ? "" : "opacity-0"
                 } transition-all duration-300`}
+                style={{
+                  width: isSidebarOpen === true ? `${sidebarWidth}%` : "0px",
+                }}
               >
                 <Sidebar />
               </div>
               <div
-                className={`contentRight !py-4 !px-5 ${
-                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
-                } transition-all duration-300`}
+                className={`contentRight !py-4 !px-5 transition-all duration-300`}
+                style={{
+                  width:
+                    isSidebarOpen === true ? `${100 - sidebarWidth}%` : "100%",
+                }}
               >
                 <HomeSliderBanners />
               </div>
@@ -195,15 +208,20 @@ function App() {
             <div className="contentMain flex">
               <div
                 className={`overflow-hidden sidebarWrapper ${
-                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                  isSidebarOpen === true ? "" : "opacity-0"
                 } transition-all duration-300`}
+                style={{
+                  width: isSidebarOpen === true ? `${sidebarWidth}%` : "0px",
+                }}
               >
                 <Sidebar />
               </div>
               <div
-                className={`contentRight !py-4 !px-5 ${
-                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
-                } transition-all duration-300`}
+                className={`contentRight !py-4 !px-5 transition-all duration-300`}
+                style={{
+                  width:
+                    isSidebarOpen === true ? `${100 - sidebarWidth}%` : "100%",
+                }}
               >
                 <CategoryList />
               </div>
@@ -222,15 +240,20 @@ function App() {
             <div className="contentMain flex">
               <div
                 className={`overflow-hidden sidebarWrapper ${
-                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                  isSidebarOpen === true ? "" : "opacity-0"
                 } transition-all duration-300`}
+                style={{
+                  width: isSidebarOpen === true ? `${sidebarWidth}%` : "0px",
+                }}
               >
                 <Sidebar />
               </div>
               <div
-                className={`contentRight !py-4 !px-5 ${
-                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
-                } transition-all duration-300`}
+                className={`contentRight !py-4 !px-5 transition-all duration-300`}
+                style={{
+                  width:
+                    isSidebarOpen === true ? `${100 - sidebarWidth}%` : "100%",
+                }}
               >
                 <SubCategoryList />
               </div>
@@ -249,15 +272,20 @@ function App() {
             <div className="contentMain flex">
               <div
                 className={`overflow-hidden sidebarWrapper ${
-                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                  isSidebarOpen === true ? "" : "opacity-0"
                 } transition-all duration-300`}
+                style={{
+                  width: isSidebarOpen === true ? `${sidebarWidth}%` : "0px",
+                }}
               >
                 <Sidebar />
               </div>
               <div
-                className={`contentRight !py-4 !px-5 ${
-                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
-                } transition-all duration-300`}
+                className={`contentRight !py-4 !px-5 transition-all duration-300`}
+                style={{
+                  width:
+                    isSidebarOpen === true ? `${100 - sidebarWidth}%` : "100%",
+                }}
               >
                 <Users />
               </div>
@@ -276,15 +304,20 @@ function App() {
             <div className="contentMain flex">
               <div
                 className={`overflow-hidden sidebarWrapper ${
-                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                  isSidebarOpen === true ? "" : "opacity-0"
                 } transition-all duration-300`}
+                style={{
+                  width: isSidebarOpen === true ? `${sidebarWidth}%` : "0px",
+                }}
               >
                 <Sidebar />
               </div>
               <div
-                className={`contentRight !py-4 !px-5 ${
-                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
-                } transition-all duration-300`}
+                className={`contentRight !py-4 !px-5 transition-all duration-300`}
+                style={{
+                  width:
+                    isSidebarOpen === true ? `${100 - sidebarWidth}%` : "100%",
+                }}
               >
                 <Orders />
               </div>
@@ -303,15 +336,20 @@ function App() {
             <div className="contentMain flex">
               <div
                 className={`overflow-hidden sidebarWrapper ${
-                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                  isSidebarOpen === true ? "" : "opacity-0"
                 } transition-all duration-300`}
+                style={{
+                  width: isSidebarOpen === true ? `${sidebarWidth}%` : "0px",
+                }}
               >
                 <Sidebar />
               </div>
               <div
-                className={`contentRight !py-4 !px-5 ${
-                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
-                } transition-all duration-300`}
+                className={`contentRight !py-4 !px-5 transition-all duration-300`}
+                style={{
+                  width:
+                    isSidebarOpen === true ? `${100 - sidebarWidth}%` : "100%",
+                }}
               >
                 <Factura />
               </div>
@@ -330,15 +368,20 @@ function App() {
             <div className="contentMain flex">
               <div
                 className={`overflow-hidden sidebarWrapper ${
-                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                  isSidebarOpen === true ? "" : "opacity-0"
                 } transition-all duration-300`}
+                style={{
+                  width: isSidebarOpen === true ? `${sidebarWidth}%` : "0px",
+                }}
               >
                 <Sidebar />
               </div>
               <div
-                className={`contentRight !py-4 !px-5 ${
-                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
-                } transition-all duration-300`}
+                className={`contentRight !py-4 !px-5 transition-all duration-300`}
+                style={{
+                  width:
+                    isSidebarOpen === true ? `${100 - sidebarWidth}%` : "100%",
+                }}
               >
                 <Profile />
               </div>
@@ -357,15 +400,20 @@ function App() {
             <div className="contentMain flex">
               <div
                 className={`overflow-hidden sidebarWrapper ${
-                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                  isSidebarOpen === true ? "" : "opacity-0"
                 } transition-all duration-300`}
+                style={{
+                  width: isSidebarOpen === true ? `${sidebarWidth}%` : "0px",
+                }}
               >
                 <Sidebar />
               </div>
               <div
-                className={`contentRight !py-4 !px-5 ${
-                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
-                } transition-all duration-300`}
+                className={`contentRight !py-4 !px-5 transition-all duration-300`}
+                style={{
+                  width:
+                    isSidebarOpen === true ? `${100 - sidebarWidth}%` : "100%",
+                }}
               >
                 <ProductDetails />
               </div>
@@ -384,15 +432,20 @@ function App() {
             <div className="contentMain flex">
               <div
                 className={`overflow-hidden sidebarWrapper ${
-                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                  isSidebarOpen === true ? "" : "opacity-0"
                 } transition-all duration-300`}
+                style={{
+                  width: isSidebarOpen === true ? `${sidebarWidth}%` : "0px",
+                }}
               >
                 <Sidebar />
               </div>
               <div
-                className={`contentRight !py-4 !px-5 ${
-                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
-                } transition-all duration-300`}
+                className={`contentRight !py-4 !px-5 transition-all duration-300`}
+                style={{
+                  width:
+                    isSidebarOpen === true ? `${100 - sidebarWidth}%` : "100%",
+                }}
               >
                 <AddRams />
               </div>
@@ -411,15 +464,20 @@ function App() {
             <div className="contentMain flex">
               <div
                 className={`overflow-hidden sidebarWrapper ${
-                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                  isSidebarOpen === true ? "" : "opacity-0"
                 } transition-all duration-300`}
+                style={{
+                  width: isSidebarOpen === true ? `${sidebarWidth}%` : "0px",
+                }}
               >
                 <Sidebar />
               </div>
               <div
-                className={`contentRight !py-4 !px-5 ${
-                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
-                } transition-all duration-300`}
+                className={`contentRight !py-4 !px-5 transition-all duration-300`}
+                style={{
+                  width:
+                    isSidebarOpen === true ? `${100 - sidebarWidth}%` : "100%",
+                }}
               >
                 <AddWeight />
               </div>
@@ -438,15 +496,20 @@ function App() {
             <div className="contentMain flex">
               <div
                 className={`overflow-hidden sidebarWrapper ${
-                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                  isSidebarOpen === true ? "" : "opacity-0"
                 } transition-all duration-300`}
+                style={{
+                  width: isSidebarOpen === true ? `${sidebarWidth}%` : "0px",
+                }}
               >
                 <Sidebar />
               </div>
               <div
-                className={`contentRight !py-4 !px-5 ${
-                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
-                } transition-all duration-300`}
+                className={`contentRight !py-4 !px-5 transition-all duration-300`}
+                style={{
+                  width:
+                    isSidebarOpen === true ? `${100 - sidebarWidth}%` : "100%",
+                }}
               >
                 <AddSize />
               </div>
@@ -465,15 +528,20 @@ function App() {
             <div className="contentMain flex">
               <div
                 className={`overflow-hidden sidebarWrapper ${
-                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                  isSidebarOpen === true ? "" : "opacity-0"
                 } transition-all duration-300`}
+                style={{
+                  width: isSidebarOpen === true ? `${sidebarWidth}%` : "0px",
+                }}
               >
                 <Sidebar />
               </div>
               <div
-                className={`contentRight !py-4 !px-5 ${
-                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
-                } transition-all duration-300`}
+                className={`contentRight !py-4 !px-5 transition-all duration-300`}
+                style={{
+                  width:
+                    isSidebarOpen === true ? `${100 - sidebarWidth}%` : "100%",
+                }}
               >
                 <BannerV1List />
               </div>
@@ -492,15 +560,20 @@ function App() {
             <div className="contentMain flex">
               <div
                 className={`overflow-hidden sidebarWrapper ${
-                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                  isSidebarOpen === true ? "" : "opacity-0"
                 } transition-all duration-300`}
+                style={{
+                  width: isSidebarOpen === true ? `${sidebarWidth}%` : "0px",
+                }}
               >
                 <Sidebar />
               </div>
               <div
-                className={`contentRight !py-4 !px-5 ${
-                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
-                } transition-all duration-300`}
+                className={`contentRight !py-4 !px-5 transition-all duration-300`}
+                style={{
+                  width:
+                    isSidebarOpen === true ? `${100 - sidebarWidth}%` : "100%",
+                }}
               >
                 <BannerV2List />
               </div>
@@ -519,15 +592,20 @@ function App() {
             <div className="contentMain flex">
               <div
                 className={`overflow-hidden sidebarWrapper ${
-                  isSidebarOpen === true ? "!w-[20%]" : "!w-[0px] opacity-0"
+                  isSidebarOpen === true ? "" : "opacity-0"
                 } transition-all duration-300`}
+                style={{
+                  width: isSidebarOpen === true ? `${sidebarWidth}%` : "0px",
+                }}
               >
                 <Sidebar />
               </div>
               <div
-                className={`contentRight !py-4 !px-5 ${
-                  isSidebarOpen === false ? "!w-[100%]" : "!w-[80%]"
-                } transition-all duration-300`}
+                className={`contentRight !py-4 !px-5 transition-all duration-300`}
+                style={{
+                  width:
+                    isSidebarOpen === true ? `${100 - sidebarWidth}%` : "100%",
+                }}
               >
                 <BlogList />
               </div>
