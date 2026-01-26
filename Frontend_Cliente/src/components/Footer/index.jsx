@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { FcShipped } from "react-icons/fc";
 import { FaCcVisa } from "react-icons/fa6";
 import { GiLaptop } from "react-icons/gi";
 import { FcMoneyTransfer } from "react-icons/fc";
 import { MdCurrencyExchange } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IoMdChatboxes } from "react-icons/io";
 import Button from "@mui/material/Button";
 
@@ -30,6 +30,20 @@ import AddAddress from "../../Pages/MyAccount/addAddress";
 
 const Footer = () => {
   const context = useContext(MyContext);
+  const [email, setEmail] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubscribe = (e) => {
+    e.preventDefault();
+    if (context.isLogin === true) {
+      context.alertBox(
+        "error",
+        "ESTE CORREO YA ESTA REGISTRADO COMO UN USUARIO",
+      );
+    } else {
+      navigate("/register", { state: { email: email } });
+    }
+  };
 
   return (
     <>
@@ -224,14 +238,18 @@ const Footer = () => {
                 MÁS!
               </p>
 
-              <form className="!mt-5">
+              <form className="!mt-5" onSubmit={handleSubscribe}>
                 <input
                   type="text"
                   className="w-full !h-[45px] border border-[#38597e] outline-none !pl-4 !pr-4 !rounded-sm !mb-8  focus:!border-[#38597e]"
                   placeholder="TU CORREO"
                   style={{ boxShadow: "4px 4px 7px #38597e" }}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
-                <Button className="btn-org">SUSCRIBETE</Button>
+                <Button type="submit" className="btn-org">
+                  SUSCRIBETE
+                </Button>
                 <br />
 
                 <FormControlLabel

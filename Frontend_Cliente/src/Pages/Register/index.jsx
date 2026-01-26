@@ -8,7 +8,7 @@ import { FcGoogle } from "react-icons/fc";
 import { MyContext } from "../../App";
 import { postData } from "../../utils/api";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { firebaseApp } from "../../firebase.jsx";
@@ -27,10 +27,17 @@ const Register = () => {
 
   const context = useContext(MyContext);
   const history = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
+    if (location.state?.email) {
+      setFormFields((prev) => ({
+        ...prev,
+        email: location.state.email,
+      }));
+    }
+  }, [location.state]);
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
