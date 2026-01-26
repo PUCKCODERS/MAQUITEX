@@ -184,31 +184,31 @@ const Footer = () => {
                 </h2>
                 <ul className="list">
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <Link to="/" className="link">
+                    <button className="link hover:text-[#0a7fec]">
                       ENVIOS A DOMICILIO
-                    </Link>
+                    </button>
                   </li>
 
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <Link to="/" className="link">
+                    <button className="link hover:text-[#0a7fec]">
                       SEGUIMIENTO DE PEDIDOS
-                    </Link>
+                    </button>
                   </li>
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <Link to="/" className="link">
+                    <button className="link hover:text-[#0a7fec]">
                       GARANTÍA
-                    </Link>
+                    </button>
                   </li>
 
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <Link to="/" className="link">
+                    <button className="link hover:text-[#0a7fec]">
                       PAGO SEGURO
-                    </Link>
+                    </button>
                   </li>
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <Link to="/" className="link">
+                    <button className="link hover:text-[#0a7fec]">
                       ULTIMAS NOTICIAS
-                    </Link>
+                    </button>
                   </li>
                   <li className="list-none text-[14px] text-[#000] !mb-2">
                     <Link to="/nosotros" className="link">
