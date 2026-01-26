@@ -89,13 +89,9 @@ const Header = () => {
   return (
     <>
       <header
-        className={`!w-full !h-[auto] !py-2 shadow-md !pr-7 !bg-[#fff]  flex items-center justify-between transition-all duration-300 fixed !top-0 !left-0 z-[50]`}
-        style={{
-          paddingLeft:
-            context.isSidebarOpen === true
-              ? `${context?.sidebarWidth}%`
-              : "1.25rem",
-        }}
+        className={`!w-full !h-[auto] !py-2 ${
+          context.isSidebarOpen === true ? "!pl-[20%]" : "!pl-5"
+        } shadow-md !pr-7 !bg-[#fff]  flex items-center justify-between transition-all duration-300 fixed !top-0 !left-0 z-[50]`}
       >
         <div className="part1">
           <Button
