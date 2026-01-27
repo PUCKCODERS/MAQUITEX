@@ -31,7 +31,7 @@ const Sidebar = () => {
       <div
         className={`sidebar fixed !top-0 !left-0 z-[52] !bg-[#fff] border-r border-[rgba(0,0,0,0.32)] h-full !py-2 !px-4 !w-[${
           context.isSidebarOpen === true
-            ? `${context?.sidebarWidth / 2}%`
+            ? `${context?.sidebarWidth / 1.5}%`
             : "0px"
         }]`}
       >
@@ -387,7 +387,7 @@ const Sidebar = () => {
         </ul>
       </div>
       <div
-        className="sidebarOverlay  block lg:hidden w-full h-full fixed top-0 left-0 bg-[rgba(0,0,0,0.5)] z-51"
+        className="sidebarOverlay pointer-events-auto sm:pointer-events-none block lg:hidden w-full h-full fixed top-0 left-0 bg-[rgba(0,0,0,0.5)] z-51"
         onClick={() => context?.setisSidebarOpen(false)}
       ></div>
     </>

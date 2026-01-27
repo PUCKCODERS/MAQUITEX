@@ -1029,12 +1029,11 @@ const Dashboard = () => {
         </div>
       </Dialog>
 
-      <div className="card !my-4 !pt-5 shadow-md sm:rounded-lg dark:bg-gray-800">
-        <div className="flex items-center w-full !text-white !bg-gray-800 !pl-5 !pr-5 !py-4 !border-b !border-gray-500 justify-between">
+      <div className="card !my-4 !pt-5 shadow-md sm:rounded-lg bg-gray-950">
+        <div className="flex items-center w-full !text-white !bg-gray-950 !pl-5 !pr-5 !py-4 !border-b !border-gray-500 justify-between">
           <div className="col w-[50%]">
-            <h2 className="text-white text-[20px] !font-[500] ">
+            <h2 className="text-white text-[15px] sm:text-[20px] !font-[500] ">
               LISTA DE USUARIOS
-              <span className="font-[400] text-[14px] !ml-3"></span>
             </h2>
           </div>
 
@@ -1305,11 +1304,11 @@ const Dashboard = () => {
       </Dialog>
 
       <div className="card !my-4 shadow-md sm:rounded-lg dark:bg-gray-700">
-        <div className="flex !bg-gray-950 items-center justify-between !px-5 !py-5 border-b dark:border-gray-700">
-          <h2 className="text-white text-[20px] font-[500] ">
+        <div className="flex !bg-gray-950 items-center justify-between !px-5 !py-5 border-b dark:border-gray-700 flex-col sm:flex-row">
+          <h2 className="text-white text-[15px] sm:text-[20px] text-center md:text-left font-[500] mb-2 sm:mb-0 ">
             PEDIDOS RECIENTES
           </h2>
-          <div className="w-[25%]">
+          <div className="w-[75%] md:w-[25%]">
             <SearchBox
               searchQuery={orderSearchQuery}
               setSearchQuery={setOrderSearchQuery}
@@ -1569,8 +1568,8 @@ const Dashboard = () => {
 
       <div className="card !my-4 shadow-md sm:rounded-lg dark:!bg-gray-100">
         <div class="flex !bg-gray-950 items-center justify-between !px-5 !py-5 !mb-0 border-b dark:border-gray-700">
-          <h2 class="text-white text-[12px] sm:text-[20px] !font-[500] ">
-            TASA DE CLIENTES Y VENTAS DEL AÑO ACTUAL
+          <h2 class="text-white text-[15px] sm:text-[20px] !font-[500] ">
+            TASA DE USUARIOS Y VENTAS DEL AÑO ACTUAL
           </h2>
         </div>
 
