@@ -647,12 +647,24 @@ const Dashboard = () => {
             {sortedIds?.length > 0 && (
               <Button
                 variant="contained"
-                className="btn btn-sm !bg-red-800 hover:!bg-red-950 !font-bold transition-all duration-300"
+                className="btn btn-sm btn-responsive !bg-red-800 hover:!bg-red-950 !font-bold transition-all duration-300"
                 onClick={deleteMultipleProduct}
               >
                 ELIMINAR
               </Button>
             )}
+
+            <Button
+              className="btn-sm btn-responsive !gap-3"
+              onClick={() =>
+                context.setIsOpenFullScreenPanel({
+                  open: true,
+                  model: "NUEVO PRODUCTO",
+                })
+              }
+            >
+              <BiPlusMedical /> AGREGAR PRODUCTO
+            </Button>
           </div>
         </div>
 
@@ -1041,7 +1053,7 @@ const Dashboard = () => {
             {sortedIdsUser?.length > 0 && (
               <Button
                 variant="contained"
-                className="btn btn-sm !bg-red-800 hover:!bg-red-950 !font-bold transition-all duration-300"
+                className="btn btn-sm btn-responsive !bg-red-800 hover:!bg-red-950 !font-bold transition-all duration-300"
                 onClick={deleteMultipleUser}
               >
                 ELIMINAR

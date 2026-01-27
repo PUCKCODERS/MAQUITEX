@@ -60,4 +60,26 @@
   .pagination-nowrap .MuiPaginationItem-icon {
     font-size: 16px !important;
   }
+
+  btn-responsive {
+    min-height: 30px !important;
+    padding: 4px 8px !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+  }
+
+  .btn-responsive svg {
+    font-size: 14px !important;
+  }
+  .actions-bar {
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .btn-responsive {
+    font-size: 10px !important;
+    padding: 3px 6px !important;
+  }
 }
