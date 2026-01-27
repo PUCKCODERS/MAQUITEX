@@ -90,7 +90,7 @@ const Header = () => {
     <>
       <header
         className={`!w-full !h-[auto] !py-2 ${
-          context.isSidebarOpen === true ? "!pl-64" : "!pl-5"
+          context.isSidebarOpen === true ? "!pl-65" : "!pl-5"
         } ${context.isSidebarOpen === true && context?.windowWidth < 992 && "pl-80"} shadow-md !pr-7 !bg-[#fff]  flex items-center justify-between transition-all duration-300 fixed !top-0 !left-0 z-[50]`}
       >
         <div className="part1">

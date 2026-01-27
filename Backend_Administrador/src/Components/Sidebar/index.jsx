@@ -387,7 +387,7 @@ const Sidebar = () => {
         </ul>
       </div>
       <div
-        className="sidebarOverlay w-full h-full fixed top-0 left-0 bg-[rgba(0,0,0,0.5)] z-51"
+        className="sidebarOverlay  block lg:hidden w-full h-full fixed top-0 left-0 bg-[rgba(0,0,0,0.5)] z-51"
         onClick={() => context?.setisSidebarOpen(false)}
       ></div>
     </>

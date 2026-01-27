@@ -590,16 +590,18 @@ const Dashboard = () => {
 
   return (
     <>
-      <div className="w-full !bg-white !py-2 !px-5 border border-[#082c55] flex items-center !gap-8 !mb-5 justify-between rounded-md !shadow-[5px_5px_5px_#082c55]">
+      <div className="w-full !bg-white !py-5 !px-5 border border-[#082c55] flex items-center !gap-8 !mb-5 justify-between rounded-md !shadow-[5px_5px_5px_#082c55]">
         <div className="info ">
-          <h1 className="text-[35px] !font-bold !font-[bold] leading-10 !mb-3 ">
+          <h1 className="text-[25px] sm:text-[35px] text-[#082c55] !font-bold !font-[bold] leading-10 mb-1 sm:mb-3">
             BUENOS DIAS,
             <br />
-            {context?.user?.name?.toUpperCase() ||
-              context?.userData?.name?.toUpperCase() ||
-              "USUARIO"}
+            <h1 className="text-[25px] sm:text-[35px] text-[#f1683a] !font-bold !font-[bold] leading-10 mb-0 sm:mb-3">
+              {context?.user?.name?.toUpperCase() ||
+                context?.userData?.name?.toUpperCase() ||
+                "USUARIO"}
+            </h1>
           </h1>
-          <p className="!font-[500">
+          <p className="!font-[500] text-[12px] sm:text-[16px] text-gray-700 ">
             ESTO ES LO QUE PASA HOY EN TU TIENDA. CONSULTA LAS ESTADÍSTICAS
             INMEDIATAMENTE.
           </p>
@@ -637,11 +639,8 @@ const Dashboard = () => {
 
       <div className="card !my-4  shadow-md sm:rounded-lg dark:bg-gray-800 ">
         <div className="flex !bg-gray-950 items-center justify-between  !px-5 !py-5 !mt-3 border-b dark:border-gray-700 ">
-          <h2 className="text-white text-[20px] !font-[500] ">
+          <h2 className="text-white text-[15px] sm:text-[20px] !font-[500] ">
             PRODUCTOS
-            <span className="font-[400] text-[14px] !ml-3">
-              (MATERIAL UI DESCRIPCION)
-            </span>
           </h2>
 
           <div className="col !w-[55%] !ml-auto flex items-center justify-end !gap-2">
@@ -654,126 +653,116 @@ const Dashboard = () => {
                 ELIMINAR
               </Button>
             )}
-
-            <Button
-              className="btn btn-sm "
-              onClick={() =>
-                context.setIsOpenFullScreenPanel({
-                  open: true,
-                  model: "NUEVO PRODUCTO",
-                })
-              }
-            >
-              AGREGAR PRODUCTO
-            </Button>
           </div>
         </div>
 
-        <div className="flex items-center w-full !text-white !bg-gray-800 !pl-5 !pr-5 !py-4 !border-b !border-gray-500 justify-between !gap-4">
-          <div className="col !w-[25%]">
-            <h4 className="font-[bold] !text-[15px] !mb-2">CATEGORÍA</h4>
-            {context?.catData?.length !== 0 && (
-              <Select
-                style={{ zoom: "80%" }}
-                labelId="demo-simple-select-label"
-                id="productCatDrop"
-                size="small"
-                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                value={productCat}
-                label="Category"
-                onChange={handleChangeProductCat}
-              >
-                {context?.catData?.map((cat /*, index*/) => {
-                  return (
-                    <MenuItem
-                      value={cat?._id}
-                      className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                    >
-                      {cat?.name}
-                    </MenuItem>
-                  );
-                })}
-              </Select>
-            )}
-          </div>
+        <div className="card !my-4 !pt-5 shadow-md sm:rounded-lg">
+          <div className="flex items-center w-full !text-white !bg-gray-800 !pl-5 !pr-5 !py-4 !border-b !border-gray-500 justify-between !gap-4 dashboardFilters">
+            <div className="col !w-[25%]">
+              <h4 className="font-[bold] !text-[15px] !mb-2">CATEGORÍA</h4>
+              {context?.catData?.length !== 0 && (
+                <Select
+                  style={{ zoom: "80%" }}
+                  labelId="demo-simple-select-label"
+                  id="productCatDrop"
+                  size="small"
+                  className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                  value={productCat}
+                  label="Category"
+                  onChange={handleChangeProductCat}
+                >
+                  {context?.catData?.map((cat /*, index*/) => {
+                    return (
+                      <MenuItem
+                        value={cat?._id}
+                        className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                      >
+                        {cat?.name}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              )}
+            </div>
 
-          <div className="col !w-[25%]">
-            <h4 className="font-[bold] !text-[15px] !mb-2">SUBCATEGORÍA</h4>
-            {context?.catData?.length !== 0 && (
-              <Select
-                style={{ zoom: "80%" }}
-                labelId="demo-simple-select-label"
-                id="productCatDrop"
-                size="small"
-                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                value={productSubCat}
-                label="Sub Category"
-                onChange={handleChangeProductSubCat}
-              >
-                {context?.catData?.map((cat /*, index*/) => {
-                  return (
-                    cat?.children?.length !== 0 &&
-                    cat?.children?.map((subCat /*, index*/) => {
-                      return (
-                        <MenuItem
-                          value={subCat?._id}
-                          className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                        >
-                          {subCat?.name}
-                        </MenuItem>
-                      );
-                    })
-                  );
-                })}
-              </Select>
-            )}
-          </div>
+            <div className="col !w-[25%]">
+              <h4 className="font-[bold] !text-[15px] !mb-2">SUBCATEGORÍA</h4>
+              {context?.catData?.length !== 0 && (
+                <Select
+                  style={{ zoom: "80%" }}
+                  labelId="demo-simple-select-label"
+                  id="productCatDrop"
+                  size="small"
+                  className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                  value={productSubCat}
+                  label="Sub Category"
+                  onChange={handleChangeProductSubCat}
+                >
+                  {context?.catData?.map((cat /*, index*/) => {
+                    return (
+                      cat?.children?.length !== 0 &&
+                      cat?.children?.map((subCat /*, index*/) => {
+                        return (
+                          <MenuItem
+                            value={subCat?._id}
+                            className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                          >
+                            {subCat?.name}
+                          </MenuItem>
+                        );
+                      })
+                    );
+                  })}
+                </Select>
+              )}
+            </div>
 
-          <div className="col !w-[25%]">
-            <h4 className="font-[bold] !text-[15px] !mb-2">
-              CATEGORÍA TERCER NIVEL
-            </h4>
-            {context?.catData?.length !== 0 && (
-              <Select
-                style={{ zoom: "80%" }}
-                labelId="demo-simple-select-label"
-                id="productCatDrop"
-                size="small"
-                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                value={productThirdLavelCat}
-                label="Sub Category"
-                onChange={handleChangeProductThirdLavelSubCat}
-              >
-                {context?.catData?.map((cat) => {
-                  return (
-                    cat?.children?.length !== 0 &&
-                    cat?.children?.map((subCat) => {
-                      return (
-                        subCat?.children?.length !== 0 &&
-                        subCat?.children?.map((thirdLavelCat, index) => {
-                          return (
-                            <MenuItem
-                              value={thirdLavelCat?._id}
-                              key={index}
-                              className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                            >
-                              {thirdLavelCat?.name}
-                            </MenuItem>
-                          );
-                        })
-                      );
-                    })
-                  );
-                })}
-              </Select>
-            )}
-          </div>
+            <div className="col !w-[25%]">
+              <h4 className="font-[bold] !text-[15px] !mb-2">
+                CATEGORÍA TERCER NIVEL
+              </h4>
+              {context?.catData?.length !== 0 && (
+                <Select
+                  style={{ zoom: "80%" }}
+                  labelId="demo-simple-select-label"
+                  id="productCatDrop"
+                  size="small"
+                  className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                  value={productThirdLavelCat}
+                  label="Sub Category"
+                  onChange={handleChangeProductThirdLavelSubCat}
+                >
+                  {context?.catData?.map((cat) => {
+                    return (
+                      cat?.children?.length !== 0 &&
+                      cat?.children?.map((subCat) => {
+                        return (
+                          subCat?.children?.length !== 0 &&
+                          subCat?.children?.map((thirdLavelCat, index) => {
+                            return (
+                              <MenuItem
+                                value={thirdLavelCat?._id}
+                                key={index}
+                                className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                              >
+                                {thirdLavelCat?.name}
+                              </MenuItem>
+                            );
+                          })
+                        );
+                      })
+                    );
+                  })}
+                </Select>
+              )}
+            </div>
 
-          <div className="col !w-[20%] ml-auto">
-            <SearchBox
-              searchQuery={productSearchQuery}
-              setSearchQuery={setProductSearchQuery}
-            />
+            <div className="col !w-[20%] ml-auto search_box">
+              <SearchBox
+                searchQuery={productSearchQuery}
+                setSearchQuery={setProductSearchQuery}
+              />
+            </div>
           </div>
         </div>
 

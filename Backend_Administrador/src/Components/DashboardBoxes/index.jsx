@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -10,15 +10,36 @@ import { FaCartArrowDown } from "react-icons/fa";
 import { AiFillDatabase } from "react-icons/ai";
 import { GiSewingMachine } from "react-icons/gi";
 import { FaUsers } from "react-icons/fa";
+import { MyContext } from "../../App";
 
 const DashboardBoxes = (props) => {
+  const context = useContext(MyContext);
+
   return (
     <>
       <Swiper
         slidesPerView={4}
         spaceBetween={10}
-        navigation={true}
+        navigation={context?.windowWidth < 992 ? false : true}
         modules={[Navigation]}
+        breakpoints={{
+          300: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
+          650: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+          },
+          992: {
+            slidesPerView: 4,
+            spaceBetween: 10,
+          },
+        }}
         className="dashboardBoxesSlider"
       >
         <SwiperSlide className="!mt-1">

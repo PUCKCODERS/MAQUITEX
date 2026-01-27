@@ -3,4 +3,37 @@
   body {
     overflow-x: hidden;
   }
+
+  /*.dashboardBoxesSlider .swiper-wrapper {
+    overflow-x: scroll !important;
+    white-space: nowrap;
+    display: block !important;
+  }
+  .dashboardBoxesSlider .swiper-wrapper .swiper-slide {
+    width: 300px !important;
+    display: inline-block;
+    vertical-align: top;
+  }*/
+
+  .dashboardFilters {
+    display: flex !important;
+    flex-wrap: nowrap;
+    gap: 15px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .dashboardFilters::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .dashboardFilters .col {
+    flex: 0 0 250px;
+    padding-right: 0;
+  }
+
+  .dashboardFilters .search_box {
+    position: relative;
+    top: 14px;
+  }
 }
