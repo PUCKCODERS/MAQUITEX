@@ -29,7 +29,7 @@ const Sidebar = () => {
   return (
     <>
       <div
-        className={`sidebar fixed !top-0 !left-0 z-[50] !bg-[#fff] border-r border-[rgba(0,0,0,0.32)] h-full !py-2 !px-4 !w-[${
+        className={`sidebar fixed !top-0 !left-0 z-[52] !bg-[#fff] border-r border-[rgba(0,0,0,0.32)] h-full !py-2 !px-4 !w-[${
           context.isSidebarOpen === true
             ? `${context?.sidebarWidth / 2}%`
             : "0px"
@@ -44,7 +44,7 @@ const Sidebar = () => {
           </Link>
         </div>
 
-        <ul className="!mt-4 ">
+        <ul className="!mt-4 overflow-y-scroll max-h-[80vh]">
           <li>
             <Link to="/">
               <Button className="w-full !text-[#082c55] hover:!bg-[#082c55] hover:!text-[#fff] !font-[600] !text-[15px] !capitalize !justify-start !gap-3 items-center !py-2 transition-all !duration-300 ">
@@ -386,12 +386,12 @@ const Sidebar = () => {
           </li>
         </ul>
       </div>
+      <div
+        className="sidebarOverlay w-full h-full fixed top-0 left-0 bg-[rgba(0,0,0,0.5)] z-51"
+        onClick={() => context?.setisSidebarOpen(false)}
+      ></div>
     </>
   );
 };
 
 export default Sidebar;
-
-{
-  /*import { AiFillReconciliation } from "react-icons/ai"; pedidos */
-}
