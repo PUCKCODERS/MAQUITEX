@@ -1554,7 +1554,7 @@ const Dashboard = () => {
         </div>
 
         {orders?.totalPages > 1 && (
-          <div className="flex items-center justify-center  !mt-0 !pb-3 !bg-gray-100 !text-balck !border-t !border-gray-500">
+          <div className="pagination-nowrap flex items-center justify-center !mt-0 !pb-3 !bg-gray-100 !border-t !border-gray-500">
             <Pagination
               showFirstButton
               showLastButton

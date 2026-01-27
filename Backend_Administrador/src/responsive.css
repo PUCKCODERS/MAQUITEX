@@ -36,4 +36,28 @@
     position: relative;
     top: 14px;
   }
+
+  .pagination-nowrap {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .pagination-nowrap .MuiPagination-ul {
+    flex-wrap: nowrap !important;
+  }
+
+  .pagination-nowrap::-webkit-scrollbar {
+    display: none;
+  }
+
+  .pagination-nowrap .MuiPaginationItem-root {
+    min-width: 28px !important;
+    height: 28px !important;
+    font-size: 12px !important;
+    margin: 0 2px !important;
+  }
+
+  .pagination-nowrap .MuiPaginationItem-icon {
+    font-size: 16px !important;
+  }
 }
