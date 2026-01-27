@@ -643,7 +643,7 @@ const Dashboard = () => {
             PRODUCTOS
           </h2>
 
-          <div className="col !w-[55%] !ml-auto flex items-center justify-end !gap-2">
+          <div className="col !w-[55%] !ml-auto flex items-center justify-end !gap-2 actions-responsive">
             {sortedIds?.length > 0 && (
               <Button
                 variant="contained"
