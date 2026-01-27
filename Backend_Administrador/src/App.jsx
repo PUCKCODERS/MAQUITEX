@@ -69,16 +69,15 @@ function App() {
             <Header />
             <div className="contentMain flex">
               <div
-                /* <div
-  className={`overflow-hidden sidebarWrapper ${
-    isSidebarOpen ? "!w-[20%]" : "!w-[0px] opacity-0"
-  } transition-all duration-300`} esto es otra forma de hacerlo otra solucion
->*/
                 className={`overflow-hidden sidebarWrapper transition-all duration-300 ${
                   !isSidebarOpen && "opacity-0"
                 }`}
                 style={{
-                  width: isSidebarOpen ? `${sidebarWidth}%` : "0px",
+                  width: isSidebarOpen
+                    ? windowWidth < 992
+                      ? "100%"
+                      : `${sidebarWidth}%`
+                    : "0px",
                 }}
               >
                 <Sidebar />
@@ -86,10 +85,13 @@ function App() {
 
               <div
                 className={`contentRight !py-4 !px-5 transition-all duration-300 ${
-                  !isSidebarOpen && "!w-full"
+                  isSidebarOpen && windowWidth < 992 && "opacity-0"
                 }`}
                 style={{
-                  width: isSidebarOpen ? `${100 - sidebarWidth}%` : undefined,
+                  width:
+                    isSidebarOpen && windowWidth >= 992
+                      ? `${100 - sidebarWidth}%`
+                      : "100%",
                 }}
               >
                 <Dashboard />
