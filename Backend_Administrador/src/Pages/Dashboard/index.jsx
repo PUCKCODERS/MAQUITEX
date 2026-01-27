@@ -778,177 +778,180 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead className="!bg-gray-950">
-              <TableRow>
-                <TableCell>
-                  <Checkbox
-                    {...label}
-                    size="small"
-                    className="!text-white"
-                    onChange={handleSelectAll}
-                    checked={
-                      productData?.length > 0
-                        ? productData.every((item) => item.checked)
-                        : false
-                    }
-                  />
-                </TableCell>
 
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                  >
-                    {column.label}
+        <div className="relative overflow-x-auto">
+          <TableContainer sx={{ maxHeight: 440 }}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead className="!bg-gray-950">
+                <TableRow>
+                  <TableCell>
+                    <Checkbox
+                      {...label}
+                      size="small"
+                      className="!text-white"
+                      onChange={handleSelectAll}
+                      checked={
+                        productData?.length > 0
+                          ? productData.every((item) => item.checked)
+                          : false
+                      }
+                    />
                   </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {isLoading === false ? (
-                productData?.length !== 0 &&
-                productData
-                  ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  ?.map((product, index) => {
-                    return (
-                      <TableRow
-                        key={index}
-                        className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200"
-                      >
-                        <TableCell style={{ minWidth: columns.minWidth }}>
-                          <Checkbox
-                            {...label}
-                            size="small"
-                            className="!text-white"
-                            checked={product.checked === true ? true : false}
-                            onChange={(e) =>
-                              handleCheckboxChange(e, product._id, index)
-                            }
-                          />
-                        </TableCell>
-                        <TableCell style={{ minWidth: columns.minWidth }}>
-                          <div className="flex items-center !gap-4 w-[300px] ">
-                            <div className="img !w-[85px] !h-[85px] rounded-md overflow-hidden group !min-w-[85px]">
-                              <Link
-                                to={`/product/${product?._id}`}
-                                data-discover="true"
-                              >
-                                <LazyLoadImage
-                                  alt={"image"}
-                                  effect="blur"
-                                  src={product?.images[0]}
-                                  className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
-                                />
-                              </Link>
-                            </div>
 
-                            <div className="info w-[75%]">
-                              <h3 className=" !font-[600] text-[12px] leading-4">
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ minWidth: column.minWidth }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {isLoading === false ? (
+                  productData?.length !== 0 &&
+                  productData
+                    ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    ?.map((product, index) => {
+                      return (
+                        <TableRow
+                          key={index}
+                          className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200"
+                        >
+                          <TableCell style={{ minWidth: columns.minWidth }}>
+                            <Checkbox
+                              {...label}
+                              size="small"
+                              className="!text-white"
+                              checked={product.checked === true ? true : false}
+                              onChange={(e) =>
+                                handleCheckboxChange(e, product._id, index)
+                              }
+                            />
+                          </TableCell>
+                          <TableCell style={{ minWidth: columns.minWidth }}>
+                            <div className="flex items-center !gap-4 w-[300px] ">
+                              <div className="img !w-[85px] !h-[85px] rounded-md overflow-hidden group !min-w-[85px]">
                                 <Link
                                   to={`/product/${product?._id}`}
                                   data-discover="true"
-                                  className="!text-white hover:!text-[white] !cursor-pointer"
                                 >
-                                  {product?.name}
+                                  <LazyLoadImage
+                                    alt={"image"}
+                                    effect="blur"
+                                    src={product?.images[0]}
+                                    className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+                                  />
                                 </Link>
-                              </h3>
+                              </div>
 
-                              <p className="!text-[15px] !font-[bold] !text-white !mt-1">
-                                {product?.brand}
-                              </p>
+                              <div className="info w-[75%]">
+                                <h3 className=" !font-[600] text-[12px] leading-4">
+                                  <Link
+                                    to={`/product/${product?._id}`}
+                                    data-discover="true"
+                                    className="!text-white hover:!text-[white] !cursor-pointer"
+                                  >
+                                    {product?.name}
+                                  </Link>
+                                </h3>
+
+                                <p className="!text-[15px] !font-[bold] !text-white !mt-1">
+                                  {product?.brand}
+                                </p>
+                              </div>
                             </div>
-                          </div>
-                        </TableCell>
-                        <TableCell
-                          style={{ minWidth: columns.minWidth }}
-                          className="!text-white"
-                        >
-                          {product?.catName}
-                        </TableCell>
-                        <TableCell
-                          style={{ minWidth: columns.minWidth }}
-                          className="!text-white"
-                        >
-                          {product?.subCat}
-                        </TableCell>
+                          </TableCell>
+                          <TableCell
+                            style={{ minWidth: columns.minWidth }}
+                            className="!text-white"
+                          >
+                            {product?.catName}
+                          </TableCell>
+                          <TableCell
+                            style={{ minWidth: columns.minWidth }}
+                            className="!text-white"
+                          >
+                            {product?.subCat}
+                          </TableCell>
 
-                        <TableCell
-                          style={{ minWidth: columns.minWidth }}
-                          className="!text-white"
-                        >
-                          <div class="flex !gap-1 flex-col">
-                            <span class="oldPrice line-through leading-3 text-[15px] font-[500]">
-                              &#36; {product?.oldPrice}
-                            </span>
-                            <span class="price text-[white] text-[15px] font-[600]">
-                              &#36; {product?.price}
-                            </span>
-                          </div>
-                        </TableCell>
+                          <TableCell
+                            style={{ minWidth: columns.minWidth }}
+                            className="!text-white"
+                          >
+                            <div class="flex !gap-1 flex-col">
+                              <span class="oldPrice line-through leading-3 text-[15px] font-[500]">
+                                &#36; {product?.oldPrice}
+                              </span>
+                              <span class="price text-[white] text-[15px] font-[600]">
+                                &#36; {product?.price}
+                              </span>
+                            </div>
+                          </TableCell>
 
-                        <TableCell
-                          style={{ minWidth: columns.minWidth }}
-                          className="!text-white"
-                        >
-                          <p className="text-[15px] !w-[100px] ">
-                            <Rating
-                              name="half-rating"
-                              size="small"
-                              defaultValue={product?.rating}
-                            />
-                          </p>
-                        </TableCell>
-                        <TableCell
-                          style={{ minWidth: columns.minWidth }}
-                          className="!text-white"
-                        >
-                          <div className="flex items-center !gap-1">
-                            <Button
-                              className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
-                              onClick={() =>
-                                context.setIsOpenFullScreenPanel({
-                                  open: true,
-                                  model: "EDITAR PRODUCTO",
-                                  id: product?._id,
-                                })
-                              }
-                            >
-                              <GrEdit className=" !text-[20px] " />
-                            </Button>
-                            <Link href={`/product/${product?._id}`} passHref>
-                              <Button className="!-[35px] !h-[35px] !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                                <ImEye className="!text-[20px]" />
+                          <TableCell
+                            style={{ minWidth: columns.minWidth }}
+                            className="!text-white"
+                          >
+                            <p className="text-[15px] !w-[100px] ">
+                              <Rating
+                                name="half-rating"
+                                size="small"
+                                defaultValue={product?.rating}
+                              />
+                            </p>
+                          </TableCell>
+                          <TableCell
+                            style={{ minWidth: columns.minWidth }}
+                            className="!text-white"
+                          >
+                            <div className="flex items-center !gap-1">
+                              <Button
+                                className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                                onClick={() =>
+                                  context.setIsOpenFullScreenPanel({
+                                    open: true,
+                                    model: "EDITAR PRODUCTO",
+                                    id: product?._id,
+                                  })
+                                }
+                              >
+                                <GrEdit className=" !text-[20px] " />
                               </Button>
-                            </Link>
+                              <Link href={`/product/${product?._id}`} passHref>
+                                <Button className="!-[35px] !h-[35px] !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                                  <ImEye className="!text-[20px]" />
+                                </Button>
+                              </Link>
 
-                            <Button
-                              className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
-                              onClick={() => deleteProduct(product?._id)}
-                            >
-                              <FaTrashAlt className="!text-[20px]" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })
-              ) : (
-                <>
-                  <TableRow>
-                    <TableCell colspan={8}>
-                      <div className="flex items-center justify-center w-full min-h-[400px]">
-                        <CircularProgress className="!text-white" />
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                </>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                              <Button
+                                className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                                onClick={() => deleteProduct(product?._id)}
+                              >
+                                <FaTrashAlt className="!text-[20px]" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                ) : (
+                  <>
+                    <TableRow>
+                      <TableCell colspan={8}>
+                        <div className="flex items-center justify-center w-full min-h-[400px]">
+                          <CircularProgress className="!text-white" />
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  </>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
@@ -1067,162 +1070,164 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead className="!bg-gray-950">
-              <TableRow>
-                <TableCell>
-                  <Checkbox
-                    {...label}
-                    size="small"
-                    className="!text-white"
-                    onChange={handleSelectAllUser}
-                    checked={
-                      userData?.length > 0
-                        ? userData.every((item) => item.checked)
-                        : false
-                    }
-                  />
-                </TableCell>
-
-                {columnsUser.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                  >
-                    <span className="whitespace-nowrap">{column.label}</span>
+        <div className="relative overflow-x-auto">
+          <TableContainer sx={{ maxHeight: 440 }}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead className="!bg-gray-950">
+                <TableRow>
+                  <TableCell>
+                    <Checkbox
+                      {...label}
+                      size="small"
+                      className="!text-white"
+                      onChange={handleSelectAllUser}
+                      checked={
+                        userData?.length > 0
+                          ? userData.every((item) => item.checked)
+                          : false
+                      }
+                    />
                   </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {isLoading === false ? (
-                userData?.length !== 0 &&
-                userData
-                  ?.slice(
-                    pageUser * rowsPerPageUser,
-                    pageUser * rowsPerPageUser + rowsPerPageUser,
-                  )
-                  ?.reverse()
-                  .map((user, index) => {
-                    return (
-                      <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
-                        <TableCell style={{ minWidth: columnsUser.minWidth }}>
-                          <Checkbox
-                            {...label}
-                            size="small"
-                            className="!text-white"
-                            checked={user.checked === true ? true : false}
-                            onChange={(e) =>
-                              handleCheckboxChangeUser(e, user._id, index)
-                            }
-                          />
-                        </TableCell>
-                        <TableCell style={{ minWidth: columnsUser.minWidth }}>
-                          <div className="flex items-center !gap-4 w-[70px] ">
-                            <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
-                              <Link to="/product/45745">
-                                <img
-                                  src={
-                                    user?.avatar !== "" &&
-                                    user?.avatar !== undefined
-                                      ? user?.avatar
-                                      : "/"
-                                  }
-                                  className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
-                                />
-                              </Link>
+
+                  {columnsUser.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ minWidth: column.minWidth }}
+                    >
+                      <span className="whitespace-nowrap">{column.label}</span>
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {isLoading === false ? (
+                  userData?.length !== 0 &&
+                  userData
+                    ?.slice(
+                      pageUser * rowsPerPageUser,
+                      pageUser * rowsPerPageUser + rowsPerPageUser,
+                    )
+                    ?.reverse()
+                    .map((user, index) => {
+                      return (
+                        <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
+                          <TableCell style={{ minWidth: columnsUser.minWidth }}>
+                            <Checkbox
+                              {...label}
+                              size="small"
+                              className="!text-white"
+                              checked={user.checked === true ? true : false}
+                              onChange={(e) =>
+                                handleCheckboxChangeUser(e, user._id, index)
+                              }
+                            />
+                          </TableCell>
+                          <TableCell style={{ minWidth: columnsUser.minWidth }}>
+                            <div className="flex items-center !gap-4 w-[70px] ">
+                              <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
+                                <Link to="/product/45745">
+                                  <img
+                                    src={
+                                      user?.avatar !== "" &&
+                                      user?.avatar !== undefined
+                                        ? user?.avatar
+                                        : "/"
+                                    }
+                                    className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+                                  />
+                                </Link>
+                              </div>
                             </div>
-                          </div>
-                        </TableCell>
-                        <TableCell
-                          style={{ minWidth: columnsUser.minWidth }}
-                          className="!text-white"
-                        >
-                          {user?.name}
-                        </TableCell>
-                        <TableCell
-                          style={{ minWidth: columnsUser.minWidth }}
-                          className="!text-white"
-                        >
-                          <span className="flex items-center !gap-2">
-                            <MdEmail /> {user?.email}
-                          </span>
-                        </TableCell>
+                          </TableCell>
+                          <TableCell
+                            style={{ minWidth: columnsUser.minWidth }}
+                            className="!text-white"
+                          >
+                            {user?.name}
+                          </TableCell>
+                          <TableCell
+                            style={{ minWidth: columnsUser.minWidth }}
+                            className="!text-white"
+                          >
+                            <span className="flex items-center !gap-2">
+                              <MdEmail /> {user?.email}
+                            </span>
+                          </TableCell>
 
-                        <TableCell
-                          style={{ minWidth: columnsUser.minWidth }}
-                          className="!text-white"
-                        >
-                          <span className="flex items-center !gap-2">
-                            <FaPhoneAlt />{" "}
-                            {user?.mobile === null ? "NINGUNO" : user?.mobile}
-                          </span>
-                        </TableCell>
+                          <TableCell
+                            style={{ minWidth: columnsUser.minWidth }}
+                            className="!text-white"
+                          >
+                            <span className="flex items-center !gap-2">
+                              <FaPhoneAlt />{" "}
+                              {user?.mobile === null ? "NINGUNO" : user?.mobile}
+                            </span>
+                          </TableCell>
 
-                        <TableCell
-                          style={{ minWidth: columnsUser.minWidth }}
-                          className="!text-white"
-                        >
-                          {user?.verify_email === false ? (
-                            <span
-                              className={`inline-block !py-1 !px-4 rounded-full text-[12px] capitalize 
+                          <TableCell
+                            style={{ minWidth: columnsUser.minWidth }}
+                            className="!text-white"
+                          >
+                            {user?.verify_email === false ? (
+                              <span
+                                className={`inline-block !py-1 !px-4 rounded-full text-[12px] capitalize 
                                   bg-gray-600 text-white 
                                 `}
-                            >
-                              NO VERIFICADO
-                            </span>
-                          ) : (
-                            <span
-                              className={`inline-block !py-1 !px-4 rounded-full text-[12px] capitalize 
+                              >
+                                NO VERIFICADO
+                              </span>
+                            ) : (
+                              <span
+                                className={`inline-block !py-1 !px-4 rounded-full text-[12px] capitalize 
                                   bg-green-800 text-white
                                 `}
-                            >
-                              VERIFICADO
-                            </span>
-                          )}
-                        </TableCell>
+                              >
+                                VERIFICADO
+                              </span>
+                            )}
+                          </TableCell>
 
-                        <TableCell
-                          style={{ minWidth: columnsUser.minWidth }}
-                          className="!text-white"
-                        >
-                          <span className="flex items-center !gap-2">
-                            <BsFillCalendar2DateFill />{" "}
-                            {user?.updatedAt?.split("T")[0]}
-                          </span>
-                        </TableCell>
-                        <TableCell
-                          style={{ minWidth: columnsUser.minWidth }}
-                          className="!text-white"
-                        >
-                          <div className="flex items-center justify-center !gap-1">
-                            <Button
-                              className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
-                              onClick={() => deleteUser(user?._id)}
-                            >
-                              <FaTrashAlt className="!text-[20px]" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })
-              ) : (
-                <>
-                  <TableRow>
-                    <TableCell colspan={8}>
-                      <div className="flex items-center justify-center w-full min-h-[400px]">
-                        <CircularProgress className="!text-white" />
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                </>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                          <TableCell
+                            style={{ minWidth: columnsUser.minWidth }}
+                            className="!text-white"
+                          >
+                            <span className="flex items-center !gap-2">
+                              <BsFillCalendar2DateFill />{" "}
+                              {user?.updatedAt?.split("T")[0]}
+                            </span>
+                          </TableCell>
+                          <TableCell
+                            style={{ minWidth: columnsUser.minWidth }}
+                            className="!text-white"
+                          >
+                            <div className="flex items-center justify-center !gap-1">
+                              <Button
+                                className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                                onClick={() => deleteUser(user?._id)}
+                              >
+                                <FaTrashAlt className="!text-[20px]" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                ) : (
+                  <>
+                    <TableRow>
+                      <TableCell colspan={8}>
+                        <div className="flex items-center justify-center w-full min-h-[400px]">
+                          <CircularProgress className="!text-white" />
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  </>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
