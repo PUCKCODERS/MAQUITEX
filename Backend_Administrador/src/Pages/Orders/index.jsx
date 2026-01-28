@@ -121,11 +121,11 @@ const Orders = () => {
 
   return (
     <div className="card !my-4 shadow-md sm:rounded-lg dark:bg-gray-700">
-      <div className="flex !bg-gray-950 items-center justify-between !px-5 !py-5 border-b dark:border-gray-700">
-        <h2 className="text-white text-[20px] font-[500] ">
+      <div className="grid grid-cols-1 lg:grid-cols-2 !bg-gray-950 items-center justify-between !px-5 !py-5 border-b dark:border-gray-700 flex-col sm:flex-row">
+        <h2 className="text-white text-[15px] sm:text-[20px] text-left font-[500] mb-2 lg:mb-0 ">
           PEDIDOS RECIENTES
         </h2>
-        <div className="w-[25%]">
+        <div className="ml-auto w-full">
           <SearchBox
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
@@ -383,7 +383,7 @@ const Orders = () => {
       </div>
 
       {paginationInfo?.totalPages > 0 && (
-        <div className="flex items-center justify-center  !mt-0 !pb-3 !bg-gray-100 !text-balck !border-t !border-gray-500">
+        <div className="pagination-nowrap flex items-center justify-center !mt-0 !pb-3 !bg-gray-100 !border-t !border-gray-500">
           <Pagination
             showFirstButton
             showLastButton

@@ -1323,11 +1323,11 @@ const Dashboard = () => {
       </Dialog>
 
       <div className="card !my-4 shadow-md sm:rounded-lg dark:bg-gray-700">
-        <div className="flex !bg-gray-950 items-center justify-between !px-5 !py-5 border-b dark:border-gray-700 flex-col sm:flex-row">
-          <h2 className="text-white text-[15px] sm:text-[20px] text-center md:text-left font-[500] mb-2 sm:mb-0 ">
+        <div className="grid grid-cols-1 lg:grid-cols-2 !bg-gray-950 items-center justify-between !px-5 !py-5 border-b dark:border-gray-700 flex-col sm:flex-row">
+          <h2 className="text-white text-[15px] sm:text-[20px] text-left font-[500] mb-2 lg:mb-0 ">
             PEDIDOS RECIENTES
           </h2>
-          <div className="w-[75%] md:w-[25%]">
+          <div className="ml-auto w-full">
             <SearchBox
               searchQuery={orderSearchQuery}
               setSearchQuery={setOrderSearchQuery}
