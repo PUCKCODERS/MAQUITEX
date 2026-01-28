@@ -24,6 +24,7 @@ import { deleteData, fetchDataFromApi } from "../../utils/api";
 import Dialog from "@mui/material/Dialog";
 import { FcDeleteDatabase } from "react-icons/fc";
 import DialogTitle from "@mui/material/DialogTitle";
+import { BiPlusMedical } from "react-icons/bi";
 
 const columns = [
   { id: "image", label: "IMAGEN", minWidth: 250 },
@@ -77,14 +78,14 @@ export const HomeSliderBanners = () => {
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-2 !bg-gray-700  !px-5 !py-5 !mt-3 sm:rounded-lg border-b dark:border-gray-700">
-        <h2 className="text-white text-[20px] !font-[500] ">
+        <h2 className="text-white text-[20px] !font-[500] mb-2 sm:mb-0">
           DIAPOSITIVAS DE INICIO
           <span className="font-[400] text-[14px] !ml-3"></span>
         </h2>
 
-        <div className="col !ml-auto flex items-center justify-end !gap-3">
+        <div className="col  flex items-center justify-start md:justify-end !gap-3">
           <Button
-            className="btn btn-sm"
+            className="btn btn-sm !gap-3"
             onClick={() =>
               context.setIsOpenFullScreenPanel({
                 open: true,
@@ -92,6 +93,7 @@ export const HomeSliderBanners = () => {
               })
             }
           >
+            <BiPlusMedical />
             AÑADIR SLIDE DE INICIO
           </Button>
         </div>
