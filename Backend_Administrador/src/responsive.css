@@ -15,7 +15,8 @@
     vertical-align: top;
   }*/
 
-  .dashboardFilters {
+  /*OTRA OPCION */
+  /*.dashboardFilters {
     display: flex !important;
     flex-wrap: nowrap;
     gap: 15px;
@@ -35,6 +36,25 @@
   .dashboardFilters .search_box {
     position: relative;
     top: 14px;
+  }*/
+
+  .dashboardFilters {
+    display: block !important;
+    white-space: nowrap;
+    overflow-x: scroll;
+  }
+  .dashboardFilters::-webkit-scrollbar {
+    display: none !important;
+  }
+  .dashboardFilters .col {
+    display: inline-block;
+    vertical-align: top;
+    width: 250px;
+    padding-right: 15px;
+  }
+  .dashboardFilters .search_box {
+    position: relative;
+    top: 25px;
   }
 
   .pagination-nowrap {

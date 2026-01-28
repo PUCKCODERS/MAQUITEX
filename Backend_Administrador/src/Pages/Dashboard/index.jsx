@@ -669,8 +669,8 @@ const Dashboard = () => {
         </div>
 
         <div className="card !my-4 !pt-5 shadow-md sm:rounded-lg">
-          <div className="flex items-center w-full !text-white !bg-gray-800 !pl-5 !pr-5 !py-4 !border-b !border-gray-500 justify-between !gap-4 dashboardFilters">
-            <div className="col !w-[25%]">
+          <div className="sm:flex sm:items-center w-full grid grid-cols-1 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 !text-white !bg-gray-800 !pl-5 !pr-5 !py-4 !border-b !border-gray-500 justify-between !gap-4 ">
+            <div className="col sm:!w-[25%]">
               <h4 className="font-[bold] !text-[15px] !mb-2">CATEGORÍA</h4>
               {context?.catData?.length !== 0 && (
                 <Select
@@ -697,7 +697,7 @@ const Dashboard = () => {
               )}
             </div>
 
-            <div className="col !w-[25%]">
+            <div className="col sm:!w-[25%]">
               <h4 className="font-[bold] !text-[15px] !mb-2">SUBCATEGORÍA</h4>
               {context?.catData?.length !== 0 && (
                 <Select
@@ -729,7 +729,7 @@ const Dashboard = () => {
               )}
             </div>
 
-            <div className="col !w-[25%]">
+            <div className="col sm:!w-[25%]">
               <h4 className="font-[bold] !text-[15px] !mb-2">
                 CATEGORÍA TERCER NIVEL
               </h4>
@@ -769,7 +769,7 @@ const Dashboard = () => {
               )}
             </div>
 
-            <div className="col !w-[20%] ml-auto search_box">
+            <div className="col w-full sm:!w-[20%] ml-auto flex items-center">
               <SearchBox
                 searchQuery={productSearchQuery}
                 setSearchQuery={setProductSearchQuery}
@@ -777,7 +777,6 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-
 
         <div className="relative overflow-x-auto">
           <TableContainer sx={{ maxHeight: 440 }}>
@@ -813,7 +812,10 @@ const Dashboard = () => {
                 {isLoading === false ? (
                   productData?.length !== 0 &&
                   productData
-                    ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    ?.slice(
+                      page * rowsPerPage,
+                      page * rowsPerPage + rowsPerPage,
+                    )
                     ?.map((product, index) => {
                       return (
                         <TableRow
@@ -1044,7 +1046,7 @@ const Dashboard = () => {
         </div>
       </Dialog>
 
-      <div className="card !my-4 !pt-5 shadow-md sm:rounded-lg bg-gray-950">
+      <div className="card !my-4 !pt-5 shadow-md  bg-gray-950">
         <div className="flex items-center w-full !text-white !bg-gray-950 !pl-5 !pr-5 !py-4 !border-b !border-gray-500 justify-between">
           <div className="col w-[50%]">
             <h2 className="text-white text-[15px] sm:text-[20px] !font-[500] ">

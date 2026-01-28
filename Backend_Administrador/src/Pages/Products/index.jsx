@@ -9,6 +9,7 @@ import Progress from "../../Components/ProgressBar";
 import { GrEdit } from "react-icons/gr";
 import { ImEye } from "react-icons/im";
 import { FaTrashAlt } from "react-icons/fa";
+import { BiPlusMedical } from "react-icons/bi";
 import Pagination from "@mui/material/Pagination";
 
 import Table from "@mui/material/Table";
@@ -256,17 +257,16 @@ export const Products = () => {
 
   return (
     <>
-      <div className="flex !bg-gray-950 items-center justify-between !px-5 !py-5 !mt-3 sm:rounded-lg border-b dark:border-gray-700 ">
-        <h2 className="text-white text-[20px] !font-[500] ">
+      <div className="flex !bg-gray-700 items-center justify-between sm:rounded-lg !px-5 !py-5 !mt-3 border-b dark:border-gray-700 ">
+        <h2 className="text-white text-[15px] sm:text-[20px] !font-[500] ">
           PRODUCTOS
-          <span className="font-[400] text-[14px] !ml-3"></span>
         </h2>
 
-        <div className="col !w-[55%] !ml-auto flex items-center justify-end !gap-2">
+        <div className="col !w-[55%] !ml-auto flex items-center justify-end !gap-2 actions-responsive">
           {sortedIds?.length > 0 && (
             <Button
               variant="contained"
-              className="btn btn-sm !bg-red-800 hover:!bg-red-950 !font-bold transition-all duration-300"
+              className="btn btn-sm btn-responsive !bg-red-800 hover:!bg-red-950 !font-bold transition-all duration-300"
               onClick={deleteMultipleProduct}
             >
               ELIMINAR
@@ -274,7 +274,7 @@ export const Products = () => {
           )}
 
           <Button
-            className="btn btn-sm "
+            className="btn-sm btn-responsive !gap-3"
             onClick={() =>
               context.setIsOpenFullScreenPanel({
                 open: true,
@@ -282,14 +282,14 @@ export const Products = () => {
               })
             }
           >
-            AGREGAR PRODUCTO
+            <BiPlusMedical /> AGREGAR PRODUCTO
           </Button>
         </div>
       </div>
 
       <div className="card !my-4 !pt-5 shadow-md sm:rounded-lg dark:bg-gray-800">
-        <div className="flex items-center w-full !text-white !bg-gray-800 !pl-5 !pr-5 !py-4 !border-b !border-gray-500 justify-between !gap-4">
-          <div className="col !w-[25%]">
+        <div className="sm:flex sm:items-center w-full grid grid-cols-1 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4  !text-white !bg-gray-800 !pl-5 !pr-5 !py-4 !border-b !border-gray-500 justify-between !gap-4 ">
+          <div className="col sm:!w-[25%]">
             <h4 className="font-[bold] !text-[15px] !mb-2">CATEGORÍA</h4>
             {context?.catData?.length !== 0 && (
               <Select
@@ -316,7 +316,7 @@ export const Products = () => {
             )}
           </div>
 
-          <div className="col !w-[25%]">
+          <div className="col sm:!w-[25%]">
             <h4 className="font-[bold] !text-[15px] !mb-2">SUBCATEGORÍA</h4>
             {context?.catData?.length !== 0 && (
               <Select
@@ -348,7 +348,7 @@ export const Products = () => {
             )}
           </div>
 
-          <div className="col !w-[25%]">
+          <div className="col sm:!w-[25%]">
             <h4 className="font-[bold] !text-[15px] !mb-2">
               CATEGORÍA TERCER NIVEL
             </h4>
@@ -388,7 +388,7 @@ export const Products = () => {
             )}
           </div>
 
-          <div className="col !w-[20%] ml-auto">
+          <div className="col w-full sm:!w-[20%] ml-auto flex items-center">
             <SearchBox
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
@@ -397,178 +397,183 @@ export const Products = () => {
           </div>
         </div>
 
-        <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead className="!bg-gray-950">
-              <TableRow>
-                <TableCell>
-                  <Checkbox
-                    {...label}
-                    size="small"
-                    className="!text-white"
-                    onChange={handleSelectAll}
-                    checked={
-                      productData?.length > 0
-                        ? productData.every((item) => item.checked)
-                        : false
-                    }
-                  />
-                </TableCell>
-
-                {columns.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                  >
-                    {column.label}
+        <div className="relative overflow-x-auto">
+          <TableContainer sx={{ maxHeight: 440 }}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead className="!bg-gray-950">
+                <TableRow>
+                  <TableCell>
+                    <Checkbox
+                      {...label}
+                      size="small"
+                      className="!text-white"
+                      onChange={handleSelectAll}
+                      checked={
+                        productData?.length > 0
+                          ? productData.every((item) => item.checked)
+                          : false
+                      }
+                    />
                   </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {isLoading === false ? (
-                productData?.length !== 0 &&
-                productData
-                  ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  ?.map((product, index) => {
-                    return (
-                      <TableRow
-                        key={index}
-                        className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200"
-                      >
-                        <TableCell style={{ minWidth: columns.minWidth }}>
-                          <Checkbox
-                            {...label}
-                            size="small"
-                            className="!text-white"
-                            checked={product.checked === true ? true : false}
-                            onChange={(e) =>
-                              handleCheckboxChange(e, product._id, index)
-                            }
-                          />
-                        </TableCell>
-                        <TableCell style={{ minWidth: columns.minWidth }}>
-                          <div className="flex items-center !gap-4 w-[300px] ">
-                            <div className="img !w-[85px] !h-[85px] rounded-md overflow-hidden group !min-w-[85px]">
-                              <Link
-                                to={`/product/${product?._id}`}
-                                data-discover="true"
-                              >
-                                <LazyLoadImage
-                                  alt={"image"}
-                                  effect="blur"
-                                  src={product?.images[0]}
-                                  className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
-                                />
-                              </Link>
-                            </div>
 
-                            <div className="info w-[75%]">
-                              <h3 className=" !font-[600] text-[12px] leading-4">
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ minWidth: column.minWidth }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {isLoading === false ? (
+                  productData?.length !== 0 &&
+                  productData
+                    ?.slice(
+                      page * rowsPerPage,
+                      page * rowsPerPage + rowsPerPage,
+                    )
+                    ?.map((product, index) => {
+                      return (
+                        <TableRow
+                          key={index}
+                          className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200"
+                        >
+                          <TableCell style={{ minWidth: columns.minWidth }}>
+                            <Checkbox
+                              {...label}
+                              size="small"
+                              className="!text-white"
+                              checked={product.checked === true ? true : false}
+                              onChange={(e) =>
+                                handleCheckboxChange(e, product._id, index)
+                              }
+                            />
+                          </TableCell>
+                          <TableCell style={{ minWidth: columns.minWidth }}>
+                            <div className="flex items-center !gap-4 w-[300px] ">
+                              <div className="img !w-[85px] !h-[85px] rounded-md overflow-hidden group !min-w-[85px]">
                                 <Link
                                   to={`/product/${product?._id}`}
                                   data-discover="true"
-                                  className="!text-white hover:!text-[white] !cursor-pointer"
                                 >
-                                  {product?.name}
+                                  <LazyLoadImage
+                                    alt={"image"}
+                                    effect="blur"
+                                    src={product?.images[0]}
+                                    className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+                                  />
                                 </Link>
-                              </h3>
+                              </div>
 
-                              <p className="!text-[15px] !font-[bold] !text-white !mt-1">
-                                {product?.brand}
-                              </p>
+                              <div className="info w-[75%]">
+                                <h3 className=" !font-[600] text-[12px] leading-4">
+                                  <Link
+                                    to={`/product/${product?._id}`}
+                                    data-discover="true"
+                                    className="!text-white hover:!text-[white] !cursor-pointer"
+                                  >
+                                    {product?.name}
+                                  </Link>
+                                </h3>
+
+                                <p className="!text-[15px] !font-[bold] !text-white !mt-1">
+                                  {product?.brand}
+                                </p>
+                              </div>
                             </div>
-                          </div>
-                        </TableCell>
-                        <TableCell
-                          style={{ minWidth: columns.minWidth }}
-                          className="!text-white"
-                        >
-                          {product?.catName}
-                        </TableCell>
-                        <TableCell
-                          style={{ minWidth: columns.minWidth }}
-                          className="!text-white"
-                        >
-                          {product?.subCat}
-                        </TableCell>
+                          </TableCell>
+                          <TableCell
+                            style={{ minWidth: columns.minWidth }}
+                            className="!text-white"
+                          >
+                            {product?.catName}
+                          </TableCell>
+                          <TableCell
+                            style={{ minWidth: columns.minWidth }}
+                            className="!text-white"
+                          >
+                            {product?.subCat}
+                          </TableCell>
 
-                        <TableCell
-                          style={{ minWidth: columns.minWidth }}
-                          className="!text-white"
-                        >
-                          <div class="flex !gap-1 flex-col">
-                            <span class="oldPrice line-through leading-3 text-[15px] font-[500]">
-                              &#36; {product?.oldPrice}
-                            </span>
-                            <span class="price text-[white] text-[15px] font-[600]">
-                              &#36; {product?.price}
-                            </span>
-                          </div>
-                        </TableCell>
+                          <TableCell
+                            style={{ minWidth: columns.minWidth }}
+                            className="!text-white"
+                          >
+                            <div class="flex !gap-1 flex-col">
+                              <span class="oldPrice line-through leading-3 text-[15px] font-[500]">
+                                &#36; {product?.oldPrice}
+                              </span>
+                              <span class="price text-[white] text-[15px] font-[600]">
+                                &#36; {product?.price}
+                              </span>
+                            </div>
+                          </TableCell>
 
-                        <TableCell
-                          style={{ minWidth: columns.minWidth }}
-                          className="!text-white"
-                        >
-                          <p className="text-[15px] !w-[100px] ">
-                            <Rating
-                              name="half-rating"
-                              size="small"
-                              defaultValue={product?.rating}
-                              readOnly
-                            />
-                          </p>
-                        </TableCell>
-                        <TableCell
-                          style={{ minWidth: columns.minWidth }}
-                          className="!text-white"
-                        >
-                          <div className="flex items-center !gap-1">
-                            <Button
-                              className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
-                              onClick={() =>
-                                context.setIsOpenFullScreenPanel({
-                                  open: true,
-                                  model: "EDITAR PRODUCTO",
-                                  id: product?._id,
-                                })
-                              }
-                            >
-                              <GrEdit className=" !text-[20px] " />
-                            </Button>
-                            <Link href={`/product/${product?._id}`} passHref>
-                              <Button className="!-[35px] !h-[35px] !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                                <ImEye className="!text-[20px]" />
+                          <TableCell
+                            style={{ minWidth: columns.minWidth }}
+                            className="!text-white"
+                          >
+                            <p className="text-[15px] !w-[100px] ">
+                              <Rating
+                                name="half-rating"
+                                size="small"
+                                defaultValue={product?.rating}
+                                readOnly
+                              />
+                            </p>
+                          </TableCell>
+                          <TableCell
+                            style={{ minWidth: columns.minWidth }}
+                            className="!text-white"
+                          >
+                            <div className="flex items-center !gap-1">
+                              <Button
+                                className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                                onClick={() =>
+                                  context.setIsOpenFullScreenPanel({
+                                    open: true,
+                                    model: "EDITAR PRODUCTO",
+                                    id: product?._id,
+                                  })
+                                }
+                              >
+                                <GrEdit className=" !text-[20px] " />
                               </Button>
-                            </Link>
+                              <Link href={`/product/${product?._id}`} passHref>
+                                <Button className="!-[35px] !h-[35px] !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                                  <ImEye className="!text-[20px]" />
+                                </Button>
+                              </Link>
 
-                            <Button
-                              className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
-                              onClick={() => deleteProduct(product?._id)}
-                            >
-                              <FaTrashAlt className="!text-[20px]" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })
-              ) : (
-                <>
-                  <TableRow>
-                    <TableCell colspan={8}>
-                      <div className="flex items-center justify-center w-full min-h-[400px]">
-                        <CircularProgress className="!text-white" />
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                </>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                              <Button
+                                className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                                onClick={() => deleteProduct(product?._id)}
+                              >
+                                <FaTrashAlt className="!text-[20px]" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                ) : (
+                  <>
+                    <TableRow>
+                      <TableCell colspan={8}>
+                        <div className="flex items-center justify-center w-full min-h-[400px]">
+                          <CircularProgress className="!text-white" />
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  </>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"

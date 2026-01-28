@@ -77,8 +77,10 @@ export const Users = () => {
   const context = useContext(MyContext);
   console.log("Users Component - context.userData:", context.userData);
   const loggedInUserIdForDebug = context.userData?._id;
-  console.log("Users Component - loggedInUserIdForDebug:", loggedInUserIdForDebug);
-
+  console.log(
+    "Users Component - loggedInUserIdForDebug:",
+    loggedInUserIdForDebug,
+  );
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -100,7 +102,9 @@ export const Users = () => {
       if (res?.error === false) {
         const loggedInUserId = context.userData?._id;
         console.log("Logged in user ID (initial load):", loggedInUserId);
-        const filteredUsers = res?.users.filter(user => user._id !== loggedInUserId);
+        const filteredUsers = res?.users.filter(
+          (user) => user._id !== loggedInUserId,
+        );
         console.log("Filtered users (initial load):", filteredUsers);
         setUserData(filteredUsers);
         setUserTotalData(filteredUsers);
@@ -116,20 +120,33 @@ export const Users = () => {
       const filteredItems = userTotalData?.filter(
         (user) =>
           (user._id?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          user.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          user.createdAt?.toLowerCase().includes(searchQuery.toLowerCase())) &&
-          user._id !== loggedInUserId
+            user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            user.email?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            user.createdAt
+              ?.toLowerCase()
+              .includes(searchQuery.toLowerCase())) &&
+          user._id !== loggedInUserId,
       );
-      console.log("Filtered users by search (excluding logged in user):", filteredItems);
+      console.log(
+        "Filtered users by search (excluding logged in user):",
+        filteredItems,
+      );
       setUserData(filteredItems);
     } else {
       fetchDataFromApi(`/api/user/getAllUsers`).then((res) => {
-        console.log("All users from API (search query effect, no search query):", res?.users);
+        console.log(
+          "All users from API (search query effect, no search query):",
+          res?.users,
+        );
         if (res?.error === false) {
           const allUsers = res?.users || [];
-          const filteredUsers = allUsers.filter(user => user._id !== loggedInUserId);
-          console.log("Filtered users (search query effect, no search query):", filteredUsers);
+          const filteredUsers = allUsers.filter(
+            (user) => user._id !== loggedInUserId,
+          );
+          console.log(
+            "Filtered users (search query effect, no search query):",
+            filteredUsers,
+          );
           setUserData(filteredUsers);
           setIsloading(false);
         }
@@ -157,7 +174,7 @@ export const Users = () => {
 
   const handleCheckboxChangeUser = (e, id /*, index*/) => {
     const updatedItems = userData.map((item) =>
-      item._id === id ? { ...item, checked: !item.checked } : item
+      item._id === id ? { ...item, checked: !item.checked } : item,
     );
 
     setUserData(updatedItems);
@@ -214,7 +231,9 @@ export const Users = () => {
       let userArr = [];
       if (res?.error === false) {
         const loggedInUserId = context.userData?._id;
-        const filteredUsers = res?.users.filter(user => user._id !== loggedInUserId);
+        const filteredUsers = res?.users.filter(
+          (user) => user._id !== loggedInUserId,
+        );
 
         for (let i = 0; i < filteredUsers.length; i++) {
           userArr[i] = filteredUsers[i];
@@ -258,159 +277,164 @@ export const Users = () => {
           </div>
         </div>
 
-        <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead className="!bg-gray-950">
-              <TableRow>
-                <TableCell>
-                  <Checkbox
-                    {...label}
-                    size="small"
-                    className="!text-white"
-                    onChange={handleSelectAllUser}
-                    checked={
-                      userData?.length > 0
-                        ? userData.every((item) => item.checked)
-                        : false
-                    }
-                  />
-                </TableCell>
-
-                {columnsUser.map((column) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                  >
-                    <span className="whitespace-nowrap">{column.label}</span>
+        <div className="relative overflow-x-auto">
+          <TableContainer sx={{ maxHeight: 440 }}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead className="!bg-gray-950">
+                <TableRow>
+                  <TableCell>
+                    <Checkbox
+                      {...label}
+                      size="small"
+                      className="!text-white"
+                      onChange={handleSelectAllUser}
+                      checked={
+                        userData?.length > 0
+                          ? userData.every((item) => item.checked)
+                          : false
+                      }
+                    />
                   </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {isLoading === false ? (
-                userData?.length !== 0 &&
-                userData
-                  ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  ?.reverse()
-                  .map((user, index) => {
-                    return (
-                      <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
-                        <TableCell style={{ minWidth: columnsUser.minWidth }}>
-                          <Checkbox
-                            {...label}
-                            size="small"
-                            className="!text-white"
-                            checked={user.checked === true ? true : false}
-                            onChange={(e) =>
-                              handleCheckboxChangeUser(e, user._id, index)
-                            }
-                          />
-                        </TableCell>
-                        <TableCell style={{ minWidth: columnsUser.minWidth }}>
-                          <div className="flex items-center !gap-4 w-[70px] ">
-                            <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
-                              <Link to="/product/45745">
-                                <img
-                                  src={
-                                    user?.avatar !== "" &&
-                                    user?.avatar !== undefined
-                                      ? user?.avatar
-                                      : "/"
-                                  }
-                                  className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
-                                />
-                              </Link>
+
+                  {columnsUser.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ minWidth: column.minWidth }}
+                    >
+                      <span className="whitespace-nowrap">{column.label}</span>
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {isLoading === false ? (
+                  userData?.length !== 0 &&
+                  userData
+                    ?.slice(
+                      page * rowsPerPage,
+                      page * rowsPerPage + rowsPerPage,
+                    )
+                    ?.reverse()
+                    .map((user, index) => {
+                      return (
+                        <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
+                          <TableCell style={{ minWidth: columnsUser.minWidth }}>
+                            <Checkbox
+                              {...label}
+                              size="small"
+                              className="!text-white"
+                              checked={user.checked === true ? true : false}
+                              onChange={(e) =>
+                                handleCheckboxChangeUser(e, user._id, index)
+                              }
+                            />
+                          </TableCell>
+                          <TableCell style={{ minWidth: columnsUser.minWidth }}>
+                            <div className="flex items-center !gap-4 w-[70px] ">
+                              <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
+                                <Link to="/product/45745">
+                                  <img
+                                    src={
+                                      user?.avatar !== "" &&
+                                      user?.avatar !== undefined
+                                        ? user?.avatar
+                                        : "/"
+                                    }
+                                    className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+                                  />
+                                </Link>
+                              </div>
                             </div>
-                          </div>
-                        </TableCell>
-                        <TableCell
-                          style={{ minWidth: columnsUser.minWidth }}
-                          className="!text-white"
-                        >
-                          {user?.name}
-                        </TableCell>
-                        <TableCell
-                          style={{ minWidth: columnsUser.minWidth }}
-                          className="!text-white"
-                        >
-                          <span className="flex items-center !gap-2">
-                            <MdEmail /> {user?.email}
-                          </span>
-                        </TableCell>
+                          </TableCell>
+                          <TableCell
+                            style={{ minWidth: columnsUser.minWidth }}
+                            className="!text-white"
+                          >
+                            {user?.name}
+                          </TableCell>
+                          <TableCell
+                            style={{ minWidth: columnsUser.minWidth }}
+                            className="!text-white"
+                          >
+                            <span className="flex items-center !gap-2">
+                              <MdEmail /> {user?.email}
+                            </span>
+                          </TableCell>
 
-                        <TableCell
-                          style={{ minWidth: columnsUser.minWidth }}
-                          className="!text-white"
-                        >
-                          <span className="flex items-center !gap-2">
-                            <FaPhoneAlt />{" "}
-                            {user?.mobile === null ? "NINGUNO" : user?.mobile}
-                          </span>
-                        </TableCell>
+                          <TableCell
+                            style={{ minWidth: columnsUser.minWidth }}
+                            className="!text-white"
+                          >
+                            <span className="flex items-center !gap-2">
+                              <FaPhoneAlt />{" "}
+                              {user?.mobile === null ? "NINGUNO" : user?.mobile}
+                            </span>
+                          </TableCell>
 
-                        <TableCell
-                          style={{ minWidth: columnsUser.minWidth }}
-                          className="!text-white"
-                        >
-                          {user?.verify_email === false ? (
-                            <span
-                              className={`inline-block !py-1 !px-4 rounded-full text-[12px] capitalize 
+                          <TableCell
+                            style={{ minWidth: columnsUser.minWidth }}
+                            className="!text-white"
+                          >
+                            {user?.verify_email === false ? (
+                              <span
+                                className={`inline-block !py-1 !px-4 rounded-full text-[12px] capitalize 
                                   bg-gray-600 text-white 
                                 `}
-                            >
-                              NO VERIFICADO
-                            </span>
-                          ) : (
-                            <span
-                              className={`inline-block !py-1 !px-4 rounded-full text-[12px] capitalize 
+                              >
+                                NO VERIFICADO
+                              </span>
+                            ) : (
+                              <span
+                                className={`inline-block !py-1 !px-4 rounded-full text-[12px] capitalize 
                                   bg-green-800 text-white
                                 `}
-                            >
-                              VERIFICADO
-                            </span>
-                          )}
-                        </TableCell>
+                              >
+                                VERIFICADO
+                              </span>
+                            )}
+                          </TableCell>
 
-                        <TableCell
-                          style={{ minWidth: columnsUser.minWidth }}
-                          className="!text-white"
-                        >
-                          <span className="flex items-center !gap-2">
-                            <BsFillCalendar2DateFill />{" "}
-                            {user?.updatedAt?.split("T")[0]}
-                          </span>
-                        </TableCell>
-                        <TableCell
-                          style={{ minWidth: columnsUser.minWidth }}
-                          className="!text-white"
-                        >
-                          <div className="flex items-center justify-center !gap-1">
-                            <Button
-                              className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
-                              onClick={() => deleteUser(user?._id)}
-                            >
-                              <FaTrashAlt className="!text-[20px]" />
-                            </Button>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })
-              ) : (
-                <>
-                  <TableRow>
-                    <TableCell colspan={8}>
-                      <div className="flex items-center justify-center w-full min-h-[400px]">
-                        <CircularProgress className="!text-white" />
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                </>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
+                          <TableCell
+                            style={{ minWidth: columnsUser.minWidth }}
+                            className="!text-white"
+                          >
+                            <span className="flex items-center !gap-2">
+                              <BsFillCalendar2DateFill />{" "}
+                              {user?.updatedAt?.split("T")[0]}
+                            </span>
+                          </TableCell>
+                          <TableCell
+                            style={{ minWidth: columnsUser.minWidth }}
+                            className="!text-white"
+                          >
+                            <div className="flex items-center justify-center !gap-1">
+                              <Button
+                                className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                                onClick={() => deleteUser(user?._id)}
+                              >
+                                <FaTrashAlt className="!text-[20px]" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })
+                ) : (
+                  <>
+                    <TableRow>
+                      <TableCell colspan={8}>
+                        <div className="flex items-center justify-center w-full min-h-[400px]">
+                          <CircularProgress className="!text-white" />
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  </>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </div>
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
