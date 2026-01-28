@@ -72,7 +72,7 @@ export const BannerV1List = () => {
     <>
       <div className="flex !bg-gray-700 items-center justify-between !px-5 !py-5 !mt-3 sm:rounded-lg border-b dark:border-gray-700">
         <h2 className="text-white text-[20px] !font-[500] ">
-          LISTA DE BANNERS (CATEGORIAS DE TERCER NIVEL )
+          LISTA DE BANNERS CATEGORIAS DE TERCER NIVEL
           <span className="font-[400] text-[14px] !ml-3"></span>
         </h2>
 
@@ -82,7 +82,7 @@ export const BannerV1List = () => {
             onClick={() =>
               context.setIsOpenFullScreenPanel({
                 open: true,
-                model: "AGREGAR BANNER",
+                model: "AGREGAR BANNER 3ER SUB CATEGORIA ",
               })
             }
           >
@@ -133,7 +133,7 @@ export const BannerV1List = () => {
                             onClick={() =>
                               context.setIsOpenFullScreenPanel({
                                 open: true,
-                                model: "EDITAR BANNER",
+                                model: "EDITAR BANNER 3ER SUB CATEGORIA",
                                 id: item?._id,
                               })
                             }

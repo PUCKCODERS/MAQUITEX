@@ -76,13 +76,13 @@ export const HomeSliderBanners = () => {
 
   return (
     <>
-      <div className="flex !bg-gray-700 items-center justify-between !px-5 !py-5 !mt-3 sm:rounded-lg border-b dark:border-gray-700">
+      <div className="grid grid-cols-1 md:grid-cols-2 !bg-gray-700  !px-5 !py-5 !mt-3 sm:rounded-lg border-b dark:border-gray-700">
         <h2 className="text-white text-[20px] !font-[500] ">
           DIAPOSITIVAS DE INICIO
           <span className="font-[400] text-[14px] !ml-3"></span>
         </h2>
 
-        <div className="col !w-[40%] !ml-auto flex items-center justify-end !gap-3">
+        <div className="col !ml-auto flex items-center justify-end !gap-3">
           <Button
             className="btn btn-sm"
             onClick={() =>

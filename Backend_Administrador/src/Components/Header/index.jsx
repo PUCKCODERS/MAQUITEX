@@ -90,7 +90,7 @@ const Header = () => {
     <>
       <header
         className={`!w-full !h-[auto] !py-2 ${
-          context.isSidebarOpen === true ? "!pl-65" : "!pl-5"
+          context.isSidebarOpen === true ? "!pl-68" : "!pl-5"
         } ${context.isSidebarOpen === true && context?.windowWidth < 992 && "pl-80"} shadow-md !pr-7 !bg-[#fff]  flex items-center justify-between transition-all duration-300 fixed !top-0 !left-0 z-[50]`}
       >
         <div className="part1">
@@ -284,18 +284,14 @@ const Header = () => {
         {context?.isOpenFullScreenPanel?.model === "EDITAR PRODUCTO" && (
           <EditProduct />
         )}
-        {context?.isOpenFullScreenPanel?.model === "AGREGAR BANNER" && (
-          <AddBannerV1 />
-        )}
-        {context?.isOpenFullScreenPanel?.model === "EDITAR BANNER" && (
-          <EditBannerV1 />
-        )}
-        {context?.isOpenFullScreenPanel?.model === "AGREGAR BANNER PROMO" && (
-          <AddBannerV2 />
-        )}
-        {context?.isOpenFullScreenPanel?.model === "EDITAR BANNER PROMO" && (
-          <EditBannerV2 />
-        )}
+        {context?.isOpenFullScreenPanel?.model ===
+          "AGREGAR BANNER 3ER SUB CATEGORIA " && <AddBannerV1 />}
+        {context?.isOpenFullScreenPanel?.model ===
+          "EDITAR BANNER 3ER SUB CATEGORIA" && <EditBannerV1 />}
+        {context?.isOpenFullScreenPanel?.model ===
+          "AGREGAR BANNER SUB CATEGORIA" && <AddBannerV2 />}
+        {context?.isOpenFullScreenPanel?.model ===
+          "EDITAR BANNER SUB CATEGORIA" && <EditBannerV2 />}
         {context?.isOpenFullScreenPanel?.model === "AGREGAR BLOG" && (
           <AddBlog />
         )}
