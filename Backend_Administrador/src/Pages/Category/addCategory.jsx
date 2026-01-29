@@ -58,7 +58,7 @@ const AddCategory = () => {
     if (formFields.name === "") {
       context.alertBox(
         "error",
-        "POR FAVOR INTRODUZCA EL NOMBRE DE LA CATEGORIA"
+        "POR FAVOR INTRODUZCA EL NOMBRE DE LA CATEGORIA",
       );
       setIsLoading(false);
       return false;
@@ -67,7 +67,7 @@ const AddCategory = () => {
     if (previews?.length === 0) {
       context.alertBox(
         "error",
-        "POR FAVOR SELECCIONE LA IMAGEN DE LA CATEGORIA"
+        "POR FAVOR SELECCIONE LA IMAGEN DE LA CATEGORIA",
       );
       setIsLoading(false);
       return false;
@@ -88,33 +88,33 @@ const AddCategory = () => {
 
   return (
     <section className="!p-5 !bg-gray-200">
-      <form className="form !py-3 !p-8" onSubmit={handleSubmit}>
-        <div className="grid grid-cols-1 !mb-3">
-          <div className="col w-[50%]">
-            <h3 className="text-[#082c55] font-bold text-[14px] !mb-2">
-              NOMBRE DE CATEGORÍA
-            </h3>
-            <input
-              type="text"
-              className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
-              name="name"
-              value={formFields.name}
-              onChange={onChangeInput}
-            />
+      <form className="form py-1 p-1 md:p-8 md:py-1" onSubmit={handleSubmit}>
+        <div className="scroll max-h-[72vh]  pr-1 md:pr-4 pt-4">
+          <div className="grid grid-cols-1 !mb-3">
+            <div className="col w-full sm:w-[50%]">
+              <h3 className="text-[#082c55] font-bold text-[14px] !mb-2">
+                NOMBRE DE CATEGORÍA
+              </h3>
+              <input
+                type="text"
+                className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+                name="name"
+                value={formFields.name}
+                onChange={onChangeInput}
+              />
+            </div>
           </div>
         </div>
 
-        <br />
-
-        <h3 className="text-[#082c55] font-bold text-[18px] !mb-2">
+        <h3 className="text-[#082c55] font-bold text-[14px] !mb-2 !mt-5">
           IMAGEN DE CATEGORÍA
         </h3>
 
-        <div className="grid grid-cols-7 !gap-2">
+        <div className="grid grid-cols-2 md:grid-cols-7 !gap-2 ">
           {previews?.length !== 0 &&
             previews?.map((image, index) => {
               return (
-                <div className="uploadBoxWrapper relative" key={index}>
+                <div className="uploadBoxWrapper  relative" key={index}>
                   <span
                     className="!absolute w-[20px] h-[20px] rounded-full overflow-hidden !text-[#fff]  !bg-[#030712] hover:!text-[#030712] hover:!bg-[#fff] !shadow-[0px_0px_0px_3px_#6b6c6d] hover:!shadow-[0px_0px_0px_3px_#030712]
                           -top-[0x] -right-[0px] flex items-center justify-center z-50 cursor-pointer"
