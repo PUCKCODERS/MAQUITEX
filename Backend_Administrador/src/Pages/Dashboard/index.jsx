@@ -687,7 +687,7 @@ const Dashboard = () => {
                     return (
                       <MenuItem
                         value={cat?._id}
-                        className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                        className="!font-bold  !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
                       >
                         {cat?.name}
                       </MenuItem>
@@ -802,6 +802,7 @@ const Dashboard = () => {
                       key={column.id}
                       align={column.align}
                       style={{ minWidth: column.minWidth }}
+                      className="!font-[bold]"
                     >
                       {column.label}
                     </TableCell>
@@ -1096,6 +1097,7 @@ const Dashboard = () => {
                       key={column.id}
                       align={column.align}
                       style={{ minWidth: column.minWidth }}
+                      className="!font-[bold]"
                     >
                       <span className="whitespace-nowrap">{column.label}</span>
                     </TableCell>

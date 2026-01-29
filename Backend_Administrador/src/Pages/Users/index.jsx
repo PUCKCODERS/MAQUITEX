@@ -301,6 +301,7 @@ export const Users = () => {
                       key={column.id}
                       align={column.align}
                       style={{ minWidth: column.minWidth }}
+                      className="!font-[bold]"
                     >
                       <span className="whitespace-nowrap">{column.label}</span>
                     </TableCell>
@@ -443,7 +444,7 @@ export const Users = () => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
-          className="!bg-gray-100 !text-balck !border-t !border-gray-500"
+          className="!bg-gray-100 !text-black !border-t !border-gray-500"
         />
       </div>
 
