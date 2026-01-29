@@ -139,59 +139,61 @@ const AddSubCategory = () => {
   };
 
   return (
-    <section className="!p-5 !bg-gray-200 grid grid-cols-2 !gap-10">
-      <form className="form !py-3 !p-8" onSubmit={handleSubmit}>
-        <h4 className="text-[#000] font-bold text-[25px] !mb-3">
+    <section className="!p-5 !bg-gray-200 grid grid-cols-1 md:grid-cols-2 !gap-10">
+      <form className="form py-1 p-1 md:p-8 md:py-1" onSubmit={handleSubmit}>
+        <h4 className="text-[#000] font-bold text-[20px] sm:text-[25px] !mb-3">
           AGREGAR SUBCATEGORÍA
         </h4>
-        <div className="grid grid-cols-2 !mb-3 !gap-5">
-          <div className="col">
-            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-              CATEGORÍA PRINCIPAL
-            </h3>
-            <Select
-              labelId="demo-simple-select-label"
-              id="productCatDrop"
-              size="small"
-              className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-              value={productCat}
-              label="Category"
-              onChange={handleChangeProductCat}
-            >
-              {context?.catData?.length !== 0 &&
-                context?.catData?.map((item, index) => {
-                  return (
-                    <MenuItem
-                      key={index}
-                      value={item?._id}
-                      onClick={selecteCatFun(item?.name)}
-                      className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-100"
-                    >
-                      {item?.name}
-                    </MenuItem>
-                  );
-                })}
-            </Select>
-          </div>
+        <div className="scroll max-h-[72vh]  pr-1 md:pr-4 pt-4">
+          <div className="grid grid-cols-1 md:grid-cols-1  !mb-3 !gap-5">
+            <div className="col">
+              <h3 className="text-[#082c55] font-bold text-[14px] sm:text-[14px] !mb-1">
+                CATEGORÍA PRINCIPAL
+              </h3>
+              <Select
+                labelId="demo-simple-select-label"
+                id="productCatDrop"
+                size="small"
+                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                value={productCat}
+                label="Category"
+                onChange={handleChangeProductCat}
+              >
+                {context?.catData?.length !== 0 &&
+                  context?.catData?.map((item, index) => {
+                    return (
+                      <MenuItem
+                        key={index}
+                        value={item?._id}
+                        onClick={selecteCatFun(item?.name)}
+                        className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-100"
+                      >
+                        {item?.name}
+                      </MenuItem>
+                    );
+                  })}
+              </Select>
+            </div>
 
-          <div className="col">
-            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-              NOMBRE DE SUBCATEGORÍA
-            </h3>
-            <input
-              type="text"
-              className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
-              name="name"
-              value={formFields.name}
-              onChange={onChangeInput}
-            />
+            <div className="col">
+              <h3 className="text-[#082c55] font-bold  text-[14px] sm:text-[14px] !mb-1">
+                NOMBRE DE SUBCATEGORÍA
+              </h3>
+              <input
+                type="text"
+                className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+                name="name"
+                value={formFields.name}
+                onChange={onChangeInput}
+              />
+            </div>
           </div>
         </div>
 
         <br />
 
         <br />
-        <div className="w-[325px]">
+        <div className="w-[250px] sm:w-[325px]">
           <Button type="submit" className="btn-blue btn-lg w-full !gap-2">
             {isLoading === true ? (
               <CircularProgress color="inherit" />
@@ -205,63 +207,65 @@ const AddSubCategory = () => {
         </div>
       </form>
 
-      <form className="form !py-3 !p-8" onSubmit={handleSubmit2}>
-        <h4 className="text-[#000] font-bold text-[25px] !mb-3">
-          AGREGAR CATEGORÍA DE TERCER NIVEL
+      <form className="form py-1 p-1 md:p-8 md:py-1" onSubmit={handleSubmit2}>
+        <h4 className="text-[#000]  font-bold text-[20px] sm:text-[25px] !mb-3">
+          CATEGORÍA TERCER NIVEL
         </h4>
-        <div className="grid grid-cols-2 !mb-3 !gap-5">
-          <div className="col">
-            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-              SUBCATEGORÍA
-            </h3>
-            <Select
-              labelId="demo-simple-select-label"
-              id="productCatDrop"
-              size="small"
-              className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-              value={productCat2}
-              label="Category"
-              onChange={handleChangeProductCat2}
-            >
-              {context?.catData?.length !== 0 &&
-                context?.catData?.map((item /*, index*/) => {
-                  return (
-                    item?.children?.length !== 0 &&
-                    item?.children?.map((item2, index) => {
-                      return (
-                        <MenuItem
-                          key={index}
-                          value={item2?._id}
-                          onClick={selecteCatFun2(item2?.name)}
-                          className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-100"
-                        >
-                          {item2?.name}
-                        </MenuItem>
-                      );
-                    })
-                  );
-                })}
-            </Select>
-          </div>
+        <div className="scroll max-h-[72vh]  pr-1 md:pr-4 pt-4">
+          <div className="grid grid-cols-1 md:grid-cols-1 !mb-3 !gap-5">
+            <div className="col">
+              <h3 className="text-[#082c55] font-bold text-[14px] sm:text-[14px] !mb-1">
+                SUBCATEGORÍA
+              </h3>
+              <Select
+                labelId="demo-simple-select-label"
+                id="productCatDrop"
+                size="small"
+                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                value={productCat2}
+                label="Category"
+                onChange={handleChangeProductCat2}
+              >
+                {context?.catData?.length !== 0 &&
+                  context?.catData?.map((item /*, index*/) => {
+                    return (
+                      item?.children?.length !== 0 &&
+                      item?.children?.map((item2, index) => {
+                        return (
+                          <MenuItem
+                            key={index}
+                            value={item2?._id}
+                            onClick={selecteCatFun2(item2?.name)}
+                            className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-100"
+                          >
+                            {item2?.name}
+                          </MenuItem>
+                        );
+                      })
+                    );
+                  })}
+              </Select>
+            </div>
 
-          <div className="col">
-            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-              NOMBRE DE TERCER NIVEL
-            </h3>
-            <input
-              type="text"
-              className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
-              name="name"
-              value={formFields2.name}
-              onChange={onChangeInput2}
-            />
+            <div className="col">
+              <h3 className="text-[#082c55] font-bold text-[14px] sm:text-[14px] !mb-1">
+                NOMBRE DE SUBCATEGORÍA
+              </h3>
+              <input
+                type="text"
+                className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+                name="name"
+                value={formFields2.name}
+                onChange={onChangeInput2}
+              />
+            </div>
           </div>
         </div>
 
         <br />
 
         <br />
-        <div className="w-[325px]">
+        <div className="w-[250px] sm:w-[325px]">
           <Button type="submit" className="btn-blue btn-lg w-full !gap-2">
             {isLoading2 === true ? (
               <CircularProgress color="inherit" />

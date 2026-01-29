@@ -157,7 +157,9 @@ export const EditSubCatBox = (props) => {
 
         {editMode === false && (
           <>
-            <span className="font-bold text-[16px] !text-[#fff]">
+            <span
+              className={`font-bold ${props.fontSize || "text-[16px]"} !text-[#fff]`}
+            >
               {props?.name}
             </span>
             <div className="flex items-center ml-auto !gap-2">
