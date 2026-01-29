@@ -122,7 +122,7 @@ const Orders = () => {
   return (
     <div className="card my-2 md:mt-4 shadow-md sm:rounded-lg dark:bg-gray-700">
       <div className="grid grid-cols-1 lg:grid-cols-2 !bg-gray-950 items-center justify-between !px-5 !py-5 border-b dark:border-gray-700 flex-col sm:flex-row">
-        <h2 className="text-white text-[15px] sm:text-[20px] text-left font-[500] mb-2 lg:mb-0 ">
+        <h2 className="text-white text-[20px] sm:text-[20px] text-left font-[500] mb-2 lg:mb-0 ">
           PEDIDOS RECIENTES
         </h2>
         <div className="ml-auto w-full">

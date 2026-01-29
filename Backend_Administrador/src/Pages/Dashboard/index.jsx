@@ -638,7 +638,7 @@ const Dashboard = () => {
         )}
 
       <div className="card !my-4  shadow-md sm:rounded-lg dark:bg-gray-800 ">
-        <div className="flex !bg-gray-950 items-center justify-between  !px-5 !py-5 !mt-3 border-b dark:border-gray-700 ">
+        <div className="flex !bg-gray-700 items-center justify-between  !px-5 !py-5 !mt-3 border-b dark:border-gray-700 ">
           <h2 className="text-white text-[15px] sm:text-[20px] !font-[500] ">
             PRODUCTOS
           </h2>

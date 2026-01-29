@@ -82,7 +82,7 @@ export const HomeSliderBanners = () => {
           DIAPOSITIVAS DE INICIO
         </h2>
 
-        <div className="col  flex items-center justify-start md:justify-end !gap-3">
+        <div className="col flex items-center justify-start md:justify-end !gap-3">
           <Button
             className="btn btn-blue !gap-3"
             onClick={() =>
