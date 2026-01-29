@@ -84,7 +84,7 @@ export const HomeSliderBanners = () => {
 
         <div className="col  flex items-center justify-start md:justify-end !gap-3">
           <Button
-            className="btn btn-sm !gap-3"
+            className="btn btn-blue !gap-3"
             onClick={() =>
               context.setIsOpenFullScreenPanel({
                 open: true,
@@ -93,7 +93,7 @@ export const HomeSliderBanners = () => {
             }
           >
             <BiPlusMedical />
-            AÑADIR SLIDE DE INICIO
+            AÑADIR SLIDE
           </Button>
         </div>
       </div>

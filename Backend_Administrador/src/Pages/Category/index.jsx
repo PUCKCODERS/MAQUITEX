@@ -81,9 +81,9 @@ export const CategoryList = () => {
           LISTA DE CATEGORÍAS
         </h2>
 
-        <div className="col  flex items-center justify-start md:justify-end !gap-3">
+        <div className="col flex items-center justify-start md:justify-end !gap-3">
           <Button
-            className="btn btn-sm !gap-3"
+            className="btn btn-blue !gap-3"
             onClick={() =>
               context.setIsOpenFullScreenPanel({
                 open: true,
@@ -92,7 +92,7 @@ export const CategoryList = () => {
             }
           >
             <BiPlusMedical />
-            AÑADIR NUEVA CATEGORÍA
+            AÑADIR CATEGORÍA
           </Button>
         </div>
       </div>
@@ -138,15 +138,15 @@ export const CategoryList = () => {
                       </TableCell>
 
                       <TableCell width={100}>
-                        <span className="text-[14px] sm:text-[18px] !font-bold !font-[bold] !inline-block !rounded-md !p-1 !px-2 text-white">
+                        <span className="text-[12px] sm:text-[18px] !font-bold !font-[bold] !inline-block !rounded-md !p-1 !px-2 text-white">
                           {item?.name}
                         </span>
                       </TableCell>
 
                       <TableCell width={100} className="!text-white">
-                        <div className="flex items-center !gap-3">
+                        <div className="flex items-center gap-1 sm:!gap-3">
                           <Button
-                            className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                            className="!h-[30px] sm:!h-[35px] !border-1 !border-white !min-w-[30px] sm:!min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
                             onClick={() =>
                               context.setIsOpenFullScreenPanel({
                                 open: true,
@@ -155,14 +155,14 @@ export const CategoryList = () => {
                               })
                             }
                           >
-                            <GrEdit className=" !text-[20px] " />
+                            <GrEdit className="!text-[16px] sm:!text-[20px]" />
                           </Button>
 
                           <Button
-                            className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                            className="!h-[30px] sm:!h-[35px] !border-1 !border-white !min-w-[30px] sm:!min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
                             onClick={() => deleteCat(item?._id)}
                           >
-                            <FaTrashAlt className="!text-[20px]" />
+                            <FaTrashAlt className="!text-[16px] sm:!text-[20px]" />
                           </Button>
                         </div>
                       </TableCell>

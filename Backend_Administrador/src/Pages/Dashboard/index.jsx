@@ -655,7 +655,7 @@ const Dashboard = () => {
             )}
 
             <Button
-              className="btn-sm btn-responsive !gap-3"
+              className="btn-blue btn-responsive !gap-3"
               onClick={() =>
                 context.setIsOpenFullScreenPanel({
                   open: true,

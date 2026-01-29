@@ -256,7 +256,7 @@ const Header = () => {
               <IoClose className="!w-[30px] !h-[30px] !min-w-[30px] !ml-3 !rounded-full  !text-[#fff] !absolute !bg-[#030712] hover:!text-[#030712] hover:!bg-[#fff] !shadow-[0px_0px_0px_3px_#fff] hover:!shadow-[0px_0px_0px_3px_#030712]" />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              <span className="text-[#fff] !ml-4 font-bold font-[bold] text-[25px]">
+              <span className="text-[#fff] !ml-4 font-bold font-[bold] text-[16px] sm:text-[25px]">
                 {context?.isOpenFullScreenPanel?.model}
               </span>
             </Typography>

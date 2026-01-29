@@ -264,3 +264,6 @@ input[type="email"]:disabled {
 .contentRight {
   padding-left: 30px !important;
 }
+.uploadBox h4 {
+  text-align: center;
+}
