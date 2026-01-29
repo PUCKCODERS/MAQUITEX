@@ -93,11 +93,11 @@ export const EditSubCatBox = (props) => {
       >
         {editMode === true && (
           <>
-            <div className="flex items-center justify-between !py-2 !gap-4">
-              <div className="w-[150px]">
+            <div className="flex items-center justify-between !py-2 !gap-4 whitespace-nowrap overflow-x-scroll ">
+              <div className="w-[180px] md:w-[150px]">
                 <Select
                   style={{ zoom: "75%" }}
-                  className="w-full border !text-[20px] border-[#fff] !text-[#fff] focus:!outline-none focus:!border-[#fff] rounded-sm !p-1 text-sm"
+                  className="w-full  border !text-[20px] border-[#fff] !text-[#fff] focus:!outline-none focus:!border-[#fff] rounded-sm !p-1 text-sm"
                   size="small"
                   value={selectVal}
                   onChange={handleChange}
@@ -123,7 +123,7 @@ export const EditSubCatBox = (props) => {
 
               <input
                 type="text"
-                className="w-full border !text-[20px] border-[#fff] !text-[#fff] focus:!outline-none focus:!border-[#fff] rounded-sm !p-1 text-sm"
+                className="w-[150px] md:w-full  border !text-[20px] border-[#fff] !text-[#fff] focus:!outline-none focus:!border-[#fff] rounded-sm !p-1 text-sm"
                 name="name"
                 value={formFields?.name}
                 onChange={onChangeInput}
@@ -132,7 +132,7 @@ export const EditSubCatBox = (props) => {
               <div className="flex items-center !gap-2">
                 <Button
                   size="small"
-                  className="btn-sm hover:!bg-[#082c55]"
+                  className="btn-lg hover:!bg-[#082c55]"
                   type="submit"
                   variant="contained"
                 >
@@ -144,7 +144,7 @@ export const EditSubCatBox = (props) => {
                 </Button>
                 <Button
                   size="small"
-                  className="btn-sm !bg-red-950"
+                  className="btn-lg !bg-red-950"
                   variant="outlined"
                   onClick={() => setEditMode(false)}
                 >

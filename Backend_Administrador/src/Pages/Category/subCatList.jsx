@@ -72,7 +72,7 @@ export const SubCategoryList = () => {
                                   index={index_}
                                   selectedCat={subCat?.parentId}
                                   selectedCatName={subCat?.parentCatName}
-                                  fontSize="text-[12px]"
+                                  fontSize="text-[12px] sm:text-[20px]"
                                 />
 
                                 {subCat?.children?.length !== 0 && (
@@ -93,7 +93,7 @@ export const SubCategoryList = () => {
                                                 thirdLevel?.parentCatName
                                               }
                                               id={thirdLevel?._id}
-                                              fontSize="text-[10px] "
+                                              fontSize="text-[10px] sm:text-[20px]"
                                             />
                                           </li>
                                         );

@@ -141,7 +141,7 @@ const AddSubCategory = () => {
   return (
     <section className="!p-5 !bg-gray-200 grid grid-cols-1 md:grid-cols-2 !gap-10">
       <form className="form py-1 p-1 md:p-8 md:py-1" onSubmit={handleSubmit}>
-        <h4 className="text-[#000] font-bold text-[20px] sm:text-[25px] !mb-3">
+        <h4 className="text-[#000] flex items-center justify-center font-bold text-[19px] sm:text-[25px] !mb-3">
           AGREGAR SUBCATEGORÍA
         </h4>
         <div className="scroll max-h-[72vh]  pr-1 md:pr-4 pt-4">
@@ -208,7 +208,7 @@ const AddSubCategory = () => {
       </form>
 
       <form className="form py-1 p-1 md:p-8 md:py-1" onSubmit={handleSubmit2}>
-        <h4 className="text-[#000]  font-bold text-[20px] sm:text-[25px] !mb-3">
+        <h4 className="text-[#000] flex items-center justify-center font-bold text-[18px] sm:text-[25px] !mb-3">
           CATEGORÍA TERCER NIVEL
         </h4>
         <div className="scroll max-h-[72vh]  pr-1 md:pr-4 pt-4">
