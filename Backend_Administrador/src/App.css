@@ -260,3 +260,7 @@ input[type="email"]:disabled {
   border-color: #9fc3ec !important;
   box-shadow: 3px 3px 3px #082c55 !important;
 }
+
+.contentRight {
+  padding-left: 30px !important;
+}

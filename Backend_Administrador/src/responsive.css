@@ -57,7 +57,7 @@
     top: 25px;
   }
 
-  .pagination-nowrap {
+  /*.pagination-nowrap {
     overflow-x: auto;
     white-space: nowrap;
   }
@@ -79,6 +79,45 @@
 
   .pagination-nowrap .MuiPaginationItem-icon {
     font-size: 16px !important;
+  }*/
+
+  .sidebarOverlay {
+    pointer-events: inherit;
+  }
+
+  .btn-sm {
+    padding: 3px 10px !important;
+    font-size: 11px !important;
+  }
+  .btn-lg {
+    padding: 5px 10px !important;
+    font-size: 14px !important;
+  }
+  .btn {
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+  }
+  .btn svg {
+    font-size: 15px !important;
+  }
+
+  .MuiPagination-root {
+    width: 80% !important;
+    margin: auto !important;
+  }
+  .MuiPagination-ul {
+    white-space: nowrap !important;
+    overflow-x: scroll !important;
+    display: block !important;
+    width: 100% !important;
+  }
+  .MuiPagination-ul li {
+    display: inline-block !important;
+    vertical-align: top !important;
+  }
+
+  .contentRight {
+    padding-left: 15px !important;
   }
 
   .btn-responsive {
@@ -102,6 +141,12 @@
     gap: 6px !important;
   }
 }
+@media only screen and (min-width: 320px) and (max-width: 992px) {
+  .MuiTableCell-head {
+    white-space: nowrap;
+  }
+}
+
 @media only screen and (max-width: 375px) {
   .btn-responsive {
     font-size: 10px !important;

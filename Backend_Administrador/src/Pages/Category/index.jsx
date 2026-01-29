@@ -19,6 +19,7 @@ import TableRow from "@mui/material/TableRow";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import { FcDeleteDatabase } from "react-icons/fc";
+import { BiPlusMedical } from "react-icons/bi";
 
 import { MyContext } from "../../App";
 import { deleteData, fetchDataFromApi } from "../../utils/api";
@@ -75,17 +76,14 @@ export const CategoryList = () => {
 
   return (
     <>
-      <div className="flex !bg-gray-700 items-center justify-between !px-5 !py-5 !mt-3 sm:rounded-lg border-b dark:border-gray-700">
-        <h2 className="text-white text-[20px] !font-[500] ">
+      <div className="grid grid-cols-1 md:grid-cols-2 !bg-gray-700  !px-5 !py-5 !mt-3 sm:rounded-lg border-b dark:border-gray-700">
+        <h2 className="text-white text-[20px] !font-[500] mb-2 sm:mb-0 ">
           LISTA DE CATEGORÍAS
-          <span className="font-[400] text-[14px] !ml-3">
-            (MATERIAL UI DESCRIPCION)
-          </span>
         </h2>
 
-        <div className="col !w-[40%] !ml-auto flex items-center justify-end !gap-3">
+        <div className="col  flex items-center justify-start md:justify-end !gap-3">
           <Button
-            className="btn btn-sm"
+            className="btn btn-sm !gap-3"
             onClick={() =>
               context.setIsOpenFullScreenPanel({
                 open: true,
@@ -93,6 +91,7 @@ export const CategoryList = () => {
               })
             }
           >
+            <BiPlusMedical />
             AÑADIR NUEVA CATEGORÍA
           </Button>
         </div>
@@ -108,6 +107,7 @@ export const CategoryList = () => {
                     width={column.minWidth}
                     key={column.id}
                     align={column.align}
+                    className="!font-[bold]"
                   >
                     {column.label}
                   </TableCell>
@@ -123,13 +123,13 @@ export const CategoryList = () => {
                       className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200"
                     >
                       <TableCell width={100}>
-                        <div className="flex items-center !gap-4 w-[300px]">
+                        <div className="flex items-center !gap-4 w-[40px] sm:w-[300px]">
                           <div className="img w-full rounded-md overflow-hidden !bg-Transparent group">
                             <Link to="/product/45745" data-discover="true">
                               <LazyLoadImage
                                 alt={"image"}
                                 effect="blur"
-                                className=" group-hover:scale-105 transition-all duration-300 !cursor-pointer w-[300px] !h-[200px]"
+                                className=" group-hover:scale-105 transition-all duration-300 !cursor-pointer w-[40px] h-[25px] sm:w-[300px] sm:h-[200px]"
                                 src={item.images[0]}
                               />
                             </Link>
@@ -138,7 +138,7 @@ export const CategoryList = () => {
                       </TableCell>
 
                       <TableCell width={100}>
-                        <span className="!text-[18px] !font-bold !font-[bold] !inline-block !rounded-md !p-1 !px-2 text-white">
+                        <span className="text-[14px] sm:text-[18px] !font-bold !font-[bold] !inline-block !rounded-md !p-1 !px-2 text-white">
                           {item?.name}
                         </span>
                       </TableCell>
