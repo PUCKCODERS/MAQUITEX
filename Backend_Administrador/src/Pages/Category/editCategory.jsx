@@ -153,7 +153,7 @@ const EditCategory = () => {
         </div>
 
         <br />
-        <div className="w-[325px]">
+        <div className="w-[250px] sm:w-[325px]">
           <Button type="submit" className="btn-blue btn-lg w-full !gap-2">
             {isLoading === true ? (
               <CircularProgress color="inherit" />
