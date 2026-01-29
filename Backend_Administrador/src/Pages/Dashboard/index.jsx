@@ -592,16 +592,16 @@ const Dashboard = () => {
     <>
       <div className="w-full !bg-white !py-5 !px-5 border border-[#082c55] flex items-center !gap-8 !mb-5 justify-between rounded-md !shadow-[5px_5px_5px_#082c55]">
         <div className="info ">
-          <h1 className="text-[25px] sm:text-[35px] text-[#082c55] !font-bold !font-[bold] leading-10 mb-1 sm:mb-3">
+          <h1 className="text-[25px] sm:text-[35px] text-gray-700 !font-bold !font-[bold] leading-10 mb-1 sm:mb-3">
             BUENOS DIAS,
             <br />
-            <h1 className="text-[25px] sm:text-[35px] text-[#f1683a] !font-bold !font-[bold] leading-10 mb-0 sm:mb-3">
+            <h1 className="text-[25px] sm:text-[35px] text-[#082c55] !font-bold !font-[bold] leading-10 mb-0 sm:mb-3">
               {context?.user?.name?.toUpperCase() ||
                 context?.userData?.name?.toUpperCase() ||
                 "USUARIO"}
             </h1>
           </h1>
-          <p className="!font-[500] text-[12px] sm:text-[16px] text-gray-700 ">
+          <p className="!font- text-[12px] sm:text-[20px] text-gray-700 ">
             ESTO ES LO QUE PASA HOY EN TU TIENDA. CONSULTA LAS ESTADÍSTICAS
             INMEDIATAMENTE.
           </p>

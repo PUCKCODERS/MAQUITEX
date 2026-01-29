@@ -57,7 +57,7 @@ const AddHomeSlide = () => {
     if (previews?.length === 0) {
       context.alertBox(
         "error",
-        "POR FAVOR SELECCIONE LA IMAGEN DE LA DIAPOSITIVA"
+        "POR FAVOR SELECCIONE LA IMAGEN DE LA DIAPOSITIVA",
       );
       setIsLoading(false);
       return false;
@@ -77,9 +77,9 @@ const AddHomeSlide = () => {
 
   return (
     <section className="!p-5 !bg-gray-200">
-      <form className="form !py-3 !p-8" onSubmit={handleSubmit}>
-        <div className="scroll max-h-[70vh]  !pr-4 !pt-1">
-          <div className="grid grid-cols-7 !gap-2">
+      <form className="form py-1 p-1 md:p-8 md:py-1" onSubmit={handleSubmit}>
+        <div className="scroll max-h-[70vh] overflow-y-scroll !pr-4 !pt-1">
+          <div className="grid grid-cols-2 md:grid-cols-7 !gap-2">
             {previews?.length !== 0 &&
               previews?.map((image, index) => {
                 return (

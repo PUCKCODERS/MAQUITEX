@@ -137,9 +137,6 @@ export const HomeSliderBanners = () => {
                       <TableCell width={100} className="!text-white">
                         <div className="flex items-center !gap-3">
                           <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
-                            <GrEdit className=" !text-[20px] " />
-                          </Button>
-                          <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
                             <FaTrashAlt
                               className="!text-[20px]"
                               onClick={() => deleteSlide(item?._id)}
