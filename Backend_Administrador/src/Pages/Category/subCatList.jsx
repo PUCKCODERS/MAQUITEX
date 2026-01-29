@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import { MyContext } from "../../App";
 import { FaAngleDown } from "react-icons/fa6";
 import EditSubCatBox from "./EditSubCatBox";
+import { BiPlusMedical } from "react-icons/bi";
 
 export const SubCategoryList = () => {
   const [expandedCatId, setExpandedCatId] = useState(null);
@@ -14,19 +15,13 @@ export const SubCategoryList = () => {
 
   return (
     <>
-      {" "}
-      <div className="flex !bg-gray-700 items-center justify-between !px-5 !py-5 !mt-3 sm:rounded-lg border-b dark:border-gray-700">
-        {" "}
-        <h2 className="text-white text-[20px] !font-[500] ">
-          LISTA DE SUBCATEGORÍAS{" "}
-          <span className="font-[400] text-[14px] !ml-3">
-            (MATERIAL UI DESCRIPCION){" "}
-          </span>{" "}
+      <div className="grid grid-cols-1 md:grid-cols-2 !bg-gray-700  !px-5 !py-5 !mt-3 sm:rounded-lg border-b dark:border-gray-700">
+        <h2 className="text-white text-[18px] sm:text-[20px] !font-[500] mb-2 sm:mb-0  ">
+          LISTA DE SUBCATEGORÍAS
         </h2>
-        ```
-        <div className="col !w-[45%] !ml-auto flex items-center justify-end !gap-3">
+        <div className="col flex items-center justify-start md:justify-end !gap-3">
           <Button
-            className="btn btn-sm"
+            className="btn btn-blue !gap-3"
             onClick={() =>
               context.setIsOpenFullScreenPanel({
                 open: true,
@@ -34,7 +29,8 @@ export const SubCategoryList = () => {
               })
             }
           >
-            AÑADIR NUEVA SUBCATEGORÍA
+            <BiPlusMedical />
+            AÑADIR SUBCATEGORÍA
           </Button>
         </div>
       </div>
@@ -65,10 +61,10 @@ export const SubCategoryList = () => {
                   {isExpanded && (
                     <>
                       {firstLavelCat?.children?.length !== 0 && (
-                        <ul className="w-full !mt-1 pl-5 border-l border-gray-600 transition-all duration-300">
+                        <ul className="w-full !mt-1 pl-5 border-l border-gray-600 transition-all duration-300 ">
                           {firstLavelCat?.children?.map((subCat, index_) => {
                             return (
-                              <li className="w-full !py-1" key={index_}>
+                              <li className="w-full !py-1 " key={index_}>
                                 <EditSubCatBox
                                   name={subCat?.name}
                                   id={subCat?._id}
@@ -79,13 +75,13 @@ export const SubCategoryList = () => {
                                 />
 
                                 {subCat?.children?.length !== 0 && (
-                                  <ul className="!pl-4 border-l border-gray-600">
+                                  <ul className="!pl-4 border-l border-gray-600  ">
                                     {subCat?.children?.map(
                                       (thirdLevel, index__) => {
                                         return (
                                           <li
                                             key={index__}
-                                            className="w-full hover:bg-gray-800 rounded-sm transition-all duration-300"
+                                            className="w-full  hover:!bg-gray-800 rounded-sm transition-all duration-300"
                                           >
                                             <EditSubCatBox
                                               name={thirdLevel.name}
@@ -99,7 +95,7 @@ export const SubCategoryList = () => {
                                             />
                                           </li>
                                         );
-                                      }
+                                      },
                                     )}
                                   </ul>
                                 )}

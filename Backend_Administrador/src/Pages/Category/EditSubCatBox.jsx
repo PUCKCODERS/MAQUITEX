@@ -162,7 +162,7 @@ export const EditSubCatBox = (props) => {
             </span>
             <div className="flex items-center ml-auto !gap-2">
               <Button
-                className="!-[35px] !h-[35px] !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                className="!w-[30px] sm:!w-[35px] !h-[30px] sm:!h-[35px] !border-1 !border-white !min-w-[30px] sm:!min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
                 onClick={() => {
                   setEditMode(true);
                 }}
@@ -170,7 +170,7 @@ export const EditSubCatBox = (props) => {
                 <GrEdit className="!text-[20px]" />
               </Button>
               <Button
-                className="!-[35px] !h-[35px] !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                className="!w-[30px] sm:!w-[35px] !h-[30px] sm:!h-[35px] !border-1 !border-white !min-w-[30px] sm:!min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
                 onClick={() => deleteCat(props?.id)}
               >
                 <FaTrashAlt className="!text-[20px]" />
