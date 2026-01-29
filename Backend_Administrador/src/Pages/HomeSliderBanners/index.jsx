@@ -128,7 +128,7 @@ export const HomeSliderBanners = () => {
                           <div className="img w-full rounded-md overflow-hidden border border-[#fff] group">
                             <img
                               src={item?.images[0]}
-                              className=" group-hover:scale-105 transition-all duration-300 !cursor-pointer w-[150px]  sm:w-[400px] !h-[75px] sm:h-[200px]"
+                              className=" group-hover:scale-105 transition-all duration-300 !cursor-pointer w-[150px]  sm:w-[400px] h-[75px] sm:h-[200px]"
                             />
                           </div>
                         </div>
@@ -136,7 +136,7 @@ export const HomeSliderBanners = () => {
 
                       <TableCell width={100} className="!text-white">
                         <div className="flex items-center !gap-3">
-                          <Button className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                          <Button className="!w-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
                             <FaTrashAlt
                               className="!text-[20px]"
                               onClick={() => deleteSlide(item?._id)}

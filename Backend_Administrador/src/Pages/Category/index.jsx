@@ -144,9 +144,9 @@ export const CategoryList = () => {
                       </TableCell>
 
                       <TableCell width={100} className="!text-white">
-                        <div className="flex items-center gap-1 sm:!gap-3">
+                        <div className="flex items-center gap-1 sm:gap-3">
                           <Button
-                            className="!h-[30px] sm:!h-[35px] !border-1 !border-white !min-w-[30px] sm:!min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                            className="!w-[30px] sm:!w-[35px] !h-[30px] sm:!h-[35px] !border-1 !border-white !min-w-[30px] sm:!min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
                             onClick={() =>
                               context.setIsOpenFullScreenPanel({
                                 open: true,
@@ -159,7 +159,7 @@ export const CategoryList = () => {
                           </Button>
 
                           <Button
-                            className="!h-[30px] sm:!h-[35px] !border-1 !border-white !min-w-[30px] sm:!min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                            className="!w-[30px] sm:!w-[35px] !h-[30px] sm:!h-[35px] !border-1 !border-white !min-w-[30px] sm:!min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
                             onClick={() => deleteCat(item?._id)}
                           >
                             <FaTrashAlt className="!text-[16px] sm:!text-[20px]" />
