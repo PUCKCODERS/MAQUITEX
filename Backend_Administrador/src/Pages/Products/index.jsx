@@ -266,7 +266,7 @@ export const Products = () => {
           {sortedIds?.length > 0 && (
             <Button
               variant="contained"
-              className="btn btn-sm btn-responsive !bg-red-800 hover:!bg-red-950 !font-bold transition-all duration-300"
+              className="btn btn-blue btn-responsive !bg-red-800 hover:!bg-red-600 !font-bold transition-all duration-300"
               onClick={deleteMultipleProduct}
             >
               ELIMINAR

@@ -250,203 +250,195 @@ export const Users = () => {
 
   return (
     <>
-      <div className="card !my-4 !pt-5 shadow-md sm:rounded-lg dark:bg-gray-800">
-        <div className="flex items-center w-full !text-white !bg-gray-800 !pl-5 !pr-5 !py-4 !border-b !border-gray-500 justify-between">
-          <div className="col w-[50%]">
-            <h2 className="text-white text-[20px] !font-[500] ">
-              LISTA DE USUARIOS
-              <span className="font-[400] text-[14px] !ml-3"></span>
-            </h2>
-          </div>
+      <div className="flex !bg-gray-950 items-center justify-between sm:rounded-lg !px-5 !py-5 !mt-3 border-b dark:border-gray-700 !mb-4">
+        <h2 className="text-white text-[16px] sm:text-[20px] !font-[500]  ">
+          LISTA DE USUARIOS
+        </h2>
 
-          <div className="col w-[40%]  !ml-auto flex items-center justify-end !gap-2">
-            {sortedIdsUser?.length > 0 && (
-              <Button
-                variant="contained"
-                className="btn btn-sm !bg-red-800 hover:!bg-red-950 !font-bold transition-all duration-300"
-                onClick={deleteMultipleUser}
-              >
-                ELIMINAR
-              </Button>
-            )}
+        <div className="col w-[40%]  !ml-auto flex items-center justify-end !gap-2 actions-responsive">
+          {sortedIdsUser?.length > 0 && (
+            <Button
+              variant="contained"
+              className="btn btn-sm btn-responsive !bg-red-800 hover:!bg-red-600 !font-bold transition-all duration-300"
+              onClick={deleteMultipleUser}
+            >
+              ELIMINAR
+            </Button>
+          )}
 
-            <SearchBox
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-            />
-          </div>
+          <SearchBox
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
         </div>
+      </div>
 
-        <div className="relative overflow-x-auto">
-          <TableContainer sx={{ maxHeight: 440 }}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead className="!bg-gray-950">
-                <TableRow>
-                  <TableCell>
-                    <Checkbox
-                      {...label}
-                      size="small"
-                      className="!text-white"
-                      onChange={handleSelectAllUser}
-                      checked={
-                        userData?.length > 0
-                          ? userData.every((item) => item.checked)
-                          : false
-                      }
-                    />
+      <div className="relative overflow-x-auto ">
+        <TableContainer sx={{ maxHeight: 440 }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead className="!bg-gray-950">
+              <TableRow>
+                <TableCell>
+                  <Checkbox
+                    {...label}
+                    size="small"
+                    className="!text-white"
+                    onChange={handleSelectAllUser}
+                    checked={
+                      userData?.length > 0
+                        ? userData.every((item) => item.checked)
+                        : false
+                    }
+                  />
+                </TableCell>
+
+                {columnsUser.map((column) => (
+                  <TableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth }}
+                    className="!font-[bold]"
+                  >
+                    <span className="whitespace-nowrap">{column.label}</span>
                   </TableCell>
-
-                  {columnsUser.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                      className="!font-[bold]"
-                    >
-                      <span className="whitespace-nowrap">{column.label}</span>
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {isLoading === false ? (
-                  userData?.length !== 0 &&
-                  userData
-                    ?.slice(
-                      page * rowsPerPage,
-                      page * rowsPerPage + rowsPerPage,
-                    )
-                    ?.reverse()
-                    .map((user, index) => {
-                      return (
-                        <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
-                          <TableCell style={{ minWidth: columnsUser.minWidth }}>
-                            <Checkbox
-                              {...label}
-                              size="small"
-                              className="!text-white"
-                              checked={user.checked === true ? true : false}
-                              onChange={(e) =>
-                                handleCheckboxChangeUser(e, user._id, index)
-                              }
-                            />
-                          </TableCell>
-                          <TableCell style={{ minWidth: columnsUser.minWidth }}>
-                            <div className="flex items-center !gap-4 w-[70px] ">
-                              <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
-                                <Link to="/product/45745">
-                                  <img
-                                    src={
-                                      user?.avatar !== "" &&
-                                      user?.avatar !== undefined
-                                        ? user?.avatar
-                                        : "/"
-                                    }
-                                    className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
-                                  />
-                                </Link>
-                              </div>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {isLoading === false ? (
+                userData?.length !== 0 &&
+                userData
+                  ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  ?.reverse()
+                  .map((user, index) => {
+                    return (
+                      <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
+                        <TableCell style={{ minWidth: columnsUser.minWidth }}>
+                          <Checkbox
+                            {...label}
+                            size="small"
+                            className="!text-white"
+                            checked={user.checked === true ? true : false}
+                            onChange={(e) =>
+                              handleCheckboxChangeUser(e, user._id, index)
+                            }
+                          />
+                        </TableCell>
+                        <TableCell style={{ minWidth: columnsUser.minWidth }}>
+                          <div className="flex items-center !gap-4 w-[70px] ">
+                            <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
+                              <Link to="/product/45745">
+                                <img
+                                  src={
+                                    user?.avatar !== "" &&
+                                    user?.avatar !== undefined
+                                      ? user?.avatar
+                                      : "/"
+                                  }
+                                  className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+                                />
+                              </Link>
                             </div>
-                          </TableCell>
-                          <TableCell
-                            style={{ minWidth: columnsUser.minWidth }}
-                            className="!text-white"
-                          >
-                            {user?.name}
-                          </TableCell>
-                          <TableCell
-                            style={{ minWidth: columnsUser.minWidth }}
-                            className="!text-white"
-                          >
-                            <span className="flex items-center !gap-2">
-                              <MdEmail /> {user?.email}
-                            </span>
-                          </TableCell>
+                          </div>
+                        </TableCell>
+                        <TableCell
+                          style={{ minWidth: columnsUser.minWidth }}
+                          className="!text-white"
+                        >
+                          {user?.name}
+                        </TableCell>
+                        <TableCell
+                          style={{ minWidth: columnsUser.minWidth }}
+                          className="!text-white"
+                        >
+                          <span className="flex items-center !gap-2">
+                            <MdEmail /> {user?.email}
+                          </span>
+                        </TableCell>
 
-                          <TableCell
-                            style={{ minWidth: columnsUser.minWidth }}
-                            className="!text-white"
-                          >
-                            <span className="flex items-center !gap-2">
-                              <FaPhoneAlt />{" "}
-                              {user?.mobile === null ? "NINGUNO" : user?.mobile}
-                            </span>
-                          </TableCell>
+                        <TableCell
+                          style={{ minWidth: columnsUser.minWidth }}
+                          className="!text-white"
+                        >
+                          <span className="flex items-center !gap-2">
+                            <FaPhoneAlt />{" "}
+                            {user?.mobile === null ? "NINGUNO" : user?.mobile}
+                          </span>
+                        </TableCell>
 
-                          <TableCell
-                            style={{ minWidth: columnsUser.minWidth }}
-                            className="!text-white"
-                          >
-                            {user?.verify_email === false ? (
-                              <span
-                                className={`inline-block !py-1 !px-4 rounded-full text-[12px] capitalize 
+                        <TableCell
+                          style={{ minWidth: columnsUser.minWidth }}
+                          className="!text-white"
+                        >
+                          {user?.verify_email === false ? (
+                            <span
+                              className={`inline-block !py-1 !px-4 rounded-full text-[12px] capitalize 
                                   bg-gray-600 text-white 
                                 `}
-                              >
-                                NO VERIFICADO
-                              </span>
-                            ) : (
-                              <span
-                                className={`inline-block !py-1 !px-4 rounded-full text-[12px] capitalize 
+                            >
+                              NO VERIFICADO
+                            </span>
+                          ) : (
+                            <span
+                              className={`inline-block !py-1 !px-4 rounded-full text-[12px] capitalize 
                                   bg-green-800 text-white
                                 `}
-                              >
-                                VERIFICADO
-                              </span>
-                            )}
-                          </TableCell>
-
-                          <TableCell
-                            style={{ minWidth: columnsUser.minWidth }}
-                            className="!text-white"
-                          >
-                            <span className="flex items-center !gap-2">
-                              <BsFillCalendar2DateFill />{" "}
-                              {user?.updatedAt?.split("T")[0]}
+                            >
+                              VERIFICADO
                             </span>
-                          </TableCell>
-                          <TableCell
-                            style={{ minWidth: columnsUser.minWidth }}
-                            className="!text-white"
-                          >
-                            <div className="flex items-center justify-center !gap-1">
-                              <Button
-                                className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
-                                onClick={() => deleteUser(user?._id)}
-                              >
-                                <FaTrashAlt className="!text-[20px]" />
-                              </Button>
-                            </div>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })
-                ) : (
-                  <>
-                    <TableRow>
-                      <TableCell colspan={8}>
-                        <div className="flex items-center justify-center w-full min-h-[400px]">
-                          <CircularProgress className="!text-white" />
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  </>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </div>
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component="div"
-          count={userData?.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          className="!bg-gray-100 !text-black !border-t !border-gray-500"
-        />
+                          )}
+                        </TableCell>
+
+                        <TableCell
+                          style={{ minWidth: columnsUser.minWidth }}
+                          className="!text-white"
+                        >
+                          <span className="flex items-center !gap-2">
+                            <BsFillCalendar2DateFill />{" "}
+                            {user?.updatedAt?.split("T")[0]}
+                          </span>
+                        </TableCell>
+                        <TableCell
+                          style={{ minWidth: columnsUser.minWidth }}
+                          className="!text-white"
+                        >
+                          <div className="flex items-center justify-center !gap-1">
+                            <Button
+                              className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                              onClick={() => deleteUser(user?._id)}
+                            >
+                              <FaTrashAlt className="!text-[20px]" />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+              ) : (
+                <>
+                  <TableRow>
+                    <TableCell colspan={8}>
+                      <div className="flex items-center justify-center w-full min-h-[400px]">
+                        <CircularProgress className="!text-white" />
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                </>
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={userData?.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+        className="!bg-gray-100 !text-black !border-t !border-gray-500"
+      />
 
       <Dialog
         open={isConfirmOpenUser}

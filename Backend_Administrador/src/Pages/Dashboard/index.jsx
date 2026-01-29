@@ -647,7 +647,7 @@ const Dashboard = () => {
             {sortedIds?.length > 0 && (
               <Button
                 variant="contained"
-                className="btn btn-sm btn-responsive !bg-red-800 hover:!bg-red-950 !font-bold transition-all duration-300"
+                className="btn btn-blue btn-responsive !bg-red-800 hover:!bg-red-600 !font-bold transition-all duration-300"
                 onClick={deleteMultipleProduct}
               >
                 ELIMINAR
@@ -1055,11 +1055,11 @@ const Dashboard = () => {
             </h2>
           </div>
 
-          <div className="col w-[40%]  !ml-auto flex items-center justify-end !gap-2">
+          <div className="col w-[40%]  !ml-auto flex items-center justify-end !gap-2 actions-responsive">
             {sortedIdsUser?.length > 0 && (
               <Button
                 variant="contained"
-                className="btn btn-sm btn-responsive !bg-red-800 hover:!bg-red-950 !font-bold transition-all duration-300"
+                className="btn btn-sm btn-responsive !bg-red-800 hover:!bg-red-600 !font-bold transition-all duration-300"
                 onClick={deleteMultipleUser}
               >
                 ELIMINAR
