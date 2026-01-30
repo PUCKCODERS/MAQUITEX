@@ -149,7 +149,7 @@ const Login = () => {
         <h1 className="!text-center !text-gray-800  text-[15px] sm:text-[25px] !font-bold !mt-4">
           ¡BIENVENIDOS DE NUEVO! <br />
           <span className="text-blue-800">
-            INICIE SESIÓN CON SUS CREDENCIALES.
+            INICIE SESIÓN CON SUS CREDENCIALES
           </span>
         </h1>
 
@@ -171,7 +171,7 @@ const Login = () => {
 
         <div className="w-full flex items-center justify-center !gap-3">
           <span className="flex items-center w-[100px] h-[1px] !bg-gray-400"></span>
-          <span className="text-[10px] lg:text-[15px] font-bold ">
+          <span className="flex items-center justify-center text-[10px] lg:text-[15px] font-bold ">
             O INICIA SESIÓN CON TU CORREO ELECTRÓNICO
           </span>
           <span className="flex items-center w-[100px] h-[1px] !bg-gray-400"></span>
@@ -219,37 +219,10 @@ const Login = () => {
             </div>
           </div>
 
-          <div className="form-group !mb-4 !w-full flex items-center !justify-between !gap-12">
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="RECORDARME"
-            />
-
-            <a
-              onClick={forgotPassword}
-              to="/forgot-password"
-              className="text-blue-950 !font-[600] text-[10px] lg:text-[15px] hover:underline hover:!text-gray-950
-              transition-all duration-300 !cursor-pointer"
-            >
-              HAS OLVIDADO TU CONTRASEÑA ?
-            </a>
-          </div>
-
-          <div className="flex items-center justify-between !mb-4">
-            <span className="text-[13px]">NO TIENES UNA CUENTA ?</span>
-            <Link
-              to="/sign-up"
-              className="text-blue-950 !font-[600] text-[12px] lg:text-[15px] hover:underline hover:!text-gray-950
-              transition-all duration-300 !cursor-pointer"
-            >
-              REGISTRATE
-            </Link>
-          </div>
-
           <Button
             type="submit"
             disabled={!valideValue}
-            className="btn-lg !w-full"
+            className="btn-blue !w-full !mb-4"
           >
             {isLoading === true ? (
               <CircularProgress color="inherit" />
@@ -257,6 +230,39 @@ const Login = () => {
               "INICIAR SESIÓN"
             )}
           </Button>
+
+          <div className="form-group  !mb-4 !w-full flex items-center !justify-between !gap-12">
+            <FormControlLabel
+              control={<Checkbox defaultChecked fontSize="small" />}
+              label={
+                <span className="text-[10px] sm:text-[15px] lg:text-[15px]">
+                  RECORDARME
+                </span>
+              }
+            />
+
+            <a
+              onClick={forgotPassword}
+              to="/forgot-password"
+              className="text-blue-950 !font-[600] text-[10px] sm:text-[15px] lg:text-[15px] hover:underline hover:!text-gray-950
+              transition-all duration-300 !cursor-pointer"
+            >
+              HAS OLVIDADO TU CONTRASEÑA ?
+            </a>
+          </div>
+
+          <div className="flex items-center justify-between !mb-4">
+            <span className="text-[11px] lg:text-[15px] sm:text-[15px]">
+              NO TIENES UNA CUENTA ?
+            </span>
+            <Link
+              to="/sign-up"
+              className="text-blue-950 !font-[600] text-[11px] lg:text-[15px] sm:text-[15px] hover:underline hover:!text-gray-950
+              transition-all duration-300 !cursor-pointer"
+            >
+              REGISTRATE
+            </Link>
+          </div>
         </form>
       </div>
     </section>

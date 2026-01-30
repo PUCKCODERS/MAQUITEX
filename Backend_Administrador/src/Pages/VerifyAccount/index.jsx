@@ -63,7 +63,7 @@ const VerifyAccount = () => {
   };
 
   return (
-    <section className="!bg-[#fff] !w-full !h-[100vh]">
+    <section className="!bg-[#fff] !w-full ">
       <header className="w-full static lg:fixed top-0 left-0 !px-4 !py-3 flex items-center justify-center sm:justify-between z-50 bg-none">
         <Link to="/">
           <img
@@ -97,7 +97,7 @@ const VerifyAccount = () => {
         <div className="text-center">
           <img
             src="../../../imagenes/verify.png "
-            className="w-[50px] sm:w-[150px] m-auto"
+            className="w-[75px] sm:w-[150px] lg:w-[100px] md:w-[100px] m-auto"
           />
         </div>
 

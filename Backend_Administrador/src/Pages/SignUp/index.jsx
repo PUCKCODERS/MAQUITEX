@@ -207,35 +207,9 @@ const SignUp = () => {
             </div>
           </div>
 
-          <div className="form-group !mb-4 !w-full flex items-center !justify-between !gap-12">
-            <FormControlLabel
-              control={<Checkbox defaultChecked />}
-              label="RECORDARME"
-            />
-
-            <Link
-              to="/forgot-password"
-              className="text-blue-950 !font-[600] text-[10px] lg:text-[15px] hover:underline hover:!text-gray-950
-              transition-all duration-300"
-            >
-              HAS OLVIDADO TU CONTRASEÑA ?
-            </Link>
-          </div>
-
-          <div className="flex items-center justify-between !mb-4">
-            <span className="text-[13px]">YA TIENES UNA CUENTA ?</span>
-            <Link
-              to="/login"
-              className="text-blue-950 !font-[600] text-[12px] lg:text-[15px] hover:underline hover:!text-gray-950
-                        transition-all duration-300 !cursor-pointer"
-            >
-              INICIAR SESION
-            </Link>
-          </div>
-
           <Button
             type="submit"
-            className="btn-lg !w-full"
+            className="btn-blue !mb-4 !w-full"
             disabled={!valideValue}
           >
             {isLoading === true ? (
@@ -244,6 +218,38 @@ const SignUp = () => {
               "REGISTRARSE"
             )}
           </Button>
+
+          <div className="form-group  !mb-4 !w-full flex items-center !justify-between !gap-12">
+            <FormControlLabel
+              control={<Checkbox defaultChecked fontSize="small" />}
+              label={
+                <span className="text-[10px] sm:text-[15px] lg:text-[15px]">
+                  RECORDARME
+                </span>
+              }
+            />
+
+            <Link
+              to="/forgot-password"
+              className="text-blue-950 !font-[600] text-[10px] sm:text-[15px] lg:text-[15px] hover:underline hover:!text-gray-950
+              transition-all duration-300 !cursor-pointer"
+            >
+              HAS OLVIDADO TU CONTRASEÑA ?
+            </Link>
+          </div>
+
+          <div className="flex items-center justify-between !mb-4">
+            <span className="text-[11px] lg:text-[15px] sm:text-[15px]">
+              YA TIENES UNA CUENTA ?
+            </span>
+            <Link
+              to="/login"
+              className="text-blue-950 !font-[600] text-[11px] lg:text-[15px] sm:text-[15px] hover:underline hover:!text-gray-950
+              transition-all duration-300 !cursor-pointer"
+            >
+              INICIAR SESION
+            </Link>
+          </div>
         </form>
       </div>
     </section>

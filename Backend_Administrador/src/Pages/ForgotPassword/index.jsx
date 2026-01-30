@@ -6,7 +6,7 @@ import { MdAssignmentInd } from "react-icons/md";
 
 const ForgotPassword = () => {
   return (
-    <section className="!bg-[#fff] !w-full !h-[100vh]">
+    <section className="!bg-[#fff] !w-full h-[110vh] relative">
       <header className="w-full static lg:fixed top-0 left-0 !px-4 !py-3 flex items-center justify-center sm:justify-between z-50 bg-none">
         <Link to="/">
           <img
@@ -59,14 +59,18 @@ const ForgotPassword = () => {
             />
           </div>
 
-          <Button className="btn-lg !w-full">RESTABLECER CONTRASEÑA</Button>
+          <Button className="btn-blue !w-full !text-[14px] !mb-2">
+            RESTABLECER CONTRASEÑA
+          </Button>
 
-          <div className="text-center !mt-3 flex items-center !justify-between text-[12px] sm:text-[15px] !gap-4">
-            <span>NO QUIERES RESTABLECER ?</span>
+          <div className="text-center !mt-3 flex items-center !justify-between !gap-4">
+            <span className="text-[11px] lg:text-[15px] sm:text-[15px]">
+              NO QUIERES RESTABLECER ?
+            </span>
             <Link
               to="/login"
-              className="text-blue-950 font-[600] text-[12px] sm:text-[15px] hover:underline hover:!text-gray-950
-                          transition-all duration-300"
+              className="text-blue-950 !font-[600] text-[11px] lg:text-[15px] sm:text-[15px] hover:underline hover:!text-gray-950
+              transition-all duration-300 !cursor-pointer"
             >
               INICIAR SESIÓN
             </Link>
