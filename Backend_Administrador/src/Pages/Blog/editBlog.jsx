@@ -97,7 +97,7 @@ const EditBlog = () => {
 
     editData(
       `/api/blog/${context?.isOpenFullScreenPanel?.id}`,
-      formFields
+      formFields,
     ).then(() => {
       setTimeout(() => {
         setIsLoading(false);
@@ -113,7 +113,7 @@ const EditBlog = () => {
 
   return (
     <section className="!p-5 !bg-gray-200">
-      <form className="form !py-3 !p-8" onSubmit={handleSubmit}>
+      <form className="form py-1 p-1 md:p-8 md:py-1" onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 !mb-3">
           <div className="col w-[100%] !mb-4">
             <h3 className="text-[#082c55] font-bold text-[14px] !mb-2">
@@ -145,7 +145,7 @@ const EditBlog = () => {
 
         <h3 className="text-[#082c55] font-bold text-[18px] !mb-2">IMAGEN</h3>
 
-        <div className="grid grid-cols-7 !gap-2">
+        <div className="grid grid-cols-2 md:grid-cols-7 !gap-2">
           {previews?.length !== 0 &&
             previews?.map((image, index) => {
               return (
@@ -177,7 +177,7 @@ const EditBlog = () => {
         </div>
 
         <br />
-        <div className="w-[325px]">
+        <div className="w-[250px] sm:w-[325px]">
           <Button type="submit" className="btn-blue btn-lg w-full !gap-2">
             {isLoading === true ? (
               <CircularProgress color="inherit" />

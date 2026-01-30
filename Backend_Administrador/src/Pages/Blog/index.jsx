@@ -68,15 +68,14 @@ export const BlogList = () => {
 
   return (
     <>
-      <div className="flex !bg-gray-700 items-center justify-between !px-5 !py-5 !mt-3 sm:rounded-lg border-b dark:border-gray-700">
-        <h2 className="text-white text-[20px] !font-[500] ">
+      <div className="grid grid-cols-1 md:grid-cols-2 !bg-gray-700  !px-5 !py-5 !mt-3 sm:rounded-lg border-b dark:border-gray-700">
+        <h2 className="text-white text-[20px] !font-[500] mb-2 sm:mb-0">
           LISTA DE BLOGS
-          <span className="font-[400] text-[14px] !ml-3"></span>
         </h2>
 
-        <div className="col !w-[40%] !ml-auto flex items-center justify-end !gap-3">
+        <div className="col flex items-center justify-start md:justify-end !gap-3">
           <Button
-            className="btn btn-sm"
+            className="btn btn-blue !gap-3"
             onClick={() =>
               context.setIsOpenFullScreenPanel({
                 open: true,
@@ -99,6 +98,7 @@ export const BlogList = () => {
                     width={column.minWidth}
                     key={column.id}
                     align={column.align}
+                    className="!font-[bold]"
                   >
                     {column.label}
                   </TableCell>
@@ -112,40 +112,40 @@ export const BlogList = () => {
                     <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
                       <TableCell width={300}>
                         <div
-                          className="flex items-center !gap-4 w-[300px] "
+                          className="flex items-center !gap-4 w-[150px] sm:w-[400px]"
                           key={index}
                         >
                           <div className="img w-full rounded-md overflow-hidden border border-[#fff] group">
                             <img
                               src={item?.images[0]}
-                              className=" group-hover:scale-105 transition-all duration-300 !cursor-pointer w-[300px] !h-[150px]"
+                              className=" group-hover:scale-105 transition-all duration-300 !cursor-pointer w-[150px]  sm:w-[400px] h-[75px] sm:h-[200px]"
                             />
                           </div>
                         </div>
                       </TableCell>
 
-                      <TableCell
-                        width={200}
-                        className="!text-white text-[15px]  font-[600] "
-                      >
-                        {item?.title}
+                      <TableCell width={200} className="!text-white">
+                        <span
+                          className="!text-white text-[15px] !font-[bold]
+                        inline-block w-[200px] sm:w-[200px] md:w-[300px]"
+                        >
+                          {item?.title}
+                        </span>
                       </TableCell>
 
-                      <TableCell
-                        width={300}
-                        className="!text-white text-[15px]  font-[600]"
-                      >
+                      <TableCell width={300} className="!text-white">
                         <div
+                          className="w-[250px] sm:w-[200px] md:w-[300px]"
                           dangerouslySetInnerHTML={{
-                            __html: item?.description?.substr(0, 150) + "...",
+                            __html: item?.description?.substr(0, 100) + "...",
                           }}
-                        ></div>
+                        />
                       </TableCell>
 
                       <TableCell width={100} className="!text-white">
                         <div className="flex items-center !gap-3">
                           <Button
-                            className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                            className="!w-[35px] !h-[35px] !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
                             onClick={() =>
                               context.setIsOpenFullScreenPanel({
                                 open: true,
@@ -157,7 +157,7 @@ export const BlogList = () => {
                             <GrEdit className=" !text-[20px] " />
                           </Button>
                           <Button
-                            className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                            className="!w-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
                             onClick={() => deleteSlide(item?._id)}
                           >
                             <FaTrashAlt className="!text-[20px]" />
