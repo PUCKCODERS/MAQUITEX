@@ -133,11 +133,11 @@ const AddBannerV2 = () => {
 
   return (
     <section className="!p-5 !bg-gray-200">
-      <form className="form !py-3 !p-8" onSubmit={handleSubmit}>
-        <div className="grid grid-cols-5 !mb-3 !gap-2">
-          <div className="col ">
+      <form className="form py-1 p-1 md:p-8 md:py-1" onSubmit={handleSubmit}>
+        <div className="grid grid-cols-1 sm:grid-cols-5 md:grid-cols-5 lg:grid-cols-5 !mb-3 !gap-2">
+          <div className="col mb-4 sm:mb-0">
             <h3 className="text-[#082c55] font-bold text-[14px] !mb-2">
-              NOMBRE PROMO
+              NOMBRE DE BANNER
             </h3>
             <input
               type="text"
@@ -148,9 +148,9 @@ const AddBannerV2 = () => {
             />
           </div>
 
-          <div className="col">
+          <div className="col mb-4 sm:mb-0">
             <h3 className="text-[#082c55] font-bold text-[14px] !mb-2">
-              CATEGORÍA PROMO
+              CATEGORÍA DE BANNER
             </h3>
             {context?.catData?.length !== 0 && (
               <Select
@@ -177,7 +177,7 @@ const AddBannerV2 = () => {
             )}
           </div>
 
-          <div className="col">
+          <div className="col mb-4 sm:mb-0">
             <h3 className="text-[#082c55] font-bold text-[14px] !mb-2">
               SUBCATEGORÍA
             </h3>
@@ -212,60 +212,7 @@ const AddBannerV2 = () => {
             )}
           </div>
 
-          {/*<div className="col">
-            <h3 className="text-[#082c55] font-bold text-[14px] !mb-2">
-              SUBCATEGORÍA TERCER NIVEL
-            </h3>
-
-            {context?.catData?.length !== 0 && (
-              <Select
-                labelId="demo-simple-select-label"
-                id="productCatDrop"
-                size="small"
-                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                value={productThirdLavelCat}
-                label="Sub Category"
-                onChange={handleChangeProductThirdLavelSubCat}
-              >
-                {context?.catData?.map((cat) => {
-                  return (
-                    cat?.children?.length !== 0 &&
-                    cat?.children?.map((subCat) => {
-                      return (
-                        subCat?.children?.length !== 0 &&
-                        subCat?.children?.map((thirdLavelCat, index) => {
-                          return (
-                            <MenuItem
-                              value={thirdLavelCat?._id}
-                              key={index}
-                              className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                            >
-                              {thirdLavelCat?.name}
-                            </MenuItem>
-                          );
-                        })
-                      );
-                    })
-                  );
-                })}
-              </Select>
-            )}
-          </div>
-
-          <div className="col ">
-            <h3 className="text-[#082c55] font-bold text-[14px] !mb-2">
-              PRECIO
-            </h3>
-            <input
-              type="text"
-              className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
-              name="price"
-              value={formFields.price}
-              onChange={onChangeInput}
-            />
-          </div>*/}
-
-          <div className="col">
+          <div className="col mb-4 sm:mb-0">
             <h3 className="text-[#082c55] font-bold text-[14px] !mb-2">
               ALINEAR INFORMACIÓN
             </h3>
@@ -303,7 +250,7 @@ const AddBannerV2 = () => {
           IMAGEN DE CATEGORÍA
         </h3>
 
-        <div className="grid grid-cols-7 !gap-2">
+        <div className="grid grid-cols-2 md:grid-cols-7 !gap-2">
           {previews?.length !== 0 &&
             previews?.map((image, index) => {
               return (
@@ -335,7 +282,7 @@ const AddBannerV2 = () => {
         </div>
 
         <br />
-        <div className="w-[325px]">
+        <div className="w-[250px] sm:w-[325px]">
           <Button type="submit" className="btn-blue btn-lg w-full !gap-2">
             {isLoading === true ? (
               <CircularProgress color="inherit" />

@@ -137,7 +137,7 @@ export const BlogList = () => {
                       >
                         <div
                           dangerouslySetInnerHTML={{
-                            __html: item?.description?.substr(0, 450) + "...",
+                            __html: item?.description?.substr(0, 150) + "...",
                           }}
                         ></div>
                       </TableCell>

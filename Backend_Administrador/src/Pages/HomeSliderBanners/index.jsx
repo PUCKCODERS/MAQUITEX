@@ -122,7 +122,7 @@ export const HomeSliderBanners = () => {
                     <TableRow className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200">
                       <TableCell width={300}>
                         <div
-                          className="flex items-center !gap-4 w-[150px]  sm:w-[400px]"
+                          className="flex items-center !gap-4 w-[150px] sm:w-[400px]"
                           key={index}
                         >
                           <div className="img w-full rounded-md overflow-hidden border border-[#fff] group">
@@ -136,7 +136,7 @@ export const HomeSliderBanners = () => {
 
                       <TableCell width={100} className="!text-white">
                         <div className="flex items-center !gap-3">
-                          <Button className="!w-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
+                          <Button className="!w-[35px] !h-[35px] !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600">
                             <FaTrashAlt
                               className="!text-[20px]"
                               onClick={() => deleteSlide(item?._id)}

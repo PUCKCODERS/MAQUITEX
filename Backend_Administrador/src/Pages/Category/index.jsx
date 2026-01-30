@@ -123,13 +123,13 @@ export const CategoryList = () => {
                       className="bg-white border-b dark:bg-gray-900 dark:border-gray-700 border-gray-200"
                     >
                       <TableCell width={100}>
-                        <div className="flex items-center !gap-4 w-[40px] sm:w-[300px]">
-                          <div className="img w-full rounded-md overflow-hidden !bg-Transparent group">
+                        <div className="flex items-center !gap-4 w-[60px] sm:w-[400px]">
+                          <div className="img w-full bg-white border border-[#fff] rounded-md overflow-hidden !bg-Transparent group">
                             <Link to="/product/45745" data-discover="true">
                               <LazyLoadImage
                                 alt={"image"}
                                 effect="blur"
-                                className=" group-hover:scale-105 transition-all duration-300 !cursor-pointer w-[40px] h-[25px] sm:w-[300px] sm:h-[200px]"
+                                className=" group-hover:scale-105 transition-all duration-300 !cursor-pointer w-[60px] h-[45px] sm:w-[400px] sm:h-[200px]"
                                 src={item.images[0]}
                               />
                             </Link>
@@ -138,7 +138,7 @@ export const CategoryList = () => {
                       </TableCell>
 
                       <TableCell width={100}>
-                        <span className="text-[12px] sm:text-[18px] !font-bold !font-[bold] !inline-block !rounded-md !p-1 !px-2 text-white">
+                        <span className="text-[10px] sm:text-[18px] !font-bold !font-[bold] !inline-block !rounded-md !p-1 !px-2 text-white">
                           {item?.name}
                         </span>
                       </TableCell>
