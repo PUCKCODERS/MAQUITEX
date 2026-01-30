@@ -99,13 +99,13 @@ const AddWeight = () => {
 
   return (
     <>
-      <div className="flex !bg-gray-950 items-center justify-center !px-5 !py-5 !mt-3 sm:rounded-lg border-b w-[100%] sm:w-[50%] dark:border-gray-700 ">
+      <div className="flex !bg-gray-950 items-center justify-center !px-5 !py-5 !mt-3 sm:rounded-lg border-b w-[100%] sm:w-[100%] lg:w-[50%] dark:border-gray-700 ">
         <h2 className="text-white text-[20px] !font-[500] ">
           AGREGAR PESO DEL PRODUCTO
         </h2>
       </div>
 
-      <div className="card !my-4 !pt-2 sm:rounded-lg bg-gray-600 w-[100%] sm:w-[50%] shadow-[3px_3px_3px_#082c55]">
+      <div className="card !my-4 !pt-2 sm:rounded-lg bg-gray-600 w-[100%] sm:w-[100%] lg:w-[50%]shadow-[3px_3px_3px_#082c55]">
         <form className="form !py-3 !p-6" onSubmit={handleSubmit}>
           <div className="col !mb-4">
             <h3 className="flex items-center justify-center text-white font-bold text-[18px] sm:text-[20px] !mb-2">
@@ -134,7 +134,7 @@ const AddWeight = () => {
       </div>
 
       {data?.length !== 0 && (
-        <div className="card !my-4 sm:rounded-lg bg-white w-[100%] sm:w-[50%] shadow-[3px_3px_3px_#082c55]">
+        <div className="card !my-4 sm:rounded-lg bg-white w-[100%] sm:w-[100%] lg:w-[50%] shadow-[3px_3px_3px_#082c55]">
           <div class="relative overflow-x-auto !mt-2  dark:!bg-gray-800 sm:rounded-lg">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
               <thead class="text-xs uppercase bg-gray-50 dark:bg-gray-950 text-white">

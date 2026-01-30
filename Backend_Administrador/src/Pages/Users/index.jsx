@@ -404,7 +404,7 @@ export const Users = () => {
                         >
                           <div className="flex items-center justify-center !gap-1">
                             <Button
-                              className="!-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
+                              className="!w-[35px] !h-[35px]  !border-1 !border-white !min-w-[35px] !bg-gray-600 !rounded-full hover:!bg-white !text-white hover:!text-gray-600"
                               onClick={() => deleteUser(user?._id)}
                             >
                               <FaTrashAlt className="!text-[20px]" />
