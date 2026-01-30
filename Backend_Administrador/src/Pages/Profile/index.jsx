@@ -261,14 +261,14 @@ const Profile = () => {
 
   return (
     <>
-      <div className="card !my-4 !pt-5 !w-[65%] !shadow-md sm:rounded-lg bg-white !px-5 !pb-5">
+      <div className="card !my-2 !pt-3 w-[100%] sm:w-[100%] lg:w-[65%] !shadow-md sm:rounded-lg bg-white !px-5 !pb-5">
         <div className="flex items-center justify-between">
-          <h2 className="text-[#082c55] text-[20px] font-bold font-[bold]  ">
+          <h2 className="text-[#082c55] text-[15px] sm:text-[20px] font-bold ">
             PERFIL USUARIO
           </h2>
 
           <Button
-            className="!ml-auto "
+            className="!ml-auto !text-[12px] sm:!text-[18px] !font-[bold] !text-gray-500"
             onClick={() =>
               setisChangePasswordFormShow(!isChangePasswordFormShow)
             }
@@ -320,8 +320,8 @@ const Profile = () => {
         </div>
 
         <form className="form !mt-8" onSubmit={handleSubmit}>
-          <div className="flex items-center !gap-5">
-            <div className="w-[50%]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 !gap-5">
+            <div className="col">
               <input
                 type="text"
                 className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1] "
@@ -332,7 +332,7 @@ const Profile = () => {
               />
             </div>
 
-            <div className="w-[50%]">
+            <div className="col">
               <input
                 type="email"
                 className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
@@ -342,10 +342,8 @@ const Profile = () => {
                 onChange={onChangeInput}
               />
             </div>
-          </div>
 
-          <div className="flex items-center !mt-4 !gap-5 ">
-            <div className="w-[50%] ">
+            <div className="col">
               <PhoneInput
                 defaultCountry="ec"
                 value={phone}
@@ -362,7 +360,7 @@ const Profile = () => {
           </div>
 
           <div
-            className="flex items-center justify-center !p-5 rounded-md border  border-[#082c55] bg-[#526b86] hover:bg-[#082c55] text-[#fff] hover:text-[#fff] !mt-5 cursor-pointer "
+            className="flex btn-blue items-center justify-center !p-5 rounded-md border  border-[#082c55] bg-[#526b86] hover:bg-[#082c55] text-[#fff] hover:text-[#fff] !mt-5 cursor-pointer "
             onClick={() =>
               context.setIsOpenFullScreenPanel({
                 open: true,
@@ -370,7 +368,7 @@ const Profile = () => {
               })
             }
           >
-            <span className="text-[16px]  font-[500]">AÑADIR DIRECCIÓN</span>
+            <span className="text-[16px] font-[500]">AÑADIR DIRECCIÓN</span>
           </div>
 
           <div className="flex !gap-2 flex-col !mt-4">
@@ -407,7 +405,7 @@ const Profile = () => {
             <Button
               type="submit"
               disabled={!valideValue}
-              className="btn-org btn-lg w-full "
+              className="btn-blue w-full "
             >
               {isLoading === true ? (
                 <CircularProgress color="inherit" />
@@ -420,17 +418,17 @@ const Profile = () => {
       </div>
 
       <Collapse isOpened={isChangePasswordFormShow}>
-        <div className="card w-[65%] bg-white !p-5 shadow-md rounded-md">
+        <div className="w-[100%] sm:w-[100%] lg:w-[65%] bg-white !p-5 shadow-md rounded-md">
           <div className="flex items-center !pb-3">
-            <h2 className="!pb-0 font-bold font-[bold] text-[20px]">
+            <h2 className="!pb-0 font-bold font-[bold] text-[16px] sm:text-[20px]">
               CAMBIAR LA CONTRASEÑA
             </h2>
           </div>
           <hr className="!text-[#b8b8b8]" />
 
           <form className="!mt-8" onSubmit={handleSubmitChangePassword}>
-            <div className="flex items-center !gap-5">
-              <div className="w-[50%]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 !gap-5">
+              <div className="col">
                 <TextField
                   label="CONTRASEÑA ANTERIOR"
                   variant="outlined"
@@ -443,7 +441,7 @@ const Profile = () => {
                 />
               </div>
 
-              <div className="w-[50%]">
+              <div className="col">
                 <TextField
                   type="text"
                   label="NUEVA CONTRASEÑA"
@@ -455,10 +453,8 @@ const Profile = () => {
                   onChange={onChangeInput}
                 />
               </div>
-            </div>
 
-            <div className="flex items-center !mt-4 !gap-5">
-              <div className="w-[50%]">
+              <div className="col">
                 <TextField
                   label="CONFIRMAR CONTRASEÑA"
                   variant="outlined"
@@ -475,7 +471,7 @@ const Profile = () => {
               <Button
                 type="submit"
                 disabled={!valideValue2}
-                className="btn-org btn-lg w-[100%] "
+                className="btn-blue w-full"
               >
                 {isLoading2 === true ? (
                   <CircularProgress color="inherit" />
