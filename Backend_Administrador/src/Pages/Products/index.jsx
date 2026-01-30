@@ -421,6 +421,7 @@ export const Products = () => {
                       key={column.id}
                       align={column.align}
                       style={{ minWidth: column.minWidth }}
+                      className="!font-[bold]"
                     >
                       {column.label}
                     </TableCell>

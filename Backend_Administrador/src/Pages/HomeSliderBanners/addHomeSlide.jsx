@@ -78,37 +78,35 @@ const AddHomeSlide = () => {
   return (
     <section className="!p-5 !bg-gray-200">
       <form className="form py-1 p-1 md:p-8 md:py-1" onSubmit={handleSubmit}>
-        <div className="scroll max-h-[70vh] overflow-y-scroll !pr-4 !pt-1">
-          <div className="grid grid-cols-2 md:grid-cols-7 !gap-2">
-            {previews?.length !== 0 &&
-              previews?.map((image, index) => {
-                return (
-                  <div className="uploadBoxWrapper relative" key={index}>
-                    <span
-                      className="!absolute w-[20px] h-[20px] rounded-full overflow-hidden !text-[#fff]  !bg-[#030712] hover:!text-[#030712] hover:!bg-[#fff] !shadow-[0px_0px_0px_3px_#6b6c6d] hover:!shadow-[0px_0px_0px_3px_#030712]
+        <div className="grid grid-cols-2 md:grid-cols-7 !gap-2">
+          {previews?.length !== 0 &&
+            previews?.map((image, index) => {
+              return (
+                <div className="uploadBoxWrapper relative" key={index}>
+                  <span
+                    className="!absolute w-[20px] h-[20px] rounded-full overflow-hidden !text-[#fff]  !bg-[#030712] hover:!text-[#030712] hover:!bg-[#fff] !shadow-[0px_0px_0px_3px_#6b6c6d] hover:!shadow-[0px_0px_0px_3px_#030712]
                           -top-[0x] -right-[0px] flex items-center justify-center z-50 cursor-pointer"
-                      onClick={() => removeImg(image, index)}
-                    >
-                      <IoClose className="text-[20px]" />
-                    </span>
+                    onClick={() => removeImg(image, index)}
+                  >
+                    <IoClose className="text-[20px]" />
+                  </span>
 
-                    <div
-                      className="uploadBox !p-0 rounded-md overflow-hidden border border-[#082c55] h-[150px] w-[100%]
+                  <div
+                    className="uploadBox !p-0 rounded-md overflow-hidden border border-[#082c55] h-[150px] w-[100%]
                            bg-gray-200 cursor-pointer hover:bg-gray-300 flex items-center justify-center flex-col "
-                    >
-                      <img src={image} className="w-100" />
-                    </div>
+                  >
+                    <img src={image} className="w-100" />
                   </div>
-                );
-              })}
+                </div>
+              );
+            })}
 
-            <UploadBox
-              multiple={false}
-              name="images"
-              url="/api/homeSlides/uploadImages"
-              setPreviewsFun={setPreviewsFun}
-            />
-          </div>
+          <UploadBox
+            multiple={false}
+            name="images"
+            url="/api/homeSlides/uploadImages"
+            setPreviewsFun={setPreviewsFun}
+          />
         </div>
 
         <br />

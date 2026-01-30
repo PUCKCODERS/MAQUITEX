@@ -354,350 +354,392 @@ const EditProduct = () => {
 
   return (
     <section className="!p-5 !bg-gray-200">
-      <form className="form !py-3 !p-8" onSubmit={handleSubmitg}>
-        <div className="scroll max-h-[70vh] overflow-y-scroll !pr-4">
-          <div className="grid grid-cols-1 !mb-3">
-            <div className="col">
-              <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-                NOMBRE DE PRODUCTO
-              </h3>
-              <input
-                type="text"
-                className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
-                name="name"
-                value={formFields.name}
-                onChange={onChangeInput}
-              />
-            </div>
+      <form className="form py-1 p-1 md:p-8 md:py-1" onSubmit={handleSubmitg}>
+        <div className="grid grid-cols-1 !mb-3">
+          <div className="col">
+            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
+              NOMBRE DE PRODUCTO
+            </h3>
+            <input
+              type="text"
+              className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+              name="name"
+              value={formFields.name}
+              onChange={onChangeInput}
+            />
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 !mb-3">
-            <div className="col">
-              <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-                DESCRIPCION
-              </h3>
-              <textarea
-                type="text"
-                className="w-full h-[140px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
-                name="description"
-                value={formFields.description}
-                onChange={onChangeInput}
-              />
-            </div>
+        <div className="grid grid-cols-1 !mb-3">
+          <div className="col">
+            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
+              DESCRIPCION
+            </h3>
+            <textarea
+              type="text"
+              className="w-full h-[140px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+              name="description"
+              value={formFields.description}
+              onChange={onChangeInput}
+            />
           </div>
+        </div>
 
-          <div className="grid grid-cols-4 !mb-3 !gap-4">
-            <div className="col">
-              <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-                CATEGORÍA
-              </h3>
-              {context?.catData?.length !== 0 && (
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="productCatDrop"
-                  size="small"
-                  className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                  value={productCat}
-                  label="Category"
-                  onChange={handleChangeProductCat}
-                >
-                  {context?.catData?.map((cat, index) => {
-                    return (
-                      <MenuItem
-                        value={cat?._id}
-                        key={index}
-                        onClick={() => selectCatByName(cat?.name)}
-                        className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                      >
-                        {cat?.name}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              )}
-            </div>
-
-            <div className="col">
-              <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-                SUBCATEGORÍA
-              </h3>
-
-              {context?.catData?.length !== 0 && (
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="productCatDrop"
-                  size="small"
-                  className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                  value={productSubCat}
-                  label="Sub Category"
-                  onChange={handleChangeProductSubCat}
-                >
-                  {context?.catData?.find((cat) => cat._id === productCat)
-                    ?.children?.length > 0 &&
-                    context?.catData
-                      ?.find((cat) => cat._id === productCat)
-                      ?.children?.map((subCat) => (
-                        <MenuItem
-                          key={subCat._id}
-                          value={subCat._id}
-                          onClick={() => selectSubCatByName(subCat.name)}
-                          className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                        >
-                          {subCat.name}
-                        </MenuItem>
-                      ))}
-                </Select>
-              )}
-            </div>
-
-            <div className="col">
-              <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-                SUBCATEGORÍA DE TERCER NIVEL
-              </h3>
-
-              {context?.catData?.length !== 0 && (
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="productCatDrop"
-                  size="small"
-                  className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                  value={productThirdLavelCat}
-                  label="Sub Category"
-                  onChange={handleChangeProductThirdLavelSubCat}
-                >
-                  {context?.catData
-                    ?.find((cat) => cat._id === productCat)
-                    ?.children?.find((subCat) => subCat._id === productSubCat)
-                    ?.children?.length > 0 &&
-                    context?.catData
-                      ?.find((cat) => cat._id === productCat)
-                      ?.children?.find((subCat) => subCat._id === productSubCat)
-                      ?.children?.map((thirdLavelCat) => (
-                        <MenuItem
-                          key={thirdLavelCat._id}
-                          value={thirdLavelCat._id}
-                          onClick={() =>
-                            selectSubCatByThirdLavel(thirdLavelCat?.name)
-                          }
-                          className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                        >
-                          {thirdLavelCat.name}
-                        </MenuItem>
-                      ))}
-                </Select>
-              )}
-            </div>
-
-            <div className="col">
-              <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-                PRECIO
-              </h3>
-              <input
-                type="number"
-                className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
-                name="price"
-                value={formFields.price}
-                onChange={onChangeInput}
-              />
-            </div>
-
-            <div className="col">
-              <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-                PRECIO ANTERIOR
-              </h3>
-              <input
-                type="number"
-                className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
-                name="oldPrice"
-                value={formFields.oldPrice}
-                onChange={onChangeInput}
-              />
-            </div>
-
-            <div className="col">
-              <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-                SE DESTACA ?
-              </h3>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 !mb-6 !gap-4">
+          <div className="col">
+            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
+              CATEGORÍA
+            </h3>
+            {context?.catData?.length !== 0 && (
               <Select
                 labelId="demo-simple-select-label"
                 id="productCatDrop"
                 size="small"
                 className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                value={productFeatured}
+                value={productCat}
                 label="Category"
-                onChange={handleChangeProductFeatured}
+                onChange={handleChangeProductCat}
               >
-                <MenuItem
-                  value={true}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  VERDADDERO
-                </MenuItem>
-                <MenuItem
-                  value={false}
-                  className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                >
-                  FALSO
-                </MenuItem>
+                {context?.catData?.map((cat, index) => {
+                  return (
+                    <MenuItem
+                      value={cat?._id}
+                      key={index}
+                      onClick={() => selectCatByName(cat?.name)}
+                      className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                    >
+                      {cat?.name}
+                    </MenuItem>
+                  );
+                })}
               </Select>
-            </div>
-
-            <div className="col">
-              <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-                STOCK
-              </h3>
-              <input
-                type="number"
-                className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
-                name="countInStock"
-                value={formFields.countInStock}
-                onChange={onChangeInput}
-              />
-            </div>
-
-            <div className="col">
-              <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-                MARCA
-              </h3>
-              <input
-                type="text"
-                className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
-                name="brand"
-                value={formFields.brand}
-                onChange={onChangeInput}
-              />
-            </div>
-
-            <div className="col">
-              <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-                DESCUENTO
-              </h3>
-              <input
-                type="number"
-                className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
-                name="discount"
-                value={formFields.discount}
-                onChange={onChangeInput}
-              />
-            </div>
-
-            <div className="col">
-              <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-                COLOR
-              </h3>
-              {productRamsData?.length !== 0 && (
-                <Select
-                  multiple
-                  labelId="demo-simple-select-label"
-                  id="productCatDrop"
-                  size="small"
-                  className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                  value={productRams}
-                  label="Category"
-                  onChange={handleChangeProductRams}
-                >
-                  {productRamsData?.map((item, index) => {
-                    return (
-                      <MenuItem
-                        key={index}
-                        value={item?.name}
-                        className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                      >
-                        {item.name}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              )}
-            </div>
-
-            <div className="col">
-              <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-                PESO
-              </h3>
-              {productWeightData?.length !== 0 && (
-                <Select
-                  multiple
-                  labelId="demo-simple-select-label"
-                  id="productCatDrop"
-                  size="small"
-                  className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                  value={productWeight}
-                  label="Category"
-                  onChange={handleChangeProductWeight}
-                >
-                  {productWeightData?.map((item, index) => {
-                    return (
-                      <MenuItem
-                        key={index}
-                        value={item?.name}
-                        className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                      >
-                        {item.name}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              )}
-            </div>
-
-            <div className="col">
-              <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-                TAMAÑO
-              </h3>
-              {productSizeData?.length !== 0 && (
-                <Select
-                  multiple
-                  labelId="demo-simple-select-label"
-                  id="productCatDrop"
-                  size="small"
-                  className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
-                  value={productSize}
-                  label="Category"
-                  onChange={handleChangeProductSize}
-                >
-                  {productSizeData?.map((item, index) => {
-                    return (
-                      <MenuItem
-                        key={index}
-                        value={item?.name}
-                        className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                      >
-                        {item.name}
-                      </MenuItem>
-                    );
-                  })}
-                </Select>
-              )}
-            </div>
+            )}
           </div>
 
-          <div className="grid grid-cols-4 !mb-3 !gap-4">
-            <div className="col">
-              <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
-                CALIFICACIÓN
-              </h3>
-              <Rating
-                name="rating"
-                value={formFields.rating}
-                onChange={onChangeRating}
-              />
-            </div>
-          </div>
-
-          <div className="col w-full !p-5 !px-0">
-            <h3 className="font-bold text-[18px] text-[#082c55] !mb-3">
-              IMAGENES Y MULTIMEDIA
+          <div className="col">
+            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
+              SUBCATEGORÍA
             </h3>
-            <div className="grid grid-cols-7 !gap-2">
-              {previews?.length !== 0 &&
-                previews?.map((image, index) => {
+
+            {context?.catData?.length !== 0 && (
+              <Select
+                labelId="demo-simple-select-label"
+                id="productCatDrop"
+                size="small"
+                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                value={productSubCat}
+                label="Sub Category"
+                onChange={handleChangeProductSubCat}
+              >
+                {context?.catData?.find((cat) => cat._id === productCat)
+                  ?.children?.length > 0 &&
+                  context?.catData
+                    ?.find((cat) => cat._id === productCat)
+                    ?.children?.map((subCat) => (
+                      <MenuItem
+                        key={subCat._id}
+                        value={subCat._id}
+                        onClick={() => selectSubCatByName(subCat.name)}
+                        className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                      >
+                        {subCat.name}
+                      </MenuItem>
+                    ))}
+              </Select>
+            )}
+          </div>
+
+          <div className="col">
+            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
+              SUBCATEGORÍA DE TERCER NIVEL
+            </h3>
+
+            {context?.catData?.length !== 0 && (
+              <Select
+                labelId="demo-simple-select-label"
+                id="productCatDrop"
+                size="small"
+                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                value={productThirdLavelCat}
+                label="Sub Category"
+                onChange={handleChangeProductThirdLavelSubCat}
+              >
+                {context?.catData
+                  ?.find((cat) => cat._id === productCat)
+                  ?.children?.find((subCat) => subCat._id === productSubCat)
+                  ?.children?.length > 0 &&
+                  context?.catData
+                    ?.find((cat) => cat._id === productCat)
+                    ?.children?.find((subCat) => subCat._id === productSubCat)
+                    ?.children?.map((thirdLavelCat) => (
+                      <MenuItem
+                        key={thirdLavelCat._id}
+                        value={thirdLavelCat._id}
+                        onClick={() =>
+                          selectSubCatByThirdLavel(thirdLavelCat?.name)
+                        }
+                        className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                      >
+                        {thirdLavelCat.name}
+                      </MenuItem>
+                    ))}
+              </Select>
+            )}
+          </div>
+
+          <div className="col">
+            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
+              PRECIO
+            </h3>
+            <input
+              type="number"
+              className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+              name="price"
+              value={formFields.price}
+              onChange={onChangeInput}
+            />
+          </div>
+
+          <div className="col">
+            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
+              PRECIO ANTERIOR
+            </h3>
+            <input
+              type="number"
+              className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+              name="oldPrice"
+              value={formFields.oldPrice}
+              onChange={onChangeInput}
+            />
+          </div>
+
+          <div className="col">
+            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
+              SE DESTACA ?
+            </h3>
+            <Select
+              labelId="demo-simple-select-label"
+              id="productCatDrop"
+              size="small"
+              className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+              value={productFeatured}
+              label="Category"
+              onChange={handleChangeProductFeatured}
+            >
+              <MenuItem
+                value={true}
+                className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+              >
+                VERDADDERO
+              </MenuItem>
+              <MenuItem
+                value={false}
+                className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+              >
+                FALSO
+              </MenuItem>
+            </Select>
+          </div>
+
+          <div className="col">
+            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
+              STOCK
+            </h3>
+            <input
+              type="number"
+              className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+              name="countInStock"
+              value={formFields.countInStock}
+              onChange={onChangeInput}
+            />
+          </div>
+
+          <div className="col">
+            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
+              MARCA
+            </h3>
+            <input
+              type="text"
+              className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+              name="brand"
+              value={formFields.brand}
+              onChange={onChangeInput}
+            />
+          </div>
+
+          <div className="col">
+            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
+              DESCUENTO
+            </h3>
+            <input
+              type="number"
+              className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+              name="discount"
+              value={formFields.discount}
+              onChange={onChangeInput}
+            />
+          </div>
+
+          <div className="col">
+            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
+              COLOR
+            </h3>
+            {productRamsData?.length !== 0 && (
+              <Select
+                multiple
+                labelId="demo-simple-select-label"
+                id="productCatDrop"
+                size="small"
+                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                value={productRams}
+                label="Category"
+                onChange={handleChangeProductRams}
+              >
+                {productRamsData?.map((item, index) => {
+                  return (
+                    <MenuItem
+                      key={index}
+                      value={item?.name}
+                      className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                    >
+                      {item.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            )}
+          </div>
+
+          <div className="col">
+            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">PESO</h3>
+            {productWeightData?.length !== 0 && (
+              <Select
+                multiple
+                labelId="demo-simple-select-label"
+                id="productCatDrop"
+                size="small"
+                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                value={productWeight}
+                label="Category"
+                onChange={handleChangeProductWeight}
+              >
+                {productWeightData?.map((item, index) => {
+                  return (
+                    <MenuItem
+                      key={index}
+                      value={item?.name}
+                      className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                    >
+                      {item.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            )}
+          </div>
+
+          <div className="col">
+            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
+              TAMAÑO
+            </h3>
+            {productSizeData?.length !== 0 && (
+              <Select
+                multiple
+                labelId="demo-simple-select-label"
+                id="productCatDrop"
+                size="small"
+                className="w-full shadow-[3px_3px_3px_#082c55] !font-bold !font-[bold] !bg-[#f1f1f1]"
+                value={productSize}
+                label="Category"
+                onChange={handleChangeProductSize}
+              >
+                {productSizeData?.map((item, index) => {
+                  return (
+                    <MenuItem
+                      key={index}
+                      value={item?.name}
+                      className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                    >
+                      {item.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            )}
+          </div>
+        </div>
+
+        <div className="grid grid-cols-4 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 !mb-3 !gap-4">
+          <div className="col">
+            <h3 className="text-[#082c55] font-bold text-[14px] !mb-1">
+              CALIFICACIÓN
+            </h3>
+            <Rating
+              name="rating"
+              value={formFields.rating}
+              onChange={onChangeRating}
+            />
+          </div>
+        </div>
+
+        <div className="col w-full !p-5 !px-0">
+          <h3 className="font-bold text-[18px] text-[#082c55] !mb-3">
+            IMAGENES Y MULTIMEDIA
+          </h3>
+
+          <div className="grid grid-cols-2 md:grid-cols-7 !gap-2">
+            {previews?.length !== 0 &&
+              previews?.map((image, index) => {
+                return (
+                  <div className="uploadBoxWrapper relative" key={index}>
+                    <span
+                      className="!absolute w-[20px] h-[20px] rounded-full overflow-hidden !text-[#fff]  !bg-[#030712] hover:!text-[#030712] hover:!bg-[#fff] !shadow-[0px_0px_0px_3px_#6b6c6d] hover:!shadow-[0px_0px_0px_3px_#030712]
+                          -top-[0x] -right-[0px] flex items-center justify-center z-50 cursor-pointer"
+                      onClick={() => removeImg(image, index)}
+                    >
+                      <IoClose className="text-[20px]" />
+                    </span>
+
+                    <div
+                      className="uploadBox !p-0 rounded-md overflow-hidden border border-[#082c55] h-[150px] w-[100%]
+                           bg-gray-200 cursor-pointer hover:bg-gray-300 flex items-center justify-center flex-col "
+                    >
+                      <img src={image} className="w-100" />
+                    </div>
+                  </div>
+                );
+              })}
+
+            <UploadBox
+              multiple={true}
+              name="images"
+              url="/api/product/uploadImages"
+              setPreviewsFun={setPreviewsFun}
+            />
+          </div>
+        </div>
+
+        <div className="col w-full !p-5 !px-0">
+          <div className="bg-white border-1 border-[#082c55] !shadow-[3px_3px_3px_#082c55] rounded-sm !p-4 w-full">
+            <div className="flex items-center justify-between">
+              <h3 className="font-bold text-[18px] text-[#082c55] !mb-3">
+                IMAGENES DE BANNER
+              </h3>
+              <Switch
+                {...label}
+                onChange={handleChangeSwitch}
+                checked={checkedSwitch}
+              />
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-7 !gap-2">
+              {bannerPreviews?.length !== 0 &&
+                bannerPreviews?.map((image, index) => {
                   return (
                     <div className="uploadBoxWrapper relative" key={index}>
                       <span
                         className="!absolute w-[20px] h-[20px] rounded-full overflow-hidden !text-[#fff]  !bg-[#030712] hover:!text-[#030712] hover:!bg-[#fff] !shadow-[0px_0px_0px_3px_#6b6c6d] hover:!shadow-[0px_0px_0px_3px_#030712]
                           -top-[0x] -right-[0px] flex items-center justify-center z-50 cursor-pointer"
-                        onClick={() => removeImg(image, index)}
+                        onClick={() => removeBannerImg(image, index)}
                       >
                         <IoClose className="text-[20px]" />
                       </span>
@@ -714,66 +756,21 @@ const EditProduct = () => {
 
               <UploadBox
                 multiple={true}
-                name="images"
-                url="/api/product/uploadImages"
-                setPreviewsFun={setPreviewsFun}
+                name="bannerimages"
+                url="/api/product/uploadBannerImages"
+                setPreviewsFun={setBannerImagesFun}
               />
             </div>
-          </div>
-
-          <div className="col w-full !p-5 !px-0">
-            <div className="bg-white border-1 border-[#082c55] !shadow-[3px_3px_3px_#082c55] rounded-sm !p-4 w-full">
-              <div className="flex items-center justify-between">
-                <h3 className="font-bold text-[18px] text-[#082c55] !mb-3">
-                  IMAGENES DE BANNER
-                </h3>
-                <Switch
-                  {...label}
-                  onChange={handleChangeSwitch}
-                  checked={checkedSwitch}
-                />
-              </div>
-              <div className="grid grid-cols-7 !gap-2">
-                {bannerPreviews?.length !== 0 &&
-                  bannerPreviews?.map((image, index) => {
-                    return (
-                      <div className="uploadBoxWrapper relative" key={index}>
-                        <span
-                          className="!absolute w-[20px] h-[20px] rounded-full overflow-hidden !text-[#fff]  !bg-[#030712] hover:!text-[#030712] hover:!bg-[#fff] !shadow-[0px_0px_0px_3px_#6b6c6d] hover:!shadow-[0px_0px_0px_3px_#030712]
-                          -top-[0x] -right-[0px] flex items-center justify-center z-50 cursor-pointer"
-                          onClick={() => removeBannerImg(image, index)}
-                        >
-                          <IoClose className="text-[20px]" />
-                        </span>
-
-                        <div
-                          className="uploadBox !p-0 rounded-md overflow-hidden border border-[#082c55] h-[150px] w-[100%]
-                           bg-gray-200 cursor-pointer hover:bg-gray-300 flex items-center justify-center flex-col "
-                        >
-                          <img src={image} className="w-100" />
-                        </div>
-                      </div>
-                    );
-                  })}
-
-                <UploadBox
-                  multiple={true}
-                  name="bannerimages"
-                  url="/api/product/uploadBannerImages"
-                  setPreviewsFun={setBannerImagesFun}
-                />
-              </div>
-              <h3 className="font-bold text-[18px] text-[#082c55] !mb-2 !mt-3">
-                TITULO DE BANNER
-              </h3>
-              <input
-                type="text"
-                className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
-                name="bannerTitlename"
-                value={formFields.bannerTitlename}
-                onChange={onChangeInput}
-              />
-            </div>
+            <h3 className="font-bold text-[18px] text-[#082c55] !mb-2 !mt-3">
+              TITULO DE BANNER
+            </h3>
+            <input
+              type="text"
+              className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+              name="bannerTitlename"
+              value={formFields.bannerTitlename}
+              onChange={onChangeInput}
+            />
           </div>
         </div>
 
