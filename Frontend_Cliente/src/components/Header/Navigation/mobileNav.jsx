@@ -9,7 +9,7 @@ import { NavLink } from "react-router-dom";
 
 const MobileNav = () => {
   return (
-    <div className="mobileNav bg-white !p-1 !px-3 w-full grid grid-cols-5 fixed !bottom-0 !left-0 place-items-center !gap-5">
+    <div className="mobileNav bg-white !p-1 !px-3 w-full grid grid-cols-5 fixed !bottom-0 !left-0 place-items-center !gap-5 z-[51]">
       <NavLink to="/" exact={true} activeClassName="isActive">
         <Button className="flex-col !w-[40px] !min-w-[40px] !capitalize !text-gray-700">
           <SiHomeassistantcommunitystore size={18} />
