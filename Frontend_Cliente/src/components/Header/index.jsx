@@ -67,19 +67,19 @@ const Header = () => {
       <div className="top-strip !py-2 !bg-[#f1f1f1] border-t-[1px] border-b-[1px] border-[#b8b8b8]">
         <div className="container">
           <div className="flex items-center justify-between">
-            <div className="col1 !w-[50%]">
-              <p className="!text-[50%] font-bold text-[#082c55]">
+            <div className="col1 w-[50%] hidden lg:block">
+              <p className="!text-[10px] font-bold mt-0 mb-0 text-[#082c55]">
                 OBTÉN HASTA UN 50 % DE DESCUENTO EN ESTILOS DE LA NUEVA
                 TEMPORADA, POR TIEMPO LIMITADO
               </p>
             </div>
 
-            <div className="col2 flex items-center !justify-end">
-              <ul className="flex items-center !gap-5 text-[#082c55]">
+            <div className="col2 flex items-center justify-between w-full lg:w-[50%] lg:justify-end">
+              <ul className="flex items-center gap-3 text-[#082c55] w-full justify-between lg:w-[300px]">
                 <li className="list-none">
                   <Link
                     to="/help-center"
-                    className=" !text-[60%] font-bold link"
+                    className=" text-[10px] lg:text-[10px] font-bold transition"
                   >
                     CENTRO DE AYUDA
                   </Link>
@@ -87,7 +87,7 @@ const Header = () => {
                 <li className="list-none">
                   <Link
                     to="/help-center"
-                    className=" !text-[60%] font-bold link"
+                    className=" text-[10px] lg:text-[10px] font-bold transition"
                   >
                     SEGUIMIENTO DE PEDIDOS
                   </Link>
