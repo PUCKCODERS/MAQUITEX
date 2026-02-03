@@ -7,6 +7,7 @@ import CategoryCollapse from "../../CategoryCollapse";
 const CategoryPanel = (props) => {
   const toggleDrawer = (newOpen) => () => {
     props.setIsOpenCatPanel(newOpen);
+    props.propsSetIsOpenCatPanel(newOpen);
   };
 
   const DrawerList = (
