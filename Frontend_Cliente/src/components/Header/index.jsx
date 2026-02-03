@@ -64,7 +64,7 @@ const Header = () => {
 
   return (
     <header className="!bg-white sticky -top-[60px] z-100">
-      <div className="top-strip !py-2 !bg-[#f1f1f1] border-t-[1px] border-b-[1px] border-[#b8b8b8]">
+      <div className="top-strip !py-0 !bg-[#f1f1f1] border-t-[1px] border-b-[1px] border-[#b8b8b8]">
         <div className="container">
           <div className="flex items-center justify-between">
             <div className="col1 w-[50%] hidden lg:block">
@@ -79,7 +79,7 @@ const Header = () => {
                 <li className="list-none">
                   <Link
                     to="/help-center"
-                    className=" text-[10px] lg:text-[10px] font-bold transition"
+                    className=" text-[9px] lg:text-[10px] font-bold transition"
                   >
                     CENTRO DE AYUDA
                   </Link>
@@ -87,7 +87,7 @@ const Header = () => {
                 <li className="list-none">
                   <Link
                     to="/help-center"
-                    className=" text-[10px] lg:text-[10px] font-bold transition"
+                    className=" text-[9px] lg:text-[10px] font-bold transition"
                   >
                     SEGUIMIENTO DE PEDIDOS
                   </Link>
@@ -98,9 +98,9 @@ const Header = () => {
         </div>
       </div>
 
-      <div className="header !py-4 border-b-[1px] border-gray-300 bg-[#fff]">
+      <div className="header !py-2 lg:!py-4 border-b-[1px] border-gray-300 bg-[#fff]">
         <div className="container flex items-center justify-between">
-          <div className="col1 w-[35%] lg:w-[25%]">
+          <div className="col1 w-[55%] lg:w-[25%]">
             <Link to={"/"}>
               <img src="../../../imagenes/logo.jpg" />
             </Link>
@@ -109,7 +109,7 @@ const Header = () => {
             <Search />
           </div>
           <div className="col3 w-[30%] flex items-center !pl-7">
-            <ul className="flex items-center justify-end gap-3 !w-full">
+            <ul className="flex items-center justify-end gap-0 lg:gap-3 !w-full">
               {context.isLogin === false ? (
                 <li className="list-none">
                   <Link
@@ -128,140 +128,138 @@ const Header = () => {
                 </li>
               ) : (
                 <>
-                  <Button
-                    className="myAccountWrap flex items-center !gap-3 cursor-pointer "
-                    onClick={handleClick}
-                  >
+                  <li>
                     <Button
-                      className="!w-[30px] !h-[30px] !min-w-[30px] !rounded-full !text-[#274a72] hover:!text-[#fff] !bg-[#fff] hover:!bg-[#274a72] !shadow-[0px_0px_0px_3px_#7994b1] transition-all duration-300"
-                      title="MI CUENTA"
-                      placement="top"
+                      className="myAccountWrap flex items-center !gap-3 cursor-pointer "
+                      onClick={handleClick}
                     >
-                      <FaUser className="text-[20px]" />
+                      <Button
+                        className="!w-[30px] !h-[30px] !min-w-[30px] !rounded-full !text-[#274a72] hover:!text-[#fff] !bg-[#fff] hover:!bg-[#274a72] !shadow-[0px_0px_0px_3px_#7994b1] transition-all duration-300"
+                        title="MI CUENTA"
+                        placement="top"
+                      >
+                        <FaUser className="text-[20px]" />
+                      </Button>
+
+                      {context?.windowWidth > 992 && (
+                        <div className="info flex flex-col">
+                          <h4 className="leading-6 text-[8px] capitalize !mb-0  text-left justify-start font-[500] text-[#274a72]">
+                            {context?.userData?.name}
+                          </h4>
+                          <span className="text-[7px] capitalize text-left justify-start font-[400] text-[#979797]">
+                            {context?.userData?.email}
+                          </span>
+                        </div>
+                      )}
                     </Button>
 
-                    <div className="info flex flex-col">
-                      <h4 className="leading-6 text-[8px] capitalize !mb-0  text-left justify-start font-[500] text-[#274a72]">
-                        {context?.userData?.name}
-                      </h4>
-                      <span className="text-[7px] capitalize text-left justify-start font-[400] text-[#979797]">
-                        {context?.userData?.email}
-                      </span>
-                    </div>
-                  </Button>
-
-                  <Menu
-                    anchorEl={anchorEl}
-                    id="account-menu"
-                    open={open}
-                    onClose={handleClose}
-                    onClick={handleClose}
-                    slotProps={{
-                      paper: {
-                        elevation: 0,
-                        sx: {
-                          overflow: "visible",
-                          filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
-                          mt: 1.5,
-                          "& .MuiAvatar-root": {
-                            width: 32,
-                            height: 32,
-                            ml: -0.5,
-                            mr: 1,
-                          },
-                          "&::before": {
-                            content: '""',
-                            display: "block",
-                            position: "absolute",
-                            top: 0,
-                            right: 14,
-                            width: 10,
-                            height: 10,
-                            bgcolor: "background.paper",
-                            transform: "translateY(-50%) rotate(45deg)",
-                            zIndex: 0,
+                    <Menu
+                      anchorEl={anchorEl}
+                      id="account-menu"
+                      open={open}
+                      onClose={handleClose}
+                      onClick={handleClose}
+                      slotProps={{
+                        paper: {
+                          elevation: 0,
+                          sx: {
+                            overflow: "visible",
+                            filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                            mt: 1.5,
+                            "& .MuiAvatar-root": {
+                              width: 32,
+                              height: 32,
+                              ml: -0.5,
+                              mr: 1,
+                            },
+                            "&::before": {
+                              content: '""',
+                              display: "block",
+                              position: "absolute",
+                              top: 0,
+                              right: 14,
+                              width: 10,
+                              height: 10,
+                              bgcolor: "background.paper",
+                              transform: "translateY(-50%) rotate(45deg)",
+                              zIndex: 0,
+                            },
                           },
                         },
-                      },
-                    }}
-                    transformOrigin={{ horizontal: "right", vertical: "top" }}
-                    anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
-                  >
-                    <Link to="/my-account" className="w-full block">
-                      <MenuItem
-                        onClick={handleClose}
-                        className="flex !gap-2 !py-2 !text-[#274a72] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
-                      >
-                        <FaUser className="text-[20px]" />{" "}
-                        <span className="text-[14px]">MI CUENTA</span>
-                      </MenuItem>
-                    </Link>
-                    <Link to="/address" className="w-full block">
-                      <MenuItem
-                        onClick={handleClose}
-                        className="flex !gap-2 !py-2 !text-[#274a72] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
-                      >
-                        <MdMapsHomeWork className="text-[20px]" />{" "}
-                        <span className="text-[14px]">DIRECCIÓN</span>
-                      </MenuItem>
-                    </Link>
-
-                    <Link to="/my-list" className="w-full block">
-                      <MenuItem
-                        onClick={handleClose}
-                        className="flex !gap-2 !py-2 !text-[#274a72] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
-                      >
-                        <FaHeart className="text-[20px]" />
-                        <span className="text-[14px]">MI LISTA</span>
-                      </MenuItem>
-                    </Link>
-                    <Link to="/my-orders" className="w-full block">
-                      <MenuItem
-                        onClick={handleClose}
-                        className="flex !gap-2 !py-2 !text-[#274a72] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
-                      >
-                        <FaShoppingCart className="text-[20px]" />{" "}
-                        <span className="text-[14px]">PEDIDOS</span>
-                      </MenuItem>
-                    </Link>
-                    <MenuItem
-                      onClick={logout}
-                      className="flex !gap-2 !py-2 !text-[#274a72] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
+                      }}
+                      transformOrigin={{ horizontal: "right", vertical: "top" }}
+                      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                     >
-                      <GiExitDoor className="text-[20px]" />
-                      <span className="text-[14px]">CERRAR SESIÓN</span>
-                    </MenuItem>
-                  </Menu>
+                      <Link to="/my-account" className="w-full block">
+                        <MenuItem
+                          onClick={handleClose}
+                          className="flex !gap-2 !py-2 !text-[#274a72] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
+                        >
+                          <FaUser className="text-[20px]" />{" "}
+                          <span className="text-[14px]">MI CUENTA</span>
+                        </MenuItem>
+                      </Link>
+                      <Link to="/address" className="w-full block">
+                        <MenuItem
+                          onClick={handleClose}
+                          className="flex !gap-2 !py-2 !text-[#274a72] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
+                        >
+                          <MdMapsHomeWork className="text-[20px]" />{" "}
+                          <span className="text-[14px]">DIRECCIÓN</span>
+                        </MenuItem>
+                      </Link>
+
+                      <Link to="/my-list" className="w-full block">
+                        <MenuItem
+                          onClick={handleClose}
+                          className="flex !gap-2 !py-2 !text-[#274a72] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
+                        >
+                          <FaHeart className="text-[20px]" />
+                          <span className="text-[14px]">MI LISTA</span>
+                        </MenuItem>
+                      </Link>
+                      <Link to="/my-orders" className="w-full block">
+                        <MenuItem
+                          onClick={handleClose}
+                          className="flex !gap-2 !py-2 !text-[#274a72] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
+                        >
+                          <FaShoppingCart className="text-[20px]" />{" "}
+                          <span className="text-[14px]">PEDIDOS</span>
+                        </MenuItem>
+                      </Link>
+                      <MenuItem
+                        onClick={logout}
+                        className="flex !gap-2 !py-2 !text-[#274a72] !font-[bold] hover:!text-[white] hover:!bg-[#274a72] w-full !text-left !justify-start !rounded-none"
+                      >
+                        <GiExitDoor className="text-[20px]" />
+                        <span className="text-[14px]">CERRAR SESIÓN</span>
+                      </MenuItem>
+                    </Menu>
+                  </li>
                 </>
               )}
 
-              {/*<li>
-                <Tooltip title="COMPARTIR" placement="top">
-                  <IconButton aria-label="cart">
-                    <StyledBadge badgeContent={4} color="secondary">
-                      <IoMdGitCompare className="text-[#0a7fec]" />
-                    </StyledBadge>
-                  </IconButton>
-                </Tooltip>
-              </li>*/}
-              <li>
-                <Tooltip title="ME GUSTA" placement="top">
-                  <Link to="/my-list">
-                    <IconButton aria-label="cart">
-                      <StyledBadge
-                        badgeContent={
-                          context?.myListData?.length !== 0
-                            ? context?.myListData?.length
-                            : 0
-                        }
-                        color="secondary"
-                      >
-                        <FaHeart className="text-[#e73821]" />
-                      </StyledBadge>
-                    </IconButton>
-                  </Link>
-                </Tooltip>
-              </li>
+              {context?.windowWidth > 992 && (
+                <li>
+                  <Tooltip title="ME GUSTA" placement="top">
+                    <Link to="/my-list">
+                      <IconButton aria-label="cart">
+                        <StyledBadge
+                          badgeContent={
+                            context?.myListData?.length !== 0
+                              ? context?.myListData?.length
+                              : 0
+                          }
+                          color="secondary"
+                        >
+                          <FaHeart className="text-[#e73821]" />
+                        </StyledBadge>
+                      </IconButton>
+                    </Link>
+                  </Tooltip>
+                </li>
+              )}
+
               <li>
                 <Tooltip title="CARRITO" placement="top">
                   <IconButton
