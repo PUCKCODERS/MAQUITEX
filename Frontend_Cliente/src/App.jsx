@@ -1,4 +1,5 @@
 import "./App.css";
+import "./responsive.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -55,6 +56,7 @@ function App() {
   const [addressMode, setAddressMode] = useState("add");
   const [addressId, setAddressId] = useState("");
   const [searchData, setSearchData] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const handleOpenProductDetailsModal = (status, item) => {
     setOpenProductDetailsModal({
@@ -121,6 +123,16 @@ function App() {
         setCatData(res?.data);
       }
     });
+
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   const openAlertBox = (status, msg) => {
@@ -262,6 +274,7 @@ function App() {
     setAddressId,
     searchData,
     setSearchData,
+    windowWidth,
   };
 
   return (
