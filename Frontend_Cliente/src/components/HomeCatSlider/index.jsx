@@ -13,7 +13,7 @@ const HomeCatSlider = (props) => {
   const context = useContext(MyContext);
 
   return (
-    <div className="homeCatSlider !pt-3 lg:!pt-4 !py-8 ">
+    <div className="homeCatSlider !pt-3 lg:!pt-4 !py-3 lg:!py-8 ">
       <div className="container">
         <Swiper
           loop={true}
@@ -28,15 +28,15 @@ const HomeCatSlider = (props) => {
               spaceBetween: 5,
             },
             550: {
-              slidesPerView: 5,
+              slidesPerView: 4,
               spaceBetween: 5,
             },
             900: {
-              slidesPerView: 6,
+              slidesPerView: 5,
               spaceBetween: 5,
             },
             1100: {
-              slidesPerView: 7,
+              slidesPerView: 8,
               spaceBetween: 5,
             },
           }}
