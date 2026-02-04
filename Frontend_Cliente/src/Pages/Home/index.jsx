@@ -88,7 +88,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="!min-h-[30vh] lg:min-h-[65vh] relative">
+      <div className="!min-h-[25vh] lg:!min-h-[65vh] relative">
         {homeSlidesData?.length !== 0 && <HomeSlider data={homeSlidesData} />}
       </div>
 
