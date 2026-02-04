@@ -104,7 +104,7 @@ const CategoryCollapse = (props) => {
                                             <GiSewingMachine className="absolute !text-[#000] !text-[25px] top-[-2px] right-[5px]" />
                                           </li>
                                         );
-                                      }
+                                      },
                                     )}
                                 </ul>
                               )}

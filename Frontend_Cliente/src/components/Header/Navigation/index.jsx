@@ -31,20 +31,22 @@ const Navigation = (props) => {
 
   return (
     <>
-      <nav className="!py-1 ">
-        <div className="container flex items-center justify-end gap-9">
-          <div className="col_1 !w-[20%]">
-            <Button
-              className="!text-[#082c55]  !bg-[#f1f1f1] !gap-2 w-full shadow-[3px_3px_3px_#274a72]"
-              onClick={openCategoryPanel}
-            >
-              <ImMenu className="text-[18px] !mb-1" />
-              CATEGORÍAS
-              <RxTriangleDown className="text-[18px] !mb-1 !ml-auto !font-bold !cursor-pointer" />
-            </Button>
-          </div>
+      <nav className="!py-1 navigation">
+        <div className="container flex items-center justify-start lg:justify-end gap-9">
+          {context?.windowWidth > 992 && (
+            <div className="col_1 !w-[20%]">
+              <Button
+                className="!text-[#082c55]  !bg-[#f1f1f1] !gap-2 w-full shadow-[3px_3px_3px_#274a72]"
+                onClick={openCategoryPanel}
+              >
+                <ImMenu className="text-[18px] !mb-1" />
+                CATEGORÍAS
+                <RxTriangleDown className="text-[18px] !mb-1 !ml-auto !font-bold !cursor-pointer" />
+              </Button>
+            </div>
+          )}
 
-          <div className="col_2 w-[60%] !ml-6">
+          <div className="col_2 w-full lg:w-[60%] ml-0 lg:ml-6">
             <ul className="flex items-center gap-0 nav">
               <li className="list-none ">
                 {/*<Link to="/" className="link transition ">

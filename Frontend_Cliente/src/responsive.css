@@ -3,4 +3,24 @@
   body {
     overflow-x: hidden;
   }
+
+  .navigation ul {
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: block !important;
+    text-align: center;
+  }
+  .navigation ul::-webkit-scrollbar {
+    display: none !important;
+  }
+  .navigation ul li {
+    display: inline-block !important;
+    vertical-align: top !important;
+  }
+
+  .container {
+    width: 98% !important;
+    max-width: 98% !important;
+  }
 }
