@@ -65,7 +65,7 @@ const Home = () => {
 
   useEffect(() => {
     fetchDataFromApi(
-      `/api/product/getAllProductsByCatId/${context?.catData[0]?._id}`
+      `/api/product/getAllProductsByCatId/${context?.catData[0]?._id}`,
     ).then((res) => {
       if (res?.error === false) {
         setPopularProductsData(res?.products);
@@ -88,7 +88,9 @@ const Home = () => {
 
   return (
     <>
-      {homeSlidesData?.length !== 0 && <HomeSlider data={homeSlidesData} />}
+      <div className="!min-h-[30vh] lg:min-h-[65vh] relative">
+        {homeSlidesData?.length !== 0 && <HomeSlider data={homeSlidesData} />}
+      </div>
 
       {context?.catData?.length !== 0 && (
         <HomeCatSlider data={context?.catData} />

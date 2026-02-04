@@ -4,15 +4,19 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 import { Navigation, Autoplay } from "swiper/modules";
+import { useContext } from "react";
+import { MyContext } from "../../App";
 
 const HomeSlider = (props) => {
+  const context = useContext(MyContext);
+
   return (
-    <div className="homeSlider !py-4 ">
+    <div className="homeSlider !pb-0 !pt-3 lg:!pt-4 lg:!pb-2  relative z-[99]">
       <div className="container">
         <Swiper
           loop={true}
           spaceBetween={10}
-          navigation={true}
+          navigation={context?.windowWidth < 992 ? false : true}
           modules={[Navigation, Autoplay]}
           autoplay={{
             delay: 2500,
@@ -24,11 +28,11 @@ const HomeSlider = (props) => {
             props?.data?.map((item, index) => {
               return (
                 <SwiperSlide key={index}>
-                  <div className="item rounded-[20px] !overflow-hidden shadow-[3px_3px_3px_#082c55]">
+                  <div className="item rounded-[10px] overflow-hidden shadow-[6px_6px_6px_#082c55]">
                     <img
                       src={item?.images[0]}
                       alt="Banner slide"
-                      className="!w-full !left-0 !top-0 !h-[400px] "
+                      className="!w-full !left-0 !top-0 h-[200px] sm:h-[300px] md:h-[300px] lg:h-[500px] "
                     />
                   </div>
                 </SwiperSlide>
