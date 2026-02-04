@@ -71,7 +71,7 @@ const Header = () => {
         <div className="container">
           <div className="flex items-center justify-between">
             <div className="col1 w-[50%] hidden lg:block">
-              <p className="!text-[10px] font-bold mt-0 mb-0 text-[#082c55]">
+              <p className="!text-[9px] font-bold mt-0 mb-0 text-[#082c55]">
                 OBTÉN HASTA UN 50 % DE DESCUENTO EN ESTILOS DE LA NUEVA
                 TEMPORADA, POR TIEMPO LIMITADO
               </p>

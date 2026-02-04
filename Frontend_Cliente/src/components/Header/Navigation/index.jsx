@@ -34,7 +34,7 @@ const Navigation = (props) => {
       <nav className="!py-1 navigation">
         <div className="container flex items-center justify-start lg:justify-end gap-9">
           {context?.windowWidth > 992 && (
-            <div className="col_1 !w-[20%]">
+            <div className="col_1 !w-[20%] !mr-6">
               <Button
                 className="!text-[#082c55]  !bg-[#f1f1f1] !gap-2 w-full shadow-[3px_3px_3px_#274a72]"
                 onClick={openCategoryPanel}
@@ -46,7 +46,7 @@ const Navigation = (props) => {
             </div>
           )}
 
-          <div className="col_2 w-full lg:w-[60%] ml-0 lg:ml-6">
+          <div className="col_2 w-full flex items-center justify-center lg:w-[60%] ml-0 lg:ml-6">
             <ul className="flex items-center gap-0 nav">
               <li className="list-none ">
                 {/*<Link to="/" className="link transition ">
@@ -152,7 +152,7 @@ const Navigation = (props) => {
 
           <div className="col_3 w-[20%] hidden lg:block">
             <p className="!text-[10px] text-[#000] font-[600] flex items-center !gap-1 !mb-0 !mt-0">
-              <FaTruckFast className="!text-[25px] text-[#000] !ml-7" />
+              <FaTruckFast className="!text-[25px] text-[#000] !ml-6" />
               ENVIO GRATIS
             </p>
           </div>
