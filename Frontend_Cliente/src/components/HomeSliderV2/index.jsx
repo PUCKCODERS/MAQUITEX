@@ -27,7 +27,7 @@ const HomeBannerV2 = (props) => {
         disableOnInteraction: false,
       }}
       modules={[EffectFade, Navigation, Pagination, Autoplay]}
-      className="homeSliderV2 !shadow-[3px_6px_9px_#082c55] rounded-md "
+      className="homeSliderV2 shadow-[3px_3px_3px_#274a72] rounded-md "
     >
       {props?.data?.map((item, index) => {
         if (item?.isDisplayOnHomeBanner === true) {

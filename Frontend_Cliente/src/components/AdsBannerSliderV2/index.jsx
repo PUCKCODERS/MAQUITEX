@@ -5,7 +5,7 @@ import "swiper/css/navigation";
 
 import { Navigation } from "swiper/modules";
 import BannerBox from "../BannerBox";
-import BannerBoxV2 from "../bannerBoxV2";
+import BannerBoxV2 from "../BannerBoxV2";
 
 const AdsBannerSliderV2 = (props) => {
   return (
@@ -22,7 +22,7 @@ const AdsBannerSliderV2 = (props) => {
           return (
             <SwiperSlide
               key={index}
-              className="!rounded-md !mb-4 !mr-1 !ml-1 !overflow-hidden  shadow-[3px_3px_3px_#274a72] !bg-gray-100"
+              className=" !mb-4 !mr-1 !ml-1 !overflow-hidden  shadow-[3px_3px_3px_#274a72] !bg-gray-100"
             >
               <BannerBoxV2
                 info={item?.alignInfo}

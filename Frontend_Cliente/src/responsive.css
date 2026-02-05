@@ -39,6 +39,21 @@
     width: 95% !important;
     max-width: 95% !important;
   }
+
+  .scrollableBox {
+    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    display: block !important;
+  }
+  .scrollableBox::-webkit-scrollbar {
+    display: none !important;
+  }
+  .scrollableBox .box {
+    display: inline-block !important;
+    vertical-align: top !important;
+    margin-right: 12px !important;
+  }
 }
 
 @media only screen and (min-width: 320px) and (max-width: 767px) {

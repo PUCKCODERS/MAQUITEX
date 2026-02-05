@@ -145,7 +145,7 @@ const Home = () => {
           </div>
 
           {bannerV1Data.length >= 2 && (
-            <div className="part2 w-full lg:w-[30%] flex items-center !gap-2 justify-between flex-col">
+            <div className="part2 scrollableBox w-full lg:w-[30%] flex items-center !gap-2 justify-between flex-row lg:flex-col">
               <BannerBoxV2
                 info="left"
                 item={bannerV1Data[0]}
