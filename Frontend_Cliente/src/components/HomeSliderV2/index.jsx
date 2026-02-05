@@ -43,25 +43,25 @@ const HomeBannerV2 = (props) => {
                     {item?.bannerTitlename}
                   </h4>
                   {context?.windowWidth < 992 && (
-                    <h2 className="!text-[#082c55] text-[10px] lg:text-[30px] font-[bold] !w-full relative -right-[100%] opacity-0">
+                    <h2 className="!text-gray-800 text-[10px] lg:text-[30px] font-[bold] !w-full relative -right-[100%] opacity-0">
                       {item?.name?.length > 40
                         ? item?.name?.substr(0, 40)
                         : item?.name}
                     </h2>
                   )}
                   {context?.windowWidth > 992 && (
-                    <h2 className="!text-[#082c55] text-[10px] lg:text-[30px] font-[bold] !w-full relative -right-[100%] opacity-0">
+                    <h2 className="!text-gray-500 text-[10px] lg:text-[30px] font-[bold] !w-full relative -right-[100%] opacity-0">
                       {item?.name?.length > 70
                         ? item?.name?.substr(0, 70)
                         : item?.name}
                     </h2>
                   )}
 
-                  <h3 className="text-[#000] flex items-center text-[10px] lg:text-[18px] font-[bold] !w-full !text-left !mt-3 !mb-3 gap-0 lg:!gap-3 relative -right-[100%] opacity-0 flex-col lg:flex-row">
+                  <h3 className="text-gray-700 flex items-center text-[10px] lg:text-[18px] font-[bold] !w-full !text-left !mt-3 !mb-3 gap-0 lg:!gap-3 relative -right-[100%] opacity-0 flex-col lg:flex-row">
                     <span className="block lg:inline w-full lg:w-max">
                       A TAN DE SOLO
                     </span>
-                    <span className="text-[#082c55] text-[10px] lg:text-[30px] font-[700] block lg:inline w-full lg:w-max">
+                    <span className="text-red-700 text-[10px] lg:text-[30px] font-[700] block lg:inline w-full lg:w-max">
                       {item?.price?.toLocaleString("en-US", {
                         style: "currency",
                         currency: "USD",
@@ -70,7 +70,7 @@ const HomeBannerV2 = (props) => {
                   </h3>
 
                   <div className="w-full relative -bottom-[100%] opacity-0 btn_">
-                    <Button className="btn-org !shadow-[4px_4px_2px_#000] border !border-[transparent]">
+                    <Button className="btn-org !shadow-[1px_1px_1px_#000] lg:!shadow-[3px_3px_3px_#000] border !border-[transparent] !text-[8px] !w-[110px]  !h-[30px] lg:!text-[20px] lg:!w-[200px]  lg:!h-[50px] ">
                       <Link to={`/product/${item?._id}`}>VER PRODUCTO</Link>
                     </Button>
                   </div>
