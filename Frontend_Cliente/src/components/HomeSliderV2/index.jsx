@@ -43,14 +43,14 @@ const HomeBannerV2 = (props) => {
                     {item?.bannerTitlename}
                   </h4>
                   {context?.windowWidth < 992 && (
-                    <h2 className="!text-gray-500 !text-[12px] sm:!text-[15px] md:!text-[20px]  lg:!text-[30px] font-[bold] !w-full relative -right-[100%] opacity-0">
+                    <h2 className="!text-gray-500 !text-[12px] sm:!text-[15px] md:!text-[20px]  lg:!text-[25px] font-[bold] !w-full relative -right-[100%] opacity-0">
                       {item?.name?.length > 40
                         ? item?.name?.substr(0, 40)
                         : item?.name}
                     </h2>
                   )}
                   {context?.windowWidth > 992 && (
-                    <h2 className="!text-gray-500 !text-[12px] sm:!text-[15px] md:!text-[20px] lg:!text-[30px] font-[bold] !w-full relative -right-[100%] opacity-0">
+                    <h2 className="!text-gray-500 !text-[12px] sm:!text-[15px] md:!text-[20px] lg:!text-[25px] font-[bold] !w-full relative -right-[100%] opacity-0">
                       {item?.name?.length > 70
                         ? item?.name?.substr(0, 70)
                         : item?.name}
@@ -61,7 +61,7 @@ const HomeBannerV2 = (props) => {
                     <span className="block lg:inline !mt-0 lg:!mt-1  w-full lg:w-max">
                       A TAN DE SOLO
                     </span>
-                    <span className="text-red-700 !text-[12px] sm:!text-[15px] md:!text-[20px] lg:!text-[30px] font-[700] block lg:inline w-full lg:w-max">
+                    <span className="text-red-700 !text-[12px] sm:!text-[15px] md:!text-[20px]  lg:!text-[25px] font-[700] block lg:inline w-full lg:w-max">
                       {item?.price?.toLocaleString("en-US", {
                         style: "currency",
                         currency: "USD",
