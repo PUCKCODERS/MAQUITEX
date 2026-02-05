@@ -20,7 +20,13 @@
   }
 
   .container {
-    width: 98% !important;
-    max-width: 98% !important;
+    width: 95% !important;
+    max-width: 95% !important;
+  }
+}
+
+@media only screen and (min-width: 320px) and (max-width: 767px) {
+  .MuiTabs-flexContainer button {
+    font-size: 13px !important;
   }
 }

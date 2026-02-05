@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
@@ -9,14 +9,16 @@ import "swiper/css/pagination";
 import { EffectFade, Navigation, Pagination, Autoplay } from "swiper/modules";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import { MyContext } from "../../App";
 
 const HomeBannerV2 = (props) => {
+  const context = useContext(MyContext);
   return (
     <Swiper
       loop={true}
       spaceBetween={30}
       effect={"fade"}
-      navigation={true}
+      navigation={context?.windowWidth < 992 ? false : true}
       pagination={{
         clickable: true,
       }}
@@ -34,20 +36,36 @@ const HomeBannerV2 = (props) => {
               <div className="item w-full overflow-hidden ">
                 <img
                   src={item?.bannerimages[0]}
-                  className="!left-0 !top-0 !w-full !h-[400px] "
+                  className="!left-0 !top-0 w-full h-[200px] lg:h-[400px] "
                 />
                 <div className="info absolute !top-0 -right-[100%] opacity-0 !w-[50%] !h-[100%] !z-50 !p-8 flex items-center flex-col justify-center transition-all duration-700">
-                  <h4 className="text-[#000] text-[20px] font-[bold] !w-full !text-left !mb-3 relative -right-[100%] opacity-0">
+                  <h4 className="text-[#000] text-[10px] lg:text-[20px] font-[bold] !w-full !text-left !mb-3 relative -right-[100%] opacity-0 hidden lg:block">
                     {item?.bannerTitlename}
                   </h4>
-                  <h2 className="!text-[#082c55] text-[30px] font-[bold] !w-full relative -right-[100%] opacity-0">
-                    {item?.name?.substr(0, 40)}
-                  </h2>
+                  {context?.windowWidth < 992 && (
+                    <h2 className="!text-[#082c55] text-[10px] lg:text-[30px] font-[bold] !w-full relative -right-[100%] opacity-0">
+                      {item?.name?.length > 40
+                        ? item?.name?.substr(0, 40)
+                        : item?.name}
+                    </h2>
+                  )}
+                  {context?.windowWidth > 992 && (
+                    <h2 className="!text-[#082c55] text-[10px] lg:text-[30px] font-[bold] !w-full relative -right-[100%] opacity-0">
+                      {item?.name?.length > 70
+                        ? item?.name?.substr(0, 70)
+                        : item?.name}
+                    </h2>
+                  )}
 
-                  <h3 className="text-[#000] flex items-center text-[18px] font-[bold] !w-full !text-left !mt-3 !mb-3 !gap-3 relative -right-[100%] opacity-0">
-                    A TAN DE SOLO{" "}
-                    <span className="text-[#082c55] text-[30px] font-[700]">
-                      &#36; {item?.price}
+                  <h3 className="text-[#000] flex items-center text-[10px] lg:text-[18px] font-[bold] !w-full !text-left !mt-3 !mb-3 gap-0 lg:!gap-3 relative -right-[100%] opacity-0 flex-col lg:flex-row">
+                    <span className="block lg:inline w-full lg:w-max">
+                      A TAN DE SOLO
+                    </span>
+                    <span className="text-[#082c55] text-[10px] lg:text-[30px] font-[700] block lg:inline w-full lg:w-max">
+                      {item?.price?.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: "USD",
+                      })}
                     </span>
                   </h3>
 

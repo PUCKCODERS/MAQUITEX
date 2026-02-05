@@ -88,7 +88,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="!min-h-[25vh] lg:!min-h-[65vh] relative">
+      <div className="!min-h-max lg:!min-h-[65vh] relative">
         {homeSlidesData?.length !== 0 && <HomeSlider data={homeSlidesData} />}
       </div>
 
@@ -96,17 +96,19 @@ const Home = () => {
         <HomeCatSlider data={context?.catData} />
       )}
 
-      <section id="productos-populares" className="!py-8 bg-white">
+      <section id="productos-populares" className="!py-4 lg:!py-8 bg-white">
         <div className="container">
-          <div className="flex items-center justify-between">
-            <div className="leftSec">
-              <h2 className="text-[20px] font-bold">PRODUCTOS POPULARES</h2>
-              <p className="text-[12px] font-[400] !mt-0 !mb-0">
-                NO TE PIERDAS LAS OFERTAS VIGENTES HASTA FINALES DE AÑO
+          <div className="flex items-center justify-between  !flex-col lg:!flex-row">
+            <div className="leftSec w-full lg:w-[40%]">
+              <h2 className="!text-[12px] sm:!text-[16px] md:!text-[16px] lg:!text-[20px] font-bold">
+                PRODUCTOS POPULARES
+              </h2>
+              <p className="!text-[9px] sm:!text-[12px] md:!text-[12px] lg:!text-[12px] font-[400] !mt-0 !mb-0">
+                NO TE PIERDAS LAS OFERTAS VIGENTES HASTA FIN DE AÑO
               </p>
             </div>
 
-            <div className="rightSec w-[60%]">
+            <div className="rightSec w-full lg:w-[60%]">
               <Tabs
                 value={value}
                 onChange={handleChange}
@@ -137,13 +139,13 @@ const Home = () => {
       </section>
 
       <section className="!py-6 bg-white">
-        <div className="container flex !gap-3">
-          <div className="part1 w-[70%]">
+        <div className="container flex flex-col lg:flex-row !gap-3">
+          <div className="part1 w-full lg:w-[70%] ">
             {productsData?.length !== 0 && <HomeBannerV2 data={productsData} />}
           </div>
 
           {bannerV1Data.length >= 2 && (
-            <div className="part2 w-[30%] flex items-center !gap-2 justify-between flex-col">
+            <div className="part2 w-full lg:w-[30%] flex items-center !gap-2 justify-between flex-col">
               <BannerBoxV2
                 info="left"
                 item={bannerV1Data[0]}
