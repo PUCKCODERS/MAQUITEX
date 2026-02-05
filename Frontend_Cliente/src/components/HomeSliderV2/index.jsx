@@ -58,7 +58,7 @@ const HomeBannerV2 = (props) => {
                   )}
 
                   <h3 className="text-gray-700 flex items-center !text-[10px] sm:!text-[12px] md:!text-[15px] lg:!text-[18px] font-[bold] !w-full !text-left !mt-3 !mb-2 lg:!mb-3 !gap-0 lg:!gap-3 relative -right-[100%] opacity-0 flex-col lg:flex-row">
-                    <span className="block lg:inline !mt-0 lg:!mt-1  w-full lg:w-max">
+                    <span className="w-full lg:w-max hidden lg:block  !mt-0 lg:!mt-1 ">
                       A TAN DE SOLO
                     </span>
                     <span className="text-red-700 !text-[12px] sm:!text-[15px] md:!text-[20px]  lg:!text-[25px] font-[700] block lg:inline w-full lg:w-max">
