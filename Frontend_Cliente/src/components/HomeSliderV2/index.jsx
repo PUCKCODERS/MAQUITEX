@@ -36,7 +36,7 @@ const HomeBannerV2 = (props) => {
               <div className="item w-full overflow-hidden ">
                 <img
                   src={item?.bannerimages[0]}
-                  className="!left-0 !top-0 w-full h-[200px] lg:h-[400px] "
+                  className="!left-0 !top-0 w-full h-[200px] sm:h-[250px] md:h-[300px] lg:h-[400px] "
                 />
                 <div className="info absolute !top-0 -right-[100%] opacity-0 !w-[50%] !h-[100%] !z-50 !p-8 flex items-center flex-col justify-center transition-all duration-700">
                   <h4 className="text-[#000] text-[10px] lg:text-[20px] font-[bold] !w-full !text-left !mb-3 relative -right-[100%] opacity-0 hidden lg:block">
