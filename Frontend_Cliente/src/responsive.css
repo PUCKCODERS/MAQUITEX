@@ -4,6 +4,22 @@
     overflow-x: hidden;
   }
 
+  .btn-sm {
+    padding: 3px 10px !important;
+    font-size: 11px !important;
+  }
+  .btn-lg {
+    padding: 5px 10px !important;
+    font-size: 14px !important;
+  }
+  .btn {
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+  }
+  .btn svg {
+    font-size: 15px !important;
+  }
+
   .navigation ul {
     white-space: nowrap;
     overflow-x: scroll;
