@@ -130,11 +130,13 @@ const Home = () => {
             </div>
           </div>
 
-          {popularProductsData?.length === 0 && <ProductLoading />}
+          <div className="min-h-[60vh]">
+            {popularProductsData?.length === 0 && <ProductLoading />}
 
-          {popularProductsData?.length !== 0 && (
-            <ProductsSlider items={6} data={popularProductsData} />
-          )}
+            {popularProductsData?.length !== 0 && (
+              <ProductsSlider items={6} data={popularProductsData} />
+            )}
+          </div>
         </div>
       </section>
 
@@ -162,24 +164,24 @@ const Home = () => {
         </div>
       </section>
 
-      <section className="!py-4 !pt-8 bg-white">
+      <section className="!py-0 lg:!py-4 !pt-0 lg:!pt-8 bg-white">
         <div className="container">
-          <div className="freeShipping !w-[80%] !m-auto !py-4 !p-4 border-3 !border-gray-950 bg-gray-700 flex items-center justify-between !rounded-md !mb-7">
-            <div className="!w-[100%] border-3 !border-white !m-auto !py-4 !p-4 bg-gray-950 flex items-center justify-between !rounded-md">
+          <div className="freeShipping !w-full lg:!w-[80%] !m-auto !py-0 !p-0 lg:!py-1 lg:!p-1 border-3 !border-gray-950 bg-gray-700 flex items-center justify-between  !rounded-md !mb-7">
+            <div className="!w-[100%] border-3 !border-white !m-auto !py-1 !p-0 lg:!py-4 lg:!p-4 bg-gray-950 flex items-center !justify-center lg:!justify-between !flex-col lg:!flex-row !rounded-md">
               <div className="col1 flex items-center gap-4">
-                <FaTruckFast className="text-[50px] text-white" />
-                <span className="text-[18px] font-bold text-white !text-uppercase">
+                <FaTruckFast className="text-[30px] lg:text-[50px] text-white" />
+                <span className="text-[15px] lg:text-[18px] font-bold text-white !text-uppercase">
                   ENVIO GRATIS
                 </span>
               </div>
 
               <div className="col2">
-                <p className="!mb-0 font-[500] text-white text-[13px]">
-                  POR TU PRIMERA COMPRA Y SUPERIOR A $200
+                <p className="!mb-0 font-[500] text-white !text-[10px] lg:!text-[13px] text-center">
+                  POR TU PRIMERA COMPRA O SUPERIOR A $200
                 </p>
               </div>
 
-              <p className="font-bold text-[20px] text-white">- SOLO $200</p>
+              <p className="font-bold text-[20px] text-white"> SOLO $200</p>
             </div>
           </div>
 
