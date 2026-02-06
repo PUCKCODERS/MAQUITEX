@@ -12,7 +12,7 @@ const ProductsSlider = (props) => {
   const context = useContext(MyContext);
 
   return (
-    <div className="productsSlider !py-3">
+    <div className="productsSlider !py-0 lg:!py-3">
       <Swiper
         loop={true}
         slidesPerView={props.items}

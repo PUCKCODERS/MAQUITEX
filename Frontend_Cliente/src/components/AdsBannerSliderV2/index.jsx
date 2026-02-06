@@ -13,7 +13,7 @@ const AdsBannerSliderV2 = (props) => {
   const context = useContext(MyContext);
 
   return (
-    <div className="!py-5 w-full ">
+    <div className="!py-2 lg:!py-5 !w-full resBannerSlider">
       <Swiper
         loop={true}
         slidesPerView={props.items}
@@ -23,19 +23,19 @@ const AdsBannerSliderV2 = (props) => {
         freeMode={true}
         breakpoints={{
           300: {
-            slidesPerView: 4,
+            slidesPerView: 1,
             spaceBetween: 5,
           },
-          550: {
-            slidesPerView: 4,
+          450: {
+            slidesPerView: 2,
             spaceBetween: 5,
           },
-          900: {
-            slidesPerView: 5,
+          750: {
+            slidesPerView: 3,
             spaceBetween: 5,
           },
           1100: {
-            slidesPerView: 8,
+            slidesPerView: 4,
             spaceBetween: 5,
           },
         }}

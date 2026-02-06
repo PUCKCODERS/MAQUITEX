@@ -166,7 +166,7 @@ const Home = () => {
 
       <section className="!py-0 lg:!py-4 !pt-0 lg:!pt-8 bg-white">
         <div className="container">
-          <div className="freeShipping !w-full sm:!w-[80%] md:!w-[80%] lg:!w-[80%] !m-auto !py-0 !p-0 lg:!py-1 lg:!p-1 border-3 !border-gray-950 bg-gray-700 flex items-center justify-between  !rounded-md !mb-7">
+          <div className="freeShipping !w-full sm:!w-[80%] md:!w-[80%] lg:!w-[80%] !m-auto !pb-0 !py-0 !p-0 lg:!py-1 lg:!p-1 border-3 !border-gray-950 bg-gray-700 flex items-center justify-between  !rounded-md !mb-7">
             <div className="!w-[100%] lg: border-3 !border-white !m-auto !py-1 !p-0 lg:!py-4 lg:!p-4 bg-gray-950 flex items-center !justify-center lg:!justify-between !flex-col lg:!flex-row !rounded-md">
               <div className="col1 flex items-center gap-4">
                 <FaTruckFast className="text-[30px] sm:!text-[35px] md:!text-[40px] lg:text-[50px] text-white" />
@@ -208,7 +208,10 @@ const Home = () => {
           )}
         </div>
       </section>
-      <section id="productos-recomendados" className="!py-5 !pt-0 bg-white">
+      <section
+        id="productos-recomendados"
+        className="!py-2 lg:!py-5 !pt-0 bg-white"
+      >
         <div className="container">
           <h2 className="text-[20px] font-bold">PRODUCTOS RECOMENDADOS</h2>
 
@@ -224,7 +227,7 @@ const Home = () => {
           )}
 
           {bannerV2Data?.length !== 0 && (
-            <AdsBannerSliderV3 items={2} data={bannerV2Data} />
+            <AdsBannerSliderV3 items={3} data={bannerV2Data} />
           )}
         </div>
       </section>

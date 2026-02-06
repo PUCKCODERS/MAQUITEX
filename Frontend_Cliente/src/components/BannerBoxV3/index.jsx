@@ -7,7 +7,7 @@ const BannerBoxV3 = (props) => {
     <div className="bannerBoxV3 bg-white w-full overflow-hidden rounded-md group relative !border-1 !border-[#b1cdee] shadow-[3px_3px_3px_#274a72]">
       <img
         src={props?.image}
-        className={`!w-full !h-[250px] !rounded-md transition-all duration-150 group-hover:scale-105 
+        className={`!w-full h-[150px] sm:h-[180px] md:h-[200px] lg:!h-[250px] !rounded-md transition-all duration-150 group-hover:scale-105 
     
   `}
       />
@@ -23,7 +23,7 @@ const BannerBoxV3 = (props) => {
           to={`/productListing?subCatId=${props?.item?.subCatId}`}
           className="no-underline"
         >
-          <h2 className="text-[25px] font-[bold] text-[#082c55]">
+          <h2 className="!text-[12px] sm:!text-[15px] md:!text-[20px]  lg:!text-[25px] font-[bold] text-[#082c55]">
             {props?.item?.bannerTitle}
           </h2>
         </Link>
