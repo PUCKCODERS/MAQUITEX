@@ -99,11 +99,11 @@ const ProductItem = (props) => {
 
   useEffect(() => {
     const item = context?.cartData?.filter((cartItem) =>
-      cartItem.productId.includes(props?.item?._id)
+      cartItem.productId.includes(props?.item?._id),
     );
 
     const myListItem = context?.myListData?.filter((item) =>
-      item.productId.includes(props?.item?._id)
+      item.productId.includes(props?.item?._id),
     );
 
     if (item?.length !== 0) {
@@ -171,7 +171,7 @@ const ProductItem = (props) => {
     if (context?.userData === null) {
       context?.alertBox(
         "error",
-        "NO HAS INICIADO SESIÓN, POR FAVOR INICIA SESIÓN"
+        "NO HAS INICIADO SESIÓN, POR FAVOR INICIA SESIÓN",
       );
       return false;
     } else {
@@ -310,15 +310,15 @@ const ProductItem = (props) => {
       </div>
 
       <div className="info !p-3 !py-4 !bg-gray-100 relative !pb-[50px] !h-[210px]">
-        <h6 className="text-[13px] text-[#556f8d] font-[bold]">
+        <h6 className="text-[11px] text-[#556f8d] font-[bold]">
           <span className="link transition-all">{props?.item?.brand}</span>
         </h6>
-        <h3 className="text-[13px] !title !mt-1 font-[500] !text-[#082c55] !mb-1">
+        <h3 className="text-[10px] lg:text-[13px] !title !mt-1 font-[500] !text-[#082c55] !mb-1">
           <Link
             to={`/product/${props?.item?._id}`}
             className="link transition-all"
           >
-            {props?.item?.name?.substr(0, 60)}
+            {props?.item?.name?.substr(0, 80)}
           </Link>
         </h3>
         <Rating
@@ -329,13 +329,13 @@ const ProductItem = (props) => {
         />
 
         <div className="flex items-center justify-between !gap-4 ">
-          <span className="oldPrice line-through text-red-400 text-[13px] font-[500]">
+          <span className="oldPrice line-through text-red-400 text-[12px] lg:text-[13px] font-[500]">
             {props?.item?.oldPrice?.toLocaleString("en-US", {
               style: "currency",
               currency: "USD",
             })}
           </span>
-          <span class="price text-[#082c55] text-[15px] font-[600]">
+          <span class="price text-[#082c55] text-[14px] lg:text-[15px] font-[600]">
             {props?.item?.price?.toLocaleString("en-US", {
               style: "currency",
               currency: "USD",
@@ -346,7 +346,7 @@ const ProductItem = (props) => {
         <div className="!absolute !bottom-[10px] !left-0 !pl-1 !pr-1 !w-full  ">
           {isAdded === false ? (
             <Button
-              className="btn-org flex btn-sm gap-3 w-[100%] justify-center "
+              className="btn-org addToCartBtn flex btn-sm gap-3 w-[100%] justify-center "
               size="small"
               onClick={() =>
                 addToCart(props?.item, context?.userData?._id, quantity)

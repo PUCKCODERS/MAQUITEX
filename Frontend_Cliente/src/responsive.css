@@ -45,4 +45,7 @@
   .MuiTabs-flexContainer button {
     font-size: 13px !important;
   }
+  .productItem .addToCartBtn {
+    padding: 7px 13px !important;
+  }
 }
