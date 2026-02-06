@@ -1,21 +1,44 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/css/free-mode";
 
-import { Navigation } from "swiper/modules";
+import { Navigation, FreeMode } from "swiper/modules";
 import BannerBox from "../BannerBox";
 import BannerBoxV2 from "../BannerBoxV2";
+import { MyContext } from "../../App";
 
 const AdsBannerSliderV2 = (props) => {
+  const context = useContext(MyContext);
+
   return (
     <div className="!py-5 w-full ">
       <Swiper
         loop={true}
         slidesPerView={props.items}
         spaceBetween={10}
-        navigation={true}
-        modules={[Navigation]}
+        navigation={context?.windowWidth < 992 ? false : true}
+        modules={[Navigation, FreeMode]}
+        freeMode={true}
+        breakpoints={{
+          300: {
+            slidesPerView: 4,
+            spaceBetween: 5,
+          },
+          550: {
+            slidesPerView: 4,
+            spaceBetween: 5,
+          },
+          900: {
+            slidesPerView: 5,
+            spaceBetween: 5,
+          },
+          1100: {
+            slidesPerView: 8,
+            spaceBetween: 5,
+          },
+        }}
         className="smlBtn"
       >
         {props?.data?.map((item, index) => {

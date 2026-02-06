@@ -21,11 +21,11 @@ const ProductsSlider = (props) => {
         modules={[Navigation, FreeMode]}
         freeMode={true}
         breakpoints={{
-          300: {
-            slidesPerView: 2,
+          250: {
+            slidesPerView: 1,
             spaceBetween: 10,
           },
-          550: {
+          330: {
             slidesPerView: 2,
             spaceBetween: 10,
           },
