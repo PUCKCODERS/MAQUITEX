@@ -6,10 +6,10 @@ import { BsBoxArrowUpRight } from "react-icons/bs";
 const BlogItem = (props) => {
   return (
     <div className="blogItem group !mr-2">
-      <div className="imgWrapper w-full overflow-hidden rounded-md shadow-[6px_6px_6px_#274a72] cursor-pointer relative">
+      <div className="imgWrapper !w-full overflow-hidden rounded-md shadow-[3px_3px_3px_#274a72] cursor-pointer relative">
         <img
           src={props?.item?.images[0]}
-          className="w-full transition-all group-hover:scale-105 group-hover:rotate-0"
+          className="!w-full !h-[150px] transition-all group-hover:scale-105 group-hover:rotate-0"
           alt="blog image"
         />
 
@@ -29,7 +29,7 @@ const BlogItem = (props) => {
         <div
           className="text-[11px] font-[400] text-[#6c8199] !mb-3"
           dangerouslySetInnerHTML={{
-            __html: props?.item?.description?.substr(0, 200) + "...",
+            __html: props?.item?.description?.substr(0, 80) + "...",
           }}
         ></div>
 

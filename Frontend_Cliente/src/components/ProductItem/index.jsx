@@ -318,7 +318,7 @@ const ProductItem = (props) => {
             to={`/product/${props?.item?._id}`}
             className="link transition-all"
           >
-            {props?.item?.name?.substr(0, 80)}
+            {props?.item?.name?.substr(0, 70)}
           </Link>
         </h3>
         <Rating

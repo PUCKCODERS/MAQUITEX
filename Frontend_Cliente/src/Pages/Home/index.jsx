@@ -11,8 +11,9 @@ import ProductsSlider from "../../components/ProductsSlider";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
+import "swiper/css/free-mode";
 
-import { Navigation } from "swiper/modules";
+import { Navigation, FreeMode } from "swiper/modules";
 import BlogItem from "../../components/BlogItem";
 import HomeBannerV2 from "../../components/HomeSliderV2";
 import BannerBoxV2 from "../../components/BannerBoxV2";
@@ -244,8 +245,31 @@ const Home = () => {
             <Swiper
               slidesPerView={4}
               spaceBetween={20}
-              navigation={true}
-              modules={[Navigation]}
+              navigation={context?.windowWidth < 992 ? false : true}
+              modules={[Navigation, FreeMode]}
+              freeMode={true}
+              breakpoints={{
+                250: {
+                  slidesPerView: 1,
+                  spaceBetween: 0,
+                },
+                330: {
+                  slidesPerView: 1,
+                  spaceBetween: 0,
+                },
+                500: {
+                  slidesPerView: 2,
+                  spaceBetween: 0,
+                },
+                700: {
+                  slidesPerView: 3,
+                  spaceBetween: 0,
+                },
+                1100: {
+                  slidesPerView: 4,
+                  spaceBetween: 0,
+                },
+              }}
               className="blogSlider"
             >
               {blogData?.map((item, index) => {
