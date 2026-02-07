@@ -45,7 +45,7 @@ const AdsBannerSliderV2 = (props) => {
           return (
             <SwiperSlide
               key={index}
-              className=" !mb-4 !mr-1 !ml-1  !w-[290px] lg:!w-[248px]  !overflow-hidden  shadow-[3px_3px_3px_#274a72] !bg-gray-100"
+              className=" !mb-4 !overflow-hidden  shadow-[3px_3px_3px_#274a72] !bg-gray-100"
             >
               <BannerBoxV2
                 info={item?.alignInfo}
