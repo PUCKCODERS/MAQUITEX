@@ -52,6 +52,7 @@ const AdsBannerSliderV2 = (props) => {
                 item={item}
                 image={item?.images[0]}
                 liink={"/"}
+                imageClass={props.imageClass}
               />
             </SwiperSlide>
           );

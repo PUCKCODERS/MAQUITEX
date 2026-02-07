@@ -190,7 +190,11 @@ const Home = () => {
           </div>
 
           {bannerV1Data?.length !== 0 && (
-            <AdsBannerSliderV2 items={4} data={bannerV1Data} />
+            <AdsBannerSliderV2
+              items={4}
+              data={bannerV1Data}
+              imageClass="!h-[100px] min-[300px]:!h-[150px] lg:!h-[195px]"
+            />
           )}
         </div>
       </section>
@@ -224,7 +228,11 @@ const Home = () => {
           <ProductsSlider items={6} />
 
           {bannerV1Data?.length !== 0 && (
-            <AdsBannerSliderV2 items={4} data={bannerV1Data} />
+            <AdsBannerSliderV2
+              items={4}
+              data={bannerV1Data}
+              imageClass="!h-[100px] min-[300px]:!h-[150px] lg:!h-[195px]"
+            />
           )}
 
           {bannerV2Data?.length !== 0 && (
