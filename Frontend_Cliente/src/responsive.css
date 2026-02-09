@@ -41,26 +41,48 @@
   }
 
   .scrollableBoxx {
-    white-space: nowrap;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    display: block !important;
+    white-space: nowrap !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 10px !important;
+    padding-bottom: 5px !important;
   }
   .scrollableBoxx::-webkit-scrollbar {
     display: none !important;
   }
   .scrollableBoxx .box {
     display: inline-block !important;
-    vertical-align: top !important;
-    margin-right: auto !important;
+    width: auto !important;
+    margin-right: 0 !important;
   }
   .scrollableBoxx .box .info * {
     white-space: break-spaces !important;
   }
   .scrollableBoxx .col {
-    display: inline-block !important;
-    vertical-align: top !important;
-    margin-right: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: auto !important;
+    margin-right: 0 !important;
+    min-width: 50px !important;
+    white-space: normal !important;
+    text-align: center !important;
+  }
+
+  .scrollableBoxx .col svg {
+    font-size: 30px !important;
+    margin-bottom: 5px !important;
+  }
+
+  .scrollableBoxx .col h3 {
+    font-size: 6px !important;
+    line-height: 7px !important;
+  }
+
+  .scrollableBoxx .col p {
+    display: none !important;
   }
 
   /* {.resBannerSlider {
