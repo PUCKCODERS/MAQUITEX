@@ -134,7 +134,7 @@ const Footer = () => {
 
             <div className="part2 w-full lg:w-[40%] flex !pl-0 lg:!pl-8 !mt-5 lg:!mt-0">
               <div className="part2_col1 w-[50%]">
-                <h2 className="text-[20px] font-bold font-[bold] text-[#082c55] !mb-4">
+                <h2 className="text-[15px] lg:text-[20px] font-bold font-[bold] text-[#082c55] !mb-4">
                   PRODUCTOS
                 </h2>
                 <ul className="list">
@@ -179,7 +179,7 @@ const Footer = () => {
               </div>
 
               <div className="part2_col2 w-[50%]">
-                <h2 className="text-[20px] font-bold font-[bold] text-[#082c55] !mb-4">
+                <h2 className="text-[15px] lg:text-[20px] font-bold font-[bold] text-[#082c55] !mb-4">
                   NUESTRA TIENDA
                 </h2>
                 <ul className="list">
