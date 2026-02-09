@@ -47,9 +47,9 @@ const Footer = () => {
 
   return (
     <>
-      <footer className="!py-6 bg-[#eef0f3] border border-[#fff] shadow-[0_-4px_6px_-1px_#b1cdee,0_4px_6px_-1px_#b1cdee]">
+      <footer className="!py-6  bg-[#eef0f3] border border-[#fff] shadow-[0_-4px_6px_-1px_#b1cdee,0_4px_6px_-1px_#b1cdee]">
         <div className="container">
-          <div className="flex items-center justify-center !gap-2 !py-1 !pb-8 scrollableBoxx">
+          <div className="flex items-center justify-center !gap-2 !py-1 !pb-8 scrollableBoxx ">
             <div className="col flex items-center justify-center flex-col group w-[20%] text-center">
               <FcShipped className="text-[50px] text-[#38597e] transition-all duration-300 group-hover:text-[#0a7fec] group-hover:-translate-y-1" />
               <h3 className="text-[12px] font-[900] text-[#556f8d] !mt-1">
@@ -103,8 +103,8 @@ const Footer = () => {
 
           <hr />
 
-          <div className="footer flex !py-8">
-            <div className="part1 w-[25%] border-r border-[#d3d7dd]">
+          <div className="footer flex px-3 lg:px-0 flex-col lg:flex-row !py-8">
+            <div className="part1 w-full lg:w-[25%] border-r border-[#d3d7dd]">
               <h2 className="text-[20px] font-bold font-[bold] text-[#082c55] !mb-4">
                 CONTACTANOS
               </h2>
@@ -132,7 +132,7 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="part1 w-[40%] !flex !pl-8">
+            <div className="part2 w-full lg:w-[40%] flex !pl-0 lg:!pl-8 !mt-5 lg:!mt-0">
               <div className="part2_col1 w-[50%]">
                 <h2 className="text-[20px] font-bold font-[bold] text-[#082c55] !mb-4">
                   PRODUCTOS
@@ -229,8 +229,8 @@ const Footer = () => {
               </div>
             </div>
 
-            <div className="part1 w-[35%] flex !pl-8 flex-col !pr-8">
-              <h2 className="text-[18px] font-bold font-[bold] text-[#082c55] !mb-4">
+            <div className="part2 w-full lg:w-[35%] flex  flex-col !mt-3 lg:!mt-0 !pl-0 lg:!pl-8 !pr-8">
+              <h2 className="text-[18px] font-bold font-[bold] text-[#082c55] !mb-2 lg:!mb-4">
                 SUSCRIBETE
               </h2>
               <p className="text-[13px] text-[#082c55] font-[500]">
@@ -255,7 +255,7 @@ const Footer = () => {
                 <FormControlLabel
                   control={<Checkbox />}
                   label="Acepta terminos y condiciones"
-                  className="!mt-2 "
+                  className="!mt-3 block w-full"
                 />
               </form>
             </div>
@@ -263,7 +263,7 @@ const Footer = () => {
         </div>
       </footer>
 
-      <div className="bottomStrip border-t border-[0_-4px_6px_-1px_#b1cdee] shadow-[0_-4px_6px_-1px_#b1cdee,0_4px_6px_-1px_#b1cdee] !py-3 bg-[#eef0f3]">
+      <div className="bottomStrip border-t border-[0_-4px_6px_-1px_#b1cdee] shadow-[0_-4px_6px_-1px_#b1cdee,0_4px_6px_-1px_#b1cdee] !pt-3 !pb-[100px] lg:!pb-3 bg-[#eef0f3]">
         <div className="container flex items-center justify-between">
           <ul className="flex items-center !gap-3">
             <li className="list-none">

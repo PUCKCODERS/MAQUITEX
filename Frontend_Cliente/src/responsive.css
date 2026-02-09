@@ -115,6 +115,12 @@
   .productItem .addToCartBtn {
     padding: 7px 13px !important;
   }
+  .part2_col1 li a,
+  .part2_col2 li a,
+  .part2_col1 li,
+  .part2_col2 li {
+    font-size: 10px !important;
+  }
 }
 
 @media only screen and (min-width: 500px) and (max-width: 992px) {

@@ -20,20 +20,20 @@ const BlogItem = (props) => {
       </div>
 
       <div className="info !py-4">
-        <h2 className="text-[12px] font-[600] text-[#556f8d] !mb-1">
+        <h2 className="text-[13px] lg:text-[15px] font-bold  !mb-1">
           <Link to="/" className="link">
             {props?.item?.title}
           </Link>
         </h2>
 
         <div
-          className="text-[11px] font-[400] text-[#6c8199] !mb-3"
+          className="text-[11px] lg:text-[13px] font-[400] text-[#6c8199] !mb-3"
           dangerouslySetInnerHTML={{
-            __html: props?.item?.description?.substr(0, 80) + "...",
+            __html: props?.item?.description?.substr(0, 100) + "...",
           }}
         ></div>
 
-        <Link className="link font-[bold] text-[12px] flex items-center !gap-2">
+        <Link className="link font-bold text-[12px] flex items-center !gap-2">
           SEGUIR LEYENDO <BsBoxArrowUpRight className="text-[14px]" />
         </Link>
       </div>
