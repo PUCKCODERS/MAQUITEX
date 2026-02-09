@@ -41,20 +41,21 @@
   }
 
   .scrollableBoxx {
-    white-space: nowrap !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
+    white-space: normal !important;
+    overflow: hidden !important;
     display: flex !important;
     flex-direction: row !important;
-    gap: 10px !important;
-    padding-bottom: 5px !important;
+    justify-content: space-around !important;
+    gap: 0px !important;
+    padding-bottom: 0px !important;
+    width: 100% !important;
   }
   .scrollableBoxx::-webkit-scrollbar {
     display: none !important;
   }
   .scrollableBoxx .box {
-    display: inline-block !important;
-    width: auto !important;
+    display: block !important;
+    width: 100% !important;
     margin-right: 0 !important;
   }
   .scrollableBoxx .box .info * {
@@ -65,10 +66,12 @@
     flex-direction: column !important;
     align-items: center !important;
     width: auto !important;
+    flex: 1 !important;
     margin-right: 0 !important;
-    min-width: 50px !important;
+    min-width: unset !important;
     white-space: normal !important;
     text-align: center !important;
+    padding: 0 2px !important;
   }
 
   .scrollableBoxx .col svg {
@@ -77,8 +80,9 @@
   }
 
   .scrollableBoxx .col h3 {
-    font-size: 6px !important;
+    font-size: 7px !important;
     line-height: 7px !important;
+    font-weight: 700 !important;
   }
 
   .scrollableBoxx .col p {
@@ -110,5 +114,25 @@
   }
   .productItem .addToCartBtn {
     padding: 7px 13px !important;
+  }
+}
+
+@media only screen and (min-width: 500px) and (max-width: 992px) {
+  .scrollableBoxx .col svg {
+    font-size: 30px !important;
+  }
+  .scrollableBoxx .col h3 {
+    font-size: 11px !important;
+    line-height: 13px !important;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+  .scrollableBoxx .col svg {
+    font-size: 38px !important;
+  }
+  .scrollableBoxx .col h3 {
+    font-size: 13px !important;
+    line-height: 15px !important;
   }
 }
