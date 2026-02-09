@@ -49,7 +49,7 @@ const Footer = () => {
     <>
       <footer className="!py-6 bg-[#eef0f3] border border-[#fff] shadow-[0_-4px_6px_-1px_#b1cdee,0_4px_6px_-1px_#b1cdee]">
         <div className="container">
-          <div className="flex items-center justify-center !gap-2 !py-1 !pb-8 scrollableBox">
+          <div className="flex items-center justify-center !gap-2 !py-1 !pb-8 scrollableBoxx">
             <div className="col flex items-center justify-center flex-col group w-[20%] text-center">
               <FcShipped className="text-[50px] text-[#38597e] transition-all duration-300 group-hover:text-[#0a7fec] group-hover:-translate-y-1" />
               <h3 className="text-[12px] font-[900] text-[#556f8d] !mt-1">

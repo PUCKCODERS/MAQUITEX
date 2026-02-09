@@ -10,7 +10,7 @@ const BannerBoxV2 = (props) => {
         className={`!w-full ${
           props.imageClass
             ? props.imageClass
-            : "!h-[100px] sm:!h-[130px] md:!h-[150px] lg:!h-[195px]"
+            : "!h-[100px] sm:!h-[150px] md:!h-[195px] lg:!h-[195px]"
         }  transition-all duration-150 group-hover:scale-105 
     
   `}
