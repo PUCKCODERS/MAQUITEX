@@ -103,7 +103,7 @@ const Footer = () => {
 
           <hr />
 
-          <div className="footer flex px-3 lg:px-0 flex-col lg:flex-row !py-8">
+          <div className="footer flex !px-3 lg:!px-0 flex-col lg:flex-row !py-6 !-mb-5 lg:!-mb-0">
             <div className="part1 w-full lg:w-[25%] border-r border-[#d3d7dd]">
               <h2 className="text-[20px] font-bold font-[bold] text-[#082c55] !mb-4">
                 CONTACTANOS
@@ -139,39 +139,39 @@ const Footer = () => {
                 </h2>
                 <ul className="list">
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec]">
+                    <button className="link hover:text-[#0a7fec] !text-left">
                       NUEVOS
                     </button>
                   </li>
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec]">
+                    <button className="link hover:text-[#0a7fec] !text-left">
                       RECOMENDADOS
                     </button>
                   </li>
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec]">
+                    <button className="link hover:text-[#0a7fec] !text-left">
                       POPULARES
                     </button>
                   </li>
 
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec]">
+                    <button className="link hover:text-[#0a7fec] !text-left">
                       OFERTAS
                     </button>
                   </li>
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec]">
+                    <button className="link hover:text-[#0a7fec] !text-left">
                       MARCAS
                     </button>
                   </li>
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec]">
+                    <button className="link hover:text-[#0a7fec] !text-left">
                       KITS DE COSTURA
                     </button>
                   </li>
 
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec]">
+                    <button className="link hover:text-[#0a7fec] !text-left">
                       ARTICULOS DE INTERES
                     </button>
                   </li>
@@ -184,44 +184,44 @@ const Footer = () => {
                 </h2>
                 <ul className="list">
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec]">
+                    <button className="link hover:text-[#0a7fec] !text-left">
                       ENVIOS A DOMICILIO
                     </button>
                   </li>
 
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec]">
+                    <button className="link hover:text-[#0a7fec] !text-left">
                       SEGUIMIENTO DE PEDIDOS
                     </button>
                   </li>
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec]">
+                    <button className="link hover:text-[#0a7fec] !text-left">
                       GARANTÍA
                     </button>
                   </li>
 
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec]">
+                    <button className="link hover:text-[#0a7fec] !text-left">
                       PAGO SEGURO
                     </button>
                   </li>
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec]">
+                    <button className="link hover:text-[#0a7fec] !text-left">
                       ULTIMAS NOTICIAS
                     </button>
                   </li>
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <Link to="/nosotros" className="link">
+                    <Link to="/nosotros" className="link !text-left">
                       ACERCA DE NOSOTROS
                     </Link>
                   </li>
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <Link to="/contacto" className="link">
+                    <Link to="/contacto" className="link !text-left">
                       CONTACTO
                     </Link>
                   </li>
                   <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <Link to="/s.tecnico" className="link">
+                    <Link to="/s.tecnico" className="link !text-left">
                       SOPORTE TECNICO
                     </Link>
                   </li>
@@ -263,8 +263,8 @@ const Footer = () => {
         </div>
       </footer>
 
-      <div className="bottomStrip border-t border-[0_-4px_6px_-1px_#b1cdee] shadow-[0_-4px_6px_-1px_#b1cdee,0_4px_6px_-1px_#b1cdee] !pt-3 !pb-[100px] lg:!pb-3 bg-[#eef0f3]">
-        <div className="container flex items-center justify-between">
+      <div className="bottomStrip border-t border-[0_-4px_6px_-1px_#b1cdee] shadow-[0_-4px_6px_-1px_#b1cdee,0_4px_6px_-1px_#b1cdee] !pt-3 !pb-[80px] lg:!pb-3 bg-[#eef0f3]">
+        <div className="container flex items-center justify-between flex-col lg:flex-row gap-4 lg:gap-0">
           <ul className="flex items-center !gap-3">
             <li className="list-none">
               <Link
