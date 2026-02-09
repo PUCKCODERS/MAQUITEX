@@ -200,7 +200,9 @@ const Home = () => {
       </section>
       <section id="nuevos-productos" className="!py-5 !pt-4 bg-white">
         <div className="container">
-          <h2 className="text-[20px] font-bold">NUEVOS PRODUCTOS</h2>
+          <h2 className="!text-[12px] sm:!text-[16px] md:!text-[16px] lg:!text-[20px] font-bold">
+            NUEVOS PRODUCTOS
+          </h2>
 
           {productsData?.length === 0 && <ProductLoading />}
 
@@ -218,7 +220,9 @@ const Home = () => {
         className="!py-2 lg:!py-5 !pt-0 bg-white"
       >
         <div className="container">
-          <h2 className="text-[20px] font-bold">PRODUCTOS RECOMENDADOS</h2>
+          <h2 className="!text-[12px] sm:!text-[16px] md:!text-[16px] lg:!text-[20px] font-bold">
+            PRODUCTOS RECOMENDADOS
+          </h2>
 
           {featuredProducts?.length === 0 && <ProductLoading />}
 
@@ -226,18 +230,6 @@ const Home = () => {
             <ProductsSlider items={6} data={featuredProducts} />
           )}
           <ProductsSlider items={6} />
-
-          {bannerV1Data?.length !== 0 && (
-            <AdsBannerSliderV2
-              items={4}
-              data={bannerV1Data}
-              imageClass="!h-[100px] min-[300px]:!h-[150px] lg:!h-[195px]"
-            />
-          )}
-
-          {bannerV2Data?.length !== 0 && (
-            <AdsBannerSliderV3 items={3} data={bannerV2Data} />
-          )}
         </div>
       </section>
 
@@ -247,7 +239,7 @@ const Home = () => {
           className="!py-5 !pb-8 !pt-0 bg-white blogSection"
         >
           <div className="container">
-            <h2 className="text-[20px] font-bold !mb-4">
+            <h2 className="!text-[12px] sm:!text-[16px] md:!text-[16px] lg:!text-[20px] font-bold !mb-4">
               ARTICULOS DE INTERES
             </h2>
             <Swiper
