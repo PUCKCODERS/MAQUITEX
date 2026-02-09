@@ -313,12 +313,12 @@ const ProductItem = (props) => {
         <h6 className="text-[11px] text-[#556f8d] font-[bold]">
           <span className="link transition-all">{props?.item?.brand}</span>
         </h6>
-        <h3 className="text-[10px] lg:text-[13px] !title !mt-1 font-[500] !text-[#082c55] !mb-1">
+        <h3 className="text-[15px] lg:text-[13px] !title !mt-1 font-[500] !text-[#082c55] !mb-1">
           <Link
             to={`/product/${props?.item?._id}`}
             className="link transition-all"
           >
-            {props?.item?.name?.substr(0, 70)}
+            {props?.item?.name?.substr(0, 60)}
           </Link>
         </h3>
         <Rating
