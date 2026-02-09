@@ -104,7 +104,7 @@ const Footer = () => {
           <hr />
 
           <div className="footer flex !px-3 lg:!px-0 flex-col lg:flex-row !py-6 !-mb-5 lg:!-mb-0">
-            <div className="part1 w-full lg:w-[25%] border-r border-[#d3d7dd]">
+            <div className="part1 w-full lg:w-[25%] lg:border-r border-b lg:border-b-0 border-[#d3d7dd] flex flex-col items-center lg:items-start text-center lg:text-left pb-6 lg:pb-0">
               <h2 className="text-[20px] font-bold font-[bold] text-[#082c55] !mb-4">
                 CONTACTANOS
               </h2>
@@ -123,113 +123,117 @@ const Footer = () => {
                 (+593) 0968873896
               </span>
 
-              <div className="flex items-center !gap-3">
+              <div className="flex items-center justify-center lg:justify-start !gap-3">
                 <IoMdChatboxes className="text-[40px] text-[#082c55]" />
-                <span className="text-[17px] font-[600] text-[#082c55]">
+                <span className="text-[17px] font-[600] text-[#082c55] text-left">
                   CHAT EN LÍNEA <br />
                   OBTENGA AYUDA
                 </span>
               </div>
             </div>
 
-            <div className="part2 w-full lg:w-[40%] flex !pl-0 lg:!pl-8 !mt-5 lg:!mt-0">
-              <div className="part2_col1 w-[50%]">
-                <h2 className="text-[15px] lg:text-[20px] font-bold font-[bold] text-[#082c55] !mb-4">
-                  PRODUCTOS
-                </h2>
-                <ul className="list">
-                  <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec] !text-left">
-                      NUEVOS
-                    </button>
-                  </li>
-                  <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec] !text-left">
-                      RECOMENDADOS
-                    </button>
-                  </li>
-                  <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec] !text-left">
-                      POPULARES
-                    </button>
-                  </li>
+            <div className="part2 w-full lg:w-[40%] flex !pl-0 lg:!pl-8 !mt-8 lg:!mt-0 justify-center lg:justify-start">
+              <div className="part2_col1 w-[50%] flex justify-center  lg:justify-start ">
+                <div className="flex flex-col">
+                  <h2 className="text-[15px] lg:text-[20px] font-bold font-[bold] text-[#082c55] !mb-4 !text-left">
+                    PRODUCTOS
+                  </h2>
+                  <ul className="list">
+                    <li className="list-none text-[14px] text-[#000] !mb-2">
+                      <button className="link hover:text-[#0a7fec] !text-left">
+                        NUEVOS
+                      </button>
+                    </li>
+                    <li className="list-none text-[14px] text-[#000] !mb-2">
+                      <button className="link hover:text-[#0a7fec] !text-left">
+                        RECOMENDADOS
+                      </button>
+                    </li>
+                    <li className="list-none text-[14px] text-[#000] !mb-2">
+                      <button className="link hover:text-[#0a7fec] !text-left">
+                        POPULARES
+                      </button>
+                    </li>
 
-                  <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec] !text-left">
-                      OFERTAS
-                    </button>
-                  </li>
-                  <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec] !text-left">
-                      MARCAS
-                    </button>
-                  </li>
-                  <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec] !text-left">
-                      KITS DE COSTURA
-                    </button>
-                  </li>
+                    <li className="list-none text-[14px] text-[#000] !mb-2">
+                      <button className="link hover:text-[#0a7fec] !text-left">
+                        OFERTAS
+                      </button>
+                    </li>
+                    <li className="list-none text-[14px] text-[#000] !mb-2">
+                      <button className="link hover:text-[#0a7fec] !text-left">
+                        MARCAS
+                      </button>
+                    </li>
+                    <li className="list-none text-[14px] text-[#000] !mb-2">
+                      <button className="link hover:text-[#0a7fec] !text-left">
+                        KITS DE COSTURA
+                      </button>
+                    </li>
 
-                  <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec] !text-left">
-                      ARTICULOS DE INTERES
-                    </button>
-                  </li>
-                </ul>
+                    <li className="list-none text-[14px] text-[#000] !mb-2">
+                      <button className="link hover:text-[#0a7fec] !text-left">
+                        ARTICULOS DE INTERES
+                      </button>
+                    </li>
+                  </ul>
+                </div>
               </div>
 
-              <div className="part2_col2 w-[50%]">
-                <h2 className="text-[15px] lg:text-[20px] font-bold font-[bold] text-[#082c55] !mb-4">
-                  NUESTRA TIENDA
-                </h2>
-                <ul className="list">
-                  <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec] !text-left">
-                      ENVIOS A DOMICILIO
-                    </button>
-                  </li>
+              <div className="part2_col2 w-[50%] flex justify-center lg:justify-start">
+                <div className="flex flex-col">
+                  <h2 className="text-[15px] lg:text-[20px] font-bold font-[bold] text-[#082c55] !mb-4 !text-left">
+                    NUESTRA TIENDA
+                  </h2>
+                  <ul className="list">
+                    <li className="list-none text-[14px] text-[#000] !mb-2">
+                      <button className="link hover:text-[#0a7fec] !text-left">
+                        ENVIOS A DOMICILIO
+                      </button>
+                    </li>
 
-                  <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec] !text-left">
-                      SEGUIMIENTO DE PEDIDOS
-                    </button>
-                  </li>
-                  <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec] !text-left">
-                      GARANTÍA
-                    </button>
-                  </li>
+                    <li className="list-none text-[14px] text-[#000] !mb-2">
+                      <button className="link hover:text-[#0a7fec] !text-left">
+                        SEGUIMIENTO DE PEDIDOS
+                      </button>
+                    </li>
+                    <li className="list-none text-[14px] text-[#000] !mb-2">
+                      <button className="link hover:text-[#0a7fec] !text-left">
+                        GARANTÍA
+                      </button>
+                    </li>
 
-                  <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec] !text-left">
-                      PAGO SEGURO
-                    </button>
-                  </li>
-                  <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <button className="link hover:text-[#0a7fec] !text-left">
-                      ULTIMAS NOTICIAS
-                    </button>
-                  </li>
-                  <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <Link to="/nosotros" className="link !text-left">
-                      ACERCA DE NOSOTROS
-                    </Link>
-                  </li>
-                  <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <Link to="/contacto" className="link !text-left">
-                      CONTACTO
-                    </Link>
-                  </li>
-                  <li className="list-none text-[14px] text-[#000] !mb-2">
-                    <Link to="/s.tecnico" className="link !text-left">
-                      SOPORTE TECNICO
-                    </Link>
-                  </li>
-                </ul>
+                    <li className="list-none text-[14px] text-[#000] !mb-2">
+                      <button className="link hover:text-[#0a7fec] !text-left">
+                        PAGO SEGURO
+                      </button>
+                    </li>
+                    <li className="list-none text-[14px] text-[#000] !mb-2">
+                      <button className="link hover:text-[#0a7fec] !text-left">
+                        ULTIMAS NOTICIAS
+                      </button>
+                    </li>
+                    <li className="list-none text-[14px] text-[#000] !mb-2">
+                      <Link to="/nosotros" className="link !text-left">
+                        ACERCA DE NOSOTROS
+                      </Link>
+                    </li>
+                    <li className="list-none text-[14px] text-[#000] !mb-2">
+                      <Link to="/contacto" className="link !text-left">
+                        CONTACTO
+                      </Link>
+                    </li>
+                    <li className="list-none text-[14px] text-[#000] !mb-2">
+                      <Link to="/s.tecnico" className="link !text-left">
+                        SOPORTE TECNICO
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
 
-            <div className="part2 w-full lg:w-[35%] flex  flex-col !mt-3 lg:!mt-0 !pl-0 lg:!pl-8 !pr-8">
+            <div className="part2 w-full lg:w-[35%] flex flex-col !mt-8 lg:!mt-0 !pl-0 lg:!pl-8 !pr-0 lg:!pr-8 items-center lg:items-start text-center lg:text-left">
               <h2 className="text-[18px] font-bold font-[bold] text-[#082c55] !mb-2 lg:!mb-4">
                 SUSCRIBETE
               </h2>
@@ -263,7 +267,7 @@ const Footer = () => {
         </div>
       </footer>
 
-      <div className="bottomStrip border-t border-[0_-4px_6px_-1px_#b1cdee] shadow-[0_-4px_6px_-1px_#b1cdee,0_4px_6px_-1px_#b1cdee] !pt-3 !pb-[80px] lg:!pb-3 bg-[#eef0f3]">
+      <div className="bottomStrip border-t border-[0_-4px_6px_-1px_#b1cdee] shadow-[0_-4px_6px_-1px_#b1cdee,0_4px_6px_-1px_#b1cdee] !pt-3 !pb-[80px]  md:!pb-[60px] lg:!pb-3 bg-[#eef0f3]">
         <div className="container flex items-center justify-between flex-col lg:flex-row gap-4 lg:gap-0">
           <ul className="flex items-center !gap-3">
             <li className="list-none">
