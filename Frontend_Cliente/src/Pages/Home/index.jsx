@@ -155,30 +155,38 @@ const Home = () => {
               pauseOnMouseEnter: true,
             }}
             modules={[Navigation, FreeMode, Autoplay]}
-            className="brandsSlider !pb-0 !px-4 !-mt-10"
+            className="brandsSlider !pb-0 !px-4 !-mt-10 !-mb-10 lg:!-mb-5"
             breakpoints={{
               0: {
                 slidesPerView: 2,
                 spaceBetween: 0,
               },
               300: {
+                slidesPerView: 2,
+                spaceBetween: 0,
+              },
+              400: {
                 slidesPerView: 3,
                 spaceBetween: 0,
               },
-              450: {
+              550: {
                 slidesPerView: 4,
                 spaceBetween: 0,
               },
-              768: {
+              700: {
                 slidesPerView: 5,
                 spaceBetween: 0,
               },
-              1024: {
+              900: {
                 slidesPerView: 6,
                 spaceBetween: 0,
               },
-              1280: {
+              1100: {
                 slidesPerView: 7,
+                spaceBetween: 0,
+              },
+              1300: {
+                slidesPerView: 8,
                 spaceBetween: 0,
               },
             }}
@@ -303,30 +311,38 @@ const Home = () => {
               reverseDirection: true,
             }}
             modules={[Navigation, FreeMode, Autoplay]}
-            className="brandsSlider !pb-0 !px-4 !-mt-10"
+            className="brandsSlider !pb-0 !px-4 !-mt-10 !-mb-10 lg:!-mb-5"
             breakpoints={{
               0: {
                 slidesPerView: 2,
                 spaceBetween: 0,
               },
               300: {
+                slidesPerView: 2,
+                spaceBetween: 0,
+              },
+              400: {
                 slidesPerView: 3,
                 spaceBetween: 0,
               },
-              450: {
+              550: {
                 slidesPerView: 4,
                 spaceBetween: 0,
               },
-              768: {
+              700: {
                 slidesPerView: 5,
                 spaceBetween: 0,
               },
-              1024: {
+              900: {
                 slidesPerView: 6,
                 spaceBetween: 0,
               },
-              1280: {
+              1100: {
                 slidesPerView: 7,
+                spaceBetween: 0,
+              },
+              1300: {
+                slidesPerView: 8,
                 spaceBetween: 0,
               },
             }}
