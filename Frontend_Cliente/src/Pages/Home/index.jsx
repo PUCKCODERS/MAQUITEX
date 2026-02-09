@@ -12,8 +12,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/free-mode";
+import "swiper/css/autoplay";
 
-import { Navigation, FreeMode } from "swiper/modules";
+import { Navigation, FreeMode, Autoplay } from "swiper/modules";
 import BlogItem from "../../components/BlogItem";
 import HomeBannerV2 from "../../components/HomeSliderV2";
 import BannerBoxV2 from "../../components/BannerBoxV2";
@@ -96,6 +97,181 @@ const Home = () => {
       {context?.catData?.length !== 0 && (
         <HomeCatSlider data={context?.catData} />
       )}
+
+      <section className="!py-2 bg-gradient-to-b bg-white relative overflow-hidden">
+        <div className="container relative z-10">
+          <Swiper
+            slidesPerView={5}
+            spaceBetween={30}
+            loop={true}
+            speed={800}
+            autoplay={{
+              delay: 1000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            modules={[Navigation, FreeMode, Autoplay]}
+            className="brandsSlider !pb-0 !px-4"
+            breakpoints={{
+              0: {
+                slidesPerView: 2,
+                spaceBetween: 0,
+              },
+              300: {
+                slidesPerView: 3,
+                spaceBetween: 0,
+              },
+              450: {
+                slidesPerView: 4,
+                spaceBetween: 0,
+              },
+              768: {
+                slidesPerView: 5,
+                spaceBetween: 0,
+              },
+              1024: {
+                slidesPerView: 6,
+                spaceBetween: 0,
+              },
+              1280: {
+                slidesPerView: 7,
+                spaceBetween: 0,
+              },
+            }}
+          >
+            {[
+              {
+                name: "Singer",
+                logo: "https://cdn.worldvectorlogo.com/logos/singer-2.svg",
+              },
+              {
+                name: "Brother",
+                logo: "https://cdn.worldvectorlogo.com/logos/brother-1.svg",
+              },
+              {
+                name: "Janome",
+                logo: "https://cdn.worldvectorlogo.com/logos/janome.svg",
+              },
+              {
+                name: "Juki",
+                logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/JUKI_2021_logo.svg/3840px-JUKI_2021_logo.svg.png",
+              },
+              {
+                name: "Bernina",
+                logo: "https://upload.wikimedia.org/wikipedia/commons/0/0d/BERNINA_International_Logo.png?20100601090650",
+              },
+              {
+                name: "Pfaff",
+                logo: "https://cdn.worldvectorlogo.com/logos/pfaff.svg",
+              },
+              {
+                name: "Husqvarna",
+                logo: "https://cdn.worldvectorlogo.com/logos/husqvarna.svg",
+              },
+              {
+                name: "Elna",
+                logo: "https://cdn.worldvectorlogo.com/logos/elna.svg",
+              },
+            ].map((brand, index) => (
+              <SwiperSlide key={index}>
+                <div className="group w-[100px] bg-white h-[140px] flex items-center justify-center p-4 ">
+                  <img
+                    src={brand.logo}
+                    alt={brand.name}
+                    className="w-[100px] bg-white h-[140px] object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110"
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
+          <Swiper
+            slidesPerView={5}
+            spaceBetween={30}
+            loop={true}
+            speed={800}
+            autoplay={{
+              delay: 1000,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+              reverseDirection: true,
+            }}
+            modules={[Navigation, FreeMode, Autoplay]}
+            className="brandsSlider !pb-0 !px-4 !mt-0"
+            breakpoints={{
+              0: {
+                slidesPerView: 2,
+                spaceBetween: 0,
+              },
+              300: {
+                slidesPerView: 3,
+                spaceBetween: 0,
+              },
+              450: {
+                slidesPerView: 4,
+                spaceBetween: 0,
+              },
+              768: {
+                slidesPerView: 5,
+                spaceBetween: 0,
+              },
+              1024: {
+                slidesPerView: 6,
+                spaceBetween: 0,
+              },
+              1280: {
+                slidesPerView: 7,
+                spaceBetween: 0,
+              },
+            }}
+          >
+            {[
+              {
+                name: "Singer",
+                logo: "https://cdn.worldvectorlogo.com/logos/singer-2.svg",
+              },
+              {
+                name: "Brother",
+                logo: "https://cdn.worldvectorlogo.com/logos/brother-1.svg",
+              },
+              {
+                name: "Janome",
+                logo: "https://cdn.worldvectorlogo.com/logos/janome.svg",
+              },
+              {
+                name: "Juki",
+                logo: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/JUKI_2021_logo.svg/3840px-JUKI_2021_logo.svg.png",
+              },
+              {
+                name: "Bernina",
+                logo: "https://upload.wikimedia.org/wikipedia/commons/0/0d/BERNINA_International_Logo.png?20100601090650",
+              },
+              {
+                name: "Pfaff",
+                logo: "https://cdn.worldvectorlogo.com/logos/pfaff.svg",
+              },
+              {
+                name: "Husqvarna",
+                logo: "https://cdn.worldvectorlogo.com/logos/husqvarna.svg",
+              },
+              {
+                name: "Elna",
+                logo: "https://cdn.worldvectorlogo.com/logos/elna.svg",
+              },
+            ].map((brand, index) => (
+              <SwiperSlide key={index}>
+                <div className="group w-[100px] bg-white h-[140px] flex items-center justify-center p-4 ">
+                  <img
+                    src={brand.logo}
+                    alt={brand.name}
+                    className="w-[100px]  h-[140px] object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110"
+                  />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </section>
 
       <section id="productos-populares" className="!py-4 lg:!py-8 bg-white">
         <div className="container">
