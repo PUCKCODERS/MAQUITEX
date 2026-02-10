@@ -152,7 +152,7 @@ const ProductListing = () => {
         <div className="container flex !gap-3">
           <div
             className={`sidebarWrapper fixed -bottom-[100%] !left-0 !w-full max-h-[80vh] overflow-auto lg:overflow-hidden 
-               lg:!h-full lg:!static lg:!w-[20%] !z-[102] lg:!z-[99] !p-3 lg:!p-0 bg-white  transition-all lg:!opacity-100 !opacity-0 ${context?.openFilter === true ? "open" : ""}`}
+               lg:!h-full lg:!static lg:!w-[20%] !z-[102] lg:!z-[99] !p-3 lg:!p-0 bg-white  transition-all lg:!opacity-100 !opacity-0 ${context?.openFilter === true ? "!bottom-0 !opacity-100" : ""}`}
           >
             <Sidebar
               productsData={productsData}
@@ -166,7 +166,7 @@ const ProductListing = () => {
 
           {context?.windowWidth < 992 && (
             <div
-              className={`filter_overlay w-full h-full bg-[rgba(0,0,0,0.5)] fixed top-0 left-0 z-[101] hidden ${context?.openFilter === true ? "block" : "hidden"}`}
+              className={`filter_overlay w-full h-full bg-[rgba(0,0,0,0.5)] fixed top-0 left-0 z-[101]  ${context?.openFilter === true ? "block" : "hidden"}`}
               onClick={() => context?.setOpenFilter(false)}
             ></div>
           )}
