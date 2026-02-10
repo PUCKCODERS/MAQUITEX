@@ -137,8 +137,8 @@ const Sidebar = (props) => {
   }, [price]);
 
   return (
-    <aside className="sidebar !-mt-3 lg:!-mt-0 !py-5 static lg:sticky -top-[130px] z-[99] !pr-2 lg:!pr-0">
-      <div className="max-h-[60vh] overflow-auto lg:overflow-visible !w-full">
+    <aside className="sidebar !-mt-3 lg:!-mt-0 !py-5 static lg:sticky top-[130px] z-[99] !pr-2 lg:!pr-0">
+      <div className="max-h-[60vh] lg:!max-h-none overflow-auto lg:!overflow-visible !w-full">
         <div className="box">
           <h3 className="!w-full !mb-3 text-[12px] font-[bold] font-bold flex items-center !pr-2 text-[#082c55]">
             FILTRAR POR CATEGORIA
