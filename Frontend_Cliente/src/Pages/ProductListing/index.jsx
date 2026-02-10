@@ -153,7 +153,7 @@ const ProductListing = () => {
       <div className="bg-white !p-2 !mt-4">
         <div className="container flex !gap-3">
           <div
-            className={`sidebarWrapper fixed -bottom-[100%] !left-0 !w-full max-h-[80vh] overflow-auto lg:overflow-visible 
+            className={`sidebarWrapper fixed -bottom-[100%] !left-0 !w-full  
                lg:!h-full lg:!static lg:!w-[20%] !z-[102] lg:!z-[99] !p-3 lg:!p-0 bg-white  transition-all lg:!opacity-100 !opacity-0 ${context?.openFilter === true ? "!bottom-0 !opacity-100" : ""}`}
           >
             <Sidebar
