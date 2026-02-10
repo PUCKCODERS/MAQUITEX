@@ -195,7 +195,7 @@ const Sidebar = (props) => {
       </div>
 
       <div className="box !mt-4 !ml-1 lg:!ml-0">
-        <h3 className="w-full !mb-3 text-[14px] font-[bold] flex items-center !pr-5 text-[#556f8d]">
+        <h3 className="w-full !mb-3 text-[13px] font-[bold] flex items-center !pr-5 text-[#556f8d]">
           FILTAR POR CALIFICACION
         </h3>
 
