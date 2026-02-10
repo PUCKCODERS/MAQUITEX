@@ -1,5 +1,5 @@
 import { Button } from "@mui/material";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { BsFilePersonFill } from "react-icons/bs";
 import { FcLike } from "react-icons/fc";
 import { GiShoppingCart } from "react-icons/gi";
@@ -13,6 +13,15 @@ const MobileNav = () => {
   const location = useLocation();
 
   const context = useContext(MyContext);
+
+  useEffect(() => {
+    console.log(location.pathname);
+    if (location.pathname === "/products") {
+      context?.setIsFilterBtnShow(true);
+    } else {
+      context?.setIsFilterBtnShow(false);
+    }
+  }, [location]);
 
   const openFilters = () => {
     context?.setOpenFilter(true);
@@ -29,12 +38,14 @@ const MobileNav = () => {
         </Button>
       </NavLink>
 
-      <Button
-        className="flex-col !w-[40px] !h-[40px] !min-w-[40px] !capitalize !text-gray-500 !bg-gray-100 !border-1 !border-[#f97316] !rounded-full"
-        onClick={openFilters}
-      >
-        <FaSlidersH size={25} color="#f97316" />
-      </Button>
+      {context?.isFilterBtnShow === true && (
+        <Button
+          className="flex-col !w-[40px] !h-[40px] !min-w-[40px] !capitalize !text-gray-500 !bg-gray-100 !border-1 !border-[#f97316] !rounded-full"
+          onClick={openFilters}
+        >
+          <FaSlidersH size={25} color="#f97316" />
+        </Button>
+      )}
 
       <Button className="flex-col !w-[40px] !min-w-[40px] !capitalize !text-gray-500">
         <FcSearch size={25} />

@@ -33,6 +33,8 @@ const ProductListing = () => {
   const [breadcrumbs, setBreadcrumbs] = useState([]);
 
   useEffect(() => {
+    context?.setIsFilterBtnShow(true);
+
     const queryParameters = new URLSearchParams(location.search);
     const catId = queryParameters.get("catId");
     const subCatId = queryParameters.get("subCatId");
@@ -82,7 +84,7 @@ const ProductListing = () => {
     }
 
     setBreadcrumbs(path);
-  }, [location.search, context?.catData]);
+  }, [location.search, context?.catData, context?.isFilterBtnShow]);
 
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
