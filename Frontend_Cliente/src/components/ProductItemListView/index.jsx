@@ -20,7 +20,7 @@ const ProductItem = (props) => {
     if (context?.userData === null) {
       context?.alertBox(
         "error",
-        "NO HAS INICIADO SESIÓN, POR FAVOR INICIA SESIÓN"
+        "NO HAS INICIADO SESIÓN, POR FAVOR INICIA SESIÓN",
       );
       return false;
     } else {
@@ -49,8 +49,8 @@ const ProductItem = (props) => {
   };
 
   return (
-    <div className="productItem bg-white !rounded-md !overflow-hidden !border-1 !border-[#b1cdee] shadow-[5px_5px_5px_#274a72] flex items-center">
-      <div className="group imgWrapper !w-[25%] !top-0 !overflow-hidden !rounded-md relative">
+    <div className="productItem bg-white !rounded-md !overflow-hidden !border-1 !border-[#b1cdee] shadow-[5px_5px_5px_#274a72] flex items-center flex-col lg:flex-row">
+      <div className="group imgWrapper !w-full lg:!w-[25%] !top-0 !overflow-hidden !rounded-md relative">
         <div
           className="img !overflow-hidden cursor-pointer pointer-events-auto"
           onClick={() =>
@@ -59,12 +59,12 @@ const ProductItem = (props) => {
         >
           <img
             src={props?.item?.images[0]}
-            className="!left-0 !top-0 !w-[300px] !h-[200px] !rounded-md"
+            className="!left-0 !top-0 !w-full   lg:!w-full !h-[200px] !rounded-md"
           />
 
           <img
             src={props?.item?.images[1]}
-            className="!left-0 !top-0 !w-[300px] !h-[200px] transition-all duration-700 !rounded-md absolute opacity-0 group-hover:opacity-100 group-hover:scale-105"
+            className="!left-0 !top-0 !w-full  !h-[200px] transition-all duration-700 !rounded-md absolute opacity-0 group-hover:opacity-100 group-hover:scale-105"
           />
         </div>
         <span className="discount flex items-center absolute !top-[0px] !left-[10px] !z-50 bg-[#e05e12] text-white !rounded-lg !p-1 text-[12px] font-[500]">
@@ -98,7 +98,7 @@ const ProductItem = (props) => {
         </div>
       </div>
 
-      <div className="info !p-3 !py-4 !bg-white w-[75%]">
+      <div className="info !p-3 !py-4 !bg-white !px-3 lg:!px-8 !w-full lg:!w-[75%]">
         <h6 className="text-[15px] !font-[500] text-[#556f8d]">
           <Link to="/" className="link transition-all">
             {/*{props?.item?.catName} / {props?.item?.subCat} /
@@ -111,12 +111,12 @@ const ProductItem = (props) => {
             to={`/product/${props?.item?._id}`}
             className="link transition-all"
           >
-            {props?.item?.name}
+            {props?.item?.name?.substr(0, 150)}
           </Link>
         </h3>
 
         <p className="text-[14px] text-[#000] font-[bold] !mb-3">
-          {props?.item?.description?.substr(0, 250) + "..."}
+          {props?.item?.description?.substr(0, 250)}
         </p>
 
         <Rating
@@ -126,13 +126,21 @@ const ProductItem = (props) => {
           readOnly
         />
 
-        <div className="flex items-center !gap-4">
-          <span className="oldPrice line-through text-red-400 text-[13px] font-[500]">
-            &#36; {props?.item?.oldPrice}
-          </span>
-          <span className="price text-[#082c55] text-[15px] font-[600]">
-            &#36; {props?.item?.price}
-          </span>
+        <div className="flex items-center justify-between !gap-4">
+          <div className="">
+            <span className="oldPrice line-through text-red-400 text-[13px] font-[500] !mr-3">
+              {props?.item?.oldPrice?.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </span>
+            <span className="price text-[#082c55] text-[15px] font-[600]">
+              {props?.item?.price?.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </span>
+          </div>
 
           <div className="!mt-0 ">
             <AddToCartControl item={props?.item} />

@@ -150,7 +150,7 @@ const ProductListing = () => {
       </div>
       <div className="bg-white !p-2 !mt-4">
         <div className="container flex !gap-3">
-          <div className="sidebarWrapper !w-[20%] bg-white ">
+          <div className="sidebarWrapper fixed !top-0 !left-0 !w-full !h-full lg:!static lg:!w-[20%] hidden lg:!block bg-white ">
             <Sidebar
               productsData={productsData}
               setProductsData={setProductsData}
@@ -161,7 +161,7 @@ const ProductListing = () => {
             />
           </div>
 
-          <div className="rightContent w-[80%] !py-3">
+          <div className="rightContent w-full lg:w-[80%] !py-3">
             <div className="bg-[#d6e7f8] !p-2 w-full !mb-4 rounded-md flex items-center justify-between ">
               <div className="col1 flex items-center itemViewActions">
                 <Button
@@ -179,7 +179,7 @@ const ProductListing = () => {
                   <TfiLayoutGrid3Alt />
                 </Button>
 
-                <span className="text-[14px] font-[600] !pl-3 !text-[#082c55]">
+                <span className="text-[9px] sm:text-[11px] md:text-[13px] lg:text-[14px] hidden sm:block md:block lg:block font-[600] !pl-3 !text-[#082c55]">
                   CONTINE{" "}
                   {productsData?.length !== 0
                     ? productsData?.products?.length
@@ -189,7 +189,7 @@ const ProductListing = () => {
               </div>
 
               <div className="col2 !ml-auto flex items-center justify-end !gap-3 !pr-4">
-                <span className="text-[14px] font-[600] !pl-3 !text-[#082c55]">
+                <span className="text-[9px] sm:text-[11px] md:text-[13px] lg:text-[14px] font-[600] !pl-3 !text-[#082c55]">
                   ORDENAR POR
                 </span>
 
@@ -199,7 +199,7 @@ const ProductListing = () => {
                   aria-haspopup="true"
                   aria-expanded={open ? "true" : undefined}
                   onClick={handleClick}
-                  className="!bg-white !font-[bold] !text-[14px] !capitalize hover:!text-[#082c55] !border !border-[#9ab8da]"
+                  className="!bg-white !font-[bold] !text-[9px] sm:!text-[11px] md:!text-[13px] lg:!text-[14px] !capitalize hover:!text-[#082c55] !border !border-[#9ab8da]"
                 >
                   {selectedSortVal}
                 </Button>
@@ -275,8 +275,8 @@ const ProductListing = () => {
             <div
               className={`grid ${
                 itemView === "grid"
-                  ? "grid-cols-5 md:grid-cols-5"
-                  : "grid-cols-1 md:grid-cols-1"
+                  ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5"
+                  : "grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-1"
               } !gap-4`}
             >
               {itemView === "grid" ? (
