@@ -57,6 +57,7 @@ function App() {
   const [addressId, setAddressId] = useState("");
   const [searchData, setSearchData] = useState([]);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [openFilter, setOpenFilter] = useState(false);
 
   const handleOpenProductDetailsModal = (status, item) => {
     setOpenProductDetailsModal({
@@ -275,6 +276,8 @@ function App() {
     searchData,
     setSearchData,
     windowWidth,
+    setOpenFilter,
+    openFilter,
   };
 
   return (

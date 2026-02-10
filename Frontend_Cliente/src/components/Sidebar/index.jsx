@@ -14,6 +14,7 @@ import { MyContext } from "../../App";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { postData } from "../../utils/api";
+import { FaSlidersH } from "react-icons/fa";
 
 const Sidebar = (props) => {
   const [isOpenedCategoryFilter, setIsOpenCategoryFilter] = useState(true);
@@ -136,7 +137,7 @@ const Sidebar = (props) => {
   }, [price]);
 
   return (
-    <aside className="sidebar !py-5 sticky -top-[130px] z-[99]">
+    <aside className="sidebar !-mt-3 lg:!-mt-0 !py-5 static lg:sticky -top-[130px] z-[99] !pr-2 lg:!pr-0">
       <div className="box">
         <h3 className="!w-full !mb-3 text-[12px] font-[bold] font-bold flex items-center !pr-2 text-[#082c55]">
           FILTRAR POR CATEGORIA
@@ -193,7 +194,7 @@ const Sidebar = (props) => {
         </div>
       </div>
 
-      <div className="box !mt-4">
+      <div className="box !mt-4 !ml-1 lg:!ml-0">
         <h3 className="w-full !mb-3 text-[14px] font-[bold] flex items-center !pr-5 text-[#556f8d]">
           FILTAR POR CALIFICACION
         </h3>
@@ -248,6 +249,11 @@ const Sidebar = (props) => {
           <Rating name="rating" value={1} size="small" readOnly />
         </div>
       </div>
+
+      <Button className="btn btn-org w-full !h-full lg:!h-[45px] !flex lg:!hidden !mt-3  gap-2 !text-[20px]">
+        <FaSlidersH className="!text-[20px] " />
+        FILTRAR
+      </Button>
     </aside>
   );
 };
