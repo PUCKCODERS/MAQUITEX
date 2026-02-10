@@ -22,7 +22,7 @@ const ProductsSlider = (props) => {
         freeMode={true}
         breakpoints={{
           250: {
-            slidesPerView: 1,
+            slidesPerView: 2,
             spaceBetween: 10,
           },
           330: {

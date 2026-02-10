@@ -15,7 +15,6 @@ const MobileNav = () => {
   const context = useContext(MyContext);
 
   useEffect(() => {
-    console.log(location.pathname);
     if (location.pathname === "/products") {
       context?.setIsFilterBtnShow(true);
     } else {
