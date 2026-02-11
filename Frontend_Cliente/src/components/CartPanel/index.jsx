@@ -16,12 +16,12 @@ const CartPanel = (props) => {
   };
 
   return (
-    <>
-      <div className="scroll !w-full max-h-[400px] overflow-y-scroll overflow-x-hidden !py-3 !px-4">
+    <div className="flex flex-col h-full">
+      <div className="scroll !w-full flex-1 overflow-y-auto overflow-x-hidden !py-3 !px-4">
         {props?.data?.map((item, index) => {
           return (
             <div className="cartItem w-full flex items-center !gap-4 border-b border-[#d1d1d1] !pb-4 !mb-2">
-              <div className="img w-[25%] overflow-hidden !h-[100px] border-1 border-[#8998aa] rounded-md shadow-[3px_3px_3px_#274a72]">
+              <div className="img w-[25%] shrink-0 overflow-hidden !h-[100px] border-1 border-[#8998aa] rounded-md shadow-[3px_3px_3px_#274a72]">
                 <Link
                   to={`/product/${item?.productId}`}
                   className="block group"
@@ -70,8 +70,8 @@ const CartPanel = (props) => {
         })}
       </div>
 
-      <br />
-      <div className="bottomSec !absolute bottom-[0] left-[10px] w-full overflow-hidden !pr-5">
+      {/* Se elimina el <br /> para que el layout flexible funcione correctamente. */}
+      <div className="bottomSec w-full shrink-0 overflow-hidden !pr-5">
         <div className="bottomInfo !py-3 !px-4 w-full border-t border-[#d1d1d1] flex items-center justify-between flex-col">
           <div className="flex items-center justify-between w-full">
             <span className="text-[14px]  !text-[#556f8d] !font-bold">
@@ -124,7 +124,7 @@ const CartPanel = (props) => {
           </div>
 
           <br />
-          <div className="flex items-center justify-between w-full !gap-5">
+          <div className="flex items-center justify-between w-full !gap-5 !mb-5 !-mt-3">
             <Link
               to="/cart"
               className="w-[50%] d-block"
@@ -142,7 +142,7 @@ const CartPanel = (props) => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
