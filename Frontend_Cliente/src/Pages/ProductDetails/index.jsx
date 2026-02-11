@@ -149,16 +149,17 @@ const ProductDetails = () => {
               }
 
               return (
-                                    <Link
-                                        key={crumb._id}
-                                        underline="none"
-                                        color="inherit"
-                                        href={href}
-                                        className="link transition !font-[bold] !text-[#082c55] hover:!text-[#0a7fec]"
-                                        sx={{ fontSize: "16px" }}
-                                    >
-                                        {crumb.name}
-                                    </Link>              );
+                <Link
+                  key={crumb._id}
+                  underline="none"
+                  color="inherit"
+                  href={href}
+                  className="link transition !font-[bold] !text-[#082c55] hover:!text-[#0a7fec]"
+                  sx={{ fontSize: "16px" }}
+                >
+                  {crumb.name}
+                </Link>
+              );
             })}
           </Breadcrumbs>
         </div>
@@ -171,12 +172,12 @@ const ProductDetails = () => {
           </div>
         ) : (
           <>
-            <div className="container flex !gap-8 items-center">
-              <div className="productZoomContainer !w-[40%] ">
+            <div className="container flex !gap-8 flex-col lg:flex-row items-start lg:items-center">
+              <div className="productZoomContainer !w-full lg:!w-[40%] ">
                 <ProductZoom images={productData?.images} />
               </div>
 
-              <div className="productContent w-[60%] !pr-10">
+              <div className="productContent !w-full lg:!w-[60%] !pr-10">
                 <ProductDetailsComponent
                   item={productData}
                   reviewsCount={reviewsCount}
@@ -187,34 +188,34 @@ const ProductDetails = () => {
 
             <div className="container !pt-10">
               <div className="flex items-center !gap-8 !mb-5">
-                <span
-                  className={`link text-[17px]   cursor-pointer font-[bold] font-bold ${
+                {/*<span
+                  className={`link text-[17px] cursor-pointer font-[500]  ${
                     activeTab === 0 && "!text-[#000]"
                   }`}
                   onClick={() => setActiveTab(0)}
                 >
                   DESCRIPCIÓN
-                </span>
+                </span>*/}
 
                 <span
-                  className={`link text-[17px] cursor-pointer font-[bold] font-bold ${
+                  className={`link text-[20px] cursor-pointer font-[500]  ${
                     activeTab === 1 && "text-[#000]"
                   }`}
-                  onClick={() => setActiveTab(1)}
+                  onClick={() => setActiveTab(0)}
                   ref={reviewSec}
                 >
                   RESEÑAS ({reviewsCount})
                 </span>
               </div>
 
-              {activeTab === 0 && (
-                <div className="shadow-md bg-gray-800 text-white w-full !border-gray-950 !p-5 !px-8 ">
+              {/*{activeTab === 0 && (
+                <div className="rounded-sm  border-1 !border-[#556f8d] !font-[500] !p-3 !px-5 ">
                   {productData?.description || "No hay descripción disponible."}
                 </div>
-              )}
+              )}*/}
 
-              {activeTab === 1 && (
-                <div className="shadow-md bg-[#f7f7f7] !text-[#082c55] w-[80%] rounded-md border-1 border-[#082c55] !p-5 !px-8">
+              {activeTab === 0 && (
+                <div className="shadow-none lg:shadow-md  border-1 border-gray-500 !text-[#082c55] w-full sm:w-[80%] md:w-[80%] lg:w-[80%] rounded-md !py-2 lg:!py-2 !p-2 !px-2  ">
                   {productData?.length !== 0 && (
                     <Reviews
                       productId={productData?._id}
@@ -227,7 +228,7 @@ const ProductDetails = () => {
 
             {relatedProductData?.length !== 0 && (
               <div className="container !pt-8">
-                <h2 className="text-[20px] font-[600] !pb-0">
+                <h2 className="!text-[16px] sm:!text-[16px] md:!text-[16px] lg:!text-[20px]">
                   PRODUCTOS RELACIONADOS
                 </h2>
                 <ProductsSlider items={6} data={relatedProductData} />

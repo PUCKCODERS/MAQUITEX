@@ -67,21 +67,23 @@ const Reviews = (props) => {
           setReviewsData(res.reviews);
           props.setReviewsCount(res.reviews.length);
         }
-      }
+      },
     );
   };
 
   return (
     <div className="w-full productReviewsContainer ">
-      <h2 className="text-[18px] ">PREGUNTAS Y RESPUESTAS DE LOS CLIENTES</h2>
+      <h2 className="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] !font-[500] !mt-2 !ml-3 ">
+        PREGUNTAS Y RESPUESTAS DE LOS CLIENTES
+      </h2>
 
       {reviewsData?.length !== 0 && (
         <div className="reviewScroll w-full max-h-[300px] overflow-y-scroll overflow-x-hidden !mt-5 !pr-5 ">
           {reviewsData?.map((review, index) => {
             return (
-              <div className="review border-b border-[#525252] !pt-5 !pb-3 w-full flex items-center justify-between">
-                <div className="info w-[60%] flex items-center !gap-3">
-                  <div className="img w-[80px] h-[80px] overflow-hidden rounded-full border-3 border-[#!text-[#082c55]] ">
+              <div className="review border-b !border-gray-300 !pt-5 !pb-3 w-full flex items-center justify-between">
+                <div className="info  w-[60%] flex items-center !gap-3">
+                  <div className="img w-[80px] h-[80px] lg:w-[80px] lg:h-[80px] overflow-hidden rounded-full border-1 border-[#082c55]">
                     <img
                       key={index}
                       src={review?.image}
@@ -107,7 +109,9 @@ const Reviews = (props) => {
       <br />
 
       <div className="reviewForm bg-[#e6e6e6] text-[#274a72] border-1 border-[#a8a8a8] !p-4 rounded-md">
-        <h2 className="text-[18px]">AÑADIR UNA RESEÑA</h2>
+        <h2 className="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px]">
+          AÑADIR UNA RESEÑA
+        </h2>
 
         <form className="w-full !mt-5" onSubmit={addReview}>
           <TextField

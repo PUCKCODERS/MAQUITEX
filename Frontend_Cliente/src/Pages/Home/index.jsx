@@ -102,10 +102,10 @@ const Home = () => {
         <div className="container">
           <div className="flex items-center justify-between  !flex-col lg:!flex-row">
             <div className="leftSec w-full lg:w-[40%]">
-              <h2 className="!text-[12px] sm:!text-[16px] md:!text-[16px] lg:!text-[20px] font-bold">
+              <h2 className="!text-[16px] sm:!text-[16px] md:!text-[16px] lg:!text-[20px] ">
                 PRODUCTOS POPULARES
               </h2>
-              <p className="!text-[9px] sm:!text-[12px] md:!text-[12px] lg:!text-[12px] font-[400] !mt-0 !mb-0">
+              <p className="!text-[10px] sm:!text-[12px] md:!text-[12px] lg:!text-[12px] font-[400] !mt-0 !mb-0">
                 NO TE PIERDAS LAS OFERTAS VIGENTES HASTA FIN DE AÑO
               </p>
             </div>
@@ -397,7 +397,7 @@ const Home = () => {
 
       <section id="nuevos-productos" className="!py-5 !pt-4 bg-white">
         <div className="container">
-          <h2 className="!text-[12px] sm:!text-[16px] md:!text-[16px] lg:!text-[20px] font-bold">
+          <h2 className="!text-[16px] sm:!text-[16px] md:!text-[16px] lg:!text-[20px] ">
             NUEVOS PRODUCTOS
           </h2>
 
@@ -417,7 +417,7 @@ const Home = () => {
         className="!py-2 lg:!py-5 !pt-0 bg-white"
       >
         <div className="container">
-          <h2 className="!text-[12px] sm:!text-[16px] md:!text-[16px] lg:!text-[20px] font-bold">
+          <h2 className="!text-[16px] sm:!text-[16px] md:!text-[16px] lg:!text-[20px]">
             PRODUCTOS RECOMENDADOS
           </h2>
 
@@ -436,7 +436,7 @@ const Home = () => {
           className="!py-5 !pb-8 !pt-0 bg-white blogSection"
         >
           <div className="container">
-            <h2 className="!text-[12px] sm:!text-[16px] md:!text-[16px] lg:!text-[20px] font-bold !mb-4">
+            <h2 className="!text-[16px] sm:!text-[16px] md:!text-[16px] lg:!text-[20px] !mb-4">
               ARTICULOS DE INTERES
             </h2>
             <Swiper

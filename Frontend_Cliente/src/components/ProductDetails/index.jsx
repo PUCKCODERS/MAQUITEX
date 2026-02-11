@@ -115,7 +115,7 @@ const ProductDetailsComponent = (props) => {
     if (userId === undefined) {
       context?.alertBox(
         "error",
-        "NO HAS INICIADO SESIÓN, POR FAVOR INICIA SESIÓN"
+        "NO HAS INICIADO SESIÓN, POR FAVOR INICIA SESIÓN",
       );
       return false;
     }
@@ -163,7 +163,7 @@ const ProductDetailsComponent = (props) => {
       setTabError(true);
       context.alertBox(
         "error",
-        "TIENES QUE ESCOGER UNA OPCIÓN ANTES DE AGREGAR"
+        "TIENES QUE ESCOGER UNA OPCIÓN ANTES DE AGREGAR",
       );
     }
   };
@@ -172,7 +172,7 @@ const ProductDetailsComponent = (props) => {
     if (context?.userData === null) {
       context?.alertBox(
         "error",
-        "NO HAS INICIADO SESIÓN, POR FAVOR INICIA SESIÓN"
+        "NO HAS INICIADO SESIÓN, POR FAVOR INICIA SESIÓN",
       );
       return false;
     } else {
@@ -202,10 +202,10 @@ const ProductDetailsComponent = (props) => {
 
   return (
     <>
-      <h1 className="text-[24px] font-[bold] font-bold text-[#082c55] !mb-2">
+      <h1 className="text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] font-[bold] font-bold text-[#082c55] !mb-2">
         {props?.item?.name}
       </h1>
-      <div className="flex items-center !gap-3">
+      <div className="flex items-start sm:items-center md:items-center lg:items-center flex-col sm:flex-row md:flex-row lg:flex-row !gap-3 justify-start">
         <span className="text-gray-500 text-[13px] ">
           MARCA :
           <span className="font-[500] text-black opacity-75 !ml-1">
@@ -225,20 +225,30 @@ const ProductDetailsComponent = (props) => {
         </span>
       </div>
 
-      <div className="flex items-center !gap-4 !mt-4">
-        <span className="oldPrice line-through text-red-400 text-[18px] font-[500]">
-          &#36; {props?.item?.oldPrice}
-        </span>
-        <span className="price text-[#0a7fec] text-[20px] font-[600]">
-          &#36; {props?.item?.price}
-        </span>
-
-        <span className="text-[14px] ">
-          DISPONIBLE EN STOCK :
-          <span className="text-green-600 text-[14px] font-bold !ml-2">
-            {props?.item?.countInStock} ARTICULOS
+      <div className="flex justify-start sm:items-center md:items-center lg:items-center flex-col sm:flex-row md:flex-row lg:flex-row !gap-4 !mt-4">
+        <div className="flex items-center !gap-4 ">
+          <span className="oldPrice line-through text-red-400 text-[18px] font-[500]">
+            {props?.item?.oldPrice?.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            })}
           </span>
-        </span>
+          <span className="price text-[#0a7fec] text-[20px] font-[600]">
+            {props?.item?.price?.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            })}
+          </span>
+        </div>
+
+        <div className="flex items-center !gap-4 ">
+          <span className="text-[14px] ">
+            DISPONIBLE EN STOCK :
+            <span className="text-green-600 text-[14px] font-bold !ml-2">
+              {props?.item?.countInStock} ARTICULOS
+            </span>
+          </span>
+        </div>
       </div>
 
       <p className="!mt-3 !pr-10 !mb-5 !text-[#000]">
@@ -314,7 +324,7 @@ const ProductDetailsComponent = (props) => {
         </div>
       )}
 
-      <p className="text-green-600 font-bold text-[14px] !mt-5 !mb-2">
+      <p className="text-green-600 font-bold !text-[12px] lg:!text-[14px] !mt-5 !mb-2">
         ENVIO GRATIS
         <span className="font-[bold] font-bold text-[#7994b1] !ml-2">
           ( VALIDO PARA LA CIUDAD DE QUITO )
@@ -345,20 +355,20 @@ const ProductDetailsComponent = (props) => {
 
       <div className="flex items-center !gap-4 !mt-4">
         <Button
-          className={`flex items-center !gap-2 text-[14px] text-[#556f8d] font-bold link cursor-pointer
+          className={`flex items-center !gap-2 text-[14px] !text-[#556f8d] hover:!text-red-600 !bg-[transparent] font-bold link cursor-pointer
               `}
           onClick={() => handleAddToMyList(props?.item)}
         >
           {isAddedInMyList === true ? (
-            <FaHeart className="text-[18px] text-red-600 hover:scale-125 transition-transform duration-200 !bg-[transparent]" />
+            <FaHeart className="text-[18px]  hover:scale-125 transition-transform duration-200 !bg-[transparent]" />
           ) : (
-            <FaHeart className="text-[18px] text-red-600 hover:scale-125 transition-transform duration-200 !bg-[transparent]" />
+            <FaHeart className="text-[18px]  hover:scale-125 transition-transform duration-200 !bg-[transparent]" />
           )}
+          <span className="flex items-center hover:!text-red-600 !gap-2 text-[14px]  font-bold link cursor-pointer">
+            AGREGAR A LISTA DE DESEOS
+          </span>
         </Button>
 
-        <span className="flex items-center hover:!text-red-600 !gap-2 text-[14px]  font-bold link cursor-pointer">
-          AGREGAR A LISTA DE DESEOS
-        </span>
         {/*<span className="flex items-center !gap-2 text-[14px] text-[#556f8d] font-bold link cursor-pointer">
           <IoMdGitCompare className="text-[18px] text-[#274a72] hover:scale-125 transition-transform duration-200" />
           AGREGAR PARA COMPARAR
