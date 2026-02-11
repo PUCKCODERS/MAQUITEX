@@ -30,7 +30,7 @@ const ProductZoom = (props) => {
             direction={context?.windowWidth < 1080 ? "horizontal" : "vertical"}
             slidesPerView={5}
             spaceBetween={10}
-            navigation={true}
+            navigation={context?.windowWidth < 1080 ? false : true}
             modules={[Navigation]}
             className={`zoomProductSliderThumbs !h-auto lg:!h-[500px] overflow-hidden ${
               props?.images?.length > 5 && "space"
