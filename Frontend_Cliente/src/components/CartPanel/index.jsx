@@ -70,8 +70,7 @@ const CartPanel = (props) => {
         })}
       </div>
 
-      {/* Se elimina el <br /> para que el layout flexible funcione correctamente. */}
-      <div className="bottomSec w-full shrink-0 overflow-hidden !pr-5">
+      <div className="bottomSec w-full shrink-0 overflow-hidden !pr-5 !pb-6">
         <div className="bottomInfo !py-3 !px-4 w-full border-t border-[#d1d1d1] flex items-center justify-between flex-col">
           <div className="flex items-center justify-between w-full">
             <span className="text-[14px]  !text-[#556f8d] !font-bold">
