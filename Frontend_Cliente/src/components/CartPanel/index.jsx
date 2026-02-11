@@ -129,14 +129,18 @@ const CartPanel = (props) => {
               className="w-[50%] d-block"
               onClick={context.toggleCartPanel(false)}
             >
-              <Button className="btn-org btn-lg w-full">CARRITO</Button>
+              <Button className=" btn-org w-full !bg-green-900 hover:!bg-green-700">
+                CARRITO
+              </Button>
             </Link>
             <Link
               to="/checkout"
               className="w-[50%] d-block"
               onClick={context.toggleCartPanel(false)}
             >
-              <Button className="btn-org btn-border btn-lg w-full">CAJA</Button>
+              <Button className=" btn-org  w-full !bg-[#082c55] hover:!bg-[#1d4572]">
+                CAJA
+              </Button>
             </Link>
           </div>
         </div>
