@@ -81,18 +81,25 @@ const Reviews = (props) => {
         <div className="reviewScroll w-full max-h-[300px] overflow-y-scroll overflow-x-hidden !mt-5 !pr-5 ">
           {reviewsData?.map((review, index) => {
             return (
-              <div className="review border-b !border-gray-300 !pt-5 !pb-3 w-full flex items-center justify-between">
-                <div className="info  w-[60%] flex items-center !gap-3">
-                  <div className="img w-[80px] h-[80px] lg:w-[80px] lg:h-[80px] overflow-hidden rounded-full border-1 border-[#082c55]">
-                    <img
-                      key={index}
-                      src={review?.image}
-                      className="w-full h-full object-cover"
-                    />
+              <div className="review border-b !border-gray-300 !pt-5 !pb-3 w-full flex flex-col lg:flex-row lg:items-center justify-between">
+                <div className="info w-full lg:w-[60%] flex flex-col lg:flex-row lg:items-center !gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="img w-[80px] min-w-[80px] h-[80px] lg:w-[80px] lg:h-[80px] overflow-hidden rounded-full border-1 border-[#082c55]">
+                      <img
+                        key={index}
+                        src={review?.image}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <h4 className="text-[16px] lg:hidden font-bold">
+                      {review?.userName}
+                    </h4>
                   </div>
 
-                  <div className="w-[80%]">
-                    <h4 className="text-[16px]">{review?.userName}</h4>
+                  <div className="w-full lg:w-[80%]">
+                    <h4 className="text-[16px] hidden lg:block">
+                      {review?.userName}
+                    </h4>
                     <h5 className="text-[13px] !mb-0">
                       {review?.createdAt?.split("T")[0]}
                     </h5>
