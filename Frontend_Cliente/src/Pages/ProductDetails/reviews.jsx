@@ -103,7 +103,9 @@ const Reviews = (props) => {
                     <h5 className="text-[13px] !mb-0">
                       {review?.createdAt?.split("T")[0]}
                     </h5>
-                    <p className="!mt-0 !mb-0 text-[#000]">{review?.review}</p>
+                    <p className="!mt-0 !mb-0 text-[#000] break-words whitespace-pre-wrap">
+                      {review?.review}
+                    </p>
                   </div>
                 </div>
                 <Rating name="size-small" value={review?.rating} readOnly />
