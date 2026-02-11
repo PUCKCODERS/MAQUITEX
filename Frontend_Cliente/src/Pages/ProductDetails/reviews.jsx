@@ -100,15 +100,20 @@ const Reviews = (props) => {
                     <h4 className="text-[16px] hidden lg:block">
                       {review?.userName}
                     </h4>
-                    <h5 className="text-[13px] !mb-0">
+                    <h5 className="text-[13px] !mb-0 !ml-3 lg:!ml-0">
                       {review?.createdAt?.split("T")[0]}
                     </h5>
-                    <p className="!mt-0 !mb-0 text-[#000] break-words whitespace-pre-wrap">
+                    <p className="!mt-0 !mb-0 text-[#000] !ml-3 lg:!ml-0 break-words whitespace-pre-wrap">
                       {review?.review}
                     </p>
                   </div>
                 </div>
-                <Rating name="size-small" value={review?.rating} readOnly />
+                <Rating
+                  name="size-small"
+                  className="!ml-2 lg:!ml-0"
+                  value={review?.rating}
+                  readOnly
+                />
               </div>
             );
           })}

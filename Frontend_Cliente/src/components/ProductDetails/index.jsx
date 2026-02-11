@@ -243,7 +243,7 @@ const ProductDetailsComponent = (props) => {
 
         <div className="flex items-center !gap-4 ">
           <span className="text-[14px] ">
-            DISPONIBLE EN STOCK :
+            STOCK :
             <span className="text-green-600 text-[14px] font-bold !ml-2">
               {props?.item?.countInStock} ARTICULOS
             </span>
@@ -324,10 +324,10 @@ const ProductDetailsComponent = (props) => {
         </div>
       )}
 
-      <p className="text-green-600 font-bold !text-[12px] lg:!text-[14px] !mt-5 !mb-2">
+      <p className="text-green-600 font-bold !text-[14px] lg:!text-[14px] !mt-5 !mb-2">
         ENVIO GRATIS
         <span className="font-[bold] font-bold text-[#7994b1] !ml-2">
-          ( VALIDO PARA LA CIUDAD DE QUITO )
+          ( SOLO QUITO )
         </span>
       </p>
 
