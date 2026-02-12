@@ -443,7 +443,10 @@ const Footer = () => {
             onClick={context.toggleAddressPanel(false)}
           />
         </div>
-        <AddAddress />
+
+        <div className="w-full max-h-[100%] overflow-auto">
+          <AddAddress />
+        </div>
       </Drawer>
 
       <Dialog
