@@ -7,7 +7,6 @@ import { GiShoppingCart } from "react-icons/gi";
 import { Link } from "react-router-dom";
 
 const CartPage = () => {
-  window.scrollTo(0, 0);
   const context = useContext(MyContext);
 
   return (

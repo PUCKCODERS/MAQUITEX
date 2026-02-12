@@ -35,8 +35,6 @@ const CartItems = (props) => {
     const productId = props?.item?.productId;
     if (!productId) return;
 
-    window.scrollTo(0, 0);
-
     fetchDataFromApi(`/api/product/${productId}`).then((res) => {
       if (res?.error === false && res?.product) {
         const sizes = res.product?.size || [];
