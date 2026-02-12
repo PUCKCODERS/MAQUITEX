@@ -243,10 +243,10 @@ const Checkout = () => {
   };
 
   return (
-    <section className="!py-3 lg:!py-5">
+    <section className="!py-3 lg:!py-5 !px-1">
       <form onSubmit={checkout}>
-        <div className="w-full lg:w-[70%] !m-auto flex flex-col lg:flex-row !gap-5">
-          <div className="leftCol w-full lg:w-[60%]">
+        <div className="w-full lg:w-[70%] !m-auto flex flex-col md:flex-row lg:flex-row !gap-5">
+          <div className="leftCol w-full md:w-[60%] lg:w-[60%]">
             <div className="card bg-white shadow-md !p-5 rounded-md w-full">
               <div className="flex items-center justify-between !mb-3">
                 <h2 className="text-[10px]">
@@ -260,7 +260,7 @@ const Checkout = () => {
                   className="btn-org btn-sm !gap-2 "
                 >
                   <FaPlus />
-                  <span className="!text-[10px] sm:!text-[12px]">
+                  <span className="!text-[10px] sm:!text-[12px] md:!text-[10px]">
                     AGREGAR{" "}
                     {context?.windowWidth < 767 ? "" : " NUEVA DIRECCIÓN"}
                   </span>
@@ -349,7 +349,7 @@ const Checkout = () => {
             </div>
           </div>
 
-          <div className="rightCol w-full lg:w-[40%]">
+          <div className="rightCol w-full md:w-[40%] lg:w-[40%]">
             <div className="card shadow-md bg-white !p-5 rounded-md">
               <h2 className="mb-4">TU ORDEN</h2>
 
@@ -367,20 +367,20 @@ const Checkout = () => {
                         key={index}
                       >
                         <div className="part1 flex items-center !gap-2">
-                          <div className="img !w-[50px] sm:!w-[100px] md:!w-[100px] lg:!w-[50px] !h-[50px]  sm:!h-[100px] md:!h-[100px] lg:!h-[50px] object-cover overflow-hidden border-1 border-[#8998aa] rounded-md group cursor-pointer shadow-[2px_2px_3px_#082c55]">
+                          <div className="img !w-[50px] sm:!w-[100px] md:!w-[50px] lg:!w-[50px] !h-[50px]  sm:!h-[100px] md:!h-[50px] lg:!h-[50px] object-cover overflow-hidden border-1 border-[#8998aa] rounded-md group cursor-pointer shadow-[2px_2px_3px_#082c55]">
                             <img
                               src={item?.image}
-                              className="w-full !h-[50px] sm:!h-[100px] md:!h-[100px] lg:!h-[50px] group-hover:scale-105 overflow-hidden "
+                              className="w-full !h-[50px] sm:!h-[100px] md:!h-[50px] lg:!h-[50px] group-hover:scale-105 overflow-hidden "
                             />
                           </div>
                           <div className="info ">
                             <h4
-                              className="text-[10px] sm:text-[14px] md:text-[14px] lg:text-[10px] !font-[500] "
+                              className="text-[10px] sm:text-[14px] md:text-[10px] lg:text-[10px] !font-[500] "
                               title={item?.productTitle}
                             >
                               {item?.productTitle?.substr(0, 35)}
                             </h4>
-                            <span className="text-[9px] sm:text-[14px] md:text-[14px] lg:text-[9px] flex items-center justify-start !gap-3 !mt-2">
+                            <span className="text-[9px] sm:text-[14px] md:text-[9px] lg:text-[9px] flex items-center justify-start !gap-3 !mt-2">
                               <span>CANT: {item?.quantity}</span>{" "}
                               <span>
                                 PRECIO.U:{" "}
@@ -395,7 +395,7 @@ const Checkout = () => {
                           </div>
                         </div>
 
-                        <span className=" text-[10px] sm:text-[14px] md:text-[14px] lg:text-[10px] !font-[500] text-[#0a7fec] !mt-6 ">
+                        <span className=" text-[10px] sm:text-[14px] md:text-[10px] lg:text-[10px] !font-[500] text-[#0a7fec] !mt-3 ">
                           {(item?.quantity * item?.price)
                             ?.toLocaleString("en-US", {
                               style: "currency",
