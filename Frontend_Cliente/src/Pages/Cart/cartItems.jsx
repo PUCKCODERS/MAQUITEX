@@ -207,12 +207,12 @@ const CartItems = (props) => {
           readOnly
         />
 
-        <div className="flex items-center !gap-4 !mt-2">
+        <div className="grid grid-cols-2 gap-2 !mt-2 lg:flex lg:items-center lg:gap-4">
           {qtyOptions && qtyOptions?.length > 0 && (
             <>
-              <div className="relative">
+              <div className="relative w-full lg:w-auto">
                 <span
-                  className="flex items-center justify-center bg-[#f1f1f1] text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72]"
+                  className="flex items-center justify-center bg-[#f1f1f1] text-[7px] sm:text-[9px] md:text-[11px] lg:text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72] w-full lg:w-auto"
                   onClick={handleClickQty}
                 >
                   CANTIDAD {selectedQty} <GoTriangleDown />
@@ -245,9 +245,9 @@ const CartItems = (props) => {
 
           {sizeOptions && sizeOptions?.length > 0 && (
             <>
-              <div className="relative">
+              <div className="relative w-full lg:w-auto">
                 <span
-                  className="flex items-center justify-center bg-[#f1f1f1]  text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72]"
+                  className="flex items-center justify-center bg-[#f1f1f1]  text-[7px] sm:text-[9px] md:text-[11px] lg:text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72] w-full lg:w-auto"
                   onClick={handleClickSize}
                 >
                   TAMAÑO {selectedSize} <GoTriangleDown />
@@ -280,9 +280,9 @@ const CartItems = (props) => {
 
           {ramOptions && ramOptions?.length > 0 && (
             <>
-              <div className="relative">
+              <div className="relative w-full lg:w-auto">
                 <span
-                  className="flex items-center justify-center bg-[#f1f1f1] text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72]"
+                  className="flex items-center justify-center bg-[#f1f1f1] text-[7px] sm:text-[9px] md:text-[11px] lg:text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72] w-full lg:w-auto"
                   onClick={handleClickRam}
                 >
                   COLOR {selectedRam} <GoTriangleDown />
@@ -315,9 +315,9 @@ const CartItems = (props) => {
 
           {weightOptions && weightOptions?.length > 0 && (
             <>
-              <div className="relative">
+              <div className="relative w-full lg:w-auto">
                 <span
-                  className="flex items-center justify-center bg-[#f1f1f1] text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72]"
+                  className="flex items-center justify-center bg-[#f1f1f1] text-[7px] sm:text-[9px] md:text-[11px] lg:text-[12px] font-[600] !py-1 !px-2 rounded-md cursor-pointer shadow-[1px_1px_3px_#274a72] w-full lg:w-auto"
                   onClick={handleClickWeight}
                 >
                   PESO {selectedWeight} <GoTriangleDown />
@@ -350,23 +350,23 @@ const CartItems = (props) => {
         </div>
 
         <div className="flex items-center !gap-2 lg:!gap-4 !mt-3">
-          <span className="oldPrice line-through text-[#b8b8b8] text-[9px] sm:text-[11px] md:text-[13px] lg:text-[15px] font-[500]">
+          <span className="oldPrice line-through text-[#b8b8b8] text-[10px] sm:text-[11px] md:text-[13px] lg:text-[15px] font-[500]">
             {props?.item?.oldPrice?.toLocaleString("en-US", {
               style: "currency",
               currency: "USD",
             })}
           </span>
 
-          <span className="price text-[#0a7fec] text-[11px] sm:text-[14px] md:text-[16px] lg:text-[17px] font-[600]">
+          <span className="price text-[#0a7fec] text-[12px] sm:text-[14px] md:text-[16px] lg:text-[17px] font-[600]">
             {props?.item?.price?.toLocaleString("en-US", {
               style: "currency",
               currency: "USD",
             })}
           </span>
 
-          <span className="price text-[#ec370a] text-[9px] sm:text-[14px] md:text-[16px] lg:text-[17px] font-[600]">
+          <span className="price text-[#ec370a] text-[10px] sm:text-[14px] md:text-[16px] lg:text-[17px] font-[600]">
             {props?.item?.discount}%{" "}
-            <span className="text-[5px] sm:text-[8px] md:text-[9px] lg:text-[10px]">
+            <span className="text-[7px] sm:text-[8px] md:text-[9px] lg:text-[10px]">
               DESCUENTO
             </span>
           </span>
