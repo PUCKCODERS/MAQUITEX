@@ -70,7 +70,7 @@ const CartPanel = (props) => {
         })}
       </div>
 
-      <div className="bottomSec w-full shrink-0 overflow-hidden bg-gray-200 !pr-5 !pb-6">
+      <div className="bottomSec w-full shrink-0 overflow-hidden bg-gray-200 !pr-5 !-mb-6">
         <div className="bottomInfo !py-3 !px-4 w-full border-t border-[#d1d1d1] flex items-center justify-between flex-col">
           <div className="flex items-center justify-between w-full">
             <span className="text-[12px] lg:text-[14px] !text-[#556f8d] !font-[500]">
