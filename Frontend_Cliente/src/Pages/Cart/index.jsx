@@ -11,9 +11,9 @@ const CartPage = () => {
   const context = useContext(MyContext);
 
   return (
-    <section className="section !py-10 !pb-10">
-      <div className="container w-[80%] max-w-[80%] flex !gap-5">
-        <div className="leftPart w-[70%]">
+    <section className="section !py-4 lg:!py-8 !pb-10">
+      <div className="container w-[80%] max-w-[80%] flex !gap-5 !flex-col lg:!flex-row">
+        <div className="leftPart !w-full lg:!w-[70%]">
           <div className="shadow-md rounded-md  bg-white">
             {context?.cartData?.length === 0 ? (
               <div className="flex items-center justify-center flex-col !pt-[30px] !gap-1">
@@ -49,10 +49,10 @@ const CartPage = () => {
             ) : (
               <>
                 <div className="!py-2 !px-3 border-b border-[#d1d1d1] ">
-                  <h2 className="font-[bold]  !text-[25px] flex justify-center">
+                  <h2 className="font-[bold]  !text-[15px] lg:!text-[25px] flex justify-center">
                     TU CARRITO
                   </h2>
-                  <p className="!mt-2 !mb-2 text-[#556f8d] !text-[20px] font-[600] flex justify-center">
+                  <p className="!mt-2 !mb-2 text-[#556f8d] !text-[11px] lg:!text-[20px] font-[600] flex justify-center">
                     ESTOS SON
                     <span className="font-bold text-[#ec370a]">
                       &nbsp;{context?.cartData?.length}&nbsp;
@@ -117,7 +117,7 @@ const CartPage = () => {
               <span className="text-[#0a7fec] font-bold">
                 {context.cartData?.reduce(
                   (sum, item) => sum + item.quantity,
-                  0
+                  0,
                 )}
               </span>
             </p>

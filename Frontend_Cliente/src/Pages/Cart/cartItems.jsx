@@ -79,7 +79,7 @@ const CartItems = (props) => {
         .then((res) => {
           context?.alertBox(
             "success",
-            res?.data?.message || "TAMAÑO ACTUALIZADO"
+            res?.data?.message || "TAMAÑO ACTUALIZADO",
           );
           context?.getCartItems();
         })
@@ -171,7 +171,7 @@ const CartItems = (props) => {
 
   return (
     <div className="cartItem w-full !p-3 flex items-center !gap-4 !pb-5 border-b border-[#d1d1d1]">
-      <div className="img w-[20%] rounded-md overflow-hidden shadow-[3px_3px_3px_#274a72] border-1 border-[#acb1b8]">
+      <div className="img w-[40%] lg:w-[20%] rounded-md overflow-hidden shadow-[3px_3px_3px_#274a72] border-1 border-[#acb1b8]">
         <Link to={`/product/${props?.item?.productId}`} className="group">
           <img
             src={props?.item?.image}
@@ -180,18 +180,23 @@ const CartItems = (props) => {
         </Link>
       </div>
 
-      <div className="info w-[80%] relative">
+      <div className="info w-[60%] lg:w-[80%] relative">
         <RiDeleteBin5Fill
-          className="!absolute top-[-5px] right-[10px] cursor-pointer text-[25px] text-[#d67070] hover:!text-[#ce0202]  link transition-all"
+          className="!absolute top-[-5px] lg:top-[-5px] right-[-5px] lg:right-[10px] cursor-pointer text-[20px] lg:text-[25px] text-[#d67070] hover:!text-[#ce0202]  link transition-all"
           onClick={() => removeItem(props?.item?._id)}
         />
-        <span className="text-[13px] font-[500]">{props?.item?.brand}</span>
-        <h3 className="!text-[15px] !font-[bold] !mb-3 !mt-1">
+        <span className="!text-[11px] sm:!text-[12px] md:!text-[13px] lg:!text-[13px] font-[500]">
+          {props?.item?.brand}
+        </span>
+        <h3 className=" !text-[10px] sm:!text-[12px] md:!text-[14px] lg:!text-[15px] !font-bold !mb-3 !mt-1">
           <Link
             to={`/product/${props?.item?.productId}`}
             className=" !text-[#556f8d] hover:!text-[#20446d]"
           >
-            {props?.item?.productTitle?.substr(0, 200)}
+            {props?.item?.productTitle?.substr(
+              0,
+              context?.windowWidth < 992 ? 100 : 200,
+            )}
           </Link>
         </h3>
 
@@ -344,17 +349,26 @@ const CartItems = (props) => {
           )}
         </div>
 
-        <div className="flex items-center !gap-4 !mt-3">
-          <span className="price text-[#0a7fec] text-[17px] font-[600]">
-            &#36; {props?.item?.price}
-          </span>
-          <span className="oldPrice line-through text-[#b8b8b8] text-[15px] font-[500]">
-            &#36; {props?.item?.oldPrice}
+        <div className="flex items-center !gap-2 lg:!gap-4 !mt-3">
+          <span className="oldPrice line-through text-[#b8b8b8] text-[9px] sm:text-[11px] md:text-[13px] lg:text-[15px] font-[500]">
+            {props?.item?.oldPrice?.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            })}
           </span>
 
-          <span className="price text-[#ec370a] text-[17px] font-[600]">
+          <span className="price text-[#0a7fec] text-[11px] sm:text-[14px] md:text-[16px] lg:text-[17px] font-[600]">
+            {props?.item?.price?.toLocaleString("en-US", {
+              style: "currency",
+              currency: "USD",
+            })}
+          </span>
+
+          <span className="price text-[#ec370a] text-[9px] sm:text-[14px] md:text-[16px] lg:text-[17px] font-[600]">
             {props?.item?.discount}%{" "}
-            <span className="text-[10px]">DESCUENTO</span>
+            <span className="text-[5px] sm:text-[8px] md:text-[9px] lg:text-[10px]">
+              DESCUENTO
+            </span>
           </span>
         </div>
       </div>

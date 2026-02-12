@@ -375,7 +375,7 @@ const Footer = () => {
         anchor={"right"}
         className="cartPanel"
       >
-        <div className="flex items-center justify-between !py-6 !px-4 !gap-3 border-b-2 bg-gray-200 border-[#d1d1d1] overflow-hidden">
+        <div className="flex items-center justify-between !py-2 !px-4 !gap-3 border-b-2 bg-gray-200 border-[#d1d1d1] ">
           <h4 className="font-bold font-[bold] !text-[#082c55] !text-[20px]">
             CARRITO ({context?.cartData?.length})
           </h4>
@@ -390,7 +390,7 @@ const Footer = () => {
         ) : (
           <>
             <div className="flex items-center justify-center flex-col !pt-[30px] !gap-1">
-              <p className="!text-[#38597e] !text-[9px] !font-[600] !mb-1 !mt-4 !max-w-xs !p-0">
+              <p className=" !text-[#38597e] !text-[9px] !font-[600] !mb-1 !mt-4 !max-w-xs !p-6 !px-6">
                 ¡PARECE QUE AÚN NO HAS AGREGADO NADA! EXPLORA NUESTRAS
                 CATEGORÍAS Y ENCUENTRA ESE PRODUCTO QUE TANTO DESEAS
               </p>
@@ -408,17 +408,17 @@ const Footer = () => {
 
               <div className="!mt-6 text-sm ">
                 <a
-                  href="/favoritos"
+                  href="/my-list"
                   className="text-blue-600 hover:text-blue-800 !mx-2"
                 >
                   IR A MIS FAVORITOS
                 </a>
                 <span className="text-gray-400">|</span>
                 <a
-                  href="/vistos-recientemente"
+                  href="/productListing"
                   className="text-blue-600 hover:text-blue-800 !mx-1"
                 >
-                  COMPARTIDOS
+                  PRODUCTOS
                 </a>
               </div>
             </div>
