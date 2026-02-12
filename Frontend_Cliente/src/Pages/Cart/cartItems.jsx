@@ -188,7 +188,7 @@ const CartItems = (props) => {
         <span className="!text-[11px] sm:!text-[12px] md:!text-[13px] lg:!text-[13px] font-[500]">
           {props?.item?.brand}
         </span>
-        <h3 className=" !text-[10px] sm:!text-[12px] md:!text-[14px] lg:!text-[15px] !font-bold !mb-3 !mt-1">
+        <h3 className=" !text-[10px] sm:!text-[12px] md:!text-[14px] lg:!text-[15px] !font-[500] !mb-3 !mt-1">
           <Link
             to={`/product/${props?.item?.productId}`}
             className=" !text-[#556f8d] hover:!text-[#20446d]"

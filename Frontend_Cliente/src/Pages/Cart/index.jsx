@@ -78,7 +78,7 @@ const CartPage = () => {
           </div>
         </div>
 
-        <div className="rightPart w-[30%]">
+        <div className="rightPart w-full lg:w-[30%]">
           <div className="shadow-md rounded-md bg-white !p-5 sticky !top-[155px] z-[90]">
             <h3 className="font-[bold] font-bold !pb-2 flex items-center !justify-center">
               TOTAL DE CARRITO
