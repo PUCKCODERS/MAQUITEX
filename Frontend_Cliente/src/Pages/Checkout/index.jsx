@@ -367,20 +367,20 @@ const Checkout = () => {
                         key={index}
                       >
                         <div className="part1 flex items-center !gap-2">
-                          <div className="img !w-[50px] !h-[50px] object-cover overflow-hidden border-1 border-[#8998aa] rounded-md group cursor-pointer shadow-[2px_2px_3px_#082c55]">
+                          <div className="img !w-[50px] sm:!w-[100px] md:!w-[100px] lg:!w-[50px] sm:!h-[100px] md:!h-[100px] !h-[50px] object-cover overflow-hidden border-1 border-[#8998aa] rounded-md group cursor-pointer shadow-[2px_2px_3px_#082c55]">
                             <img
                               src={item?.image}
-                              className="w-full group-hover:scale-105 overflow-hidden !h-[50px]"
+                              className="w-full !h-[50px] sm:!h-[100px] md:!h-[100px] lg:!h-[50px] group-hover:scale-105 overflow-hidden "
                             />
                           </div>
                           <div className="info ">
                             <h4
-                              className="text-[10px] !font-[500] "
+                              className="text-[10px] sm:text-[14px] md:text-[14px] lg:text-[10px] !font-[500] "
                               title={item?.productTitle}
                             >
                               {item?.productTitle?.substr(0, 35)}
                             </h4>
-                            <span className="text-[9px] flex items-center justify-start !gap-3 !mt-2">
+                            <span className="text-[9px] sm:text-[14px] md:text-[14px] lg:text-[9px] flex items-center justify-start !gap-3 !mt-2">
                               <span>CANT: {item?.quantity}</span>{" "}
                               <span>
                                 PRECIO.U:{" "}
@@ -395,7 +395,7 @@ const Checkout = () => {
                           </div>
                         </div>
 
-                        <span className=" text-[10px] !font-[500] text-[#0a7fec] !mt-6 ">
+                        <span className=" text-[10px] sm:text-[14px] md:text-[14px] lg:text-[10px] !font-[500] text-[#0a7fec] !mt-6 ">
                           {(item?.quantity * item?.price)
                             ?.toLocaleString("en-US", {
                               style: "currency",

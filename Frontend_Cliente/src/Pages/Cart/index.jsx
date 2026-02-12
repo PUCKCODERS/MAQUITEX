@@ -84,8 +84,10 @@ const CartPage = () => {
             </h3>
             <hr />
 
-            <p className="flex items-center justify-between !text-[10px] !mt-3">
-              <span className="text-[10px] font-bold">SUBTOTAL</span>
+            <p className="flex items-center justify-between !text-[10px] sm:!text-[14px] md:!text-[14px] lg:!text-[10px] !mt-3 !mb-0 sm:!mb-2 md:!mb-2 lg:!mb-0">
+              <span className="!text-[10px] sm:!text-[14px] md:!text-[14px] lg:!text-[10px] font-bold">
+                SUBTOTAL
+              </span>
               <span className="text-[#0a7fec] ">
                 {(context.cartData?.length !== 0
                   ? context.cartData
@@ -101,18 +103,20 @@ const CartPage = () => {
               </span>
             </p>
 
-            <p className="flex items-center justify-between !text-[10px]">
-              <span className="text-[10px] font-bold">ENVIO</span>
+            <p className="flex items-center justify-between !text-[10px] sm:!text-[14px] md:!text-[14px] lg:!text-[10px] !mb-0 sm:!mb-2 md:!mb-2 lg:!mb-0">
+              <span className="!text-[10px] sm:!text-[14px] md:!text-[14px] lg:!text-[10px] font-bold">
+                ENVIO
+              </span>
               <span className="text-green-600 !font-bold ">
                 GRATIS{" "}
-                <span className="font-[bold]  text-[#7994b1] text-[10px]">
+                <span className="font-[bold]  text-[#7994b1] !text-[10px] sm:!text-[14px] md:!text-[14px] lg:!text-[10px]">
                   (SOLO QUITO)
                 </span>
               </span>
             </p>
 
-            <p className="flex items-center justify-between !text-[10px]">
-              <span className="text-[10px] font-[500]">
+            <p className="flex items-center justify-between !text-[10px] sm:!text-[14px] md:!text-[14px] lg:!text-[10px] !mb-0 sm:!mb-2 md:!mb-2 lg:!mb-0">
+              <span className="!text-[10px] sm:!text-[14px] md:!text-[14px] lg:!text-[10px] font-[500]">
                 CANTIDAD TOTAL DE PRODUCTOS
               </span>
               <span className="text-[#0a7fec]">
@@ -123,10 +127,10 @@ const CartPage = () => {
               </span>
             </p>
 
-            <p className="flex items-center justify-between !text-[10px]">
-              <span className="text-[10px] font-bold">
+            <p className="flex items-center justify-between  !text-[10px] sm:!text-[14px] md:!text-[14px] lg:!text-[10px] ">
+              <span className="!text-[10px] sm:!text-[14px] md:!text-[14px] lg:!text-[10px] font-bold">
                 TOTAL{" "}
-                <span className="font-[bold]   text-[#7994b1] text-[10px]">
+                <span className="font-[bold] text-[#7994b1] !text-[10px] sm:!text-[14px] md:!text-[14px] lg:!text-[10px]">
                   (INCLUIDO IVA)
                 </span>
               </span>
@@ -148,7 +152,7 @@ const CartPage = () => {
             <br />
             <Link to="/checkout">
               <Button className="btn-org btn-lg w-full flex !gap-2">
-                <FaCashRegister className="text-[25px]" />
+                <FaCashRegister className="!text-[25px]" />
                 PASAR POR CAJA
               </Button>
             </Link>
