@@ -169,7 +169,7 @@ const CartItems = (props) => {
 
   return (
     <div className="cartItem w-full !p-3 flex items-center !gap-4 !pb-5 border-b border-[#d1d1d1]">
-      <div className="img w-[40%] lg:w-[20%] rounded-md overflow-hidden shadow-[3px_3px_3px_#274a72] border-1 border-[#acb1b8]">
+      <div className="img w-[40%] sm:w-[30%] lg:w-[20%] rounded-md overflow-hidden shadow-[3px_3px_3px_#274a72] border-1 border-[#acb1b8]">
         <Link to={`/product/${props?.item?.productId}`} className="group">
           <img
             src={props?.item?.image}
@@ -178,7 +178,7 @@ const CartItems = (props) => {
         </Link>
       </div>
 
-      <div className="info w-[60%] lg:w-[80%] relative">
+      <div className="info w-[60%] sm:w-[70%] lg:w-[80%] relative">
         <RiDeleteBin5Fill
           className="!absolute top-[-5px] lg:top-[-5px] right-[-5px] lg:right-[10px] cursor-pointer text-[20px] lg:text-[25px] text-[#d67070] hover:!text-[#ce0202]  link transition-all"
           onClick={() => removeItem(props?.item?._id)}
