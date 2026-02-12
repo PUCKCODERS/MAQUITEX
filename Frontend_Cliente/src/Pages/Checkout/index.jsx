@@ -260,8 +260,8 @@ const Checkout = () => {
                   }}
                   className="btn-org btn-sm !gap-2 "
                 >
-                  <FaPlus className="!text-[10px]" />
-                  <span className=":text-[10px]">
+                  <FaPlus />
+                  <span className="!text-[10px] sm:!text-[12px]">
                     AGREGAR{" "}
                     {context?.windowWidth < 767 ? "" : " NUEVA DIRECCIÓN"}
                   </span>
