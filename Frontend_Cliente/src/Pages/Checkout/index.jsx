@@ -17,7 +17,6 @@ const VITE_API_PAYPAL_CLIENT_ID = import.meta.env.VITE_API_PAYPAL_CLIENT_ID;
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 const Checkout = () => {
-  window.scrollTo(0, 0);
   const [userData, setUserData] = useState(null);
   const [isChecked, setIsChecked] = useState(0);
   const [selectedAddress, setSelectedAddress] = useState("");
@@ -364,24 +363,24 @@ const Checkout = () => {
                   context?.cartData?.map((item, index) => {
                     return (
                       <div
-                        className="flex !items-center !justify-between !py-2 border-b border-[#d1d1d1]"
+                        className="!flex !items-center !justify-between !py-2 border-b border-[#d1d1d1]"
                         key={index}
                       >
-                        <div className="part1 flex items-center !gap-3">
+                        <div className="part1 flex items-center !gap-2">
                           <div className="img !w-[50px] !h-[50px] object-cover overflow-hidden border-1 border-[#8998aa] rounded-md group cursor-pointer shadow-[2px_2px_3px_#082c55]">
                             <img
                               src={item?.image}
                               className="w-full group-hover:scale-105 overflow-hidden !h-[50px]"
                             />
                           </div>
-                          <div className="info">
+                          <div className="info ">
                             <h4
-                              className="text-[10px]"
+                              className="text-[10px] !font-[500] "
                               title={item?.productTitle}
                             >
-                              {item?.productTitle?.substr(0, 35) + "..."}
+                              {item?.productTitle?.substr(0, 35)}
                             </h4>
-                            <span className="text-[9px] flex items-center justify-center !gap-8">
+                            <span className="text-[9px] flex items-center justify-start !gap-3 !mt-2">
                               <span>CANT: {item?.quantity}</span>{" "}
                               <span>
                                 PRECIO.U:{" "}
@@ -396,13 +395,13 @@ const Checkout = () => {
                           </div>
                         </div>
 
-                        <span className="text-[10px] font-bold text-[#0a7fec]">
+                        <span className=" text-[10px] !font-[500] text-[#0a7fec] !mt-6 ">
                           {(item?.quantity * item?.price)
                             ?.toLocaleString("en-US", {
                               style: "currency",
                               currency: "USD",
                             })
-                            .replace("$", "$ ")}
+                            .replace("$", "$")}
                         </span>
                       </div>
                     );

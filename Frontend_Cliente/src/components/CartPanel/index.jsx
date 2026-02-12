@@ -35,7 +35,7 @@ const CartPanel = (props) => {
               </div>
 
               <div className="info w-[75%] !pr-5 !relative !pt-3">
-                <h4 className="text-[10px] lg:text-[14px]  !font-bold !text-[#556f8d] hover:!text-[#20446d]">
+                <h4 className="text-[10px] lg:text-[14px]  !font-[500] !text-[#556f8d] hover:!text-[#20446d]">
                   <Link to={`/product/${item?.productId}`}>
                     {item?.productTitle?.substr(0, 80)}
                   </Link>
@@ -43,11 +43,11 @@ const CartPanel = (props) => {
                 <p className="flex items-center !text-[10px] lg:!text-[12px]  !gap-5 !mt-2 !mb-2">
                   <span>
                     <span className="!text-[#556f8d] !font-bold">CANT: </span>
-                    <span className="text-[#0a7fec] font-bold">
+                    <span className="text-[#0a7fec] !font-[500]">
                       {item?.quantity}
                     </span>
                   </span>
-                  <span className="text-[#0a7fec] font-bold">
+                  <span className="text-[#0a7fec] !font-[500]">
                     <span className="!text-[#556f8d] !font-bold">
                       PRECIO.U:{" "}
                     </span>{" "}
@@ -73,10 +73,10 @@ const CartPanel = (props) => {
       <div className="bottomSec w-full shrink-0 overflow-hidden bg-gray-200 !pr-5 !pb-6">
         <div className="bottomInfo !py-3 !px-4 w-full border-t border-[#d1d1d1] flex items-center justify-between flex-col">
           <div className="flex items-center justify-between w-full">
-            <span className="text-[12px] lg:text-[14px] !text-[#556f8d] !font-bold">
+            <span className="text-[12px] lg:text-[14px] !text-[#556f8d] !font-[500]">
               {context?.cartData?.length} PRODUCTOS
             </span>
-            <span className="text-[#0a7fec]  font-bold">
+            <span className="text-[#0a7fec]  !font-[500]">
               {(context.cartData?.length !== 0
                 ? context.cartData
                     ?.map((item) => parseInt(item.price) * item.quantity)
@@ -93,23 +93,23 @@ const CartPanel = (props) => {
         </div>
 
         <div className="bottomInfo !py-3 !px-4 w-full border-t border-[#d1d1d1] flex items-center justify-between">
-          <span className="text-[12px] lg:text-[14px]   !text-[#556f8d] !font-bold">
+          <span className="text-[12px] lg:text-[14px]   !text-[#556f8d] !font-[500]">
             CANTIDAD TOTAL DE PRODUCTOS
           </span>
-          <span className="text-[#0a7fec] font-bold">
+          <span className="text-[#0a7fec] !font-[500]">
             {context.cartData?.reduce((sum, item) => sum + item.quantity, 0)}
           </span>
         </div>
 
         <div className="bottomInfo !py-3 !px-4 w-full border-t border-[#d1d1d1]  flex items-center justify-between flex-col">
           <div className="flex items-center justify-between w-full ">
-            <span className="text-[12px] lg:text-[14px]  !text-[#556f8d] !font-bold">
+            <span className="text-[12px] lg:text-[14px]  !text-[#556f8d] !font-[500]">
               TOTAL FINAL{" "}
               <span className="text-red-600 text-[8px] lg:text-[10px]">
                 (INCLUIDO IVA)
               </span>
             </span>
-            <span className="text-[#0a7fec]  font-bold">
+            <span className="text-[#0a7fec] !font-[500]">
               {(context.cartData?.length !== 0
                 ? context.cartData
                     ?.map((item) => parseInt(item.price) * item.quantity)
@@ -131,16 +131,14 @@ const CartPanel = (props) => {
               className="w-[50%] d-block"
               onClick={context.toggleCartPanel(false)}
             >
-              <Button className=" btn-org w-full !bg-green-900 hover:!bg-green-700">
-                CARRITO
-              </Button>
+              <Button className=" btn-org btn-lg w-full">CARRITO</Button>
             </Link>
             <Link
               to="/checkout"
               className="w-[50%] d-block"
               onClick={context.toggleCartPanel(false)}
             >
-              <Button className=" btn-org  w-full !bg-[#082c55] hover:!bg-[#1d4572]">
+              <Button className=" btn-org btn-lg w-full !bg-[#082c55] hover:!bg-[#1d4572]">
                 CAJA
               </Button>
             </Link>
