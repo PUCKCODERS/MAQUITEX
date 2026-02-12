@@ -37,7 +37,7 @@ const Checkout = () => {
         ? context.cartData
             ?.map((item) => parseInt(item.price) * item.quantity)
             .reduce((total, value) => total + value, 0)
-        : 0
+        : 0,
     )?.toLocaleString("en-US", { style: "currency", currency: "USD" });
   }, [context.cartData]);
 
@@ -50,7 +50,7 @@ const Checkout = () => {
         .Buttons({
           createOrder: async () => {
             const resp = await fetch(
-              "https://v6.exchangerate-api.com/v6/8f3b6f4d1d3c1f5e1f8b6c9e/pair/USD/USD"
+              "https://v6.exchangerate-api.com/v6/8f3b6f4d1d3c1f5e1f8b6c9e/pair/USD/USD",
             );
 
             const respData = await resp.json();
@@ -75,7 +75,7 @@ const Checkout = () => {
               VITE_API_URL +
                 `/api/order/create-order-paypal?userId=${data?.userId}&
                 totalAmount=${data?.totalAmount}`,
-              { headers }
+              { headers },
             );
 
             return response?.data?.id;
@@ -122,7 +122,7 @@ const Checkout = () => {
           ...info,
           paymentId: data.orderID,
         },
-        { headers }
+        { headers },
       )
       .then((res) => {
         context.alertBox("success", res?.data?.message);
@@ -135,7 +135,7 @@ const Checkout = () => {
     if (response.data.success) {
       context.alertBox(
         "success",
-        "ORDEN REALIZADA Y GUARDADA EN BASE DE DATOS"
+        "ORDEN REALIZADA Y GUARDADA EN BASE DE DATOS",
       );
     }
   };
@@ -244,10 +244,10 @@ const Checkout = () => {
   };
 
   return (
-    <section className="!py-5">
+    <section className="!py-3 lg:!py-5">
       <form onSubmit={checkout}>
-        <div className="w-[70%] !m-auto flex !gap-5">
-          <div className="leftCol w-[60%]">
+        <div className="w-full lg:w-[70%] !m-auto flex flex-col lg:flex-row !gap-5">
+          <div className="leftCol w-full lg:w-[60%]">
             <div className="card bg-white shadow-md !p-5 rounded-md w-full">
               <div className="flex items-center justify-between !mb-3">
                 <h2 className="text-[10px]">
@@ -260,8 +260,11 @@ const Checkout = () => {
                   }}
                   className="btn-org btn-sm !gap-2 "
                 >
-                  <FaPlus className="text-[10px]" />{" "}
-                  <span className="text-[10px]">AGREGAR NUEVA DIRECCIÓN</span>
+                  <FaPlus className="!text-[10px]" />
+                  <span className=":text-[10px]">
+                    AGREGAR{" "}
+                    {context?.windowWidth < 767 ? "" : " NUEVA DIRECCIÓN"}
+                  </span>
                 </Button>
               </div>
 
@@ -347,7 +350,7 @@ const Checkout = () => {
             </div>
           </div>
 
-          <div className="rightCol w-[40%]">
+          <div className="rightCol w-full lg:w-[40%]">
             <div className="card shadow-md bg-white !p-5 rounded-md">
               <h2 className="mb-4">TU ORDEN</h2>
 
