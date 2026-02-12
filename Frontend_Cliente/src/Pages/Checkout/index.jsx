@@ -367,7 +367,7 @@ const Checkout = () => {
                         key={index}
                       >
                         <div className="part1 flex items-center !gap-2">
-                          <div className="img !w-[50px] sm:!w-[100px] md:!w-[100px] lg:!w-[50px] sm:!h-[100px] md:!h-[100px] !h-[50px] object-cover overflow-hidden border-1 border-[#8998aa] rounded-md group cursor-pointer shadow-[2px_2px_3px_#082c55]">
+                          <div className="img !w-[50px] sm:!w-[100px] md:!w-[100px] lg:!w-[50px] !h-[50px]  sm:!h-[100px] md:!h-[100px] lg:!h-[50px] object-cover overflow-hidden border-1 border-[#8998aa] rounded-md group cursor-pointer shadow-[2px_2px_3px_#082c55]">
                             <img
                               src={item?.image}
                               className="w-full !h-[50px] sm:!h-[100px] md:!h-[100px] lg:!h-[50px] group-hover:scale-105 overflow-hidden "

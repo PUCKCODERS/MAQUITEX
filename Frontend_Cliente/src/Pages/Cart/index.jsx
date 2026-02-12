@@ -99,7 +99,7 @@ const CartPage = () => {
                     style: "currency",
                     currency: "USD",
                   })
-                  .replace("$", "$ ")}
+                  .replace("$", "$")}
               </span>
             </p>
 
