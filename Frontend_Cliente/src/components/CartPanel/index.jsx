@@ -101,7 +101,7 @@ const CartPanel = (props) => {
           </span>
         </div>
 
-        <div className="bottomInfo !py-3 !px-4 w-full border-t border-[#d1d1d1] flex items-center justify-between flex-col">
+        <div className="bottomInfo !py-3 !px-4 w-full border-t border-[#d1d1d1]  flex items-center justify-between flex-col">
           <div className="flex items-center justify-between w-full ">
             <span className="text-[12px] lg:text-[14px]  !text-[#556f8d] !font-bold">
               TOTAL FINAL{" "}

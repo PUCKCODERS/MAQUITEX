@@ -16,7 +16,7 @@ const CartPage = () => {
           <div className="shadow-md rounded-md  bg-white">
             {context?.cartData?.length === 0 ? (
               <div className="flex items-center justify-center flex-col !pt-[30px] !gap-1">
-                <p className="!text-[#38597e] !text-[9px] !font-[600] !mb-1 !mt-4 !max-w-xs !p-0">
+                <p className="!text-[#38597e] !text-[9px] !font-[600] !mb-1 !mt-4 !max-w-xs lg:!p-0 !p-6 !px-6 lg:!px-0">
                   ¡PARECE QUE AÚN NO HAS AGREGADO NADA! EXPLORA NUESTRAS
                   CATEGORÍAS Y ENCUENTRA ESE PRODUCTO QUE TANTO DESEAS
                 </p>
@@ -31,17 +31,17 @@ const CartPage = () => {
 
                 <div className="!mt-6 !mb-6 text-sm ">
                   <a
-                    href="/favoritos"
+                    href="/my-list"
                     className="text-blue-600 hover:text-blue-800 !mx-2"
                   >
                     IR A MIS FAVORITOS
                   </a>
                   <span className="text-gray-400">|</span>
                   <a
-                    href="/vistos-recientemente"
+                    href="/productListing"
                     className="text-blue-600 hover:text-blue-800 !mx-1"
                   >
-                    COMPARTIDOS
+                    PRODUCTOS
                   </a>
                 </div>
               </div>
@@ -79,16 +79,14 @@ const CartPage = () => {
 
         <div className="rightPart w-full lg:w-[30%]">
           <div className="shadow-md rounded-md bg-white !p-5 sticky !top-[155px] z-[90]">
-            <h3 className="font-[bold] font-bold !pb-2 flex items-center !justify-center text-[14px] sm:text-[16px] md:text-[18px]">
+            <h3 className="font-[bold] font-bold !pb-2 flex items-center !justify-center">
               TOTAL DE CARRITO
             </h3>
             <hr />
 
-            <p className="flex items-center justify-between !mt-3">
-              <span className="text-[12px] sm:text-[14px] lg:text-[15px] font-[500]">
-                SUBTOTAL
-              </span>
-              <span className="text-[#0a7fec] font-bold text-[12px] sm:text-[14px] lg:text-[15px]">
+            <p className="flex items-center justify-between !text-[10px] !mt-3">
+              <span className="text-[10px] font-bold">SUBTOTAL</span>
+              <span className="text-[#0a7fec] ">
                 {(context.cartData?.length !== 0
                   ? context.cartData
                       ?.map((item) => parseInt(item.price) * item.quantity)
@@ -103,23 +101,21 @@ const CartPage = () => {
               </span>
             </p>
 
-            <p className="flex items-center justify-between !mt-2">
-              <span className="text-[12px] sm:text-[14px] lg:text-[15px] font-[500]">
-                ENVIO
-              </span>
-              <span className="text-[#274a72] font-bold text-[12px] sm:text-[14px] lg:text-[15px]">
+            <p className="flex items-center justify-between !text-[10px]">
+              <span className="text-[10px] font-bold">ENVIO</span>
+              <span className="text-green-600 !font-bold ">
                 GRATIS{" "}
-                <span className="text-red-600 text-[10px] sm:text-[12px] lg:text-[13px]">
+                <span className="font-[bold]  text-[#7994b1] text-[10px]">
                   (SOLO QUITO)
                 </span>
               </span>
             </p>
 
-            <p className="flex items-center justify-between !mt-2">
-              <span className="text-[12px] sm:text-[14px] lg:text-[15px] font-[500]">
+            <p className="flex items-center justify-between !text-[10px]">
+              <span className="text-[10px] font-[500]">
                 CANTIDAD TOTAL DE PRODUCTOS
               </span>
-              <span className="text-[#0a7fec] font-bold text-[12px] sm:text-[14px] lg:text-[15px]">
+              <span className="text-[#0a7fec]">
                 {context.cartData?.reduce(
                   (sum, item) => sum + item.quantity,
                   0,
@@ -127,14 +123,14 @@ const CartPage = () => {
               </span>
             </p>
 
-            <p className="flex items-center justify-between !mt-2">
-              <span className="text-[12px] sm:text-[14px] lg:text-[15px] font-[500]">
+            <p className="flex items-center justify-between !text-[10px]">
+              <span className="text-[10px] font-bold">
                 TOTAL{" "}
-                <span className="text-red-600 text-[10px] sm:text-[12px] lg:text-[13px]">
+                <span className="font-[bold]   text-[#7994b1] text-[10px]">
                   (INCLUIDO IVA)
                 </span>
               </span>
-              <span className="text-[#0a7fec] font-bold text-[12px] sm:text-[14px] lg:text-[15px]">
+              <span className="text-[#0a7fec] ">
                 {(context.cartData?.length !== 0
                   ? context.cartData
                       ?.map((item) => parseInt(item.price) * item.quantity)
