@@ -35,12 +35,12 @@ const CartPanel = (props) => {
               </div>
 
               <div className="info w-[75%] !pr-5 !relative !pt-3">
-                <h4 className="text-[14px] !font-bold !text-[#556f8d] hover:!text-[#20446d]">
+                <h4 className="text-[10px] lg:text-[14px]  !font-bold !text-[#556f8d] hover:!text-[#20446d]">
                   <Link to={`/product/${item?.productId}`}>
                     {item?.productTitle?.substr(0, 80)}
                   </Link>
                 </h4>
-                <p className="flex items-center !text-[12px] !gap-5 !mt-2 !mb-2">
+                <p className="flex items-center !text-[10px] lg:!text-[12px]  !gap-5 !mt-2 !mb-2">
                   <span>
                     <span className="!text-[#556f8d] !font-bold">CANT: </span>
                     <span className="text-[#0a7fec] font-bold">
@@ -61,7 +61,7 @@ const CartPanel = (props) => {
                 </p>
 
                 <RiDeleteBin5Fill
-                  className="!absolute top-[1px] right-[1px] cursor-pointer text-[25px] text-[#d67070] hover:!text-[#ce0202]  link transition-all"
+                  className="!absolute -top-[5px] -right-[6px] cursor-pointer text-[20px] lg:text-[25px]  text-[#d67070] hover:!text-[#ce0202]  link transition-all"
                   onClick={() => removeItem(item?._id)}
                 />
               </div>
@@ -70,10 +70,10 @@ const CartPanel = (props) => {
         })}
       </div>
 
-      <div className="bottomSec w-full shrink-0 overflow-hidden !pr-5 !pb-6">
+      <div className="bottomSec w-full shrink-0 overflow-hidden bg-gray-200 !pr-5 !pb-6">
         <div className="bottomInfo !py-3 !px-4 w-full border-t border-[#d1d1d1] flex items-center justify-between flex-col">
           <div className="flex items-center justify-between w-full">
-            <span className="text-[14px]  !text-[#556f8d] !font-bold">
+            <span className="text-[12px] lg:text-[14px] !text-[#556f8d] !font-bold">
               {context?.cartData?.length} PRODUCTOS
             </span>
             <span className="text-[#0a7fec]  font-bold">
@@ -93,7 +93,7 @@ const CartPanel = (props) => {
         </div>
 
         <div className="bottomInfo !py-3 !px-4 w-full border-t border-[#d1d1d1] flex items-center justify-between">
-          <span className="text-[14px]  !text-[#556f8d] !font-bold">
+          <span className="text-[12px] lg:text-[14px]   !text-[#556f8d] !font-bold">
             CANTIDAD TOTAL DE PRODUCTOS
           </span>
           <span className="text-[#0a7fec] font-bold">
@@ -103,9 +103,11 @@ const CartPanel = (props) => {
 
         <div className="bottomInfo !py-3 !px-4 w-full border-t border-[#d1d1d1] flex items-center justify-between flex-col">
           <div className="flex items-center justify-between w-full ">
-            <span className="text-[14px]  !text-[#556f8d] !font-bold">
+            <span className="text-[12px] lg:text-[14px]  !text-[#556f8d] !font-bold">
               TOTAL FINAL{" "}
-              <span className="text-red-600 text-[10px]">(INCLUIDO IVA)</span>
+              <span className="text-red-600 text-[8px] lg:text-[10px]">
+                (INCLUIDO IVA)
+              </span>
             </span>
             <span className="text-[#0a7fec]  font-bold">
               {(context.cartData?.length !== 0

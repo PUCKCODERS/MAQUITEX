@@ -375,7 +375,7 @@ const Footer = () => {
         anchor={"right"}
         className="cartPanel"
       >
-        <div className="flex items-center justify-between !py-6 !px-4 !gap-3 border-b-2 border-[#d1d1d1] overflow-hidden">
+        <div className="flex items-center justify-between !py-6 !px-4 !gap-3 border-b-2 bg-gray-200 border-[#d1d1d1] overflow-hidden">
           <h4 className="font-bold font-[bold] !text-[#082c55] !text-[20px]">
             CARRITO ({context?.cartData?.length})
           </h4>
