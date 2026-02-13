@@ -42,7 +42,12 @@ const CategoryCollapse = (props) => {
                     to={`/productListing?catId=${cat?._id}`}
                     className="!w-full"
                   >
-                    <Button className="!w-full !text-[#082c55] !bg-white/20 hover:!bg-white/90 backdrop-blur-sm !rounded-none !text-left !font-bold !font-[bold] !justify-start !px-3 ">
+                    <Button
+                      className={`!w-full !text-[#082c55] ${
+                        submenuIndex === index ? "!bg-white/90" : "!bg-white/20"
+                      } hover:!bg-white/90 backdrop-blur-sm !rounded-none !text-left !font-bold !font-[bold] !justify-start !px-3 `}
+                      onClick={() => openSubmenu(index)}
+                    >
                       {cat?.name}
                     </Button>
                   </Link>
