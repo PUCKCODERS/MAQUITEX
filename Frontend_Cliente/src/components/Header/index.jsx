@@ -122,8 +122,8 @@ const Header = () => {
           </div>
           <div className="col3 w-[10%] lg:w-[30%] flex items-center !pl-7">
             <ul className="flex items-center justify-end gap-0 lg:gap-3 !w-full">
-              {context.isLogin === false ? (
-                <li className="list-none">
+              {context.isLogin === false && context?.windowWidth > 992 ? (
+                <li className="list-none whitespace-nowrap">
                   <Link
                     to="/login"
                     className="link transition text-[9px] font-[600] text-[#082c55]"
