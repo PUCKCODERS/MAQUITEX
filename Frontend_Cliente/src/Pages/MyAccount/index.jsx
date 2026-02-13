@@ -137,7 +137,7 @@ const MyAccount = () => {
           context.alertBox("error", res?.data?.message);
           setIsLoading(false);
         }
-      }
+      },
     );
   };
 
@@ -166,7 +166,7 @@ const MyAccount = () => {
     if (changePassword.confirmPassword !== changePassword.newPassword) {
       context.alertBox(
         "error",
-        "CONTRASEÑA Y CONFIRMAR CONTRASEÑA NO COINCIDE"
+        "CONTRASEÑA Y CONFIRMAR CONTRASEÑA NO COINCIDE",
       );
       return false;
     }
@@ -185,20 +185,20 @@ const MyAccount = () => {
   };
 
   return (
-    <section className="!py-5 w-full">
-      <div className="container flex !gap-5">
-        <div className="col1 w-[25%]">
+    <section className="!py-3 lg:!py-5 w-full">
+      <div className="container flex flex-col lg:flex-row !gap-5">
+        <div className="col1 w-full lg:w-[25%]">
           <AccountSidebar />
         </div>
 
-        <div className="col2 w-[60%]">
+        <div className="col2 w-full lg:w-[60%]">
           <div className="card bg-white !p-5 shadow-md rounded-md !mb-5">
             <div className="flex items-center !pb-3">
-              <h2 className="!pb-0 font-bold font-[bold] text-[20px]">
+              <h2 className="!pb-0 font-bold font-[bold] !text-[15px] md:!text-[20px] lg:!text-[20px]">
                 MI PERFIL
               </h2>
               <Button
-                className="!ml-auto"
+                className="!ml-auto !text-[12px] md:!text-[14px] lg:!text-[14px]"
                 onClick={() =>
                   setisChangePasswordFormShow(!isChangePasswordFormShow)
                 }
@@ -210,8 +210,8 @@ const MyAccount = () => {
             <hr className="!text-[#b8b8b8]" />
 
             <form className="!mt-8" onSubmit={handleSubmit}>
-              <div className="flex items-center !gap-5">
-                <div className="w-[50%]">
+              <div className="grid grid-cols-1 sm:grid-cols-2 !gap-5 !space-y-2">
+                <div className="col">
                   <TextField
                     label="NOMBRE COMPLETO"
                     variant="outlined"
@@ -224,7 +224,7 @@ const MyAccount = () => {
                   />
                 </div>
 
-                <div className="w-[50%]">
+                <div className="col">
                   <TextField
                     type="email"
                     label="CORREO ELECTRONICO"
@@ -237,10 +237,8 @@ const MyAccount = () => {
                     onChange={onChangeInput}
                   />
                 </div>
-              </div>
 
-              <div className="flex items-center !mt-4 !gap-5">
-                <div className="w-[50%]">
+                <div className="col">
                   <PhoneInput
                     defaultCountry="ec"
                     value={phone}
@@ -306,14 +304,14 @@ const MyAccount = () => {
           <Collapse isOpened={isChangePasswordFormShow}>
             <div className="card bg-white !p-5 shadow-md rounded-md">
               <div className="flex items-center !pb-3">
-                <h2 className="!pb-0 font-bold font-[bold] text-[20px]">
+                <h2 className="!pb-0 font-bold font-[bold] !text-[15px] md:!text-[20px] lg:!text-[20px]">
                   CAMBIAR LA CONTRASEÑA
                 </h2>
               </div>
               <hr className="!text-[#b8b8b8]" />
 
               <form className="!mt-8" onSubmit={handleSubmitChangePassword}>
-                <div className="grid grid-cols-2 !gap-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 !gap-5">
                   {context?.userData?.signUpWithGoogle === false && (
                     <div className="col">
                       <TextField

@@ -37,7 +37,7 @@ const Login = () => {
     } else {
       context.alertBox(
         "success",
-        `POR FAVOR INTRODUZCA EL CODIGO ENVIADO A : ${formFields.email}`
+        `POR FAVOR INTRODUZCA EL CODIGO ENVIADO A : ${formFields.email}`,
       );
       localStorage.setItem("userEmail", formFields.email);
       localStorage.setItem("actionType", "forgot-password");
@@ -156,9 +156,9 @@ const Login = () => {
   };
 
   return (
-    <section className="section !py-10">
+    <section className="section !py-3 sm:!py-4 md:!py-5 lg:!py-10">
       <div className="container">
-        <div className="card w-[400px] !m-auto rounded-md bg-white !p-5 !px-10 shadow-[7px_7px_5px_#274a72]">
+        <div className="card w-full sm:w-[400px] lg:w-[400px] !m-auto rounded-md bg-white !p-5 !px-5 md:!px-5 lg:!px-10 shadow-[3px_3px_3px_#274a72]">
           <h3 className="text-center text-[20px] font-[bold] font-bold">
             INICIA SESIÓN EN TU CUENTA
           </h3>
@@ -226,10 +226,10 @@ const Login = () => {
               </Button>
             </div>
 
-            <p className="text-center text-black">
+            <p className="text-center  text-black ">
               NO ESTÁS REGISTRADO ?
               <Link
-                className="link text-[14px] font-[600] !text-[#d82c0e] !ml-2"
+                className="link text-[14px] font-[600] !text-[#d82c0e] !ml-6"
                 to="/register"
               >
                 REGISTRARSE

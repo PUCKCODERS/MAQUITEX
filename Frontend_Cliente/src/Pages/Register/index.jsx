@@ -139,7 +139,7 @@ const Register = () => {
   return (
     <section className="section !py-10">
       <div className="container">
-        <div className="card w-[500px] !m-auto rounded-md bg-white !p-5 !px-10 shadow-[7px_7px_5px_#274a72]">
+        <div className="card w-full sm:w-[500px] lg:w-[500px] !m-auto rounded-md bg-white !p-5 !px-5 md:!px-5 lg:!px-10  shadow-[7px_7px_5px_#274a72]">
           <h3 className="text-center text-[20px] font-[bold] font-bold">
             REGÍSTRESE CON UNA NUEVA CUENTA
           </h3>
@@ -213,10 +213,10 @@ const Register = () => {
               </Button>
             </div>
 
-            <p className="text-center text-black">
-              YA TIENES UNA CUENTA?
+            <p className="text-center text-black ">
+              YA TIENES UNA CUENTA ?
               <Link
-                className="link text-[14px] font-[600] !text-[#d82c0e] !ml-2"
+                className="link text-[14px] font-[600] !text-[#d82c0e] !ml-6"
                 to="/login"
               >
                 INICIAR SESION
