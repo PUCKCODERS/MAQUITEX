@@ -39,7 +39,11 @@ const CategoryPanel = (props) => {
   };
 
   const DrawerList = (
-    <Box sx={{ width: 300 }} role="presentation" className="categoryPanel">
+    <Box
+      sx={{ width: 300 }}
+      role="presentation"
+      className="categoryPanel h-full !bg-white/10 backdrop-blur-sm"
+    >
       <div className="!p-0 relative">
         <img src="../../../imagenes/logo.jpg" className="w-full h-[75px]" />
         <IoClose
@@ -48,7 +52,7 @@ const CategoryPanel = (props) => {
         />
       </div>
 
-      <h3 className="!p-3 text-[16px] text-[#082c55] font-[bold] font-bold flex items-center justify-between ">
+      <h3 className="!p-3 text-[16px] text-[#fff] font-[bold] font-bold flex items-center justify-between ">
         TODAS LAS CATEGORÍAS{" "}
       </h3>
 
@@ -78,7 +82,13 @@ const CategoryPanel = (props) => {
 
   return (
     <>
-      <Drawer open={props.isOpenCatPanel} onClose={toggleDrawer(false)}>
+      <Drawer
+        open={props.isOpenCatPanel}
+        onClose={toggleDrawer(false)}
+        PaperProps={{
+          sx: { backgroundColor: "transparent", boxShadow: "none" },
+        }}
+      >
         {DrawerList}
       </Drawer>
     </>

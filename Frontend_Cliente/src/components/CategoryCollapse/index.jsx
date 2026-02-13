@@ -30,7 +30,7 @@ const CategoryCollapse = (props) => {
     <>
       <div className="scroll">
         <ul className="w-full">
-          <hr className="text-[#082c55]" />
+          <hr className="text-[#fff]" />
           {props?.data?.length !== 0 &&
             props?.data?.map((cat, index) => {
               return (
@@ -42,13 +42,13 @@ const CategoryCollapse = (props) => {
                     to={`/productListing?catId=${cat?._id}`}
                     className="!w-full"
                   >
-                    <Button className="!w-full !text-[#fff] !bg-[#3c4a5a]  !rounded-none !text-left !justify-start !px-3 ">
+                    <Button className="!w-full !text-[#082c55] !bg-white/20 hover:!bg-white/90 backdrop-blur-sm !rounded-none !text-left !font-bold !font-[bold] !justify-start !px-3 ">
                       {cat?.name}
                     </Button>
                   </Link>
 
                   <div
-                    className="absolute w-[30px] h-[30px] flex items-center justify-center !text-[#fff] top-[5px] right-[15px] cursor-pointer"
+                    className="absolute w-[30px] h-[30px] flex items-center justify-center !text-[#082c55]  top-[5px] right-[15px] cursor-pointer"
                     onClick={() => openSubmenu(index)}
                   >
                     {submenuIndex === index ? (
@@ -68,7 +68,7 @@ const CategoryCollapse = (props) => {
                                 to={`/productListing?subCatId=${subCat?._id}`}
                                 className="w-full"
                               >
-                                <Button className="w-full !text-left !justify-start !px-3 !text-[#274a72]">
+                                <Button className="w-full !text-left !justify-start !font-bold !font-[bold] !px-3 !text-[#fff]">
                                   {subCat?.name}
                                 </Button>
                               </Link>
@@ -78,9 +78,9 @@ const CategoryCollapse = (props) => {
                                 onClick={() => openInnerSubmenu(index_)}
                               >
                                 {innerSubmenuIndex === index_ ? (
-                                  <TbCopyMinusFilled className="absolute text-[#082c55] top-[5px] right-[15px] cursor-pointer" />
+                                  <TbCopyMinusFilled className="absolute text-[#fff] top-[5px] right-[15px] cursor-pointer" />
                                 ) : (
-                                  <TbCopyPlusFilled className="absolute text-[#082c55] top-[5px] right-[15px] cursor-pointer" />
+                                  <TbCopyPlusFilled className="absolute text-[#fff] top-[5px] right-[15px] cursor-pointer" />
                                 )}
                               </div>
 
@@ -91,12 +91,12 @@ const CategoryCollapse = (props) => {
                                       (thirdLavelCat, index__) => {
                                         return (
                                           <li
-                                            className="list-none relative !mb-1 hover:bg-[#e2e2e2]"
+                                            className="list-none relative  !mb-1 hover:bg-[#e2e2e2]"
                                             key={index__}
                                           >
                                             <Link
                                               to={`/productListing?thirdLavelCatId=${thirdLavelCat?._id}`}
-                                              className="w-full !text-left !justify-start !px-3 transition text-[13px] !text-[#4a5b6e] "
+                                              className="w-full !text-left !justify-start !px-3 transition !font-bold !font-[bold] text-[13px] !text-[#fff] "
                                             >
                                               {thirdLavelCat?.name}
                                             </Link>
@@ -116,7 +116,7 @@ const CategoryCollapse = (props) => {
               );
             })}
 
-          <hr className="text-[#082c55]" />
+          <hr className="text-[#fff]" />
         </ul>
       </div>
     </>
