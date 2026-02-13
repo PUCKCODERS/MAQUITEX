@@ -47,17 +47,16 @@ const CategoryCollapse = (props) => {
                     </Button>
                   </Link>
 
-                  {submenuIndex === index ? (
-                    <TbCopyMinusFilled
-                      className="absolute !text-[#fff] top-[10px] right-[15px] cursor-pointer"
-                      onClick={() => openSubmenu(index)}
-                    />
-                  ) : (
-                    <TbCopyPlusFilled
-                      className="absolute !text-[#fff] top-[10px] right-[15px] cursor-pointer"
-                      onClick={() => openSubmenu(index)}
-                    />
-                  )}
+                  <div
+                    className="absolute w-[30px] h-[30px] flex items-center justify-center !text-[#fff] top-[5px] right-[15px] cursor-pointer"
+                    onClick={() => openSubmenu(index)}
+                  >
+                    {submenuIndex === index ? (
+                      <TbCopyMinusFilled />
+                    ) : (
+                      <TbCopyPlusFilled />
+                    )}
+                  </div>
 
                   {submenuIndex === index && (
                     <ul className="submenu w-full !pl-3">
@@ -73,17 +72,17 @@ const CategoryCollapse = (props) => {
                                   {subCat?.name}
                                 </Button>
                               </Link>
-                              {innerSubmenuIndex === index_ ? (
-                                <TbCopyMinusFilled
-                                  className="absolute text-[#082c55] top-[10px] right-[15px] cursor-pointer"
-                                  onClick={() => openInnerSubmenu(index_)}
-                                />
-                              ) : (
-                                <TbCopyPlusFilled
-                                  className="absolute text-[#082c55] top-[10px] right-[15px] cursor-pointer"
-                                  onClick={() => openInnerSubmenu(index_)}
-                                />
-                              )}
+
+                              <div
+                                className="absolute w-[30px] h-[30px] flex items-center justify-center !text-[#fff] top-[5px] right-[15px] cursor-pointer"
+                                onClick={() => openInnerSubmenu(index_)}
+                              >
+                                {innerSubmenuIndex === index_ ? (
+                                  <TbCopyMinusFilled className="absolute text-[#082c55] top-[5px] right-[15px] cursor-pointer" />
+                                ) : (
+                                  <TbCopyPlusFilled className="absolute text-[#082c55] top-[5px] right-[15px] cursor-pointer" />
+                                )}
+                              </div>
 
                               {innerSubmenuIndex === index_ && (
                                 <ul className="inner_submenu w-full !pl-3 ">
