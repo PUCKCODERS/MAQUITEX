@@ -64,16 +64,23 @@ const CategoryCollapse = (props) => {
                   </div>
 
                   {submenuIndex === index && (
-                    <ul className="submenu w-full !pl-3">
+                    <ul className="submenu w-full ">
                       {cat?.children?.length !== 0 &&
                         cat?.children?.map((subCat, index_) => {
                           return (
                             <li className="list-none relative" key={index_}>
                               <Link
                                 to={`/productListing?subCatId=${subCat?._id}`}
-                                className="w-full"
+                                className="w-full "
                               >
-                                <Button className="w-full !text-left !justify-start !font-bold !font-[bold] !px-3 !text-[#fff]">
+                                <Button
+                                  className={`w-full !text-left !justify-start !font-bold !font-[bold] !px-6 !rounded-none !text-[#fff] ${
+                                    innerSubmenuIndex === index_
+                                      ? "!bg-[#082c55]"
+                                      : "!bg-[#082c55]/50 "
+                                  } hover:!bg-[#082c55] backdrop-blur-sm`}
+                                  onClick={() => openInnerSubmenu(index_)}
+                                >
                                   {subCat?.name}
                                 </Button>
                               </Link>
@@ -90,22 +97,22 @@ const CategoryCollapse = (props) => {
                               </div>
 
                               {innerSubmenuIndex === index_ && (
-                                <ul className="inner_submenu w-full !pl-3 ">
+                                <ul className="inner_submenu w-full ">
                                   {subCat?.children?.length !== 0 &&
                                     subCat?.children?.map(
                                       (thirdLavelCat, index__) => {
                                         return (
                                           <li
-                                            className="list-none relative  !mb-1 hover:bg-[#e2e2e2]"
+                                            className="list-none relative   hover:!bg-white !text-[#fff] hover:!text-[#082c55] !py-1 !cursor-pointer"
                                             key={index__}
                                           >
                                             <Link
                                               to={`/productListing?thirdLavelCatId=${thirdLavelCat?._id}`}
-                                              className="w-full !text-left !justify-start !px-3 transition !font-bold !font-[bold] text-[13px] !text-[#fff] "
+                                              className="w-full !text-left !justify-start !px-9  transition !font-bold !font-[bold] text-[13px]  "
                                             >
                                               {thirdLavelCat?.name}
+                                              <GiSewingMachine className="absolute !text-[25px] top-[-0px] right-[5px]" />
                                             </Link>
-                                            <GiSewingMachine className="absolute !text-[#000] !text-[25px] top-[-2px] right-[5px]" />
                                           </li>
                                         );
                                       },

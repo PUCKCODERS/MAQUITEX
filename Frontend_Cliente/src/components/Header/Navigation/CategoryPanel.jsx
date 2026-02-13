@@ -52,7 +52,7 @@ const CategoryPanel = (props) => {
         />
       </div>
 
-      <h3 className="!p-3 text-[16px] text-[#fff] font-[bold] font-bold flex items-center justify-between ">
+      <h3 className="!p-3 text-[16px] !bg-[#082c55]/50 text-[#fff] font-[bold] font-bold flex items-center justify-between ">
         TODAS LAS CATEGORÍAS{" "}
       </h3>
 
