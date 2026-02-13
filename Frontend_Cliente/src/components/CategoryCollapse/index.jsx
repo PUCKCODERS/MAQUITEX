@@ -30,7 +30,6 @@ const CategoryCollapse = (props) => {
     <>
       <div className="scroll">
         <ul className="w-full">
-          <hr className="text-[#fff]" />
           {props?.data?.length !== 0 &&
             props?.data?.map((cat, index) => {
               return (
@@ -127,8 +126,6 @@ const CategoryCollapse = (props) => {
                 </li>
               );
             })}
-
-          <hr className="text-[#fff]" />
         </ul>
       </div>
     </>

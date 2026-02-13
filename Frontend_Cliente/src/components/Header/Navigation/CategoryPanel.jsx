@@ -40,9 +40,9 @@ const CategoryPanel = (props) => {
 
   const DrawerList = (
     <Box
-      sx={{ width: 300 }}
+      sx={{ width: 310 }}
       role="presentation"
-      className="categoryPanel h-full !bg-white/10 backdrop-blur-sm"
+      className="categoryPanel h-full !bg-white/10 backdrop-blur-sm !shadow-[5px_0px_30px_rgba(255,255,255,0.6)]"
     >
       <div className="!p-0 relative">
         <img src="../../../imagenes/logo.jpg" className="w-full h-[75px]" />
