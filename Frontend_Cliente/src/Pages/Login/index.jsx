@@ -226,18 +226,14 @@ const Login = () => {
               </Button>
             </div>
 
-            <p className="text-center  text-black ">
+            <p className="flex flex-col sm:flex-row items-center justify-center text-center text-black gap-2 sm:gap-6">
               NO ESTÁS REGISTRADO ?
               <Link
-                className="link text-[14px] font-[600] !text-[#d82c0e] !ml-6"
+                className="link text-[14px] font-[600] !text-[#d82c0e]"
                 to="/register"
               >
                 REGISTRARSE
               </Link>
-            </p>
-
-            <p className="text-center font-[500] !mb-3">
-              O INICIAR CON RED SOCIAL
             </p>
 
             <Button
