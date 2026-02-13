@@ -8,19 +8,19 @@ const MyList = () => {
   const context = useContext(MyContext);
 
   return (
-    <section className="!py-5 w-full">
-      <div className="container flex !gap-5">
-        <div className="col1 w-[25%]">
+    <section className="!py-3 lg:!py-5 w-full">
+      <div className="container flex flex-col md:flex-row !gap-5">
+        <div className="col1 w-full md:w-[25%] lg:w-[25%] hidden lg:block">
           <AccountSidebar />
         </div>
 
-        <div className="col2 w-[75%]">
+        <div className="col2 w-full sm:w-[100%] md:w-[100%] lg:w-[75%]">
           <div className="shadow-md rounded-md  bg-white">
             <div className="!py-2 !px-3 border-b border-[#d1d1d1] ">
-              <h2 className="font-[bold]  !text-[25px] flex justify-center">
+              <h2 className="font-[bold]  !text-[15px] sm:!text-[18px] md:!text-[20px] lg:!text-[25px] flex justify-center">
                 MI LISTA
               </h2>
-              <p className="!mt-2 !mb-2 text-[#556f8d] !text-[20px] font-[600] flex justify-center">
+              <p className="!mt-2 !mb-2 text-[#556f8d] !text-[11px] sm:!text-[13px] md:!text-[15px] lg:!text-[20px] font-[600] flex justify-center">
                 ESTOS SON
                 <span className="font-bold text-[#ec370a]">
                   &nbsp;{context?.myListData?.length}&nbsp;
