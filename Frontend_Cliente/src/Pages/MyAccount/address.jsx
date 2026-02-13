@@ -86,7 +86,7 @@ const Address = () => {
     if (addressToDelete) {
       deleteData(`/api/address/${addressToDelete}`).then(() => {
         fetchDataFromApi(
-          `/api/address/get?userId=${context?.userData?._id}`
+          `/api/address/get?userId=${context?.userData?._id}`,
         ).then((res) => {
           setAddress(res.data);
           context?.getUserDetails();
@@ -100,13 +100,13 @@ const Address = () => {
 
   return (
     <>
-      <section className="!py-5 w-full">
-        <div className="container flex !gap-5">
-          <div className="col1 w-[25%]">
+      <section className="!py-3 lg:!py-5 w-full">
+        <div className="container flex flex-col sm:flex-row  md:flex-row !gap-5">
+          <div className="col1  w-full  sm:w-[35%] md:w-[35%]">
             <AccountSidebar />
           </div>
 
-          <div className="col2 w-[60%]">
+          <div className="col2  w-full sm:w-[60%] md:w-[60%]">
             <div className="card bg-white !p-5 shadow-md rounded-md !mb-5">
               <div className="flex items-center !pb-3">
                 <h2 className="!pb-0 font-bold font-[bold] text-[20px]">
@@ -115,7 +115,7 @@ const Address = () => {
               </div>
 
               <div
-                className="flex items-center justify-center !p-5 rounded-md border  border-[#082c55] bg-[#526b86] hover:bg-[#082c55] text-[#fff] hover:text-[#fff] !mt-5 cursor-pointer "
+                className="flex items-center justify-center rounded-md border btn-org btn-lg  border-[#082c55] bg-[#526b86] hover:bg-[#082c55] text-[#fff] hover:text-[#fff]  cursor-pointer "
                 onClick={
                   //resetForm()
                   () => {
@@ -124,9 +124,7 @@ const Address = () => {
                   }
                 }
               >
-                <span className="text-[16px]  font-[500]">
-                  AÑADIR DIRECCIÓN
-                </span>
+                <span className="text-[16px] font-[500]">AÑADIR DIRECCIÓN</span>
               </div>
 
               <div className="flex !gap-2 flex-col !mt-4">

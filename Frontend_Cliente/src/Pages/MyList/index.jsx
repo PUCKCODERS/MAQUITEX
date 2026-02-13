@@ -35,7 +35,7 @@ const MyList = () => {
               })
             ) : (
               <div className="flex items-center justify-center flex-col !pt-[30px] !gap-1">
-                <p className="!text-[#38597e] !text-[9px] !font-[600] !mb-1 !mt-4 !max-w-xs !p-0">
+                <p className="!text-[#38597e] !text-[9px] !font-[600] !mb-1 !mt-4 !max-w-xs lg:!p-0 !p-6 !px-6 lg:!px-0">
                   AÚN NO HAS GUARDADO NINGÚN FAVORITO, AGREGA PRODUCTOS QUE TE
                   ENCANTEN PARA GUARDARLOS AQUÍ Y VERLOS CUANDO QUIERAS
                 </p>
@@ -50,17 +50,17 @@ const MyList = () => {
 
                 <div className="!mt-6 !mb-6 text-sm ">
                   <a
-                    href="/favoritos"
+                    href="/my-list"
                     className="text-blue-600 hover:text-blue-800 !mx-2"
                   >
                     IR A MIS FAVORITOS
                   </a>
                   <span className="text-gray-400">|</span>
                   <a
-                    href="/vistos-recientemente"
+                    href="/productListing"
                     className="text-blue-600 hover:text-blue-800 !mx-1"
                   >
-                    COMPARTIDOS
+                    PRODUCTOS
                   </a>
                 </div>
               </div>
