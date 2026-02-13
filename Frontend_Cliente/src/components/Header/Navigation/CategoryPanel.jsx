@@ -3,17 +3,39 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import { IoClose } from "react-icons/io5";
 import CategoryCollapse from "../../CategoryCollapse";
-import { Button } from "@mui/material";
+import { Button, MenuItem } from "@mui/material";
 import { useContext } from "react";
 import { MyContext } from "../../../App";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+
+import { fetchDataFromApi } from "../../../utils/api";
 
 const CategoryPanel = (props) => {
   const context = useContext(MyContext);
+  const navigate = useNavigate();
 
   const toggleDrawer = (newOpen) => () => {
     props.setIsOpenCatPanel(newOpen);
     props.propsSetIsOpenCatPanel(newOpen);
+  };
+
+  const logout = () => {
+    props.setIsOpenCatPanel(false);
+    props.propsSetIsOpenCatPanel(false);
+    fetchDataFromApi(
+      `/api/user/logout?token=${localStorage.getItem("accessToken")}`,
+      { withCredentials: true },
+    ).then((res) => {
+      if (res?.error === false) {
+        context.setIsLogin(false);
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        context.setUserData(null);
+        context?.setCartData([]);
+        context?.setMyListData([]);
+        navigate("/");
+      }
+    });
   };
 
   const DrawerList = (
@@ -32,18 +54,25 @@ const CategoryPanel = (props) => {
 
       {props?.data?.length !== 0 && <CategoryCollapse data={props?.data} />}
 
-      {context?.windowWidth < 992 && (
-        <Link
-          to="/login"
-          className="!p-3 block"
-          onClick={() => {
-            props.setIsOpenCatPanel(false);
-            props.propsSetIsOpenCatPanel(false);
-          }}
-        >
-          <Button className="btn-org w-full ">INICIAR SESSION</Button>
-        </Link>
-      )}
+      {context?.windowWidth < 992 &&
+        (context.isLogin === false ? (
+          <Link
+            to="/login"
+            className="!p-3 block"
+            onClick={() => {
+              props.setIsOpenCatPanel(false);
+              props.propsSetIsOpenCatPanel(false);
+            }}
+          >
+            <Button className="btn-org btn-lg w-full">INICIAR SESSION</Button>
+          </Link>
+        ) : (
+          <MenuItem onClick={logout} className="!p-3 block">
+            <Button className=" btn-org btn-lg w-full !bg-[#082c55] hover:!bg-[#1d4572]">
+              CERRAR SESIÓN
+            </Button>
+          </MenuItem>
+        ))}
     </Box>
   );
 
