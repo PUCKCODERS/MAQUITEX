@@ -48,9 +48,9 @@ const Verify = () => {
   };
 
   return (
-    <section className="section !py-10">
+    <section className="section !py-3 sm:!py-4 md:!py-5 lg:!py-10">
       <div className="container">
-        <div className="card w-[400px] !m-auto rounded-md bg-white !p-5 !px-10 shadow-[7px_7px_5px_#274a72]">
+        <div className="card w-full sm:w-[400px] lg:w-[400px] !m-auto rounded-md bg-white !p-5 !px-10 shadow-[3px_3px_3px_#274a72]">
           <div className="text-center flex items-center justify-center">
             <img
               src="https://cdn-icons-png.flaticon.com/512/8286/8286772.png"
@@ -61,7 +61,7 @@ const Verify = () => {
             VERIFICAR CODIGO
           </h3>
 
-          <p className="text-center text-black font-[600] !mt-0 !mb-4">
+          <p className="text-center !text-[11px] sm:!text-[13px] md:!text-[15px] lg:!text-[20px] text-black font-[600] !mt-0 !mb-4">
             ENVIADO A :
             <span className=" !ml-3 !text-[#274a72]">
               {localStorage.getItem("userEmail")}
