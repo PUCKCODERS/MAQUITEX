@@ -50,7 +50,7 @@ const Verify = () => {
   return (
     <section className="section !py-3 sm:!py-4 md:!py-5 lg:!py-10">
       <div className="container">
-        <div className="card w-full sm:w-[400px] lg:w-[400px] !m-auto rounded-md bg-white !p-5 !px-10 shadow-[3px_3px_3px_#274a72]">
+        <div className="card w-full sm:w-[400px] md:w-[400px] lg:w-[400px] !m-auto rounded-md bg-white !p-5 !px-10 shadow-[3px_3px_3px_#274a72]">
           <div className="text-center flex items-center justify-center">
             <img
               src="https://cdn-icons-png.flaticon.com/512/8286/8286772.png"

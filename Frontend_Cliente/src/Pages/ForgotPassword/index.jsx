@@ -55,7 +55,7 @@ const ForgotPassword = () => {
     if (formFields.confirmPassword !== formFields.newPassword) {
       context.alertBox(
         "error",
-        "CONTRASEÑA Y CONFIRMAR CONTRASEÑA NO COINCIDE"
+        "CONTRASEÑA Y CONFIRMAR CONTRASEÑA NO COINCIDE",
       );
       setIsLoading(false);
       return false;
@@ -76,9 +76,9 @@ const ForgotPassword = () => {
   };
 
   return (
-    <section className="section !py-10">
+    <section className="section !py-3 sm:!py-4 md:!py-5 lg:!py-10">
       <div className="container">
-        <div className="card w-[400px] !m-auto rounded-md bg-white !p-5 !px-10 shadow-[7px_7px_5px_#274a72]">
+        <div className="card w-full sm:w-[400px] md:w-[400px] lg:w-[400px] !m-auto rounded-md bg-white !p-5 !px-5 md:!px-5 lg:!px-10 shadow-[3px_3px_3px_#274a72]">
           <div className="text-center flex items-center justify-center !mb-3">
             <img
               src="https://png.pngtree.com/png-vector/20230522/ourmid/pngtree-reset-password-vector-png-image_7104484.png"
