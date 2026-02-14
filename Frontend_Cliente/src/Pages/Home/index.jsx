@@ -40,8 +40,6 @@ const Home = () => {
   const context = useContext(MyContext);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-
     fetchDataFromApi("/api/homeSlides").then((res) => {
       setHomeSlidesData(res?.data);
     });
@@ -285,8 +283,8 @@ const Home = () => {
 
       <section className="!py-0 lg:!py-4 !pt-0 lg:!pt-0 bg-white">
         <div className="container">
-          <div className="freeShipping !w-full sm:!w-[80%] md:!w-[80%] lg:!w-[80%] !m-auto !pb-0 !py-0 !p-0 lg:!py-1 lg:!p-1 border-3 !border-gray-950 bg-gray-700 flex items-center justify-between  !rounded-md !mb-7">
-            <div className="!w-[100%] lg: border-3 !border-white !m-auto !py-1 !p-0 lg:!py-4 lg:!p-4 bg-gray-950 flex items-center !justify-center lg:!justify-between !flex-col lg:!flex-row !rounded-md">
+          <div className="freeShipping !w-full sm:!w-[80%] md:!w-[80%] lg:!w-[80%] !m-auto !pb-0 !py-0 !p-0 lg:!py-1 lg:!p-1 border-3 !border-[#082c55]/60 backdrop-blur-sm !bg-[#082c55]/40 flex items-center justify-between  !rounded-md !mb-7">
+            <div className="!w-[100%] lg: border-3 !border-white !m-auto !py-1 !p-0 lg:!py-4 lg:!p-4 !bg-[#082c55]/50 backdrop-blur-sm flex items-center !justify-center lg:!justify-between !flex-col lg:!flex-row !rounded-md">
               <div className="col1 flex items-center gap-4">
                 <FaTruckFast className="text-[30px] sm:!text-[35px] md:!text-[40px] lg:text-[50px] text-white" />
                 <span className="text-[15px] sm:!text-[16px] md:!text-[17px] lg:text-[18px] font-bold text-white !text-uppercase">
@@ -296,7 +294,7 @@ const Home = () => {
 
               <div className="col2">
                 <p className="!mb-0 font-[500] text-white !text-[10px] sm:!text-[11px] md:!text-[12px] lg:!text-[13px] text-center">
-                  POR TU PRIMERA COMPRA O SUPERIOR A $200
+                  POR TU PRIMER PEDIDO ONLINE O SUPEIOR A $200
                 </p>
               </div>
 
