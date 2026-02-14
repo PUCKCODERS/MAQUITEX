@@ -28,7 +28,12 @@ const MobileNav = () => {
 
   return (
     <div className="mobileNav bg-white !p-1 !px-3 !w-full fixed !bottom-0 !left-0 flex items-center justify-between !gap-0 z-[51] border-t-1 border-[#b1cdee] shadow-[0_-4px_10px_rgba(0,0,0,0.2)]">
-      <NavLink to="/" exact={true} activeClassName="isActive">
+      <NavLink
+        to="/"
+        exact={true}
+        activeClassName="isActive"
+        onClick={() => context?.setOpenSearchPanel(false)}
+      >
         <Button
           className={`flex-col !w-[40px] !min-w-[40px] !capitalize ${location.pathname === "/" ? "!text-[#143253]" : "!text-gray-500"}`}
         >
@@ -54,7 +59,12 @@ const MobileNav = () => {
         <span className="text-[10px] lg:text-[12px]">BUSCAR</span>
       </Button>
 
-      <NavLink to="/my-list" exact={true} activeClassName="isActive">
+      <NavLink
+        to="/my-list"
+        exact={true}
+        activeClassName="isActive"
+        onClick={() => context?.setOpenSearchPanel(false)}
+      >
         <Button
           className={`flex-col !w-[40px] !min-w-[40px] !capitalize ${location.pathname === "/my-list" ? "!text-[#143253]" : "!text-gray-500"}`}
         >
@@ -63,7 +73,12 @@ const MobileNav = () => {
         </Button>
       </NavLink>
 
-      <NavLink to="/my-orders" exact={true} activeClassName="isActive">
+      <NavLink
+        to="/my-orders"
+        exact={true}
+        activeClassName="isActive"
+        onClick={() => context?.setOpenSearchPanel(false)}
+      >
         <Button
           className={`flex-col !w-[40px] !min-w-[40px] !capitalize ${location.pathname === "/my-orders" ? "!text-[#143253]" : "!text-gray-500"}`}
         >
@@ -72,7 +87,12 @@ const MobileNav = () => {
         </Button>
       </NavLink>
 
-      <NavLink to="/my-account" exact={true} activeClassName="isActive">
+      <NavLink
+        to="/my-account"
+        exact={true}
+        activeClassName="isActive"
+        onClick={() => context?.setOpenSearchPanel(false)}
+      >
         <Button
           className={`flex-col !w-[40px] !min-w-[40px] !capitalize ${location.pathname === "/my-account" ? "!text-[#143253]" : "!text-gray-500"}`}
         >
