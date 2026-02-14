@@ -112,17 +112,17 @@ const Header = () => {
             </Button>
           )}
 
-          <div className="col1 w-[50%] lg:w-[25%]">
+          <div className="col1 w-[50%] min-[992px]:w-[25%]">
             <Link to={"/"}>
               <img src="../../../imagenes/logo.jpg" />
             </Link>
           </div>
           <div
-            className={`col2 fixed top-0 left-0 w-full h-full lg:w-[45%] lg:static !p-2 lg:!p-0 bg-white z-50 ${context?.windowWidth > 992 && "!block"} ${context?.openSearchPanel === true ? "block" : "hidden"} `}
+            className={`col2 fixed top-0 left-0 w-full h-full min-[992px]:w-[45%] min-[992px]:static !p-2 min-[992px]:!p-0 bg-white z-50 ${context?.windowWidth > 992 ? "!block" : ""} ${context?.openSearchPanel === true ? "block" : "hidden"} `}
           >
             <Search />
           </div>
-          <div className="col3 w-[10%] lg:w-[30%] flex items-center !pl-7">
+          <div className="col3 w-[10%] min-[992px]:w-[30%] flex items-center !pl-7">
             <ul className="flex items-center justify-end gap-0 lg:gap-3 !w-full">
               {context.isLogin === false && context?.windowWidth > 992 ? (
                 <li className="list-none whitespace-nowrap">
