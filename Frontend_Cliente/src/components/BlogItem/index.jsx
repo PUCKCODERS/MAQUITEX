@@ -21,7 +21,7 @@ const BlogItem = (props) => {
 
       <div className="info !py-4">
         <h2 className="text-[13px] lg:text-[15px] font-bold  !mb-1">
-          <Link to="/" className="link">
+          <Link to={props.link || "/"} className="link">
             {props?.item?.title}
           </Link>
         </h2>
@@ -33,7 +33,10 @@ const BlogItem = (props) => {
           }}
         ></div>
 
-        <Link className="link font-bold text-[12px] flex items-center !gap-2">
+        <Link
+          to={props.link || "/"}
+          className="link font-bold text-[12px] flex items-center !gap-2"
+        >
           SEGUIR LEYENDO <BsBoxArrowUpRight className="text-[14px]" />
         </Link>
       </div>

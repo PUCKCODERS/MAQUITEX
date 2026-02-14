@@ -490,7 +490,24 @@ const Home = () => {
               {blogData?.map((item, index) => {
                 return (
                   <SwiperSlide key={index}>
-                    <BlogItem item={item} />
+                    <BlogItem
+                      item={item}
+                      link={
+                        index === 0
+                          ? "/blog/firstblog"
+                          : index === 1
+                            ? "/blog/secondblog"
+                            : index === 2
+                              ? "/blog/thirdblog"
+                              : index === 3
+                                ? "/blog/fourthblog"
+                                : index === 4
+                                  ? "/blog/quintoblog"
+                                  : index === 5
+                                    ? "/blog/sixthblog"
+                                    : "/"
+                      }
+                    />
                   </SwiperSlide>
                 );
               })}
