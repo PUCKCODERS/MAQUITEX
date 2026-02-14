@@ -118,7 +118,7 @@ const Header = () => {
             </Link>
           </div>
           <div
-            className={`col2 fixed top-0 left-0 w-full h-full lg:w-[45%] lg:static !p-2 lg:!p-0 bg-white z-50 ${context?.windowWidth > 992 && "block"} ${context?.openSearchPanel === true ? "block" : "hidden"} `}
+            className={`col2 fixed top-0 left-0 w-full h-full lg:w-[45%] lg:static !p-2 lg:!p-0 bg-white z-50 ${context?.openSearchPanel === true ? "block" : "hidden lg:block"} `}
           >
             <Search />
           </div>
