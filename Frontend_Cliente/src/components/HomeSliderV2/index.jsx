@@ -61,7 +61,7 @@ const HomeBannerV2 = (props) => {
                     <span className="w-full lg:w-max hidden lg:block  !mt-0 lg:!mt-1 ">
                       A TAN DE SOLO
                     </span>
-                    <span className="text-red-700 !text-[12px] sm:!text-[15px] md:!text-[20px]  lg:!text-[25px] font-[700] block lg:inline w-full lg:w-max">
+                    <span className="text-[#0a7fec] !text-[12px] sm:!text-[15px] md:!text-[20px]  lg:!text-[25px] font-[700] block lg:inline w-full lg:w-max">
                       {item?.price?.toLocaleString("en-US", {
                         style: "currency",
                         currency: "USD",
