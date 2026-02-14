@@ -54,11 +54,13 @@ const Home = () => {
     });
 
     fetchDataFromApi("/api/bannerV1").then((res) => {
-      setBannerV1Data(res?.data);
+      const shuffled = res?.data?.sort(() => 0.5 - Math.random());
+      setBannerV1Data(shuffled);
     });
 
     fetchDataFromApi("/api/bannerV2").then((res) => {
-      setBannerV2Data(res?.data);
+      const shuffled = res?.data?.sort(() => 0.5 - Math.random());
+      setBannerV2Data(shuffled);
     });
 
     fetchDataFromApi("/api/blog").then((res) => {
