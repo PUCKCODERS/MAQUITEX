@@ -25,16 +25,20 @@ const OrderSuccess = () => {
   }, []);
 
   return (
-    <section className="w-full !p-10 !py-20 flex items-center justify-center flex-col !gap-2">
+    <section className="w-full !p-10 !py-5 sm:!py-10 md:!py-15 lg:!py-20 flex items-center justify-center flex-col !gap-2">
       <img src="../../../imagenes/checked.png" width="120" />
-      <h3 className="!mb-0 text-[25]">SU PEDIDO ESTÁ REALIZADO</h3>
-      <p className="!mt-0">GRACIAS POR SU PREFERENCIA</p>
+      <h3 className="!mt-0 text-center !text-[15px] sm:!text-[20px] md:!text-[25px] lg:!text-[25px] !text-gray-600">
+        SU PEDIDO ESTÁ REALIZADO
+      </h3>
+      <p className="!mt-0 text-center !text-[15px] sm:!text-[20px] md:!text-[25px] lg:!text-[25px] !text-gray-500">
+        GRACIAS POR SU PREFERENCIA
+      </p>
       {/* Pasamos el objeto 'order' completo en el estado para que la página de factura no necesite volver a buscarlo */}
       <Link
         to={order ? `/factura/${order._id}` : "/my-orders"}
         state={{ order }}
       >
-        <Button className="btn-org btn-border">VER FACTURA</Button>
+        <Button className="btn-org btn-border">VER PEDIDO</Button>
       </Link>
     </section>
   );
