@@ -102,18 +102,15 @@ const Search = () => {
 
       {/* Panel de Sugerencias */}
       {showSuggestions && suggestions.length > 0 && (
-        <div className="absolute top-[55px] left-0 w-full bg-white/30 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)] rounded-xl z-[1000] overflow-hidden border border-white/40 max-h-[450px] overflow-y-auto scrollbar-hide">
-          <div className="px-4 py-2 text-[10px] font-bold text-white uppercase tracking-wider bg-[#082c55]/60 border-b border-white/30">
-            Productos Sugeridos
-          </div>
+        <div className="absolute top-[55px] left-0 w-full bg-white/30 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)]  z-[1000] overflow-hidden border border-white/40 max-h-[450px] overflow-y-auto scrollbar-hide">
           {suggestions.map((item, index) => (
             <Link
               to={`/product/${item._id}`}
               key={index}
               onClick={handleSuggestionClick}
-              className="flex items-start gap-4 px-4 py-3 hover:bg-white/50 transition-all duration-200 border-b border-gray-100/30 last:border-0 no-underline group"
+              className="flex items-start gap-4 px-4 py-3 hover:bg-white transition-all duration-200 border-b border-gray-100/30 last:border-0 no-underline group"
             >
-              <div className="w-[60px] h-[60px] min-w-[60px] overflow-hidden rounded-lg border border-gray-200/60 bg-white p-1 flex items-center justify-center group-hover:border-[#082c55]/50 transition-colors">
+              <div className="w-[60px] h-[60px] min-w-[60px] overflow-hidden  border border-gray-200/60 bg-white p-1 flex items-center justify-center group-hover:border-[#082c55]/50 transition-colors">
                 <img
                   src={
                     item.images?.[0] ||
@@ -124,11 +121,11 @@ const Search = () => {
                   className="w-full h-full object-contain"
                 />
               </div>
-              <div className="flex flex-col flex-1 justify-center min-h-[60px]">
-                <h4 className="text-[14px] font-semibold text-[#1f2937] line-clamp-1 group-hover:text-[#274a72] transition-colors mb-1 leading-tight">
+              <div className="flex flex-col flex-1 justify-center !font-[500] min-h-[60px]">
+                <h4 className="text-[14px] !font-[500] text-[#1f2937] line-clamp-1 group-hover:text-[#274a72] transition-colors mb-1 leading-tight">
                   {item.name}
                 </h4>
-                <span className="text-[11px] text-gray-400 line-clamp-1 mb-1 flex items-center gap-1">
+                <span className="text-[11px] text-gray-400 !font-[500] line-clamp-1 mb-1 flex items-center gap-1">
                   {[
                     item.category?.name,
                     item.subCat?.name,
@@ -137,12 +134,12 @@ const Search = () => {
                     .filter(Boolean)
                     .join(" › ")}
                 </span>
-                <div className="flex items-center gap-2">
-                  <span className="text-[13px] font-bold text-[#e73821]">
+                <div className="flex items-center font-[500] gap-2">
+                  <span className="text-[13px]  text-[#082c55]">
                     ${item.price}
                   </span>
                   {item.oldPrice && (
-                    <span className="text-[11px] text-gray-400 line-through decoration-gray-300">
+                    <span className="text-[11px] text-[#e73821] line-through decoration-red-500">
                       ${item.oldPrice}
                     </span>
                   )}
@@ -154,7 +151,7 @@ const Search = () => {
             className="p-3 text-center bg-white/30 backdrop-blur-xl border-t border-white/30 cursor-pointer hover:bg-white/50 transition-all sticky bottom-0 z-10"
             onClick={search}
           >
-            <span className="text-[12px] font-bold text-[#274a72] hover:text-[#e73821] transition-colors uppercase tracking-wide flex items-center justify-center gap-2">
+            <span className="text-[12px] font-[500] text-white hover:text-[#274a72] bg-[#274a72]  hover:bg-white  transition-colors uppercase tracking-wide flex items-center justify-center gap-2">
               VER TODOS LOS RESULTADOS
               <svg
                 xmlns="http://www.w3.org/2000/svg"
