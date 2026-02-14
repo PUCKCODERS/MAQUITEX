@@ -35,6 +35,7 @@ const Search = () => {
         context?.setSearchData(res);
         setTimeout(() => {
           setIsLoading(false);
+          context?.setOpenSearchPanel(false);
           history("/search");
         }, 1000);
       });

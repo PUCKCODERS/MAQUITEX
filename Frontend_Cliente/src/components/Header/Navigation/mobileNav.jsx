@@ -46,7 +46,10 @@ const MobileNav = () => {
         </Button>
       )}
 
-      <Button className="flex-col !w-[40px] !min-w-[40px] !capitalize !text-gray-500">
+      <Button
+        className="flex-col !w-[40px] !min-w-[40px] !capitalize !text-gray-500"
+        onClick={() => context?.setOpenSearchPanel(true)}
+      >
         <FcSearch size={25} />
         <span className="text-[10px] lg:text-[12px]">BUSCAR</span>
       </Button>
