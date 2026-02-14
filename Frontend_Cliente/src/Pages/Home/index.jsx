@@ -35,6 +35,7 @@ const Home = () => {
   const [bannerV1Data, setBannerV1Data] = useState([]);
   const [bannerV2Data, setBannerV2Data] = useState([]);
   const [blogData, setBlogData] = useState([]);
+  const [allTabs, setAllTabs] = useState([]);
 
   const context = useContext(MyContext);
 
@@ -75,13 +76,30 @@ const Home = () => {
     });
   }, [context?.catData]);
 
+  useEffect(() => {
+    const tabs = [];
+    context?.catData?.forEach((cat) => {
+      tabs.push({ ...cat, type: "cat" });
+      if (cat.children?.length !== 0) {
+        cat.children?.forEach((subCat) => {
+          tabs.push({ ...subCat, type: "subCat" });
+        });
+      }
+    });
+    setAllTabs(tabs);
+  }, [context?.catData]);
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const filterByCatId = (id) => {
+  const filterByCatId = (id, type) => {
     setPopularProductsData([]);
-    fetchDataFromApi(`/api/product/getAllProductsByCatId/${id}`).then((res) => {
+    let url = `/api/product/getAllProductsByCatId/${id}`;
+    if (type === "subCat") {
+      url = `/api/product/getAllProductsBySubCatId/${id}`;
+    }
+    fetchDataFromApi(url).then((res) => {
       if (res?.error === false) {
         setPopularProductsData(res?.products);
       }
@@ -118,13 +136,13 @@ const Home = () => {
                 scrollButtons="auto"
                 aria-label="scrollable auto tabs example"
               >
-                {context?.catData?.length !== 0 &&
-                  context?.catData?.map((cat, index) => {
+                {allTabs?.length !== 0 &&
+                  allTabs?.map((cat, index) => {
                     return (
                       <Tab
                         key={index}
                         label={cat?.name}
-                        onClick={() => filterByCatId(cat?._id)}
+                        onClick={() => filterByCatId(cat?._id, cat?.type)}
                       />
                     );
                   })}
