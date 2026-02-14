@@ -89,7 +89,7 @@ const Header = () => {
                 </li>
                 <li className="list-none">
                   <Link
-                    to="/help-center"
+                    to="/my-orders"
                     className=" text-[9px] lg:text-[10px] font-bold transition"
                   >
                     SEGUIMIENTO DE PEDIDOS
