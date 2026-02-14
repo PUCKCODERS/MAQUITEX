@@ -49,7 +49,7 @@ const HomeCatSlider = (props) => {
                   <div className="item !py-3 !px-3 bg-white !text-[#556f8d] shadow-[3px_3px_3px_#556f8d] !border-1 !border-[#b1cdee] rounded-lg text-center flex items-center justify-center flex-col">
                     <img
                       src={cat?.images[0]}
-                      className="!w-full !left-0 !top-0 h-[50px] lg:h-[94px] transition-all !duration-500"
+                      className="!w-full !left-0 !top-0 h-[50px] sm:h-[80px] lg:h-[94px] transition-all !duration-500"
                     />
                     <h3 className="text-[9px] lg:text-[13px] font-bold font-[bold] !mt-3 !mb-0 lg:!mt-3 lg:!mb-0">
                       {cat?.name}
@@ -65,7 +65,7 @@ const HomeCatSlider = (props) => {
               <div className="item !py-3 !px-3 bg-white !text-[#556f8d] shadow-[3px_3px_3px_#556f8d] !border-1 !border-[#b1cdee] rounded-lg text-center flex items-center justify-center flex-col">
                 <img
                   src="https://marcimex.vtexassets.com/arquivos/ids/217717/48946.png?v=638741894549100000"
-                  className="!w-full !left-0 !top-0 h-[50px] lg:h-[94px] transition-all !duration-500"
+                  className="!w-full !left-0 !top-0 h-[50px] sm:h-[80px] lg:h-[94px] transition-all !duration-500"
                 />
                 <h3 className="text-[9px] lg:text-[13px] font-bold font-[bold] !mt-3 !mb-0 lg:!mt-3 lg:!mb-0">
                   S.TECNICO
@@ -78,7 +78,7 @@ const HomeCatSlider = (props) => {
               <div className="item !py-3 !px-3 bg-white !text-[#556f8d] shadow-[3px_3px_3px_#556f8d] !border-1 !border-[#b1cdee] rounded-lg text-center flex items-center justify-center flex-col">
                 <img
                   src="https://marcimex.vtexassets.com/arquivos/ids/217717/48946.png?v=638741894549100000"
-                  className="!w-full !left-0 !top-0 h-[50px] lg:h-[94px] transition-all !duration-500"
+                  className="!w-full !left-0 !top-0 h-[50px] sm:h-[80px] lg:h-[94px] transition-all !duration-500"
                 />
                 <h3 className="text-[9px] lg:text-[13px] font-bold font-[bold] !mt-3 !mb-0 lg:!mt-3 lg:!mb-0">
                   NOSOTROS
@@ -91,7 +91,7 @@ const HomeCatSlider = (props) => {
               <div className="item !py-3 !px-3 bg-white !text-[#556f8d] shadow-[3px_3px_3px_#556f8d] !border-1 !border-[#b1cdee] rounded-lg text-center flex items-center justify-center flex-col">
                 <img
                   src="https://marcimex.vtexassets.com/arquivos/ids/217717/48946.png?v=638741894549100000"
-                  className="!w-full !left-0 !top-0 h-[50px] lg:h-[94px] transition-all !duration-500"
+                  className="!w-full !left-0 !top-0 h-[50px] sm:h-[80px] lg:h-[94px] transition-all !duration-500"
                 />
                 <h3 className="text-[9px] lg:text-[13px] font-bold font-[bold] !mt-3 !mb-0 lg:!mt-3 lg:!mb-0">
                   CONTACTO
