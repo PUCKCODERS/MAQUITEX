@@ -58,7 +58,7 @@ const Search = () => {
         setTimeout(() => {
           setIsLoading(false);
           context?.setOpenSearchPanel(false);
-          setShowSuggestions(false); // Ocultar sugerencias al buscar
+          setShowSuggestions(false);
           history("/search");
         }, 1000);
       });
