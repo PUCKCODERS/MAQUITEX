@@ -102,42 +102,74 @@ const Search = () => {
 
       {/* Panel de Sugerencias */}
       {showSuggestions && suggestions.length > 0 && (
-        <div className="absolute top-[55px] left-0 w-full bg-white shadow-[0px_5px_15px_rgba(0,0,0,0.2)] rounded-b-md z-[100] overflow-hidden border border-gray-200 max-h-[300px] overflow-y-auto">
+        <div className="absolute top-[55px] left-0 w-full bg-white/30 backdrop-blur-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)] rounded-xl z-[1000] overflow-hidden border border-white/40 max-h-[450px] overflow-y-auto scrollbar-hide">
+          <div className="px-4 py-2 text-[10px] font-bold text-white uppercase tracking-wider bg-[#082c55]/60 border-b border-white/30">
+            Productos Sugeridos
+          </div>
           {suggestions.map((item, index) => (
             <Link
               to={`/product/${item._id}`}
               key={index}
               onClick={handleSuggestionClick}
-              className="flex items-center gap-3 p-2 hover:bg-gray-100 transition-all border-b border-gray-100 last:border-0 text-decoration-none"
+              className="flex items-start gap-4 px-4 py-3 hover:bg-white/50 transition-all duration-200 border-b border-gray-100/30 last:border-0 no-underline group"
             >
-              <div className="w-[40px] h-[40px] min-w-[40px] overflow-hidden rounded-md border border-gray-200">
+              <div className="w-[60px] h-[60px] min-w-[60px] overflow-hidden rounded-lg border border-gray-200/60 bg-white p-1 flex items-center justify-center group-hover:border-[#082c55]/50 transition-colors">
                 <img
-                  src={item.images?.[0] || item.image} // Maneja array de imagenes o string simple
+                  src={
+                    item.images?.[0] ||
+                    item.image ||
+                    "https://via.placeholder.com/50"
+                  }
                   alt={item.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-contain"
                 />
               </div>
-              <div className="flex flex-col w-full">
-                <span className="text-[12px] font-bold text-[#082c55] line-clamp-1">
+              <div className="flex flex-col flex-1 justify-center min-h-[60px]">
+                <h4 className="text-[14px] font-semibold text-[#1f2937] line-clamp-1 group-hover:text-[#274a72] transition-colors mb-1 leading-tight">
                   {item.name}
+                </h4>
+                <span className="text-[11px] text-gray-400 line-clamp-1 mb-1 flex items-center gap-1">
+                  {[
+                    item.category?.name,
+                    item.subCat?.name,
+                    item.thirdLevelCat?.name,
+                  ]
+                    .filter(Boolean)
+                    .join(" › ")}
                 </span>
-                <div className="flex justify-between items-center">
-                  <span className="text-[10px] text-gray-500">
-                    {item.category?.name || "Producto"}
-                  </span>
-                  <span className="text-[11px] font-bold text-[#e73821]">
+                <div className="flex items-center gap-2">
+                  <span className="text-[13px] font-bold text-[#e73821]">
                     ${item.price}
                   </span>
+                  {item.oldPrice && (
+                    <span className="text-[11px] text-gray-400 line-through decoration-gray-300">
+                      ${item.oldPrice}
+                    </span>
+                  )}
                 </div>
               </div>
             </Link>
           ))}
           <div
-            className="p-2 text-center bg-gray-50 cursor-pointer hover:bg-gray-200 transition-all"
+            className="p-3 text-center bg-white/30 backdrop-blur-xl border-t border-white/30 cursor-pointer hover:bg-white/50 transition-all sticky bottom-0 z-10"
             onClick={search}
           >
-            <span className="text-[11px] font-bold text-[#274a72]">
+            <span className="text-[12px] font-bold text-[#274a72] hover:text-[#e73821] transition-colors uppercase tracking-wide flex items-center justify-center gap-2">
               VER TODOS LOS RESULTADOS
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={2}
+                stroke="currentColor"
+                className="w-3 h-3"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
+                />
+              </svg>
             </span>
           </div>
         </div>
