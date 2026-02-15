@@ -177,6 +177,7 @@ const Header = () => {
                         slotProps={{
                           paper: {
                             elevation: 0,
+                            className: "!shadow-[3px_3px_3px_#274a72]",
                             sx: {
                               overflow: "visible",
                               filter:
