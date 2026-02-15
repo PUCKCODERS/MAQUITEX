@@ -88,7 +88,7 @@ const Factura = () => {
   }
 
   return (
-    <section className="w-full !p-10 bg-[#f9f9f9]">
+    <section className="w-full !p-4 md:!p-10 bg-[#f9f9f9]">
       <style>
         {`
           @media print {
@@ -121,30 +121,30 @@ const Factura = () => {
         `}
       </style>
       <div
-        className="invoice-card max-w-[900px] mx-auto bg-white shadow-md rounded-md !p-10 border border-[#e0e0e0]"
+        className="invoice-card w-full max-w-[900px] !mx-auto bg-white shadow-md !rounded-md !p-4 md:!p-10 !border border-[#e0e0e0]"
         style={{ backgroundColor: "#ffffff" }}
       >
-        <div className="flex justify-between items-center !mb-8 border-b pb-4">
-          <div>
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-start !mb-8 !border-b !pb-4 gap-4 md:gap-0">
+          <div className="text-center md:text-left">
             <img
               src={logo}
               width="250"
               height="500"
               alt="Logo"
-              className="img-cover"
+              className="img-cover mx-auto md:mx-0"
             />
-            <h2 className="text-[20px] font-[bold] text-[#274a72]">
+            <h2 className="text-[18px] md:text-[20px] font-[bold] text-[#274a72] mt-2">
               FACTURA DE PEDIDO
             </h2>
           </div>
-          <div className="text-right">
-            <p className="text-[16px] font-[bold] text-[#274a72]">
+          <div className="text-center md:text-right w-full md:w-auto">
+            <p className="text-[14px] md:text-[16px] font-[bold] text-[#274a72]">
               ID PEDIDO:{" "}
               <span className="font-normal text-[#666]">
                 &nbsp;{order?._id}
               </span>
             </p>
-            <p className="text-[16px] font-[bold] text-[#274a72]">
+            <p className="text-[14px] md:text-[16px] font-[bold] text-[#274a72]">
               FECHA:{" "}
               <span className="font-normal text-[#666]">
                 &nbsp;{order?.createdAt?.split("T")[0]}
@@ -153,17 +153,17 @@ const Factura = () => {
           </div>
         </div>
 
-        <div className="flex justify-between !mb-8">
-          <div className="w-[48%]">
-            <h3 className="text-[18px] font-[bold] text-[#555] !mb-3">
+        <div className="flex flex-col md:flex-row justify-between !mb-8 gap-6 md:gap-0">
+          <div className="w-full md:w-[60%]">
+            <h3 className="text-[16px] md:text-[18px] font-[bold] text-[#555] !mb-3">
               INFORMACION
             </h3>
-            <p className="text-[15px] text-[#555]">
+            <p className="text-[13px] md:text-[15px] text-[#555]">
               <span className="font-[bold] text-[#274a72]">USUARIO:&nbsp;</span>
               &nbsp;
               {order?.userId?.name}
             </p>
-            <p className="text-[15px] text-[#555]">
+            <p className="text-[13px] md:text-[15px] text-[#555]">
               <span className="font-[bold] text-[#274a72]">
                 DIRECCION:&nbsp;
               </span>
@@ -173,7 +173,7 @@ const Factura = () => {
               {order?.delivery_address?.country}
             </p>
 
-            <p className="text-[15px] text-[#555]">
+            <p className="text-[13px] md:text-[15px] text-[#555]">
               <span className="font-[bold] text-[#274a72]">
                 TELEFONO:&nbsp;
               </span>
@@ -181,7 +181,7 @@ const Factura = () => {
               {order?.userId?.mobile}
             </p>
 
-            <p className="text-[15px] text-[#555]">
+            <p className="text-[13px] md:text-[15px] text-[#555]">
               <span className="font-[bold] text-[#274a72]">CORREO:&nbsp;</span>
               &nbsp;
               {order?.userId?.email}
@@ -190,17 +190,19 @@ const Factura = () => {
         </div>
 
         <div className="w-full overflow-x-auto !mb-8">
-          <table className="w-full text-left border-collapse">
+          <table className="w-full text-left border-collapse min-w-[500px] md:min-w-full">
             <thead>
               <tr className="bg-[#274a72] text-white">
-                <th className="!p-3 text-[14px] font-bold rounded-tl-md">
+                <th className="!p-2 md:!p-3 text-[12px] md:text-[14px] font-bold rounded-tl-md">
                   PRODUCTO
                 </th>
-                <th className="!p-3 text-[14px] font-bold">PRECIO</th>
-                <th className="!p-3 text-[14px] font-bold text-center">
+                <th className="!p-2 md:!p-3 text-[12px] md:text-[14px] font-bold">
+                  PRECIO
+                </th>
+                <th className="!p-2 md:!p-3 text-[12px] md:text-[14px] font-bold text-center">
                   CANTIDAD
                 </th>
-                <th className="!p-3 text-[14px] font-bold text-right rounded-tr-md">
+                <th className="!p-2 md:!p-3 text-[12px] md:text-[14px] font-bold text-right rounded-tr-md">
                   SUBTOTAL
                 </th>
               </tr>
@@ -208,23 +210,23 @@ const Factura = () => {
             <tbody>
               {order?.products?.map((item, index) => (
                 <tr key={index} className="border-b border-[#eee]">
-                  <td className="!p-3">
+                  <td className="!p-2 md:!p-3">
                     <div className="flex items-center gap-3">
-                      <span className="text-[14px] font-medium text-[#274a72]">
+                      <span className="text-[12px] md:text-[14px] font-medium text-[#274a72]">
                         {item?.productTitle}
                       </span>
                     </div>
                   </td>
-                  <td className="!p-3 text-[14px] text-[#555]">
+                  <td className="!p-2 md:!p-3 text-[12px] md:text-[14px] text-[#555]">
                     {item?.price?.toLocaleString("en-US", {
                       style: "currency",
                       currency: "USD",
                     })}
                   </td>
-                  <td className="!p-3 text-[14px] text-[#555] text-center">
+                  <td className="!p-2 md:!p-3 text-[12px] md:text-[14px] text-[#555] text-center">
                     {item?.quantity}
                   </td>
-                  <td className="!p-3 text-[14px] font-bold text-[#333] text-right">
+                  <td className="!p-2 md:!p-3 text-[12px] md:text-[14px] font-bold text-[#333] text-right">
                     {item?.subTotal?.toLocaleString("en-US", {
                       style: "currency",
                       currency: "USD",
@@ -237,10 +239,12 @@ const Factura = () => {
         </div>
 
         <div className="flex justify-end !mb-10">
-          <div className="w-[300px]">
-            <div className="flex justify-between !mb-2 py-2 border-b">
-              <span className="text-[16px] font-bold text-[#333]">TOTAL:</span>
-              <span className="text-[20px] font-bold text-[#ec370a]">
+          <div className="w-full md:w-[300px]">
+            <div className="flex justify-between !mb-2 !py-2 border-b">
+              <span className="text-[14px] md:text-[16px] font-bold text-[#333]">
+                TOTAL:
+              </span>
+              <span className="text-[18px] md:text-[20px] font-bold text-[#ec370a]">
                 {order?.totalAmt?.toLocaleString("en-US", {
                   style: "currency",
                   currency: "USD",
@@ -252,10 +256,10 @@ const Factura = () => {
 
         <div className="text-center hide-on-print">
           <Button
-            className="btn-org flex gap-2 items-center mx-auto !px-8 !py-2"
+            className="btn-org flex gap-2 items-center mx-auto !px-6 md:!px-8 !py-2 text-[12px] md:text-[14px]"
             onClick={downloadPDF}
           >
-            <FaPrint className="text-[18px]" /> DESCARGAR PEDIDO
+            <FaPrint className="text-[16px] md:text-[18px]" /> DESCARGAR PEDIDO
           </Button>
         </div>
       </div>
