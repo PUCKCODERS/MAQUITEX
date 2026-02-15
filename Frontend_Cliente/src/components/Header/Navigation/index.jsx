@@ -73,7 +73,7 @@ const Navigation = (props) => {
                       </Link>
 
                       {cat?.children?.length !== 0 && (
-                        <div className="submenu absolute !border-1 !border-[#758ba5]  !top-[135%] !left-[0%] min-w-[200px] bg-[#ebebeb] shadow-[3px_3px_3px_#274a72] opacity-0 transition-all z-10 ">
+                        <div className="submenu absolute !border-1 !border-[#758ba5]  !top-[135%] !left-[0%] min-w-[200px]  !bg-white/10 hover:!bg-white/10 backdrop-blur-sm shadow-[3px_3px_3px_#274a72] opacity-0 transition-all z-10 ">
                           <ul>
                             {cat?.children?.map((subCat, index_) => {
                               return (
@@ -90,7 +90,7 @@ const Navigation = (props) => {
                                     </Button>
 
                                     {subCat?.children?.length !== 0 && (
-                                      <div className="submenu absolute !border-1 !border-[#758ba5] !top-[-5%] !left-[100%] min-w-[200px] bg-white shadow-[3px_3px_3px_#274a72] opacity-0 transition-all">
+                                      <div className="submenu absolute !border-1 !border-[#758ba5] !top-[-5%] !left-[100%] min-w-[200px] !bg-white/30 !backdrop-blur-sm shadow-[3px_3px_3px_#274a72] opacity-0 transition-all">
                                         <ul>
                                           {subCat?.children?.map(
                                             (thirdLavelCat, index__) => {
@@ -103,7 +103,7 @@ const Navigation = (props) => {
                                                     to={`/productListing?thirdLavelCatId=${thirdLavelCat?._id}`}
                                                     className="w-full"
                                                   >
-                                                    <Button className="!text-[#082c55] hover:!text-[#fff] !bg-[#fff]  !font-bold !font-[bold] hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
+                                                    <Button className="!text-[#082c55] hover:!text-[#fff] !bg-white/30 !backdrop-blur-sm  !font-bold !font-[bold] hover:!bg-[#082c55] !w-full !text-left !justify-start !rounded-none">
                                                       {thirdLavelCat?.name}
                                                     </Button>
                                                   </Link>
