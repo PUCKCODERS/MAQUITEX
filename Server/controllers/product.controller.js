@@ -21,6 +21,12 @@ export async function uploadImages(request, response) {
       use_filename: true,
       unique_filename: false,
       overwrite: false,
+      folder: "maquitex/products", // Organiza tus archivos
+      format: "webp", // OPTIMIZACIÓN MÁXIMA: Guarda como WebP para ahorrar espacio
+      transformation: [
+        { width: 1000, crop: "limit" }, // Redimensiona si es mayor a 1000px
+        { quality: "auto" }, // Compresión automática
+      ],
     };
 
     const uploadedUrls = [];
@@ -60,6 +66,12 @@ export async function uploadBannerImages(request, response) {
       use_filename: true,
       unique_filename: false,
       overwrite: false,
+      folder: "maquitex/product_banners",
+      format: "webp",
+      transformation: [
+        { width: 1920, crop: "limit" }, // Banners pueden ser más anchos
+        { quality: "auto" },
+      ],
     };
 
     const bannerImage = [];
@@ -696,9 +708,15 @@ export async function deleteProduct(request, response) {
 
     for (const imgUrl of images) {
       try {
-        const urlArr = imgUrl.split("/");
-        const lastSeg = urlArr[urlArr.length - 1] || "";
-        const imageName = lastSeg.split(".")[0];
+        let imageName = "";
+        if (imgUrl.includes("maquitex")) {
+          const parts = imgUrl.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = imgUrl.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
         if (imageName) {
           await cloudinary.uploader.destroy(imageName).catch(() => {});
         }
@@ -709,9 +727,15 @@ export async function deleteProduct(request, response) {
 
     for (const imgUrl of bannerImages) {
       try {
-        const urlArr = imgUrl.split("/");
-        const lastSeg = urlArr[urlArr.length - 1] || "";
-        const imageName = lastSeg.split(".")[0];
+        let imageName = "";
+        if (imgUrl.includes("maquitex")) {
+          const parts = imgUrl.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = imgUrl.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
         if (imageName) {
           await cloudinary.uploader.destroy(imageName).catch(() => {});
         }
@@ -760,9 +784,15 @@ export async function deleteMultipleProduct(request, response) {
       const images = product.images || [];
       for (const img of images) {
         try {
-          const urlArr = img.split("/");
-          const image = urlArr[urlArr.length - 1];
-          const imageName = image.split(".")[0];
+          let imageName = "";
+          if (img.includes("maquitex")) {
+            const parts = img.split("/maquitex/");
+            imageName =
+              "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+          } else {
+            const urlArr = img.split("/");
+            imageName = urlArr[urlArr.length - 1].split(".")[0];
+          }
           if (imageName) {
             await cloudinary.uploader.destroy(imageName).catch(() => {});
           }
@@ -772,9 +802,15 @@ export async function deleteMultipleProduct(request, response) {
       const bannerImages = product.bannerimages || [];
       for (const img of bannerImages) {
         try {
-          const urlArr = img.split("/");
-          const image = urlArr[urlArr.length - 1];
-          const imageName = image.split(".")[0];
+          let imageName = "";
+          if (img.includes("maquitex")) {
+            const parts = img.split("/maquitex/");
+            imageName =
+              "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+          } else {
+            const urlArr = img.split("/");
+            imageName = urlArr[urlArr.length - 1].split(".")[0];
+          }
           if (imageName) {
             await cloudinary.uploader.destroy(imageName).catch(() => {});
           }
@@ -833,9 +869,16 @@ export async function removeImageFromCloudinary(request, response) {
         .status(400)
         .json({ error: true, message: "img query required" });
     }
-    const urlArr = imgUrl.split("/");
-    const image = urlArr[urlArr.length - 1] || "";
-    const imageName = image.split(".")[0];
+
+    let imageName = "";
+    if (imgUrl.includes("maquitex")) {
+      const parts = imgUrl.split("/maquitex/");
+      imageName =
+        "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+    } else {
+      const urlArr = imgUrl.split("/");
+      imageName = urlArr[urlArr.length - 1].split(".")[0];
+    }
 
     if (imageName) {
       const res = await cloudinary.uploader.destroy(imageName).catch(() => {});
@@ -861,6 +904,53 @@ export async function updateProduct(request, response) {
         message: "EL PRODUCTO NO SE ENCUENTRA",
         status: false,
       });
+    }
+
+    // OPTIMIZACIÓN: Detectar imágenes eliminadas en la edición y borrarlas de Cloudinary
+    if (Array.isArray(request.body.images)) {
+      const newImages = request.body.images;
+      const oldImages = existingProduct.images || [];
+      // Encontrar imágenes que estaban antes pero ya no están en la nueva lista
+      const imagesToDelete = oldImages.filter(
+        (img) => !newImages.includes(img),
+      );
+
+      for (const img of imagesToDelete) {
+        let imageName = "";
+        if (img.includes("maquitex")) {
+          const parts = img.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = img.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
+        if (imageName)
+          await cloudinary.uploader.destroy(imageName).catch(() => {});
+      }
+    }
+
+    // OPTIMIZACIÓN: Lo mismo para los banners del producto
+    if (Array.isArray(request.body.bannerimages)) {
+      const newBanners = request.body.bannerimages;
+      const oldBanners = existingProduct.bannerimages || [];
+      const bannersToDelete = oldBanners.filter(
+        (img) => !newBanners.includes(img),
+      );
+
+      for (const img of bannersToDelete) {
+        let imageName = "";
+        if (img.includes("maquitex")) {
+          const parts = img.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = img.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
+        if (imageName)
+          await cloudinary.uploader.destroy(imageName).catch(() => {});
+      }
     }
 
     const imagesFromClient = Array.isArray(request.body.images)

@@ -334,10 +334,15 @@ export async function userAvatarController(request, response) {
 
     const imgUrl = user.avatar;
 
-    const urlArr = imgUrl.split("/");
-    const avatar_image = urlArr[urlArr.length - 1];
-
-    const imageName = avatar_image.split(".")[0];
+    let imageName = "";
+    if (imgUrl && imgUrl.includes("maquitex")) {
+      const parts = imgUrl.split("/maquitex/");
+      imageName =
+        "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+    } else if (imgUrl) {
+      const urlArr = imgUrl.split("/");
+      imageName = urlArr[urlArr.length - 1].split(".")[0];
+    }
 
     if (imageName) {
       const res = await cloudinary.uploader.destroy(
@@ -350,6 +355,12 @@ export async function userAvatarController(request, response) {
       use_filename: true,
       unique_filename: false,
       overwrite: false,
+      folder: "maquitex/avatars",
+      format: "webp",
+      transformation: [
+        { width: 300, crop: "limit", gravity: "face" }, // Enfoca la cara y reduce tamaño
+        { quality: "auto" },
+      ],
     };
 
     for (let i = 0; i < image?.length; i++) {
@@ -382,10 +393,14 @@ export async function userAvatarController(request, response) {
 export async function removeImageFromCloudinary(request, response) {
   const imgUrl = request.query.img;
 
-  const urlArr = imgUrl.split("/");
-  const image = urlArr[urlArr.length - 1];
-
-  const imageName = image.split(".")[0];
+  let imageName = "";
+  if (imgUrl.includes("maquitex")) {
+    const parts = imgUrl.split("/maquitex/");
+    imageName = "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+  } else {
+    const urlArr = imgUrl.split("/");
+    imageName = urlArr[urlArr.length - 1].split(".")[0];
+  }
 
   if (imageName) {
     const res = await cloudinary.uploader.destroy(
@@ -826,17 +841,24 @@ export async function deleteUser(request, response) {
       });
     }
 
-    const images = user.images || [];
-
-    for (const imgUrl of images) {
+    // CORRECCIÓN: Borrar avatar, no images
+    if (user.avatar) {
       try {
-        const urlArr = imgUrl.split("/");
-        const lastSeg = urlArr[urlArr.length - 1] || "";
-        const imageName = lastSeg.split(".")[0];
+        let imageName = "";
+        if (user.avatar.includes("maquitex")) {
+          const parts = user.avatar.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = user.avatar.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
         if (imageName) {
           await cloudinary.uploader.destroy(imageName).catch(() => {});
         }
-      } catch (err) {}
+      } catch (err) {
+        console.log("Error eliminando avatar de Cloudinary", err);
+      }
     }
 
     const deleteUser = await UserModel.findByIdAndDelete(request.params.id);
@@ -876,7 +898,7 @@ export async function deleteMultiple(request, response) {
   const originalIdsLength = ids.length;
 
   // Filter out the logged-in user's ID
-  ids = ids.filter(id => id !== loggedInUserId);
+  ids = ids.filter((id) => id !== loggedInUserId);
 
   if (ids.length === 0 && originalIdsLength > 0) {
     return response.status(403).json({
@@ -891,12 +913,18 @@ export async function deleteMultiple(request, response) {
       const user = await UserModel.findById(ids[i]);
       if (!user) continue;
 
-      const images = user.images || [];
-      for (const img of images) {
+      // CORRECCIÓN: Borrar avatar
+      if (user.avatar) {
         try {
-          const urlArr = img.split("/");
-          const image = urlArr[urlArr.length - 1];
-          const imageName = image.split(".")[0];
+          let imageName = "";
+          if (user.avatar.includes("maquitex")) {
+            const parts = user.avatar.split("/maquitex/");
+            imageName =
+              "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+          } else {
+            const urlArr = user.avatar.split("/");
+            imageName = urlArr[urlArr.length - 1].split(".")[0];
+          }
           if (imageName) {
             await cloudinary.uploader.destroy(imageName).catch(() => {});
           }
@@ -907,7 +935,8 @@ export async function deleteMultiple(request, response) {
 
     let message = "USUARIOS ELIMINADOS";
     if (originalIdsLength > ids.length) {
-      message = "Algunos usuarios fueron eliminados. El usuario logueado no puede ser eliminado.";
+      message =
+        "Algunos usuarios fueron eliminados. El usuario logueado no puede ser eliminado.";
     }
 
     return response.status(200).json({

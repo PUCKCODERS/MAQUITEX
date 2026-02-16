@@ -21,6 +21,12 @@ export async function uploadImages(request, response) {
       use_filename: true,
       unique_filename: false,
       overwrite: false,
+      folder: "maquitex/sliders",
+      format: "webp",
+      transformation: [
+        { width: 1920, crop: "limit" }, // Full HD máximo
+        { quality: "auto" },
+      ],
     };
 
     for (let i = 0; i < image?.length; i++) {
@@ -30,7 +36,7 @@ export async function uploadImages(request, response) {
         function (error, result) {
           imagesArr.push(result.secure_url);
           fs.unlinkSync(`uploads/${request.files[i].filename}`);
-        }
+        },
       );
     }
 
@@ -134,15 +140,19 @@ export async function removeImageFromCloudinary(request, response) {
 
   console.log(imgUrl);
 
-  const urlArr = imgUrl.split("/");
-  const image = urlArr[urlArr.length - 1];
-
-  const imageName = image.split(".")[0];
+  let imageName = "";
+  if (imgUrl.includes("maquitex")) {
+    const parts = imgUrl.split("/maquitex/");
+    imageName = "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+  } else {
+    const urlArr = imgUrl.split("/");
+    imageName = urlArr[urlArr.length - 1].split(".")[0];
+  }
 
   if (imageName) {
     const res = await cloudinary.uploader.destroy(
       imageName,
-      (error, result) => {}
+      (error, result) => {},
     );
 
     if (res) {
@@ -161,11 +171,15 @@ export async function deleteSlide(request, response) {
   let img = "";
 
   for (img of images) {
-    const imgUrl = img;
-    const urlArr = imgUrl.split("/");
-    const image = urlArr[urlArr.length - 1];
-
-    const imageName = image.split(".")[0];
+    let imageName = "";
+    if (img.includes("maquitex")) {
+      const parts = img.split("/maquitex/");
+      imageName =
+        "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+    } else {
+      const urlArr = img.split("/");
+      imageName = urlArr[urlArr.length - 1].split(".")[0];
+    }
 
     if (imageName) {
       cloudinary.uploader.destroy(imageName, (error, result) => {});
@@ -173,7 +187,7 @@ export async function deleteSlide(request, response) {
   }
 
   const deletedSlide = await HomeSliderModel.findByIdAndDelete(
-    request.params.id
+    request.params.id,
   );
   if (!deletedSlide) {
     response.status(400).json({
@@ -190,12 +204,33 @@ export async function deleteSlide(request, response) {
 }
 
 export async function updatedSlide(request, response) {
+  // OPTIMIZACIÓN: Si hay nuevas imágenes subidas, borrar las anteriores de Cloudinary
+  if (imagesArr.length > 0) {
+    const oldSlide = await HomeSliderModel.findById(request.params.id);
+    if (oldSlide && oldSlide.images) {
+      for (const img of oldSlide.images) {
+        let imageName = "";
+        if (img.includes("maquitex")) {
+          const parts = img.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = img.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
+        if (imageName) {
+          await cloudinary.uploader.destroy(imageName).catch(() => {});
+        }
+      }
+    }
+  }
+
   const slide = await HomeSliderModel.findByIdAndUpdate(
     request.params.id,
     {
       images: imagesArr.length > 0 ? imagesArr[0] : request.body.images,
     },
-    { new: true }
+    { new: true },
   );
 
   if (!slide) {
@@ -234,9 +269,15 @@ export async function deleteMultipleSlides(request, response) {
       const images = slide.images || [];
       for (const img of images) {
         try {
-          const urlArr = img.split("/");
-          const image = urlArr[urlArr.length - 1];
-          const imageName = image.split(".")[0];
+          let imageName = "";
+          if (img.includes("maquitex")) {
+            const parts = img.split("/maquitex/");
+            imageName =
+              "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+          } else {
+            const urlArr = img.split("/");
+            imageName = urlArr[urlArr.length - 1].split(".")[0];
+          }
           if (imageName) {
             await cloudinary.uploader.destroy(imageName).catch(() => {});
           }

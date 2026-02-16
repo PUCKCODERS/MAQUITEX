@@ -21,6 +21,12 @@ export async function uploadImages(request, response) {
       use_filename: true,
       unique_filename: false,
       overwrite: false,
+      folder: "maquitex/banners_v1",
+      format: "webp",
+      transformation: [
+        { width: 1920, crop: "limit" }, // Full HD es suficiente para banners
+        { quality: "auto" },
+      ],
     };
 
     for (let i = 0; i < image?.length; i++) {
@@ -117,11 +123,15 @@ export async function deleteBanner(request, response) {
   let img = "";
 
   for (img of images) {
-    const imgUrl = img;
-    const urlArr = imgUrl.split("/");
-    const image = urlArr[urlArr.length - 1];
-
-    const imageName = image.split(".")[0];
+    let imageName = "";
+    if (img.includes("maquitex")) {
+      const parts = img.split("/maquitex/");
+      imageName =
+        "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+    } else {
+      const urlArr = img.split("/");
+      imageName = urlArr[urlArr.length - 1].split(".")[0];
+    }
 
     if (imageName) {
       cloudinary.uploader.destroy(imageName, (error, result) => {});
@@ -146,6 +156,27 @@ export async function deleteBanner(request, response) {
 }
 
 export async function updatedBanner(request, response) {
+  // OPTIMIZACIÓN: Si hay nuevas imágenes subidas, borrar las anteriores de Cloudinary
+  if (imagesArr.length > 0) {
+    const oldBanner = await BannerV1Model.findById(request.params.id);
+    if (oldBanner && oldBanner.images) {
+      for (const img of oldBanner.images) {
+        let imageName = "";
+        if (img.includes("maquitex")) {
+          const parts = img.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = img.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
+        if (imageName) {
+          await cloudinary.uploader.destroy(imageName).catch(() => {});
+        }
+      }
+    }
+  }
+
   const banner = await BannerV1Model.findByIdAndUpdate(
     request.params.id,
     {

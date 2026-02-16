@@ -21,6 +21,9 @@ export async function uploadImages(request, response) {
       use_filename: true,
       unique_filename: false,
       overwrite: false,
+      folder: "maquitex/categories",
+      format: "webp",
+      transformation: [{ width: 1200, crop: "limit" }, { quality: "auto" }],
     };
 
     for (let i = 0; i < image?.length; i++) {
@@ -30,7 +33,7 @@ export async function uploadImages(request, response) {
         function (error, result) {
           imagesArr.push(result.secure_url);
           fs.unlinkSync(`uploads/${request.files[i].filename}`);
-        }
+        },
       );
     }
 
@@ -194,15 +197,19 @@ export async function removeImageFromCloudinary(request, response) {
 
   console.log(imgUrl);
 
-  const urlArr = imgUrl.split("/");
-  const image = urlArr[urlArr.length - 1];
-
-  const imageName = image.split(".")[0];
+  let imageName = "";
+  if (imgUrl.includes("maquitex")) {
+    const parts = imgUrl.split("/maquitex/");
+    imageName = "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+  } else {
+    const urlArr = imgUrl.split("/");
+    imageName = urlArr[urlArr.length - 1].split(".")[0];
+  }
 
   if (imageName) {
     const res = await cloudinary.uploader.destroy(
       imageName,
-      (error, result) => {}
+      (error, result) => {},
     );
 
     if (res) {
@@ -221,11 +228,15 @@ export async function deleteCategory(request, response) {
   let img = "";
 
   for (img of images) {
-    const imgUrl = img;
-    const urlArr = imgUrl.split("/");
-    const image = urlArr[urlArr.length - 1];
-
-    const imageName = image.split(".")[0];
+    let imageName = "";
+    if (img.includes("maquitex")) {
+      const parts = img.split("/maquitex/");
+      imageName =
+        "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+    } else {
+      const urlArr = img.split("/");
+      imageName = urlArr[urlArr.length - 1].split(".")[0];
+    }
 
     if (imageName) {
       cloudinary.uploader.destroy(imageName, (error, result) => {});
@@ -241,14 +252,48 @@ export async function deleteCategory(request, response) {
       parentId: subCategory[i]._id,
     });
 
-    for (let i = 0; i < thirdsubCategory.length; i++) {
+    for (let j = 0; j < thirdsubCategory.length; j++) {
+      // OPTIMIZACIÓN: Borrar imágenes de la categoría de 3er nivel
+      const thirdCatImages = thirdsubCategory[j].images || [];
+      for (const img of thirdCatImages) {
+        let imageName = "";
+        if (img.includes("maquitex")) {
+          const parts = img.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = img.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
+        if (imageName) {
+          cloudinary.uploader.destroy(imageName, (error, result) => {});
+        }
+      }
+
       const deleteThirdSubCat = await CategoryModel.findByIdAndDelete(
-        thirdsubCategory[i]._id
+        thirdsubCategory[j]._id,
       );
     }
 
+    // OPTIMIZACIÓN: Borrar imágenes de la subcategoría
+    const subCatImages = subCategory[i].images || [];
+    for (const img of subCatImages) {
+      let imageName = "";
+      if (img.includes("maquitex")) {
+        const parts = img.split("/maquitex/");
+        imageName =
+          "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+      } else {
+        const urlArr = img.split("/");
+        imageName = urlArr[urlArr.length - 1].split(".")[0];
+      }
+      if (imageName) {
+        cloudinary.uploader.destroy(imageName, (error, result) => {});
+      }
+    }
+
     const deletedSubCat = await CategoryModel.findByIdAndDelete(
-      subCategory[i]._id
+      subCategory[i]._id,
     );
   }
 
@@ -268,6 +313,27 @@ export async function deleteCategory(request, response) {
 }
 
 export async function updatedCategory(request, response) {
+  // OPTIMIZACIÓN: Si hay nuevas imágenes subidas, borrar las anteriores de Cloudinary
+  if (imagesArr.length > 0) {
+    const oldCategory = await CategoryModel.findById(request.params.id);
+    if (oldCategory && oldCategory.images) {
+      for (const img of oldCategory.images) {
+        let imageName = "";
+        if (img.includes("maquitex")) {
+          const parts = img.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = img.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
+        if (imageName) {
+          await cloudinary.uploader.destroy(imageName).catch(() => {});
+        }
+      }
+    }
+  }
+
   const category = await CategoryModel.findByIdAndUpdate(
     request.params.id,
     {
@@ -277,7 +343,7 @@ export async function updatedCategory(request, response) {
       parentId: request.body.parentId,
       parentCatName: request.body.parentCatName,
     },
-    { new: true }
+    { new: true },
   );
 
   if (!category) {
