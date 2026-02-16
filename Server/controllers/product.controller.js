@@ -681,7 +681,7 @@ export async function getAllBrands(request, response) {
 export async function deleteProduct(request, response) {
   try {
     const product = await ProductModel.findById(request.params.id).populate(
-      "category"
+      "category",
     );
 
     if (!product) {
@@ -705,8 +705,21 @@ export async function deleteProduct(request, response) {
       } catch (err) {}
     }
 
+    const bannerImages = product.bannerimages || [];
+
+    for (const imgUrl of bannerImages) {
+      try {
+        const urlArr = imgUrl.split("/");
+        const lastSeg = urlArr[urlArr.length - 1] || "";
+        const imageName = lastSeg.split(".")[0];
+        if (imageName) {
+          await cloudinary.uploader.destroy(imageName).catch(() => {});
+        }
+      } catch (err) {}
+    }
+
     const deleteProduct = await ProductModel.findByIdAndDelete(
-      request.params.id
+      request.params.id,
     );
 
     if (!deleteProduct) {
@@ -755,6 +768,18 @@ export async function deleteMultipleProduct(request, response) {
           }
         } catch (err) {}
       }
+
+      const bannerImages = product.bannerimages || [];
+      for (const img of bannerImages) {
+        try {
+          const urlArr = img.split("/");
+          const image = urlArr[urlArr.length - 1];
+          const imageName = image.split(".")[0];
+          if (imageName) {
+            await cloudinary.uploader.destroy(imageName).catch(() => {});
+          }
+        } catch (err) {}
+      }
     }
     await ProductModel.deleteMany({ _id: { $in: ids } });
 
@@ -775,7 +800,7 @@ export async function deleteMultipleProduct(request, response) {
 export async function getProduct(request, response) {
   try {
     const product = await ProductModel.findById(request.params.id).populate(
-      "category"
+      "category",
     );
 
     if (!product) {
@@ -873,7 +898,7 @@ export async function updateProduct(request, response) {
         size: request.body.size,
         productWeight: request.body.productWeight,
       },
-      { new: true }
+      { new: true },
     );
 
     if (!product) {
@@ -941,7 +966,7 @@ export async function deleteProductRams(request, response) {
   }
 
   const deleteProductRams = await ProductRamsModel.findByIdAndDelete(
-    request.params.id
+    request.params.id,
   );
 
   if (!deleteProductRams) {
@@ -1041,7 +1066,7 @@ export async function updateProductRams(request, response) {
       {
         name: request.body.name,
       },
-      { new: true }
+      { new: true },
     );
 
     if (!productRams) {
@@ -1108,7 +1133,7 @@ export async function deleteProductWeight(request, response) {
   }
 
   const deleteProductWeight = await ProductWeightModel.findByIdAndDelete(
-    request.params.id
+    request.params.id,
   );
 
   if (!deleteProductWeight) {
@@ -1208,7 +1233,7 @@ export async function updateProductWeight(request, response) {
       {
         name: request.body.name,
       },
-      { new: true }
+      { new: true },
     );
 
     if (!productWeight) {
@@ -1275,7 +1300,7 @@ export async function deleteProductSize(request, response) {
   }
 
   const deleteProductSize = await ProductSizeModel.findByIdAndDelete(
-    request.params.id
+    request.params.id,
   );
 
   if (!deleteProductSize) {
@@ -1375,7 +1400,7 @@ export async function updateProductSize(request, response) {
       {
         name: request.body.name,
       },
-      { new: true }
+      { new: true },
     );
 
     if (!productSize) {
