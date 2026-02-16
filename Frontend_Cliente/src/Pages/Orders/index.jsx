@@ -178,7 +178,7 @@ const Orders = () => {
                               <tr>
                                 <td
                                   className="dark:bg-gray-800 !pl-20"
-                                  colSpan="6"
+                                  colSpan="13"
                                 >
                                   <div class="relative overflow-x-auto">
                                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -201,6 +201,24 @@ const Orders = () => {
                                             className="!px-6 !py-3 whitespace-nowrap"
                                           >
                                             IMAGEN
+                                          </th>
+                                          <th
+                                            scope="col"
+                                            className="!px-6 !py-3 whitespace-nowrap"
+                                          >
+                                            COLOR
+                                          </th>
+                                          <th
+                                            scope="col"
+                                            className="!px-6 !py-3 whitespace-nowrap"
+                                          >
+                                            TAMAÑO
+                                          </th>
+                                          <th
+                                            scope="col"
+                                            className="!px-6 !py-3 whitespace-nowrap"
+                                          >
+                                            PESO
                                           </th>
                                           <th
                                             scope="col"
@@ -246,6 +264,21 @@ const Orders = () => {
                                                   src={item?.image}
                                                   className="w-[40px] h-[40px] object-cover rounded-md"
                                                 />
+                                              </td>
+                                              <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
+                                                <span className="text-gray-500 dark:text-white">
+                                                  {item?.ram || "-"}
+                                                </span>
+                                              </td>
+                                              <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
+                                                <span className="text-gray-500 dark:text-white">
+                                                  {item?.size || "-"}
+                                                </span>
+                                              </td>
+                                              <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
+                                                <span className="text-gray-500 dark:text-white">
+                                                  {item?.weight || "-"}
+                                                </span>
                                               </td>
                                               <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
                                                 {item?.quantity}

@@ -26,6 +26,15 @@ const orderSchema = new mongoose.Schema(
         subTotal: {
           type: Number,
         },
+        ram: {
+          type: String,
+        },
+        size: {
+          type: String,
+        },
+        weight: {
+          type: String,
+        },
       },
     ],
     paymentId: {
@@ -51,7 +60,7 @@ const orderSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 const OrderModel = mongoose.model("order", orderSchema);

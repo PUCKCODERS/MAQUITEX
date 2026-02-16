@@ -211,9 +211,18 @@ const Factura = () => {
               {order?.products?.map((item, index) => (
                 <tr key={index} className="border-b border-[#eee]">
                   <td className="!p-2 md:!p-3">
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-col gap-1">
                       <span className="text-[12px] md:text-[14px] font-medium text-[#274a72]">
                         {item?.productTitle}
+                      </span>
+                      <span className="text-[11px] text-gray-500">
+                        Color: {item?.ram || "-"}
+                      </span>
+                      <span className="text-[11px] text-gray-500">
+                        Tamaño: {item?.size || "-"}
+                      </span>
+                      <span className="text-[11px] text-gray-500">
+                        Peso: {item?.weight || "-"}
                       </span>
                     </div>
                   </td>
