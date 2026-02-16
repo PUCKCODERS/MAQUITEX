@@ -46,13 +46,12 @@ const Factura = () => {
       setLoading(false);
     } else {
       setLoading(true);
-      // Intentamos buscar la orden por ID. Es más eficiente.
+
       fetchDataFromApi(`/api/orders/${id}`).then((res) => {
         if (res && !res.error && (res._id === id || res.id === id)) {
           setOrder(res);
           setLoading(false);
         } else {
-          // Si falla, buscamos en la lista completa de órdenes del admin.
           fetchDataFromApi("/api/order/order-list?admin=true").then(
             (resList) => {
               if (resList?.error === false) {
