@@ -5,7 +5,7 @@ import { uploadImages } from "../../utils/api";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const UploadBox = (props) => {
-  const [previews, setPreviews] = useState([]);
+  //const [previews, setPreviews] = useState([]);
   const [uploading, setUploading] = useState(false);
   const context = useContext(MyContext);
 
@@ -15,7 +15,7 @@ const UploadBox = (props) => {
 
   const onChangeFile = async (e, apiEndPoint) => {
     try {
-      setPreviews([]);
+      //setPreviews([]);
       const files = e.target.files;
       setUploading(true);
 
@@ -33,7 +33,7 @@ const UploadBox = (props) => {
         } else {
           context.alertBox(
             "error",
-            "Por favor, seleccione un archivo de imagen válido en formato JPG, JPEG, WEBP o PNG."
+            "Por favor, seleccione un archivo de imagen válido en formato JPG, JPEG, WEBP o PNG.",
           );
           setUploading(false);
           return false;
