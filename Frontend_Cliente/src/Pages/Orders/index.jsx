@@ -202,24 +202,36 @@ const Orders = () => {
                                           >
                                             IMAGEN
                                           </th>
-                                          <th
-                                            scope="col"
-                                            className="!px-6 !py-3 whitespace-nowrap"
-                                          >
-                                            COLOR
-                                          </th>
-                                          <th
-                                            scope="col"
-                                            className="!px-6 !py-3 whitespace-nowrap"
-                                          >
-                                            TAMAÑO
-                                          </th>
-                                          <th
-                                            scope="col"
-                                            className="!px-6 !py-3 whitespace-nowrap"
-                                          >
-                                            PESO
-                                          </th>
+                                          {order?.products?.some(
+                                            (p) => p.ram,
+                                          ) && (
+                                            <th
+                                              scope="col"
+                                              className="!px-6 !py-3 whitespace-nowrap"
+                                            >
+                                              COLOR
+                                            </th>
+                                          )}
+                                          {order?.products?.some(
+                                            (p) => p.size,
+                                          ) && (
+                                            <th
+                                              scope="col"
+                                              className="!px-6 !py-3 whitespace-nowrap"
+                                            >
+                                              TAMAÑO
+                                            </th>
+                                          )}
+                                          {order?.products?.some(
+                                            (p) => p.weight,
+                                          ) && (
+                                            <th
+                                              scope="col"
+                                              className="!px-6 !py-3 whitespace-nowrap"
+                                            >
+                                              PESO
+                                            </th>
+                                          )}
                                           <th
                                             scope="col"
                                             className="!px-6 !py-3 whitespace-nowrap"
@@ -265,21 +277,33 @@ const Orders = () => {
                                                   className="w-[40px] h-[40px] object-cover rounded-md"
                                                 />
                                               </td>
-                                              <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
-                                                <span className="text-gray-500 dark:text-white">
-                                                  {item?.ram || "-"}
-                                                </span>
-                                              </td>
-                                              <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
-                                                <span className="text-gray-500 dark:text-white">
-                                                  {item?.size || "-"}
-                                                </span>
-                                              </td>
-                                              <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
-                                                <span className="text-gray-500 dark:text-white">
-                                                  {item?.weight || "-"}
-                                                </span>
-                                              </td>
+                                              {order?.products?.some(
+                                                (p) => p.ram,
+                                              ) && (
+                                                <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
+                                                  <span className="text-gray-500 dark:text-white">
+                                                    {item?.ram || "-"}
+                                                  </span>
+                                                </td>
+                                              )}
+                                              {order?.products?.some(
+                                                (p) => p.size,
+                                              ) && (
+                                                <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
+                                                  <span className="text-gray-500 dark:text-white">
+                                                    {item?.size || "-"}
+                                                  </span>
+                                                </td>
+                                              )}
+                                              {order?.products?.some(
+                                                (p) => p.weight,
+                                              ) && (
+                                                <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
+                                                  <span className="text-gray-500 dark:text-white">
+                                                    {item?.weight || "-"}
+                                                  </span>
+                                                </td>
+                                              )}
                                               <td class="!px-6 !py-4 font-[500] whitespace-nowrap">
                                                 {item?.quantity}
                                               </td>

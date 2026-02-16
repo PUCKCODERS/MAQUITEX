@@ -215,15 +215,21 @@ const Factura = () => {
                       <span className="text-[12px] md:text-[14px] font-medium text-[#274a72]">
                         {item?.productTitle}
                       </span>
-                      <span className="text-[11px] text-gray-500">
-                        Color: {item?.ram || "-"}
-                      </span>
-                      <span className="text-[11px] text-gray-500">
-                        Tamaño: {item?.size || "-"}
-                      </span>
-                      <span className="text-[11px] text-gray-500">
-                        Peso: {item?.weight || "-"}
-                      </span>
+                      {item?.ram && (
+                        <span className="text-[11px] text-gray-500">
+                          Color: {item?.ram}
+                        </span>
+                      )}
+                      {item?.size && (
+                        <span className="text-[11px] text-gray-500">
+                          Tamaño: {item?.size}
+                        </span>
+                      )}
+                      {item?.weight && (
+                        <span className="text-[11px] text-gray-500">
+                          Peso: {item?.weight}
+                        </span>
+                      )}
                     </div>
                   </td>
                   <td className="!p-2 md:!p-3 text-[12px] md:text-[14px] text-[#555]">
