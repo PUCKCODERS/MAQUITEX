@@ -36,7 +36,7 @@ const projects = [
   },
 ];
 
-const thirdblog = () => {
+const ThirdBlog = () => {
   return (
     <div className="blog-page bg-white">
       {/* Section 1: Introduction */}
@@ -330,4 +330,4 @@ const thirdblog = () => {
   );
 };
 
-export default thirdblog;
+export default ThirdBlog;

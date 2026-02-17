@@ -36,7 +36,7 @@ const projects = [
   },
 ];
 
-const quintoblog = () => {
+const QuintoBlog = () => {
   return (
     <div className="blog-page bg-white">
       {/* Section 1: Introduction */}
@@ -330,4 +330,4 @@ const quintoblog = () => {
   );
 };
 
-export default quintoblog;
+export default QuintoBlog;
