@@ -32,7 +32,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Factura from "./Pages/Orders/factura";
 import FirstBlog from "./components/BlogItem/Blogs/FirstBlog";
 import SecondBlog from "./components/BlogItem/Blogs/SecondBlog";
-import ThirdBlog from "./components/BlogItem/Blogs/thirdblog";
+//import ThirdBlog from "./components/BlogItem/Blogs/thirdblog";
 //import FourthBlog from "./components/BlogItem/Blogs/fourthblog";
 //import QuintoBlog from "./components/BlogItem/Blogs/quintoblog";
 //import SixthBlog from "./components/BlogItem/Blogs/sixthblog";
