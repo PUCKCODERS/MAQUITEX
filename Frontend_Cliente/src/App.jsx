@@ -32,10 +32,6 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Factura from "./Pages/Orders/factura";
 import FirstBlog from "./components/BlogItem/Blogs/FirstBlog";
 import SecondBlog from "./components/BlogItem/Blogs/SecondBlog";
-//import ThirdBlog from "./components/BlogItem/Blogs/thirdblog";
-//import FourthBlog from "./components/BlogItem/Blogs/fourthblog";
-//import QuintoBlog from "./components/BlogItem/Blogs/quintoblog";
-//import SixthBlog from "./components/BlogItem/Blogs/sixthblog";
 
 const MyContext = createContext();
 
@@ -384,26 +380,6 @@ function App() {
               exact={true}
               element={<SecondBlog />}
             />
-            {/*<Route
-              path={"/blog/thirdblog"}
-              exact={true}
-              element={<ThirdBlog />}
-            />
-            <Route
-              path={"/blog/fourthblog"}
-              exact={true}
-              element={<FourthBlog />}
-            />
-            <Route
-              path={"/blog/quintoblog"}
-              exact={true}
-              element={<QuintoBlog />}
-            />
-            <Route
-              path={"/blog/sixthblog"}
-              exact={true}
-              element={<SixthBlog />}
-            />*/}
           </Routes>
           <Footer />
         </MyContext.Provider>
