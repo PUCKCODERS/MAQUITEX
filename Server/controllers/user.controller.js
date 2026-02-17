@@ -313,11 +313,8 @@ export async function logoutController(request, response) {
   }
 }
 
-var imagesArr = [];
 export async function userAvatarController(request, response) {
   try {
-    imagesArr = [];
-
     const userId = request.userId;
     const image = request.files;
 
@@ -363,23 +360,27 @@ export async function userAvatarController(request, response) {
       ],
     };
 
-    for (let i = 0; i < image?.length; i++) {
-      const img = await cloudinary.uploader.upload(
-        image[i].path,
-        options,
-        function (error, result) {
-          imagesArr.push(result.secure_url);
-          fs.unlinkSync(`uploads/${request.files[i].filename}`);
-        },
-      );
-    }
+    // OPTIMIZACIÓN VERCEL: Subida en paralelo y limpieza de /tmp
+    const uploadPromises = image.map(async (file) => {
+      try {
+        const result = await cloudinary.uploader.upload(file.path, options);
+        try {
+          fs.unlinkSync(file.path);
+        } catch (e) {}
+        return result.secure_url;
+      } catch (error) {
+        return null;
+      }
+    });
 
-    user.avatar = imagesArr[0];
+    const uploadedUrls = await Promise.all(uploadPromises);
+
+    user.avatar = uploadedUrls[0];
     await user.save();
 
     return response.status(200).json({
       _id: userId,
-      avatar: imagesArr[0],
+      avatar: uploadedUrls[0],
     });
   } catch (error) {
     return response.status(500).json({
@@ -912,28 +913,27 @@ export async function deleteMultiple(request, response) {
   }
 
   try {
-    for (let i = 0; i < ids.length; i++) {
-      const user = await UserModel.findById(ids[i]);
-      if (!user) continue;
+    // OPTIMIZACIÓN: Buscar y eliminar en paralelo para evitar Timeouts en Vercel
+    const users = await UserModel.find({ _id: { $in: ids } });
 
-      // CORRECCIÓN: Borrar avatar
+    const deletePromises = users.map(async (user) => {
       if (user.avatar) {
-        try {
-          let imageName = "";
-          if (user.avatar.includes("maquitex")) {
-            const parts = user.avatar.split("/maquitex/");
-            imageName =
-              "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
-          } else {
-            const urlArr = user.avatar.split("/");
-            imageName = urlArr[urlArr.length - 1].split(".")[0];
-          }
-          if (imageName) {
-            await cloudinary.uploader.destroy(imageName).catch(() => {});
-          }
-        } catch (err) {}
+        let imageName = "";
+        if (user.avatar.includes("maquitex")) {
+          const parts = user.avatar.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = user.avatar.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
+        if (imageName) {
+          return cloudinary.uploader.destroy(imageName).catch(() => {});
+        }
       }
-    }
+    });
+
+    await Promise.all(deletePromises);
     await UserModel.deleteMany({ _id: { $in: ids } });
 
     let message = "USUARIOS ELIMINADOS";

@@ -3,7 +3,8 @@ import fs from "fs";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    const uploadDir = "uploads";
+    // OPTIMIZACIÓN VERCEL: Usar /tmp ya que es el único directorio escribible en Serverless
+    const uploadDir = "/tmp";
     if (!fs.existsSync(uploadDir)) {
       fs.mkdirSync(uploadDir);
     }

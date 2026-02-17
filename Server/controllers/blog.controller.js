@@ -10,11 +10,8 @@ cloudinary.config({
   secure: true,
 });
 
-var imagesArr = [];
 export async function uploadImages(request, response) {
   try {
-    imagesArr = [];
-
     const image = request.files;
 
     const options = {
@@ -26,16 +23,20 @@ export async function uploadImages(request, response) {
       transformation: [{ width: 1200, crop: "limit" }, { quality: "auto" }],
     };
 
-    for (let i = 0; i < image?.length; i++) {
-      const img = await cloudinary.uploader.upload(
-        image[i].path,
-        options,
-        function (error, result) {
-          imagesArr.push(result.secure_url);
-          fs.unlinkSync(`uploads/${request.files[i].filename}`);
-        },
-      );
-    }
+    const uploadPromises = image.map(async (file) => {
+      try {
+        const result = await cloudinary.uploader.upload(file.path, options);
+        try {
+          fs.unlinkSync(file.path);
+        } catch (e) {}
+        return result.secure_url;
+      } catch (e) {
+        return null;
+      }
+    });
+    const imagesArr = (await Promise.all(uploadPromises)).filter(
+      (url) => url !== null,
+    );
 
     return response.status(200).json({
       images: imagesArr,
@@ -53,7 +54,7 @@ export async function addBlog(request, response) {
   try {
     let blog = new BlogModel({
       title: request.body.title,
-      images: imagesArr,
+      images: request.body.images,
       description: request.body.description,
     });
 
@@ -66,8 +67,6 @@ export async function addBlog(request, response) {
     }
 
     blog = await blog.save();
-
-    imagesArr = [];
 
     return response.status(200).json({
       message: "BLOG CREADO",
@@ -160,7 +159,7 @@ export async function deleteBlog(request, response) {
 
   let img = "";
 
-  for (img of images) {
+  const deletePromises = images.map(async (img) => {
     let imageName = "";
     if (img.includes("maquitex")) {
       const parts = img.split("/maquitex/");
@@ -172,9 +171,10 @@ export async function deleteBlog(request, response) {
     }
 
     if (imageName) {
-      cloudinary.uploader.destroy(imageName, (error, result) => {});
+      return cloudinary.uploader.destroy(imageName).catch(() => {});
     }
-  }
+  });
+  await Promise.all(deletePromises);
 
   const deletedBlog = await BlogModel.findByIdAndDelete(request.params.id);
   if (!deletedBlog) {
@@ -193,10 +193,11 @@ export async function deleteBlog(request, response) {
 
 export async function updatedBlog(request, response) {
   // OPTIMIZACIÓN: Si hay nuevas imágenes subidas, borrar las anteriores de Cloudinary
-  if (imagesArr.length > 0) {
+  const newImages = request.body.images;
+  if (newImages && newImages.length > 0) {
     const oldBlog = await BlogModel.findById(request.params.id);
     if (oldBlog && oldBlog.images) {
-      for (const img of oldBlog.images) {
+      const deletePromises = oldBlog.images.map(async (img) => {
         let imageName = "";
         if (img.includes("maquitex")) {
           const parts = img.split("/maquitex/");
@@ -207,9 +208,10 @@ export async function updatedBlog(request, response) {
           imageName = urlArr[urlArr.length - 1].split(".")[0];
         }
         if (imageName) {
-          await cloudinary.uploader.destroy(imageName).catch(() => {});
+          return cloudinary.uploader.destroy(imageName).catch(() => {});
         }
-      }
+      });
+      await Promise.all(deletePromises);
     }
   }
 
@@ -217,7 +219,7 @@ export async function updatedBlog(request, response) {
     request.params.id,
     {
       title: request.body.title,
-      images: imagesArr.length > 0 ? imagesArr[0] : request.body.images,
+      images: request.body.images,
       description: request.body.description,
     },
     { new: true },
@@ -230,8 +232,6 @@ export async function updatedBlog(request, response) {
       error: true,
     });
   }
-
-  imagesArr = [];
 
   response.status(200).json({
     message: "BLOG ACTUALIZADO",

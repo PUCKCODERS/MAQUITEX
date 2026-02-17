@@ -10,11 +10,8 @@ cloudinary.config({
   secure: true,
 });
 
-var imagesArr = [];
 export async function uploadImages(request, response) {
   try {
-    imagesArr = [];
-
     const image = request.files;
 
     const options = {
@@ -29,16 +26,20 @@ export async function uploadImages(request, response) {
       ],
     };
 
-    for (let i = 0; i < image?.length; i++) {
-      const img = await cloudinary.uploader.upload(
-        image[i].path,
-        options,
-        function (error, result) {
-          imagesArr.push(result.secure_url);
-          fs.unlinkSync(`uploads/${request.files[i].filename}`);
-        },
-      );
-    }
+    const uploadPromises = image.map(async (file) => {
+      try {
+        const result = await cloudinary.uploader.upload(file.path, options);
+        try {
+          fs.unlinkSync(file.path);
+        } catch (e) {}
+        return result.secure_url;
+      } catch (e) {
+        return null;
+      }
+    });
+    const imagesArr = (await Promise.all(uploadPromises)).filter(
+      (url) => url !== null,
+    );
 
     return response.status(200).json({
       images: imagesArr,
@@ -55,7 +56,7 @@ export async function uploadImages(request, response) {
 export async function addHomeSlide(request, response) {
   try {
     let slide = new HomeSliderModel({
-      images: imagesArr,
+      images: request.body.images, // CORRECCIÓN: Usar datos del body, no variable global
     });
 
     if (!slide) {
@@ -66,8 +67,6 @@ export async function addHomeSlide(request, response) {
       });
     }
     slide = await slide.save();
-
-    imagesArr = [];
 
     return response.status(200).json({
       message: "DIAPOSITIVAS CREADA",
@@ -170,7 +169,7 @@ export async function deleteSlide(request, response) {
   const images = slide.images;
   let img = "";
 
-  for (img of images) {
+  const deletePromises = images.map(async (img) => {
     let imageName = "";
     if (img.includes("maquitex")) {
       const parts = img.split("/maquitex/");
@@ -182,9 +181,10 @@ export async function deleteSlide(request, response) {
     }
 
     if (imageName) {
-      cloudinary.uploader.destroy(imageName, (error, result) => {});
+      return cloudinary.uploader.destroy(imageName).catch(() => {});
     }
-  }
+  });
+  await Promise.all(deletePromises);
 
   const deletedSlide = await HomeSliderModel.findByIdAndDelete(
     request.params.id,
@@ -205,10 +205,11 @@ export async function deleteSlide(request, response) {
 
 export async function updatedSlide(request, response) {
   // OPTIMIZACIÓN: Si hay nuevas imágenes subidas, borrar las anteriores de Cloudinary
-  if (imagesArr.length > 0) {
+  const newImages = request.body.images;
+  if (newImages && newImages.length > 0) {
     const oldSlide = await HomeSliderModel.findById(request.params.id);
     if (oldSlide && oldSlide.images) {
-      for (const img of oldSlide.images) {
+      const deletePromises = oldSlide.images.map(async (img) => {
         let imageName = "";
         if (img.includes("maquitex")) {
           const parts = img.split("/maquitex/");
@@ -219,16 +220,17 @@ export async function updatedSlide(request, response) {
           imageName = urlArr[urlArr.length - 1].split(".")[0];
         }
         if (imageName) {
-          await cloudinary.uploader.destroy(imageName).catch(() => {});
+          return cloudinary.uploader.destroy(imageName).catch(() => {});
         }
-      }
+      });
+      await Promise.all(deletePromises);
     }
   }
 
   const slide = await HomeSliderModel.findByIdAndUpdate(
     request.params.id,
     {
-      images: imagesArr.length > 0 ? imagesArr[0] : request.body.images,
+      images: request.body.images,
     },
     { new: true },
   );
@@ -240,8 +242,6 @@ export async function updatedSlide(request, response) {
       error: true,
     });
   }
-
-  imagesArr = [];
 
   response.status(200).json({
     message: "DIAPOSITIVA ACTUALIZADA",
@@ -262,28 +262,29 @@ export async function deleteMultipleSlides(request, response) {
   }
 
   try {
-    for (let i = 0; i < ids.length; i++) {
-      const slide = await HomeSliderModel.findById(ids[i]);
-      if (!slide) continue;
+    const slides = await HomeSliderModel.find({ _id: { $in: ids } });
+    const allDeletePromises = [];
 
+    slides.forEach((slide) => {
       const images = slide.images || [];
-      for (const img of images) {
-        try {
-          let imageName = "";
-          if (img.includes("maquitex")) {
-            const parts = img.split("/maquitex/");
-            imageName =
-              "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
-          } else {
-            const urlArr = img.split("/");
-            imageName = urlArr[urlArr.length - 1].split(".")[0];
-          }
-          if (imageName) {
-            await cloudinary.uploader.destroy(imageName).catch(() => {});
-          }
-        } catch (err) {}
-      }
-    }
+      images.forEach((img) => {
+        let imageName = "";
+        if (img.includes("maquitex")) {
+          const parts = img.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = img.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
+        if (imageName) {
+          allDeletePromises.push(
+            cloudinary.uploader.destroy(imageName).catch(() => {}),
+          );
+        }
+      });
+    });
+    await Promise.all(allDeletePromises);
     await HomeSliderModel.deleteMany({ _id: { $in: ids } });
 
     return response.status(200).json({

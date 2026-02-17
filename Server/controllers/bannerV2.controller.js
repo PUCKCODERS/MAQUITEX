@@ -10,11 +10,8 @@ cloudinary.config({
   secure: true,
 });
 
-var imagesArr = [];
 export async function uploadImages(request, response) {
   try {
-    imagesArr = [];
-
     const image = request.files;
 
     const options = {
@@ -26,16 +23,20 @@ export async function uploadImages(request, response) {
       transformation: [{ width: 1920, crop: "limit" }, { quality: "auto" }],
     };
 
-    for (let i = 0; i < image?.length; i++) {
-      const img = await cloudinary.uploader.upload(
-        image[i].path,
-        options,
-        function (error, result) {
-          imagesArr.push(result.secure_url);
-          fs.unlinkSync(`uploads/${request.files[i].filename}`);
-        },
-      );
-    }
+    const uploadPromises = image.map(async (file) => {
+      try {
+        const result = await cloudinary.uploader.upload(file.path, options);
+        try {
+          fs.unlinkSync(file.path);
+        } catch (e) {}
+        return result.secure_url;
+      } catch (e) {
+        return null;
+      }
+    });
+    const imagesArr = (await Promise.all(uploadPromises)).filter(
+      (url) => url !== null,
+    );
 
     return response.status(200).json({
       images: imagesArr,
@@ -53,7 +54,7 @@ export async function addBanner(request, response) {
   try {
     let banner = new BannerV2Model({
       bannerTitle: request.body.bannerTitle,
-      images: imagesArr,
+      images: request.body.images,
       catId: request.body.catId,
       subCatId: request.body.subCatId,
 
@@ -69,8 +70,6 @@ export async function addBanner(request, response) {
     }
 
     banner = await banner.save();
-
-    imagesArr = [];
 
     return response.status(200).json({
       message: "BANNER CREADA",
@@ -118,7 +117,7 @@ export async function deleteBanner(request, response) {
 
   let img = "";
 
-  for (img of images) {
+  const deletePromises = images.map(async (img) => {
     let imageName = "";
     if (img.includes("maquitex")) {
       const parts = img.split("/maquitex/");
@@ -130,9 +129,10 @@ export async function deleteBanner(request, response) {
     }
 
     if (imageName) {
-      cloudinary.uploader.destroy(imageName, (error, result) => {});
+      return cloudinary.uploader.destroy(imageName).catch(() => {});
     }
-  }
+  });
+  await Promise.all(deletePromises);
 
   const deletedBanner = await BannerV2Model.findByIdAndDelete(
     request.params.id,
@@ -153,10 +153,11 @@ export async function deleteBanner(request, response) {
 
 export async function updatedBanner(request, response) {
   // OPTIMIZACIÓN: Si hay nuevas imágenes subidas, borrar las anteriores de Cloudinary
-  if (imagesArr.length > 0) {
+  const newImages = request.body.images;
+  if (newImages && newImages.length > 0) {
     const oldBanner = await BannerV2Model.findById(request.params.id);
     if (oldBanner && oldBanner.images) {
-      for (const img of oldBanner.images) {
+      const deletePromises = oldBanner.images.map(async (img) => {
         let imageName = "";
         if (img.includes("maquitex")) {
           const parts = img.split("/maquitex/");
@@ -167,9 +168,10 @@ export async function updatedBanner(request, response) {
           imageName = urlArr[urlArr.length - 1].split(".")[0];
         }
         if (imageName) {
-          await cloudinary.uploader.destroy(imageName).catch(() => {});
+          return cloudinary.uploader.destroy(imageName).catch(() => {});
         }
-      }
+      });
+      await Promise.all(deletePromises);
     }
   }
 
@@ -177,7 +179,7 @@ export async function updatedBanner(request, response) {
     request.params.id,
     {
       bannerTitle: request.body.bannerTitle,
-      images: imagesArr.length > 0 ? imagesArr[0] : request.body.images,
+      images: request.body.images,
       catId: request.body.catId,
       subCatId: request.body.subCatId,
 
@@ -193,8 +195,6 @@ export async function updatedBanner(request, response) {
       error: true,
     });
   }
-
-  imagesArr = [];
 
   response.status(200).json({
     message: "BANNER ACTUALIZADA",
