@@ -15,6 +15,10 @@ import { useEffect } from "react";
 import { deleteData, editData, postData } from "../../utils/api";
 import CircularProgress from "@mui/material/CircularProgress";
 import { GrClose } from "react-icons/gr";
+import {
+  getOptimizedUrl,
+  getTinyPlaceholder,
+} from "../../utils/cloudinaryHelper";
 
 const ProductItem = (props) => {
   const [quantity, setQuantity] = useState(1);
@@ -203,15 +207,25 @@ const ProductItem = (props) => {
     <div className="productItem bg-white !rounded-md !overflow-hidden !border-1 !border-[#b1cdee] shadow-[5px_5px_5px_#274a72] ">
       <div className="group imgWrapper !w-[100%] !overflow-hidden !rounded-md relative">
         <Link to={`/product/${props?.item?._id}`}>
-          <div className="img !h-[200px] !overflow-hidden">
+          <div className="img !h-[200px] !overflow-hidden relative">
+            {/* 1. Placeholder ultraligero (carga instantánea) */}
             <img
-              src={props?.item?.images[0]}
-              className="!left-0 !top-0 !w-full !h-[200px] !rounded-md"
+              src={getTinyPlaceholder(props?.item?.images[0])}
+              className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md object-cover"
+              alt=""
+            />
+
+            {/* 2. Imagen real optimizada a 400px (ahorra ~70% de ancho de banda) */}
+            <img
+              src={getOptimizedUrl(props?.item?.images[0], 400)}
+              className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md object-cover z-10"
+              loading="lazy"
             />
 
             <img
-              src={props?.item?.images[1]}
-              className="!left-0 !top-0 !w-full !h-[200px] transition-all duration-700 !rounded-md absolute opacity-0 group-hover:opacity-100 group-hover:scale-105"
+              src={getOptimizedUrl(props?.item?.images[1], 400)}
+              className="!left-0 !top-0 !w-full !h-[200px] transition-all duration-700 !rounded-md absolute opacity-0 group-hover:opacity-100 group-hover:scale-105 object-cover z-20"
+              loading="lazy"
             />
           </div>
         </Link>

@@ -773,7 +773,7 @@ export async function getReviews(request, response) {
 
 export async function getAllReviews(request, response) {
   try {
-    const reviews = await UserModel.find();
+    const reviews = await ReviewModel.find();
 
     if (!reviews) {
       return response.status(400).json({
@@ -798,7 +798,10 @@ export async function getAllReviews(request, response) {
 
 export async function getAllUsers(request, response) {
   try {
-    const users = await UserModel.find();
+    // OPTIMIZACIÓN: No enviar contraseñas ni tokens al frontend para reducir peso y mejorar seguridad
+    const users = await UserModel.find().select(
+      "-password -refresh_token -access_token -otp -otpExpires",
+    );
 
     if (!users) {
       return response.status(400).json({

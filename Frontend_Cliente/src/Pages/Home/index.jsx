@@ -25,6 +25,7 @@ import { fetchDataFromApi } from "../../utils/api";
 import { useState } from "react";
 import { MyContext } from "../../App";
 import ProductLoading from "../../components/ProductLoading";
+import { getOptimizedUrl } from "../../utils/cloudinaryHelper";
 
 const Home = () => {
   const [value, setValue] = useState(0);
@@ -248,6 +249,9 @@ const Home = () => {
                   <img
                     src={brand.logo}
                     alt={brand.name}
+                    loading="lazy"
+                    width="100"
+                    height="140"
                     className="w-[100px] h-[140px] object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110"
                   />
                 </div>
@@ -268,13 +272,13 @@ const Home = () => {
               <BannerBoxV2
                 info="left"
                 item={bannerV1Data[0]}
-                image={bannerV1Data[0]?.images?.[0]}
+                image={getOptimizedUrl(bannerV1Data[0]?.images?.[0], 600)}
               />
 
               <BannerBoxV2
                 info="right"
                 item={bannerV1Data[1]}
-                image={bannerV1Data[1]?.images?.[0]}
+                image={getOptimizedUrl(bannerV1Data[1]?.images?.[0], 600)}
               />
             </div>
           )}
@@ -404,6 +408,9 @@ const Home = () => {
                   <img
                     src={brand.logo}
                     alt={brand.name}
+                    loading="lazy"
+                    width="100"
+                    height="140"
                     className="w-[100px]  h-[140px] object-contain filter grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500 transform group-hover:scale-110"
                   />
                 </div>
