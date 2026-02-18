@@ -59,10 +59,7 @@ const Sidebar = () => {
           }}
         >
           <Link to="/">
-            <img
-              src="../../../imagenes/logo.jpg"
-              className="!w-full !h-[60px]"
-            />
+            <img src="/imagenes/logo1.png" className="!w-full !h-[60px]" />
           </Link>
         </div>
 

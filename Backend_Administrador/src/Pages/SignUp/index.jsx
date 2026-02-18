@@ -91,10 +91,7 @@ const SignUp = () => {
     <section className="!bg-[#fff] !w-full ">
       <header className="w-full static lg:fixed top-0 left-0 !px-4 !py-3 flex items-center justify-center sm:justify-between z-50 bg-none">
         <Link to="/">
-          <img
-            src="https://res.cloudinary.com/dvvw7g0fm/image/upload/v1771420933/logo1_gbeu43.png"
-            className="!w-full !h-[80px]"
-          />
+          <img src="/imagenes/logo1.png" className="!w-full !h-[80px]" />
         </Link>
 
         <div className="hidden sm:flex items-center !gap-2">
@@ -114,16 +111,13 @@ const SignUp = () => {
         </div>
       </header>
       <img
-        src="/imagenes/Login/logoMaquina1.png"
+        src="/imagenes/Login/fondo8.jpg"
         className="!w-full !h-full fixed !top-0 !left-0 opacity-5 "
       />
 
       <div className="loginBox card w-full md:w-[600px] !h-[auto] !pb-20 mx-auto !pt-0 lg:!pt-20 relative z-50 ">
         <div className="text-center">
-          <img
-            src="https://res.cloudinary.com/dvvw7g0fm/image/upload/v1771420933/logo1_gbeu43.png"
-            className="m-auto "
-          />
+          <img src="/imagenes/logoMaquina1.png" className="m-auto " />
         </div>
 
         <h1 className="!text-center !text-gray-800  text-[15px] sm:text-[23px] !font-bold !mt-4">

@@ -9,10 +9,7 @@ const ForgotPassword = () => {
     <section className="!bg-[#fff] !w-full h-[110vh] relative">
       <header className="w-full static lg:fixed top-0 left-0 !px-4 !py-3 flex items-center justify-center sm:justify-between z-50 bg-none">
         <Link to="/">
-          <img
-            src="https://res.cloudinary.com/dvvw7g0fm/image/upload/v1771420933/logo1_gbeu43.png"
-            className="!w-full !h-[80px]"
-          />
+          <img src="/imagenes/logo1.png" className="!w-full !h-[80px]" />
         </Link>
 
         <div className="hidden sm:flex items-center !gap-2">
