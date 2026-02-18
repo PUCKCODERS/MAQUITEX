@@ -122,7 +122,7 @@ const Home = () => {
           <div className="flex items-center justify-between  !flex-col lg:!flex-row">
             <div className="leftSec w-full lg:w-[40%]">
               <h2 className="!text-[16px] sm:!text-[16px] md:!text-[16px] lg:!text-[20px] ">
-                PRODUCTOS POPULARES123456
+                PRODUCTOS POPULARES
               </h2>
               <p className="!text-[10px] sm:!text-[12px] md:!text-[12px] lg:!text-[12px] font-[400] !mt-0 !mb-0">
                 NO TE PIERDAS LAS OFERTAS VIGENTES HASTA FIN DE AÑO
