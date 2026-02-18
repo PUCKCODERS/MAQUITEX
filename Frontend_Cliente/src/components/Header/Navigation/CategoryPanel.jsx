@@ -45,7 +45,10 @@ const CategoryPanel = (props) => {
       className="categoryPanel h-full !bg-white/10 backdrop-blur-sm !shadow-[5px_0px_30px_rgba(255,255,255,0.6)]"
     >
       <div className="!p-0 relative">
-        <img src="../../../imagenes/logo.jpg" className="w-full h-[75px]" />
+        <img
+          src="https://res.cloudinary.com/dvvw7g0fm/image/upload/v1771420933/logo1_gbeu43.png"
+          className="w-full h-[75px]"
+        />
         <IoClose
           onClick={toggleDrawer(false)}
           className="absolute top-[9px] right-[9px] !w-[20px] !h-[20px] !min-w-[20px] !rounded-full !text-[#fff]  !bg-[#274a72] !shadow-[0px_0px_0px_3px_#7994b1] cursor-pointer"

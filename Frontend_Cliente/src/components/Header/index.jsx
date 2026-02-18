@@ -114,7 +114,7 @@ const Header = () => {
 
           <div className="col1 w-[50%] min-[992px]:w-[25%]">
             <Link to={"/"}>
-              <img src="../../../imagenes/logo.jpg" />
+              <img src="https://res.cloudinary.com/dvvw7g0fm/image/upload/v1771420933/logo1_gbeu43.png" />
             </Link>
           </div>
           <div

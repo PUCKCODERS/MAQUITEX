@@ -620,7 +620,7 @@ const Dashboard = () => {
         </div>
 
         <img
-          src="../../../imagenes/Saludo/Saludo4.png"
+          src="/imagenes/Saludo/Saludo4.png"
           className="w-[250px] hidden lg:block"
         />
       </div>
