@@ -218,6 +218,52 @@ const Dashboard = () => {
       if (res?.error === false) {
         const all = res?.data || [];
         setTotalOrdersData(all);
+
+        const total = all.reduce((acc, order) => {
+          if (order?.order_status === "CONFIRMADO") {
+            return acc + parseInt(order?.totalAmt || 0);
+          }
+          return acc;
+        }, 0);
+        setTotalVentas(total);
+
+        const currentYear = new Date().getFullYear();
+        const monthNames = [
+          "ENERO",
+          "FEBRERO",
+          "MARZO",
+          "ABRIL",
+          "MAYO",
+          "JUNIO",
+          "JULIO",
+          "AGOSTO",
+          "SEPTIEMBRE",
+          "OCTUBRE",
+          "NOVIEMBRE",
+          "DICIEMBRE",
+        ];
+        const salesByMonth = {};
+        monthNames.forEach((m) => (salesByMonth[m] = 0));
+
+        all.forEach((order) => {
+          const orderDate = new Date(order.createdAt);
+          if (
+            order?.order_status === "CONFIRMADO" &&
+            orderDate.getFullYear() === currentYear
+          ) {
+            const monthIndex = orderDate.getMonth();
+            salesByMonth[monthNames[monthIndex]] += parseInt(
+              order.totalAmt || 0,
+            );
+          }
+        });
+
+        const chartDataArr = monthNames.map((name) => ({
+          name: name,
+          VENTAS: salesByMonth[name],
+        }));
+        setChartData(chartDataArr);
+
         const totalPages = Math.max(1, Math.ceil(all.length / 6));
         const start = (pageOrder - 1) * 6;
         const pageData = all.slice(start, start + 6);
@@ -257,7 +303,6 @@ const Dashboard = () => {
   }, [pageOrder, totalOrdersData, orderSearchQuery]);
 
   useEffect(() => {
-    getVENTASByYear();
     fetchDataFromApi("/api/user/getAllUsers").then((res) => {
       if (res?.error === false) {
         setUsers(res?.users);
@@ -438,27 +483,50 @@ const Dashboard = () => {
   };
 
   const getVENTASByYear = () => {
-    fetchDataFromApi(`/api/order/sales`).then((res) => {
-      const sales = [];
-      res?.monthlySales?.length !== 0 &&
-        res?.monthlySales?.map((item) => {
-          sales.push({
-            name: item?.name,
-            VENTAS: parseInt(item?.VENTAS),
-          });
-        });
+    const currentYear = new Date().getFullYear();
+    const monthNames = [
+      "ENERO",
+      "FEBRERO",
+      "MARZO",
+      "ABRIL",
+      "MAYO",
+      "JUNIO",
+      "JULIO",
+      "AGOSTO",
+      "SEPTIEMBRE",
+      "OCTUBRE",
+      "NOVIEMBRE",
+      "DICIEMBRE",
+    ];
+    const salesByMonth = {};
+    monthNames.forEach((m) => (salesByMonth[m] = 0));
 
-      const uniqueArr = sales.filter(
-        (obj, index, self) =>
-          index === self.findIndex((t) => t.name === obj.name),
-      );
-      setTotalVentas(
-        res?.VENTAS
-          ? parseInt(res.VENTAS)
-          : uniqueArr.reduce((s, i) => s + (i.VENTAS || 0), 0),
-      );
-      setChartData(uniqueArr);
+    const dataArr = Array.isArray(totalOrdersData) ? totalOrdersData : [];
+
+    dataArr.forEach((order) => {
+      const orderDate = new Date(order.createdAt);
+      if (
+        order?.order_status === "CONFIRMADO" &&
+        orderDate.getFullYear() === currentYear
+      ) {
+        const monthIndex = orderDate.getMonth();
+        salesByMonth[monthNames[monthIndex]] += parseInt(order.totalAmt || 0);
+      }
     });
+
+    const chartDataArr = monthNames.map((name) => ({
+      name: name,
+      VENTAS: salesByMonth[name],
+    }));
+    setChartData(chartDataArr);
+
+    const total = dataArr.reduce((acc, order) => {
+      if (order?.order_status === "CONFIRMADO") {
+        return acc + parseInt(order?.totalAmt || 0);
+      }
+      return acc;
+    }, 0);
+    setTotalVentas(total);
   };
 
   {
