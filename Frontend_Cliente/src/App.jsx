@@ -3,35 +3,36 @@ import "./responsive.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./Pages/Home";
-import ProductListing from "./Pages/ProductListing";
-import ProductDetails from "./Pages/ProductDetails";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, lazy, Suspense } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 
 import Button from "@mui/material/Button";
-import Login from "./Pages/Login";
-import Register from "./Pages/Register";
-import CartPage from "./Pages/Cart";
-import Verify from "./Pages/Verify";
 import toast, { Toaster } from "react-hot-toast";
-import ForgotPassword from "./Pages/ForgotPassword";
-import Checkout from "./Pages/Checkout";
-import MyAccount from "./Pages/MyAccount";
-import MyList from "./Pages/MyList";
-import Orders from "./Pages/Orders";
 import { fetchDataFromApi, postData } from "./utils/api";
-import Address from "./Pages/MyAccount/address";
-import OrderSuccess from "./Pages/Orders/success";
-import OrderFailed from "./Pages/Orders/failed";
-import SearchPage from "./Pages/Search";
-import ServicioTecnico from "./Pages/S.Tecnico";
-import Nosotros from "./Pages/Nosotros";
-import Contacto from "./Pages/Contacto";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Factura from "./Pages/Orders/factura";
-import FirstBlog from "./components/BlogItem/Blogs/FirstBlog";
-import SecondBlog from "./components/BlogItem/Blogs/SecondBlog";
+
+const Home = lazy(() => import("./Pages/Home"));
+const ProductListing = lazy(() => import("./Pages/ProductListing"));
+const ProductDetails = lazy(() => import("./Pages/ProductDetails"));
+const Login = lazy(() => import("./Pages/Login"));
+const Register = lazy(() => import("./Pages/Register"));
+const CartPage = lazy(() => import("./Pages/Cart"));
+const Verify = lazy(() => import("./Pages/Verify"));
+const ForgotPassword = lazy(() => import("./Pages/ForgotPassword"));
+const Checkout = lazy(() => import("./Pages/Checkout"));
+const MyAccount = lazy(() => import("./Pages/MyAccount"));
+const MyList = lazy(() => import("./Pages/MyList"));
+const Orders = lazy(() => import("./Pages/Orders"));
+const Address = lazy(() => import("./Pages/MyAccount/address"));
+const OrderSuccess = lazy(() => import("./Pages/Orders/success"));
+const OrderFailed = lazy(() => import("./Pages/Orders/failed"));
+const SearchPage = lazy(() => import("./Pages/Search"));
+const ServicioTecnico = lazy(() => import("./Pages/S.Tecnico"));
+const Nosotros = lazy(() => import("./Pages/Nosotros"));
+const Contacto = lazy(() => import("./Pages/Contacto"));
+const Factura = lazy(() => import("./Pages/Orders/factura"));
+const FirstBlog = lazy(() => import("./components/BlogItem/Blogs/FirstBlog"));
+const SecondBlog = lazy(() => import("./components/BlogItem/Blogs/SecondBlog"));
 
 const MyContext = createContext();
 
@@ -293,94 +294,96 @@ function App() {
       <BrowserRouter>
         <MyContext.Provider value={values}>
           <Header />
-          <Routes>
-            <Route path={"/"} exact={true} element={<Home />} />
-            <Route
-              path={"/productListing"}
-              exact={true}
-              element={<ProductListing />}
-            />
-            <Route
-              path={"/product/:id"}
-              exact={true}
-              element={<ProductDetails />}
-            />
-            <Route path={"/login"} exact={true} element={<Login />} />
-            <Route path={"/register"} exact={true} element={<Register />} />
-            <Route path={"/cart"} exact={true} element={<CartPage />} />
-            <Route path={"/verify"} exact={true} element={<Verify />} />
-            <Route
-              path={"/forgot-password"}
-              exact={true}
-              element={<ForgotPassword />}
-            />
-            <Route path={"/checkout"} exact={true} element={<Checkout />} />
-            <Route path={"/my-account"} exact={true} element={<MyAccount />} />
-            <Route
-              path={"/my-list"}
-              exact={true}
-              element={
-                <ProtectedRoute>
-                  <MyList />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={"/my-orders"}
-              exact={true}
-              element={
-                <ProtectedRoute>
-                  <Orders />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={"/order/success"}
-              exact={true}
-              element={<OrderSuccess />}
-            />
-            <Route
-              path={"/order/failed"}
-              exact={true}
-              element={<OrderFailed />}
-            />
-            <Route
-              path={"/address"}
-              exact={true}
-              element={
-                <ProtectedRoute>
-                  <Address />
-                </ProtectedRoute>
-              }
-            />
-            <Route path={"/search"} exact={true} element={<SearchPage />} />
-            <Route
-              path={"/s.tecnico"}
-              exact={true}
-              element={<ServicioTecnico />}
-            />
-            <Route path={"/nosotros"} exact={true} element={<Nosotros />} />
-            <Route path={"/contacto"} exact={true} element={<Contacto />} />
-            <Route
-              path={"/factura/:id"}
-              exact={true}
-              element={
-                <ProtectedRoute>
-                  <Factura />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path={"/blog/firstblog"}
-              exact={true}
-              element={<FirstBlog />}
-            />
-            <Route
-              path={"/blog/secondblog"}
-              exact={true}
-              element={<SecondBlog />}
-            />
-          </Routes>
+          <Suspense fallback={<div className="w-full h-screen flex items-center justify-center">Cargando...</div>}>
+            <Routes>
+              <Route path={"/"} exact={true} element={<Home />} />
+              <Route
+                path={"/productListing"}
+                exact={true}
+                element={<ProductListing />}
+              />
+              <Route
+                path={"/product/:id"}
+                exact={true}
+                element={<ProductDetails />}
+              />
+              <Route path={"/login"} exact={true} element={<Login />} />
+              <Route path={"/register"} exact={true} element={<Register />} />
+              <Route path={"/cart"} exact={true} element={<CartPage />} />
+              <Route path={"/verify"} exact={true} element={<Verify />} />
+              <Route
+                path={"/forgot-password"}
+                exact={true}
+                element={<ForgotPassword />}
+              />
+              <Route path={"/checkout"} exact={true} element={<Checkout />} />
+              <Route path={"/my-account"} exact={true} element={<MyAccount />} />
+              <Route
+                path={"/my-list"}
+                exact={true}
+                element={
+                  <ProtectedRoute>
+                    <MyList />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={"/my-orders"}
+                exact={true}
+                element={
+                  <ProtectedRoute>
+                    <Orders />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={"/order/success"}
+                exact={true}
+                element={<OrderSuccess />}
+              />
+              <Route
+                path={"/order/failed"}
+                exact={true}
+                element={<OrderFailed />}
+              />
+              <Route
+                path={"/address"}
+                exact={true}
+                element={
+                  <ProtectedRoute>
+                    <Address />
+                  </ProtectedRoute>
+                }
+              />
+              <Route path={"/search"} exact={true} element={<SearchPage />} />
+              <Route
+                path={"/s.tecnico"}
+                exact={true}
+                element={<ServicioTecnico />}
+              />
+              <Route path={"/nosotros"} exact={true} element={<Nosotros />} />
+              <Route path={"/contacto"} exact={true} element={<Contacto />} />
+              <Route
+                path={"/factura/:id"}
+                exact={true}
+                element={
+                  <ProtectedRoute>
+                    <Factura />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path={"/blog/firstblog"}
+                exact={true}
+                element={<FirstBlog />}
+              />
+              <Route
+                path={"/blog/secondblog"}
+                exact={true}
+                element={<SecondBlog />}
+              />
+            </Routes>
+          </Suspense>
           <Footer />
         </MyContext.Provider>
       </BrowserRouter>
