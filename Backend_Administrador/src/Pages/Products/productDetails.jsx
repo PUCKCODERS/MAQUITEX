@@ -289,8 +289,8 @@ const ProductDetails = () => {
                   key={index}
                   className="w-full !mb-3 !p-4 bg-white rounded-lg shadow-[5px_4px_7px_#082c55]"
                 >
-                  <div className="flex gap-6 w-full">
-                    <div className="img w-[80px] min-w-[80px] h-[80px] lg:w-[80px] lg:h-[80px] overflow-hidden rounded-full border-1 border-[#082c55]">
+                  <div className="flex gap-3 sm:gap-4 w-full mb-3">
+                    <div className="img w-[50px] min-w-[50px] h-[50px] sm:w-[80px] sm:min-w-[80px] sm:h-[80px] overflow-hidden rounded-full border-1 border-[#082c55]">
                       <img
                         src={review.image}
                         className="w-full h-full object-cover"
@@ -298,8 +298,8 @@ const ProductDetails = () => {
                     </div>
 
                     <div className="flex-1">
-                      <div className="flex w-full items-start justify-between">
-                        <h4 className="text-[16px] font-bold hidden lg:block">
+                      <div className="flex flex-col sm:flex-row w-full sm:items-start justify-between mb-1">
+                        <h4 className="text-[14px] sm:text-[16px] font-bold text-[#082c55] mb-1 sm:mb-0">
                           {review.userName}
                         </h4>
 
@@ -308,15 +308,14 @@ const ProductDetails = () => {
                         </div>
                       </div>
 
-                      <span className="text-[13px] font-bold !mb-0 !ml-3 lg:!ml-0">
+                      <span className="text-[12px] sm:text-[13px] font-bold text-gray-500 block">
                         {review.createdAt?.split("T")[0]}
                       </span>
-
-                      <p className="text-[13px] text-[#4e4e4e] !mt-2 !mt-0 !mb-0 text-[#000]  lg:!ml-0 break-words whitespace-pre-wrap">
-                        {review.review}
-                      </p>
                     </div>
                   </div>
+                  <p className="text-[13px] text-[#4e4e4e] break-words whitespace-pre-wrap">
+                    {review.review}
+                  </p>
                 </div>
               ))
             ) : (
