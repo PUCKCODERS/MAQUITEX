@@ -73,7 +73,7 @@ const Reviews = (props) => {
 
   return (
     <div className="w-full productReviewsContainer ">
-      <h2 className="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] !font-[500] !mt-2 !ml-3 ">
+      <h2 className="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] !font-[500] !mt-2 !ml-3">
         PREGUNTAS Y RESPUESTAS DE LOS CLIENTES
       </h2>
 

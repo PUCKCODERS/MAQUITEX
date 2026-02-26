@@ -76,8 +76,8 @@ const ProductDetails = () => {
 
   return (
     <>
-      <div className="flex !bg-white items-center justify-between !px-5 !py-5 !mt-3 !mb-5 sm:rounded-lg border-b dark:!border-gray-700 shadow-[5px_4px_7px_#082c55]">
-        <h2 className="text-[#082c55] text-[20px] !font-[800] ">
+      <div className="flex !bg-white items-center justify-between !px-5 !py-5 !mt-3 !mb-5 sm:rounded-lg border-b dark:!border-gray-700 shadow-[3px_3px_3px_#082c55]">
+        <h2 className="text-[#082c55] !text-[15px] lg:!text-[20px] !font-[800] ">
           DETALLES DE PRODUCTO
         </h2>
       </div>
@@ -89,7 +89,7 @@ const ProductDetails = () => {
           <div className="productDetails flex flex-col lg:flex-row  lg:!gap-8 !mb-3">
             <div className="!w-full lg:!w-[40%]">
               {product?.images?.length !== 0 && (
-                <div className="flex flex-col lg:flex-row !gap-3 !mb-3 lg:!mb-0">
+                <div className="flex flex-col lg:flex-row !gap-1 lg:!gap-3 !mb-3 lg:!mb-0">
                   <div className="slider !w-full lg:!w-[15%] order-2 lg:order-1">
                     <Swiper
                       ref={zoomSliderSml}
