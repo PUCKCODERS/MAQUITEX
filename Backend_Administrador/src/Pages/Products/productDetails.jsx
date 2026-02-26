@@ -150,12 +150,12 @@ const ProductDetails = () => {
             </div>
 
             <div className="!w-full lg:!w-[60%]">
-              <h1 className="text-[25px] text-[#000] !font-bold !mb-4">
+              <h1 className="text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] font-[bold] font-bold text-[#082c55] !mb-2">
                 {product?.name}
               </h1>
 
-              <div className="flex items-center !py-2">
-                <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+              <div className="flex flex-wrap items-center !py-2">
+                <span className="w-[50%] md:w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                   <GiMoneyStack className="text-[20px] text-[#082c55]" />
                   PRECIO :
                 </span>
@@ -163,8 +163,8 @@ const ProductDetails = () => {
                   &#36; {product?.price}
                 </span>
               </div>
-              <div className="flex items-center !py-2">
-                <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+              <div className="flex flex-wrap items-center !py-2">
+                <span className="w-[50%] md:w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                   <MdBrandingWatermark className="text-[20px] text-[#082c55]" />
                   MARCA :
                 </span>
@@ -172,8 +172,8 @@ const ProductDetails = () => {
                   {product?.brand}
                 </span>
               </div>
-              <div className="flex items-center !py-2">
-                <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+              <div className="flex flex-wrap items-center !py-2">
+                <span className="w-[50%] md:w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                   <AiFillDatabase className="text-[20px] text-[#082c55]" />
                   CATEGORÍA :
                 </span>
@@ -183,13 +183,13 @@ const ProductDetails = () => {
               </div>
 
               {product?.productRams?.length !== 0 && (
-                <div className="flex items-center !py-2">
-                  <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+                <div className="flex flex-wrap items-center !py-2">
+                  <span className="w-[50%] md:w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                     <IoIosColorPalette className="text-[20px] text-[#082c55]" />
                     COLOR :
                   </span>
 
-                  <div className="flex items-center !gap-2">
+                  <div className="flex flex-wrap items-center !gap-2">
                     {product?.productRams?.map((ram, index) => {
                       return (
                         <span
@@ -205,13 +205,13 @@ const ProductDetails = () => {
               )}
 
               {product?.productWeight?.length !== 0 && (
-                <div className="flex items-center !py-2">
-                  <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+                <div className="flex flex-wrap items-center !py-2">
+                  <span className="w-[50%] md:w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                     <FaWeightScale className="text-[20px] text-[#082c55]" />
                     PESO :
                   </span>
 
-                  <div className="flex items-center !gap-2">
+                  <div className="flex flex-wrap items-center !gap-2">
                     {product?.productWeight?.map((weight, index) => {
                       return (
                         <span
@@ -227,13 +227,13 @@ const ProductDetails = () => {
               )}
 
               {product?.size?.length !== 0 && (
-                <div className="flex items-center !py-2">
-                  <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+                <div className="flex flex-wrap items-center !py-2">
+                  <span className="w-[50%] md:w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                     <RxRulerSquare className="text-[20px] text-[#082c55]" />
                     TAMAÑO :
                   </span>
 
-                  <div className="flex items-center !gap-2">
+                  <div className="flex flex-wrap items-center !gap-2">
                     {product?.size?.map((size, index) => {
                       return (
                         <span
@@ -248,8 +248,8 @@ const ProductDetails = () => {
                 </div>
               )}
 
-              <div className="flex items-center !py-2">
-                <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+              <div className="flex flex-wrap items-center !py-2">
+                <span className="w-[50%] md:w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                   <BiSolidMessageEdit className="text-[20px] text-[#082c55]" />
                   RESEÑAS :
                 </span>
@@ -258,8 +258,8 @@ const ProductDetails = () => {
                 </span>
               </div>
 
-              <div className="flex items-center !py-2 !mb-3">
-                <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+              <div className="flex flex-wrap items-center !py-2 !mb-3">
+                <span className="w-[50%] md:w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                   <BsPatchCheckFill className="text-[20px] text-[#082c55]" />
                   PUBLICADO :
                 </span>
@@ -268,7 +268,7 @@ const ProductDetails = () => {
                 </span>
               </div>
 
-              <h2 className="text-[25px] font-bold !mb-2">
+              <h2 className="text-[20px] lg:text-[25px] font-bold !mb-2">
                 DESCRIPCIÓN DEL PRODUCTO
               </h2>
 
@@ -282,7 +282,7 @@ const ProductDetails = () => {
 
           <h2 className="text-[20px] font-bold">RESEÑAS DE CLIENTES</h2>
 
-          <div className="!mt-3">
+          <div className="!mt-3 max-h-[300px] overflow-y-scroll overflow-x-hidden !pr-5">
             {reviews.length > 0 ? (
               reviews.map((review, index) => (
                 <div
@@ -290,7 +290,7 @@ const ProductDetails = () => {
                   className="w-full !mb-3 !p-4 bg-white rounded-lg shadow-[5px_4px_7px_#082c55]"
                 >
                   <div className="flex gap-6 w-full">
-                    <div className="w-[85px] h-[85px] rounded-full overflow-hidden border">
+                    <div className="img w-[80px] min-w-[80px] h-[80px] lg:w-[80px] lg:h-[80px] overflow-hidden rounded-full border-1 border-[#082c55]">
                       <img
                         src={review.image}
                         className="w-full h-full object-cover"
@@ -298,21 +298,21 @@ const ProductDetails = () => {
                     </div>
 
                     <div className="flex-1">
-                      <div className="flex w-full items-start">
-                        <h4 className="text-[16px] font-bold">
+                      <div className="flex w-full items-start justify-between">
+                        <h4 className="text-[16px] font-bold hidden lg:block">
                           {review.userName}
                         </h4>
 
-                        <div className="ml-auto">
+                        <div className="flex items-center gap-1">
                           <Rating value={review.rating} readOnly size="small" />
                         </div>
                       </div>
 
-                      <span className="text-[13px] font-bold">
+                      <span className="text-[13px] font-bold !mb-0 !ml-3 lg:!ml-0">
                         {review.createdAt?.split("T")[0]}
                       </span>
 
-                      <p className="text-[13px] text-[#4e4e4e] !mt-2">
+                      <p className="text-[13px] text-[#4e4e4e] !mt-2 !mt-0 !mb-0 text-[#000]  lg:!ml-0 break-words whitespace-pre-wrap">
                         {review.review}
                       </p>
                     </div>

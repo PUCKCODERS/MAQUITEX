@@ -251,7 +251,7 @@ const ProductDetailsComponent = (props) => {
         </div>
       </div>
 
-      <p className="!mt-3 !pr-10 !mb-5 !text-[#000]">
+      <p className="!mt-3 !text-[14px]  text-[#4e4e4e] !mb-5 ">
         {props?.item?.description}
       </p>
 
