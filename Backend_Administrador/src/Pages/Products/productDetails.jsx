@@ -287,7 +287,7 @@ const ProductDetails = () => {
               reviews.map((review, index) => (
                 <div
                   key={index}
-                  className="w-full !mb-3 !p-4 bg-white rounded-lg shadow-[5px_4px_7px_#082c55]"
+                  className="w-full !mb-3 !p-4 bg-white rounded-lg shadow-[3px_3px_3px_#082c55] !border-1"
                 >
                   <div className="flex gap-3 sm:gap-4 w-full mb-3">
                     <div className="img w-[50px] min-w-[50px] h-[50px] sm:w-[80px] sm:min-w-[80px] sm:h-[80px] overflow-hidden rounded-full border-1 border-[#082c55]">

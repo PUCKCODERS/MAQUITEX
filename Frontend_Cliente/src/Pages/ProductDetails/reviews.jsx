@@ -78,42 +78,40 @@ const Reviews = (props) => {
       </h2>
 
       {reviewsData?.length !== 0 && (
-        <div className="reviewScroll w-full max-h-[300px] overflow-y-scroll overflow-x-hidden !mt-5 !pr-5 ">
+        <div className="reviewScroll w-full max-h-[300px] overflow-y-scroll overflow-x-hidden !mt-5 !pr-5  ">
           {reviewsData?.map((review, index) => {
             return (
-              <div className="review border-b !border-gray-300 !pt-5 !pb-3 w-full flex flex-col lg:flex-row lg:items-center justify-between">
-                <div className="info w-full lg:w-[60%] flex flex-col lg:flex-row lg:items-center !gap-3">
-                  <div className="flex items-center gap-3">
-                    <div className="img w-[80px] min-w-[80px] h-[80px] lg:w-[80px] lg:h-[80px] overflow-hidden rounded-full border-1 border-[#082c55]">
-                      <img
-                        key={index}
-                        src={review?.image}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    <h4 className="text-[16px] lg:hidden font-bold">
-                      {review?.userName}
-                    </h4>
+              <div
+                key={index}
+                className="w-full !mb-3 !p-4 bg-white rounded-lg shadow-[3px_3px_3px_#082c55] !border-1"
+              >
+                <div className="flex gap-3 sm:gap-4 w-full mb-3">
+                  <div className="img w-[50px] min-w-[50px] h-[50px] sm:w-[80px] sm:min-w-[80px] sm:h-[80px] overflow-hidden rounded-full border-1 border-[#082c55]">
+                    <img
+                      src={review?.image}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
 
-                  <div className="w-full lg:w-[80%]">
-                    <h4 className="text-[16px] hidden lg:block">
-                      {review?.userName}
-                    </h4>
-                    <h5 className="text-[13px] !mb-0 !ml-3 lg:!ml-0">
+                  <div className="flex-1">
+                    <div className="flex flex-col sm:flex-row w-full sm:items-start justify-between mb-1">
+                      <h4 className="text-[14px] sm:text-[16px] font-bold text-[#082c55] mb-1 sm:mb-0">
+                        {review?.userName}
+                      </h4>
+
+                      <div className="flex items-center gap-1">
+                        <Rating value={review?.rating} readOnly size="small" />
+                      </div>
+                    </div>
+
+                    <span className="text-[12px] sm:text-[13px] font-bold text-gray-500 block">
                       {review?.createdAt?.split("T")[0]}
-                    </h5>
-                    <p className="!mt-0 !mb-0 text-[#000] !ml-3 lg:!ml-0 break-words whitespace-pre-wrap">
-                      {review?.review}
-                    </p>
+                    </span>
                   </div>
                 </div>
-                <Rating
-                  name="size-small"
-                  className="!ml-2 lg:!ml-0"
-                  value={review?.rating}
-                  readOnly
-                />
+                <p className="text-[13px] text-[#4e4e4e] break-words whitespace-pre-wrap">
+                  {review?.review}
+                </p>
               </div>
             );
           })}
