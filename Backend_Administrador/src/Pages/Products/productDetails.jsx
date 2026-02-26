@@ -23,10 +23,20 @@ const ProductDetails = () => {
   const [product, setProduct] = useState();
   const zoomSliderBig = useRef();
   const zoomSliderSml = useRef();
-
   const [reviews, setReviews] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const { id } = useParams();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const goto = (index) => {
     setSlideIndex(index);
@@ -76,19 +86,19 @@ const ProductDetails = () => {
       product?._id !== undefined &&
       product?._id !== null ? (
         <>
-          <div className="productDetails flex !gap-8 !mb-3">
-            <div className="!w-[40%]">
+          <div className="productDetails flex flex-col lg:flex-row  lg:!gap-8 !mb-3">
+            <div className="!w-full lg:!w-[40%]">
               {product?.images?.length !== 0 && (
-                <div className="flex !gap-3">
-                  <div className={`slider !w-[15%]`}>
+                <div className="flex flex-col lg:flex-row !gap-3 !mb-3 lg:!mb-0">
+                  <div className="slider !w-full lg:!w-[15%] order-2 lg:order-1">
                     <Swiper
                       ref={zoomSliderSml}
-                      direction={"vertical"}
+                      direction={windowWidth < 992 ? "horizontal" : "vertical"}
                       slidesPerView={5}
-                      spaceBetween={10}
-                      navigation={true}
+                      spaceBetween={5}
+                      navigation={windowWidth < 992 ? false : true}
                       modules={[Navigation]}
-                      className={`zoomProductSliderThumbs !w-[100%] !h-[500px] overflow-hidden ${
+                      className={`zoomProductSliderThumbs !h-auto lg:!h-[500px] overflow-hidden ${
                         product?.images?.length > 5 && "space"
                       }`}
                     >
@@ -96,7 +106,7 @@ const ProductDetails = () => {
                         return (
                           <SwiperSlide key={index}>
                             <div
-                              className={`item rounded-md !shadow-lg !border-1 border-[#737475] overflow-hidden cursor-pointer group transition-opacity duration-300  ${
+                              className={`item rounded-md !shadow-lg !border-1 border-[#737475] overflow-hidden cursor-pointer group !h-full transition-opacity duration-300 ${
                                 slideIndex === index
                                   ? "opacity-100"
                                   : "opacity-50"
@@ -105,7 +115,7 @@ const ProductDetails = () => {
                             >
                               <img
                                 src={item}
-                                className="!w-[100%] !h-[75px] transition-all group-hover:scale-105 "
+                                className="w-full h-full object-cover transition-all group-hover:scale-105"
                               />
                             </div>
                           </SwiperSlide>
@@ -114,7 +124,7 @@ const ProductDetails = () => {
                     </Swiper>
                   </div>
 
-                  <div className="zoomContainer !w-[85%]  overflow-hidden rounded-md">
+                  <div className="zoomContainer !w-full lg:!w-[85%] !h-auto lg:!h-[500px] overflow-hidden rounded-md order-1 lg:order-2">
                     <Swiper
                       ref={zoomSliderBig}
                       slidesPerView={1}
@@ -128,7 +138,7 @@ const ProductDetails = () => {
                               zoomType="hover"
                               zoomScale={1}
                               src={item}
-                              className="!w-full !h-full !rounded-md !shadow-lg !border-1 border-[#737475] "
+                              className="!w-full !h-full !rounded-md !shadow-lg !border-1 border-[#737475]"
                             />
                           </SwiperSlide>
                         );
@@ -139,7 +149,7 @@ const ProductDetails = () => {
               )}
             </div>
 
-            <div className="!w-[60%]">
+            <div className="!w-full lg:!w-[60%]">
               <h1 className="text-[25px] text-[#000] !font-bold !mb-4">
                 {product?.name}
               </h1>
