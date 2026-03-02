@@ -17,7 +17,7 @@ const ProductModal = ({ open, handleClose, item }) => {
       className="productDetailsModal"
     >
       <DialogContent>
-        <div className="flex flex-col lg:flex-row items-center w-full productDetailsModalContainer relative">
+        <div className="flex flex-col lg:flex-row w-full productDetailsModalContainer relative">
           <Button
             className="!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-[#fff] !absolute !top-[15px] !right-[15px] !bg-[#274a72] hover:!text-[#082c55] hover:!bg-[#fff] !shadow-[0px_0px_0px_3px_#7994b1] hover:!shadow-[0px_0px_0px_3px_#082c55] z-50"
             onClick={handleClose}
