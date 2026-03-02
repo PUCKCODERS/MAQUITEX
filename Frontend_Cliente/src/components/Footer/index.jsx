@@ -22,10 +22,6 @@ import Drawer from "@mui/material/Drawer";
 import CartPanel from "../CartPanel";
 import { MyContext } from "../../App";
 
-import Dialog from "@mui/material/Dialog";
-import DialogContent from "@mui/material/DialogContent";
-import ProductZoom from "../ProductZoom";
-import ProductDetailsComponent from "../ProductDetails";
 import AddAddress from "../../Pages/MyAccount/addAddress";
 
 const Footer = () => {
@@ -302,7 +298,7 @@ const Footer = () => {
                  border-[#38597e] flex items-center justify-center group 
                  hover:bg-[#38597e] transition-all "
               >
-                <FaInstagramSquare className="text-[45px] text-[#082c55] group-hover:text-[#38597e]" />
+                <FaInstagramSquare className="text-[45px] text-[#082c55] group-hover:!text-[#38597e]" />
               </Link>
             </li>
 
@@ -448,43 +444,6 @@ const Footer = () => {
           <AddAddress />
         </div>
       </Drawer>
-
-      <Dialog
-        open={context?.openProductDetailsModal.open}
-        fullWidth={context?.fullWidth}
-        maxWidth={context?.maxWidth}
-        onClose={context?.handleCloseProductDetailsModal}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        className="productDetailsModal"
-      >
-        <DialogContent>
-          <div className="flex items-center w-full productDetailsModalContainer relative">
-            <Button
-              className="!w-[40px] !h-[40px] !min-w-[40px] !rounded-full !text-[#fff] !absolute !top-[15px] !right-[15px] !bg-[#274a72] hover:!text-[#082c55] hover:!bg-[#fff] !shadow-[0px_0px_0px_3px_#7994b1] hover:!shadow-[0px_0px_0px_3px_#082c55]"
-              onClick={context?.handleCloseProductDetailsModal}
-            >
-              <IoCloseSharp className="text-[25px]" />
-            </Button>
-
-            {context?.openProductDetailsModal?.item?.length !== 0 && (
-              <>
-                <div className="col1 w-[40%] !px-3 !py-8">
-                  <ProductZoom
-                    images={context?.openProductDetailsModal?.item?.images}
-                  />
-                </div>
-
-                <div className="col2 w-[60%] !py-8 !px-8 !pr-16 productContent">
-                  <ProductDetailsComponent
-                    item={context?.openProductDetailsModal?.item}
-                  />
-                </div>
-              </>
-            )}
-          </div>
-        </DialogContent>
-      </Dialog>
     </>
   );
 };

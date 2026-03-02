@@ -1,9 +1,24 @@
 .productItem .title {
   line-height: 18px !important;
+  font-size: 14px !important;
 }
+
 .productItem .action button:hover svg {
   color: #fff !important;
 }
+
 .productItem .action button svg {
   pointer-events: none !important;
+}
+
+@media (max-width: 768px) {
+  .productItem .title {
+    font-size: 13px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .productItem .title {
+    font-size: 12px !important;
+  }
 }

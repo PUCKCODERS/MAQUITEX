@@ -37,11 +37,6 @@ const SecondBlog = lazy(() => import("./components/BlogItem/Blogs/SecondBlog"));
 const MyContext = createContext();
 
 function App() {
-  const [openProductDetailsModal, setOpenProductDetailsModal] = useState({
-    open: false,
-    item: {},
-  });
-
   const [isLogin, setIsLogin] = useState(() => {
     const token = localStorage.getItem("accessToken");
     return !!token;
@@ -63,20 +58,6 @@ function App() {
   const [openFilter, setOpenFilter] = useState(false);
   const [isFilterBtnShow, setIsFilterBtnShow] = useState(false);
   const [openSearchPanel, setOpenSearchPanel] = useState(false);
-
-  const handleOpenProductDetailsModal = (status, item) => {
-    setOpenProductDetailsModal({
-      open: status,
-      item: item,
-    });
-  };
-
-  const handleCloseProductDetailsModal = () => {
-    setOpenProductDetailsModal({
-      open: false,
-      item: {},
-    });
-  };
 
   const toggleCartPanel = (newOpen) => () => {
     setOpenCartPanel(newOpen);
@@ -246,10 +227,6 @@ function App() {
   };
 
   const values = {
-    openProductDetailsModal,
-    setOpenProductDetailsModal,
-    handleOpenProductDetailsModal,
-    handleCloseProductDetailsModal,
     setOpenCartPanel,
     toggleCartPanel,
     openCartPanel,
