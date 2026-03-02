@@ -1,13 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Dialog, DialogContent, Button } from "@mui/material";
 import { IoCloseSharp } from "react-icons/io5";
 import ProductZoom from "../ProductZoom";
 import ProductDetailsComponent from "../ProductDetails";
-import { MyContext } from "../../App";
 
 const ProductModal = ({ open, handleClose, item }) => {
-  const context = useContext(MyContext);
-
   return (
     <Dialog
       open={open}
