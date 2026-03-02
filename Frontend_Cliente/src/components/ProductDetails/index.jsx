@@ -364,7 +364,7 @@ const ProductDetailsComponent = (props) => {
           ) : (
             <FaHeart className="text-[18px]  hover:scale-125 transition-transform duration-200 !bg-[transparent]" />
           )}
-          <span className="flex items-center hover:!text-red-600 !gap-2 text-[14px]  font-bold link cursor-pointer">
+          <span className="flex items-center hover:!text-red-600 !gap-2 !text-[12px]  lg:!text-[14px]  font-bold link cursor-pointer">
             AGREGAR A LISTA DE DESEOS
           </span>
         </Button>
