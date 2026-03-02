@@ -172,7 +172,7 @@ const ProductDetails = () => {
           </div>
         ) : (
           <>
-            <div className="container flex !gap-8 flex-col lg:flex-row">
+            <div className="container flex !gap-4 lg:!gap-8 flex-col lg:flex-row">
               <div className="productZoomContainer !w-full lg:!w-[40%] ">
                 <ProductZoom images={productData?.images} />
               </div>
