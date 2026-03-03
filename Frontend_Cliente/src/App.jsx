@@ -10,6 +10,7 @@ import Button from "@mui/material/Button";
 import toast, { Toaster } from "react-hot-toast";
 import { fetchDataFromApi, postData } from "./utils/api";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ProductModal from "./components/ProductItem/ProductModal";
 
 const Home = lazy(() => import("./Pages/Home"));
 const ProductListing = lazy(() => import("./Pages/ProductListing"));
@@ -59,6 +60,9 @@ function App() {
   const [isFilterBtnShow, setIsFilterBtnShow] = useState(false);
   const [openSearchPanel, setOpenSearchPanel] = useState(false);
 
+  const [openProductModal, setOpenProductModal] = useState(false);
+  const [modalProductData, setModalProductData] = useState(null);
+
   const toggleCartPanel = (newOpen) => () => {
     setOpenCartPanel(newOpen);
   };
@@ -68,6 +72,11 @@ function App() {
       setAddressMode("add");
     }
     setOpenAddressPanel(newOpen);
+  };
+
+  const handleOpenProductDetailsModal = (isOpen, product) => {
+    setOpenProductModal(isOpen);
+    setModalProductData(product);
   };
 
   useEffect(() => {
@@ -264,6 +273,7 @@ function App() {
     isFilterBtnShow,
     setOpenSearchPanel,
     openSearchPanel,
+    handleOpenProductDetailsModal,
   };
 
   return (
@@ -271,7 +281,13 @@ function App() {
       <BrowserRouter>
         <MyContext.Provider value={values}>
           <Header />
-          <Suspense fallback={<div className="w-full h-screen flex items-center justify-center">Cargando...</div>}>
+          <Suspense
+            fallback={
+              <div className="w-full h-screen flex items-center justify-center">
+                Cargando...
+              </div>
+            }
+          >
             <Routes>
               <Route path={"/"} exact={true} element={<Home />} />
               <Route
@@ -294,7 +310,11 @@ function App() {
                 element={<ForgotPassword />}
               />
               <Route path={"/checkout"} exact={true} element={<Checkout />} />
-              <Route path={"/my-account"} exact={true} element={<MyAccount />} />
+              <Route
+                path={"/my-account"}
+                exact={true}
+                element={<MyAccount />}
+              />
               <Route
                 path={"/my-list"}
                 exact={true}
@@ -362,6 +382,11 @@ function App() {
             </Routes>
           </Suspense>
           <Footer />
+          <ProductModal
+            open={openProductModal}
+            handleClose={() => handleOpenProductDetailsModal(false, null)}
+            item={modalProductData}
+          />
         </MyContext.Provider>
       </BrowserRouter>
 
