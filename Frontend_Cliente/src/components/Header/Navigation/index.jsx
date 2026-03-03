@@ -125,7 +125,7 @@ const Navigation = (props) => {
                   );
                 })}
 
-              <li className="list-none !text-[#082c55] font-bold font-[bold]">
+              {/* <li className="list-none !text-[#082c55] font-bold font-[bold]">
                 <Link to="/s.tecnico" className="link transition">
                   <Button className="link !transition-all !duration-300 !text-[12px] !text-[#082c55] !bg-[transparent] !font-bold !font-[bold] hover:!text-[#fff] hover:!bg-[#082c55] !py-1">
                     S.TECNICO
@@ -146,7 +146,7 @@ const Navigation = (props) => {
                     CONTACTO
                   </Button>
                 </Link>
-              </li>
+              </li>*/}
             </ul>
           </div>
 

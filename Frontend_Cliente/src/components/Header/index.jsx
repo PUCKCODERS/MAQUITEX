@@ -81,18 +81,26 @@ const Header = () => {
               <ul className="flex items-center gap-3 text-[#082c55] w-full justify-between lg:w-[300px]">
                 <li className="list-none">
                   <Link
-                    to="/help-center"
+                    to="/nosotros"
                     className=" text-[9px] lg:text-[10px] font-bold transition"
                   >
-                    CENTRO DE AYUDA
+                    NOSOTROS
                   </Link>
                 </li>
                 <li className="list-none">
                   <Link
-                    to="/my-orders"
+                    to="/s.tecnico"
                     className=" text-[9px] lg:text-[10px] font-bold transition"
                   >
-                    SEGUIMIENTO DE PEDIDOS
+                    SERVICIO TECNICO
+                  </Link>
+                </li>
+                <li className="list-none">
+                  <Link
+                    to="/contacto"
+                    className=" text-[9px] lg:text-[10px] font-bold transition"
+                  >
+                    CONTACTO
                   </Link>
                 </li>
               </ul>
