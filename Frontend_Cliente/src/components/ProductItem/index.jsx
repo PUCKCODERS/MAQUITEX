@@ -20,7 +20,6 @@ import {
   getTinyPlaceholder,
 } from "../../utils/cloudinaryHelper";
 
-
 import ProductModal from "./ProductModal";
 
 const ProductItem = (props) => {
@@ -305,7 +304,7 @@ const ProductItem = (props) => {
             </div>
           )}
 
-          <span className="discount flex items-center absolute top-[0px] left-[0px] !z-50 bg-[#e05e12] text-white !rounded-lg !p-1 text-[12px] font-[500]">
+          <span className="discount flex items-center absolute top-[0px] left-[0px] !z-50 bg-[#e05e12] text-white !rounded-md !p-1 text-[12px] font-[500]">
             {props?.item?.discount}%
           </span>
 
@@ -421,6 +420,5 @@ const ProductItem = (props) => {
     </>
   );
 };
-
 
 export default ProductItem;
