@@ -63,6 +63,8 @@ const columns = [
   },
 ];
 
+import { getOptimizedUrl } from "../../utils/cloudinaryHelper";
+
 export const Products = () => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -463,7 +465,7 @@ export const Products = () => {
                                   <LazyLoadImage
                                     alt={"image"}
                                     effect="blur"
-                                    src={product?.images[0]}
+                                    src={getOptimizedUrl(product?.images[0], 100)}
                                     className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
                                   />
                                 </Link>

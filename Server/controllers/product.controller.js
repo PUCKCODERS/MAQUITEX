@@ -3,15 +3,8 @@ import ProductRamsModel from "../models/productRams.js";
 import ProductWeightModel from "../models/productWeight.js";
 import ProductSizeModel from "../models/productSize.js";
 
-import { v2 as cloudinary } from "cloudinary";
+import cloudinary from "../config/cloudinaryConfig.js";
 import fs from "fs";
-
-cloudinary.config({
-  cloud_name: process.env.cloudinary_Config_Cloud_Name,
-  api_key: process.env.cloudinary_Config_api_key,
-  api_secret: process.env.cloudinary_Config_api_secret,
-  secure: true,
-});
 
 // PARA PRODUCTO EN GENERAL
 export async function uploadImages(request, response) {
