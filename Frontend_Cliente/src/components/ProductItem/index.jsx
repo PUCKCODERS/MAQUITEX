@@ -220,20 +220,18 @@ const ProductItem = (props) => {
         <div className="group imgWrapper !w-[100%] !overflow-hidden !rounded-md relative">
           <Link to={`/product/${props?.item?._id}`}>
             <div className="img !h-[200px] !overflow-hidden relative">
-              {/* 1. Placeholder ultraligero (carga instantánea) */}
+              {/* Placeholder ultraligero */}
               <img
                 src={getTinyPlaceholder(props?.item?.images[0])}
                 className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md object-cover"
                 alt=""
               />
-
-              {/* 2. Imagen real optimizada a 400px (ahorra ~70% de ancho de banda) */}
+              {/* Imagen optimizada */}
               <img
                 src={getOptimizedUrl(props?.item?.images[0], 400)}
                 className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md object-cover z-10"
                 loading="lazy"
               />
-
               <img
                 src={getOptimizedUrl(props?.item?.images[1], 400)}
                 className="!left-0 !top-0 !w-full !h-[200px] transition-all duration-700 !rounded-md absolute opacity-0 group-hover:opacity-100 group-hover:scale-105 object-cover z-20"

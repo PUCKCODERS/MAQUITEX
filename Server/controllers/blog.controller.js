@@ -20,33 +20,30 @@ export async function uploadImages(request, response) {
       overwrite: false,
       folder: "maquitex/blogs",
       format: "webp",
-      transformation: [{ width: 1200, crop: "limit" }, { quality: "auto" }],
+      transformation: [
+        { width: 1200, crop: "limit" },
+        { quality: "auto" },
+        { fetch_format: "auto" },
+      ],
+      resource_type: "image",
     };
 
     const uploadPromises = image.map(async (file) => {
       try {
         const result = await cloudinary.uploader.upload(file.path, options);
-        try {
-          fs.unlinkSync(file.path);
-        } catch (e) {}
-        return result.secure_url;
-      } catch (e) {
-        return null;
+        return result;
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        throw error;
       }
     });
-    const imagesArr = (await Promise.all(uploadPromises)).filter(
-      (url) => url !== null,
-    );
 
-    return response.status(200).json({
-      images: imagesArr,
-    });
+    const results = await Promise.all(uploadPromises);
+    response.status(200).json({ success: true, results });
   } catch (error) {
-    return response.status(500).json({
-      message: error.message || error,
-      error: true,
-      success: false,
-    });
+    response
+      .status(500)
+      .json({ success: false, message: "Image upload failed", error });
   }
 }
 

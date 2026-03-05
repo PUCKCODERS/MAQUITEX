@@ -24,20 +24,34 @@ export async function uploadImages(request, response) {
       folder: "maquitex/products", // Organiza tus archivos
       format: "webp", // OPTIMIZACIÓN MÁXIMA: Guarda como WebP para ahorrar espacio
       transformation: [
-        { width: 1000, crop: "limit" }, // Redimensiona si es mayor a 1000px
-        { quality: "auto" }, // Compresión automática
+        { width: 800, height: 600, crop: "fill" }, // Mantener proporciones
+        { quality: "auto" },
+        { fetch_format: "auto" },
       ],
+      resource_type: "image",
+    };
+
+    const lowResOptions = {
+      use_filename: true,
+      unique_filename: false,
+      overwrite: false,
+      folder: "maquitex/products/low_res",
+      format: "webp",
+      transformation: [
+        { width: 320, height: 240, crop: "fill" }, // Versión de baja resolución
+        { quality: "auto" },
+        { fetch_format: "auto" },
+      ],
+      resource_type: "image",
     };
 
     // OPTIMIZACIÓN: Subida en paralelo
     const uploadPromises = files.map(async (file) => {
       try {
         const result = await cloudinary.uploader.upload(file.path, options);
-        try {
-          fs.unlinkSync(file.path);
-        } catch (err) {}
         return result.secure_url;
-      } catch (e) {
+      } catch (error) {
+        console.error("Error subiendo imagen:", error);
         return null;
       }
     });
@@ -45,6 +59,8 @@ export async function uploadImages(request, response) {
     const uploadedUrls = (await Promise.all(uploadPromises)).filter(
       (url) => url !== null,
     );
+
+    await Promise.all(lowResUploadPromises);
 
     return response.status(200).json({
       images: uploadedUrls,
@@ -70,7 +86,7 @@ export async function uploadBannerImages(request, response) {
       folder: "maquitex/product_banners",
       format: "webp",
       transformation: [
-        { width: 1920, crop: "limit" }, // Banners pueden ser más anchos
+        { width: 1280, crop: "limit" }, // Reduce width to 1280px for banners
         { quality: "auto" },
       ],
     };
@@ -79,9 +95,6 @@ export async function uploadBannerImages(request, response) {
     const uploadPromises = files.map(async (file) => {
       try {
         const result = await cloudinary.uploader.upload(file.path, options);
-        try {
-          fs.unlinkSync(file.path);
-        } catch (err) {}
         return result.secure_url;
       } catch (e) {
         return null;

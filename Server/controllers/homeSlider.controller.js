@@ -21,17 +21,16 @@ export async function uploadImages(request, response) {
       folder: "maquitex/sliders",
       format: "webp",
       transformation: [
-        { width: 1920, crop: "limit" }, // Full HD máximo
+        { width: 1280, crop: "limit" }, // Reduce width to 1280px for sliders
         { quality: "auto" },
+        { fetch_format: "auto" },
       ],
+      resource_type: "image",
     };
 
     const uploadPromises = image.map(async (file) => {
       try {
         const result = await cloudinary.uploader.upload(file.path, options);
-        try {
-          fs.unlinkSync(file.path);
-        } catch (e) {}
         return result.secure_url;
       } catch (e) {
         return null;
@@ -48,7 +47,6 @@ export async function uploadImages(request, response) {
     return response.status(500).json({
       message: error.message || error,
       error: true,
-      success: false,
     });
   }
 }
@@ -137,8 +135,6 @@ export async function getSlide(request, response) {
 export async function removeImageFromCloudinary(request, response) {
   const imgUrl = request.query.img;
 
-  console.log(imgUrl);
-
   let imageName = "";
   if (imgUrl.includes("maquitex")) {
     const parts = imgUrl.split("/maquitex/");
@@ -149,18 +145,20 @@ export async function removeImageFromCloudinary(request, response) {
   }
 
   if (imageName) {
-    const res = await cloudinary.uploader.destroy(
-      imageName,
-      (error, result) => {},
-    );
-
-    if (res) {
-      return response.status(200).json({
-        error: false,
-        success: true,
-        message: "IMAGEN ELIMINADA EXITOSAMENTE",
+    try {
+      await cloudinary.uploader.destroy(imageName);
+      response.status(200).json({ success: true, message: "Imagen eliminada" });
+    } catch (error) {
+      response.status(500).json({
+        success: false,
+        message: "Error al eliminar imagen",
+        error,
       });
     }
+  } else {
+    response
+      .status(400)
+      .json({ success: false, message: "Nombre de imagen no válido" });
   }
 }
 

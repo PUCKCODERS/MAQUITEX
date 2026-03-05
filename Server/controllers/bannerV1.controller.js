@@ -21,28 +21,60 @@ export async function uploadImages(request, response) {
       folder: "maquitex/banners_v1",
       format: "webp",
       transformation: [
-        { width: 1920, crop: "limit" }, // Full HD es suficiente para banners
+        { width: 1280, height: 720, crop: "fill" }, // Mantener proporciones
         { quality: "auto" },
+        { fetch_format: "auto" },
       ],
+      resource_type: "image",
     };
 
     const uploadPromises = image.map(async (file) => {
       try {
         const result = await cloudinary.uploader.upload(file.path, options);
-        try {
-          fs.unlinkSync(file.path);
-        } catch (e) {}
         return result.secure_url;
-      } catch (e) {
+      } catch (error) {
+        console.error("Error subiendo imagen:", error);
         return null;
       }
     });
-    const imagesArr = (await Promise.all(uploadPromises)).filter(
+
+    const uploadedUrls = (await Promise.all(uploadPromises)).filter(
       (url) => url !== null,
     );
 
+    const lowResOptions = {
+      use_filename: true,
+      unique_filename: false,
+      overwrite: false,
+      folder: "maquitex/banners_v1/low_res",
+      format: "webp",
+      transformation: [
+        { width: 320, height: 180, crop: "fill" }, // Versión de baja resolución
+        { quality: "auto" },
+        { fetch_format: "auto" },
+      ],
+      resource_type: "image",
+    };
+
+    const lowResUploadPromises = image.map(async (file) => {
+      try {
+        const result = await cloudinary.uploader.upload(
+          file.path,
+          lowResOptions,
+        );
+        return result.secure_url;
+      } catch (error) {
+        console.error("Error subiendo imagen de baja resolución:", error);
+        return null;
+      }
+    });
+
+    await Promise.all(lowResUploadPromises);
+
     return response.status(200).json({
-      images: imagesArr,
+      images: uploadedUrls,
+      error: false,
+      success: true,
     });
   } catch (error) {
     return response.status(500).json({
@@ -130,9 +162,12 @@ export async function deleteBanner(request, response) {
       const urlArr = img.split("/");
       imageName = urlArr[urlArr.length - 1].split(".")[0];
     }
-
     if (imageName) {
-      return cloudinary.uploader.destroy(imageName).catch(() => {});
+      try {
+        await cloudinary.uploader.destroy(imageName);
+      } catch (error) {
+        console.error("Error eliminando imagen:", error);
+      }
     }
   });
   await Promise.all(deletePromises);
@@ -171,7 +206,11 @@ export async function updatedBanner(request, response) {
           imageName = urlArr[urlArr.length - 1].split(".")[0];
         }
         if (imageName) {
-          return cloudinary.uploader.destroy(imageName).catch(() => {});
+          try {
+            await cloudinary.uploader.destroy(imageName);
+          } catch (error) {
+            console.error("Error eliminando imagen:", error);
+          }
         }
       });
       await Promise.all(deletePromises);

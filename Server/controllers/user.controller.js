@@ -357,7 +357,9 @@ export async function userAvatarController(request, response) {
       transformation: [
         { width: 300, crop: "limit", gravity: "face" }, // Enfoca la cara y reduce tamaño
         { quality: "auto" },
+        { fetch_format: "auto" },
       ],
+      resource_type: "image",
     };
 
     // OPTIMIZACIÓN VERCEL: Subida en paralelo y limpieza de /tmp
@@ -946,6 +948,51 @@ export async function deleteMultiple(request, response) {
       error: false,
       success: true,
       message: message,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function uploadUserAvatars(request, response) {
+  try {
+    const image = request.files;
+
+    const options = {
+      use_filename: true,
+      unique_filename: false,
+      overwrite: false,
+      folder: "maquitex/avatars",
+      format: "webp",
+      transformation: [
+        { width: 300, crop: "limit", gravity: "face" }, // Focus on face and reduce size
+        { quality: "auto" },
+        { fetch_format: "auto" },
+      ],
+      resource_type: "image",
+    };
+
+    const uploadPromises = image.map(async (file) => {
+      try {
+        const result = await cloudinary.uploader.upload(file.path, options);
+        return result.secure_url;
+      } catch (error) {
+        return null;
+      }
+    });
+
+    const uploadedUrls = (await Promise.all(uploadPromises)).filter(
+      (url) => url !== null,
+    );
+
+    return response.status(200).json({
+      images: uploadedUrls,
+      error: false,
+      success: true,
     });
   } catch (error) {
     return response.status(500).json({

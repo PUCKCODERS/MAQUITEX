@@ -103,7 +103,7 @@ export const Products = () => {
         }
       });
     }
-  }, [searchQuery]);
+  }, [searchQuery, productTotalData]);
 
   const handleSelectAll = (e) => {
     const isChecked = e.target.checked;
@@ -463,7 +463,10 @@ export const Products = () => {
                                   <LazyLoadImage
                                     alt={"image"}
                                     effect="blur"
-                                    src={product?.images[0]}
+                                    src={getOptimizedUrl(
+                                      product?.images[0],
+                                      400,
+                                    )}
                                     className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
                                   />
                                 </Link>
@@ -671,3 +674,15 @@ export const Products = () => {
 };
 
 export default Products;
+
+function getOptimizedUrl(image, size) {
+  if (!image) return "";
+  const url = image;
+  const sizeMap = {
+    400: "w400",
+    600: "w600",
+    800: "w800",
+  };
+  const sizeKey = sizeMap[size];
+  return url.replace(/\/\d+\.\d+$/, `/${sizeKey}`);
+}

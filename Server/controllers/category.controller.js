@@ -20,33 +20,30 @@ export async function uploadImages(request, response) {
       overwrite: false,
       folder: "maquitex/categories",
       format: "webp",
-      transformation: [{ width: 1200, crop: "limit" }, { quality: "auto" }],
+      transformation: [
+        { width: 800, height: 600, crop: "fill" }, // Mantener proporciones
+        { quality: "auto" },
+        { fetch_format: "auto" },
+      ],
+      resource_type: "image",
     };
 
     const uploadPromises = image.map(async (file) => {
       try {
         const result = await cloudinary.uploader.upload(file.path, options);
-        try {
-          fs.unlinkSync(file.path);
-        } catch (e) {}
         return result.secure_url;
-      } catch (e) {
+      } catch (error) {
+        console.error("Error subiendo imagen:", error);
         return null;
       }
     });
-    const imagesArr = (await Promise.all(uploadPromises)).filter(
-      (url) => url !== null,
-    );
 
-    return response.status(200).json({
-      images: imagesArr,
-    });
+    const results = await Promise.all(uploadPromises);
+    response.status(200).json({ success: true, results });
   } catch (error) {
-    return response.status(500).json({
-      message: error.message || error,
-      error: true,
-      success: false,
-    });
+    response
+      .status(500)
+      .json({ success: false, message: "Image upload failed", error });
   }
 }
 
@@ -225,13 +222,11 @@ export async function deleteCategory(request, response) {
   try {
     const category = await CategoryModel.findById(request.params.id);
     if (!category) {
-      return response
-        .status(404)
-        .json({
-          message: "CATEGORÍA NO ENCONTRADA",
-          success: false,
-          error: true,
-        });
+      return response.status(404).json({
+        message: "CATEGORÍA NO ENCONTRADA",
+        success: false,
+        error: true,
+      });
     }
 
     // 1. Recolectar TODAS las imágenes (Padre, Hijos, Nietos)
