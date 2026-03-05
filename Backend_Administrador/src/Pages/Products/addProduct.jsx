@@ -17,8 +17,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { GiSave } from "react-icons/gi";
 import Switch from "@mui/material/Switch";
 
-import { getOptimizedUrl } from "../../utils/cloudinaryHelper";
-
 const AddProduct = () => {
   const [formFields, setFormFields] = useState({
     name: "",
@@ -663,7 +661,7 @@ const AddProduct = () => {
                       className="uploadBox !p-0 rounded-md overflow-hidden border border-[#082c55] h-[150px] w-[100%]
                            bg-gray-200 cursor-pointer hover:bg-gray-300 flex items-center justify-center flex-col "
                     >
-                      <img src={getOptimizedUrl(image, 200)} className="w-100" />
+                      <img src={image} className="w-100" />
                     </div>
                   </div>
                 );
@@ -707,7 +705,7 @@ const AddProduct = () => {
                         className="uploadBox !p-0 rounded-md overflow-hidden border border-[#082c55] h-[150px] w-[100%]
                            bg-gray-200 cursor-pointer hover:bg-gray-300 flex items-center justify-center flex-col "
                       >
-                        <img src={getOptimizedUrl(image, 200)} className="w-100" />
+                        <img src={image} className="w-100" />
                       </div>
                     </div>
                   );
