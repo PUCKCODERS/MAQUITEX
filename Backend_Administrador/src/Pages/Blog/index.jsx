@@ -127,7 +127,7 @@ export const BlogList = () => {
                       <TableCell width={200} className="!text-white">
                         <span
                           className="!text-white text-[15px] !font-[bold]
-                        inline-block w-[200px] sm:w-[200px] md:w-[300px]"
+                        inline-block w-[200px] sm:w-[200px] md:w-[300px] whitespace-normal break-words"
                         >
                           {item?.title}
                         </span>
@@ -135,7 +135,7 @@ export const BlogList = () => {
 
                       <TableCell width={300} className="!text-white">
                         <div
-                          className="w-[250px] sm:w-[200px] md:w-[300px]"
+                          className="w-[250px] sm:w-[200px] md:w-[300px] whitespace-normal break-words"
                           dangerouslySetInnerHTML={{
                             __html: item?.description?.substr(0, 100) + "...",
                           }}
