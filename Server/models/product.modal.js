@@ -117,9 +117,17 @@ const productSchema = mongoose.Schema(
     },
   },
   {
-    timesTamps: true,
-  }
+    timestamps: true,
+  },
 );
+
+// OPTIMIZACIÓN: Índices para búsqueda rápida
+productSchema.index({ name: 1 });
+productSchema.index({ brand: 1 });
+productSchema.index({ catName: 1 });
+productSchema.index({ subCat: 1 });
+productSchema.index({ thirdsubCat: 1 });
+productSchema.index({ category: 1 });
 
 const ProductModel = mongoose.model("Product", productSchema);
 
