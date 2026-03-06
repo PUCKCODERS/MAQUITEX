@@ -10,39 +10,40 @@ cloudinary.config({
   secure: true,
 });
 
-var imagesArr = [];
 export async function uploadImages(request, response) {
   try {
-    imagesArr = [];
-
     const image = request.files;
 
     const options = {
       use_filename: true,
       unique_filename: false,
       overwrite: false,
+      folder: "maquitex/blogs",
+      format: "webp",
+      transformation: [
+        { width: 1200, crop: "limit" },
+        { quality: "auto" },
+        { fetch_format: "auto" },
+      ],
+      resource_type: "image",
     };
 
-    for (let i = 0; i < image?.length; i++) {
-      const img = await cloudinary.uploader.upload(
-        image[i].path,
-        options,
-        function (error, result) {
-          imagesArr.push(result.secure_url);
-          fs.unlinkSync(`uploads/${request.files[i].filename}`);
-        }
-      );
-    }
+    const uploadPromises = image.map(async (file) => {
+      try {
+        const result = await cloudinary.uploader.upload(file.path, options);
+        return result;
+      } catch (error) {
+        console.error("Error uploading image:", error);
+        throw error;
+      }
+    });
 
-    return response.status(200).json({
-      images: imagesArr,
-    });
+    const results = await Promise.all(uploadPromises);
+    response.status(200).json({ success: true, results });
   } catch (error) {
-    return response.status(500).json({
-      message: error.message || error,
-      error: true,
-      success: false,
-    });
+    response
+      .status(500)
+      .json({ success: false, message: "Image upload failed", error });
   }
 }
 
@@ -50,7 +51,7 @@ export async function addBlog(request, response) {
   try {
     let blog = new BlogModel({
       title: request.body.title,
-      images: imagesArr,
+      images: request.body.images,
       description: request.body.description,
     });
 
@@ -63,8 +64,6 @@ export async function addBlog(request, response) {
     }
 
     blog = await blog.save();
-
-    imagesArr = [];
 
     return response.status(200).json({
       message: "BLOG CREADO",
@@ -157,17 +156,22 @@ export async function deleteBlog(request, response) {
 
   let img = "";
 
-  for (img of images) {
-    const imgUrl = img;
-    const urlArr = imgUrl.split("/");
-    const image = urlArr[urlArr.length - 1];
-
-    const imageName = image.split(".")[0];
+  const deletePromises = images.map(async (img) => {
+    let imageName = "";
+    if (img.includes("maquitex")) {
+      const parts = img.split("/maquitex/");
+      imageName =
+        "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+    } else {
+      const urlArr = img.split("/");
+      imageName = urlArr[urlArr.length - 1].split(".")[0];
+    }
 
     if (imageName) {
-      cloudinary.uploader.destroy(imageName, (error, result) => {});
+      return cloudinary.uploader.destroy(imageName).catch(() => {});
     }
-  }
+  });
+  await Promise.all(deletePromises);
 
   const deletedBlog = await BlogModel.findByIdAndDelete(request.params.id);
   if (!deletedBlog) {
@@ -185,14 +189,37 @@ export async function deleteBlog(request, response) {
 }
 
 export async function updatedBlog(request, response) {
+  // OPTIMIZACIÓN: Si hay nuevas imágenes subidas, borrar las anteriores de Cloudinary
+  const newImages = request.body.images;
+  if (newImages && newImages.length > 0) {
+    const oldBlog = await BlogModel.findById(request.params.id);
+    if (oldBlog && oldBlog.images) {
+      const deletePromises = oldBlog.images.map(async (img) => {
+        let imageName = "";
+        if (img.includes("maquitex")) {
+          const parts = img.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = img.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
+        if (imageName) {
+          return cloudinary.uploader.destroy(imageName).catch(() => {});
+        }
+      });
+      await Promise.all(deletePromises);
+    }
+  }
+
   const blog = await BlogModel.findByIdAndUpdate(
     request.params.id,
     {
       title: request.body.title,
-      images: imagesArr.length > 0 ? imagesArr[0] : request.body.images,
+      images: request.body.images,
       description: request.body.description,
     },
-    { new: true }
+    { new: true },
   );
 
   if (!blog) {
@@ -202,8 +229,6 @@ export async function updatedBlog(request, response) {
       error: true,
     });
   }
-
-  imagesArr = [];
 
   response.status(200).json({
     message: "BLOG ACTUALIZADO",

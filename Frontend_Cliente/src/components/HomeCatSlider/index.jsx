@@ -60,7 +60,7 @@ const HomeCatSlider = (props) => {
             );
           })}
 
-          <SwiperSlide>
+          {/*<SwiperSlide>
             <Link to="/s.tecnico">
               <div className="item !py-3 !px-3 bg-white !text-[#556f8d] shadow-[3px_3px_3px_#556f8d] !border-1 !border-[#b1cdee] rounded-lg text-center flex items-center justify-center flex-col">
                 <img
@@ -98,7 +98,7 @@ const HomeCatSlider = (props) => {
                 </h3>
               </div>
             </Link>
-          </SwiperSlide>
+          </SwiperSlide>*/}
         </Swiper>
       </div>
     </div>

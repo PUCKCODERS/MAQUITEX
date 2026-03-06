@@ -23,10 +23,20 @@ const ProductDetails = () => {
   const [product, setProduct] = useState();
   const zoomSliderBig = useRef();
   const zoomSliderSml = useRef();
-
   const [reviews, setReviews] = useState([]);
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   const { id } = useParams();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const goto = (index) => {
     setSlideIndex(index);
@@ -66,8 +76,8 @@ const ProductDetails = () => {
 
   return (
     <>
-      <div className="flex !bg-white items-center justify-between !px-5 !py-5 !mt-3 !mb-5 sm:rounded-lg border-b dark:!border-gray-700 shadow-[5px_4px_7px_#082c55]">
-        <h2 className="text-[#082c55] text-[20px] !font-[800] ">
+      <div className="flex !bg-white items-center justify-between !px-5 !py-5 !mt-3 !mb-5 sm:rounded-lg border-b dark:!border-gray-700 shadow-[3px_3px_3px_#082c55]">
+        <h2 className="text-[#082c55] !text-[15px] lg:!text-[20px] !font-[800] ">
           DETALLES DE PRODUCTO
         </h2>
       </div>
@@ -76,19 +86,19 @@ const ProductDetails = () => {
       product?._id !== undefined &&
       product?._id !== null ? (
         <>
-          <div className="productDetails flex !gap-8 !mb-3">
-            <div className="!w-[40%]">
+          <div className="productDetails flex flex-col lg:flex-row  lg:!gap-8 !mb-3">
+            <div className="!w-full lg:!w-[40%]">
               {product?.images?.length !== 0 && (
-                <div className="flex !gap-3">
-                  <div className={`slider !w-[15%]`}>
+                <div className="flex flex-col lg:flex-row !gap-1 lg:!gap-3 !mb-3 lg:!mb-0">
+                  <div className="slider !w-full lg:!w-[15%] order-2 lg:order-1">
                     <Swiper
                       ref={zoomSliderSml}
-                      direction={"vertical"}
+                      direction={windowWidth < 992 ? "horizontal" : "vertical"}
                       slidesPerView={5}
-                      spaceBetween={10}
-                      navigation={true}
+                      spaceBetween={5}
+                      navigation={windowWidth < 992 ? false : true}
                       modules={[Navigation]}
-                      className={`zoomProductSliderThumbs !w-[100%] !h-[500px] overflow-hidden ${
+                      className={`zoomProductSliderThumbs !h-auto lg:!h-[500px] overflow-hidden ${
                         product?.images?.length > 5 && "space"
                       }`}
                     >
@@ -96,7 +106,7 @@ const ProductDetails = () => {
                         return (
                           <SwiperSlide key={index}>
                             <div
-                              className={`item rounded-md !shadow-lg !border-1 border-[#737475] overflow-hidden cursor-pointer group transition-opacity duration-300  ${
+                              className={`item rounded-md !shadow-lg !border-1 border-[#737475] overflow-hidden cursor-pointer group !h-full transition-opacity duration-300 ${
                                 slideIndex === index
                                   ? "opacity-100"
                                   : "opacity-50"
@@ -105,7 +115,7 @@ const ProductDetails = () => {
                             >
                               <img
                                 src={item}
-                                className="!w-[100%] !h-[75px] transition-all group-hover:scale-105 "
+                                className="w-full h-full object-cover transition-all group-hover:scale-105"
                               />
                             </div>
                           </SwiperSlide>
@@ -114,7 +124,7 @@ const ProductDetails = () => {
                     </Swiper>
                   </div>
 
-                  <div className="zoomContainer !w-[85%]  overflow-hidden rounded-md">
+                  <div className="zoomContainer !w-full lg:!w-[85%] !h-auto lg:!h-[500px] overflow-hidden rounded-md order-1 lg:order-2">
                     <Swiper
                       ref={zoomSliderBig}
                       slidesPerView={1}
@@ -128,7 +138,7 @@ const ProductDetails = () => {
                               zoomType="hover"
                               zoomScale={1}
                               src={item}
-                              className="!w-full !h-full !rounded-md !shadow-lg !border-1 border-[#737475] "
+                              className="!w-full !h-full !rounded-md !shadow-lg !border-1 border-[#737475]"
                             />
                           </SwiperSlide>
                         );
@@ -139,13 +149,13 @@ const ProductDetails = () => {
               )}
             </div>
 
-            <div className="!w-[60%]">
-              <h1 className="text-[25px] text-[#000] !font-bold !mb-4">
+            <div className="!w-full lg:!w-[60%]">
+              <h1 className="text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] font-[bold] font-bold text-[#082c55] !mb-2">
                 {product?.name}
               </h1>
 
-              <div className="flex items-center !py-2">
-                <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+              <div className="flex flex-wrap items-center !py-2">
+                <span className="w-[50%] md:w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                   <GiMoneyStack className="text-[20px] text-[#082c55]" />
                   PRECIO :
                 </span>
@@ -153,8 +163,8 @@ const ProductDetails = () => {
                   &#36; {product?.price}
                 </span>
               </div>
-              <div className="flex items-center !py-2">
-                <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+              <div className="flex flex-wrap items-center !py-2">
+                <span className="w-[50%] md:w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                   <MdBrandingWatermark className="text-[20px] text-[#082c55]" />
                   MARCA :
                 </span>
@@ -162,8 +172,8 @@ const ProductDetails = () => {
                   {product?.brand}
                 </span>
               </div>
-              <div className="flex items-center !py-2">
-                <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+              <div className="flex flex-wrap items-center !py-2">
+                <span className="w-[50%] md:w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                   <AiFillDatabase className="text-[20px] text-[#082c55]" />
                   CATEGORÍA :
                 </span>
@@ -173,13 +183,13 @@ const ProductDetails = () => {
               </div>
 
               {product?.productRams?.length !== 0 && (
-                <div className="flex items-center !py-2">
-                  <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+                <div className="flex flex-wrap items-center !py-2">
+                  <span className="w-[50%] md:w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                     <IoIosColorPalette className="text-[20px] text-[#082c55]" />
                     COLOR :
                   </span>
 
-                  <div className="flex items-center !gap-2">
+                  <div className="flex flex-wrap items-center !gap-2">
                     {product?.productRams?.map((ram, index) => {
                       return (
                         <span
@@ -195,13 +205,13 @@ const ProductDetails = () => {
               )}
 
               {product?.productWeight?.length !== 0 && (
-                <div className="flex items-center !py-2">
-                  <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+                <div className="flex flex-wrap items-center !py-2">
+                  <span className="w-[50%] md:w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                     <FaWeightScale className="text-[20px] text-[#082c55]" />
                     PESO :
                   </span>
 
-                  <div className="flex items-center !gap-2">
+                  <div className="flex flex-wrap items-center !gap-2">
                     {product?.productWeight?.map((weight, index) => {
                       return (
                         <span
@@ -217,13 +227,13 @@ const ProductDetails = () => {
               )}
 
               {product?.size?.length !== 0 && (
-                <div className="flex items-center !py-2">
-                  <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+                <div className="flex flex-wrap items-center !py-2">
+                  <span className="w-[50%] md:w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                     <RxRulerSquare className="text-[20px] text-[#082c55]" />
                     TAMAÑO :
                   </span>
 
-                  <div className="flex items-center !gap-2">
+                  <div className="flex flex-wrap items-center !gap-2">
                     {product?.size?.map((size, index) => {
                       return (
                         <span
@@ -238,8 +248,8 @@ const ProductDetails = () => {
                 </div>
               )}
 
-              <div className="flex items-center !py-2">
-                <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+              <div className="flex flex-wrap items-center !py-2">
+                <span className="w-[50%] md:w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                   <BiSolidMessageEdit className="text-[20px] text-[#082c55]" />
                   RESEÑAS :
                 </span>
@@ -248,8 +258,8 @@ const ProductDetails = () => {
                 </span>
               </div>
 
-              <div className="flex items-center !py-2 !mb-3">
-                <span className="w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
+              <div className="flex flex-wrap items-center !py-2 !mb-3">
+                <span className="w-[50%] md:w-[25%] text-[#000] !font-bold flex items-center !gap-2 text-[14px]">
                   <BsPatchCheckFill className="text-[20px] text-[#082c55]" />
                   PUBLICADO :
                 </span>
@@ -258,7 +268,7 @@ const ProductDetails = () => {
                 </span>
               </div>
 
-              <h2 className="text-[25px] font-bold !mb-2">
+              <h2 className="text-[20px] lg:text-[25px] font-bold !mb-2">
                 DESCRIPCIÓN DEL PRODUCTO
               </h2>
 
@@ -272,15 +282,15 @@ const ProductDetails = () => {
 
           <h2 className="text-[20px] font-bold">RESEÑAS DE CLIENTES</h2>
 
-          <div className="!mt-3">
+          <div className="!mt-3 max-h-[300px] overflow-y-scroll overflow-x-hidden !pr-5">
             {reviews.length > 0 ? (
               reviews.map((review, index) => (
                 <div
                   key={index}
-                  className="w-full !mb-3 !p-4 bg-white rounded-lg shadow-[5px_4px_7px_#082c55]"
+                  className="w-full !mb-3 !p-4 bg-white rounded-lg shadow-[3px_3px_3px_#082c55] !border-1"
                 >
-                  <div className="flex gap-6 w-full">
-                    <div className="w-[85px] h-[85px] rounded-full overflow-hidden border">
+                  <div className="flex gap-3 sm:gap-4 w-full mb-3">
+                    <div className="img w-[50px] min-w-[50px] h-[50px] sm:w-[80px] sm:min-w-[80px] sm:h-[80px] overflow-hidden rounded-full border-1 border-[#082c55]">
                       <img
                         src={review.image}
                         className="w-full h-full object-cover"
@@ -288,25 +298,24 @@ const ProductDetails = () => {
                     </div>
 
                     <div className="flex-1">
-                      <div className="flex w-full items-start">
-                        <h4 className="text-[16px] font-bold">
+                      <div className="flex flex-col sm:flex-row w-full sm:items-start justify-between mb-1">
+                        <h4 className="text-[14px] sm:text-[16px] font-bold text-[#082c55] mb-1 sm:mb-0">
                           {review.userName}
                         </h4>
 
-                        <div className="ml-auto">
+                        <div className="flex items-center gap-1">
                           <Rating value={review.rating} readOnly size="small" />
                         </div>
                       </div>
 
-                      <span className="text-[13px] font-bold">
+                      <span className="text-[12px] sm:text-[13px] font-bold text-gray-500 block">
                         {review.createdAt?.split("T")[0]}
                       </span>
-
-                      <p className="text-[13px] text-[#4e4e4e] !mt-2">
-                        {review.review}
-                      </p>
                     </div>
                   </div>
+                  <p className="text-[13px] text-[#4e4e4e] break-words whitespace-pre-wrap">
+                    {review.review}
+                  </p>
                 </div>
               ))
             ) : (

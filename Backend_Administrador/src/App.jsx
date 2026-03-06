@@ -1,38 +1,34 @@
 import "./App.css";
 import "./responsive.css";
-import React, { useEffect } from "react";
+import React, { useEffect, lazy, Suspense } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Dashboard from "./Pages/Dashboard";
 import Header from "./Components/Header";
 import Sidebar from "./Components/Sidebar";
 import { createContext, useState } from "react";
-import Login from "./Pages/Login";
-import SignUp from "./Pages/SignUp";
-import Products from "./Pages/Products";
-import ProductDetails from "./Pages/Products/productDetails.jsx";
-
-import HomeSliderBanners from "./Pages/HomeSliderBanners";
-
-import CategoryList from "./Pages/Category";
-
-import SubCategoryList from "./Pages/Category/subCatList.jsx";
-
-import Users from "./Pages/Users";
-import Orders from "./Pages/Orders";
-import ForgotPassword from "./Pages/ForgotPassword";
-import VerifyAccount from "./Pages/VerifyAccount";
-import ChangePassword from "./Pages/ChangePassword";
-
 import toast, { Toaster } from "react-hot-toast";
 import { fetchDataFromApi } from "./utils/api";
-import Profile from "./Pages/Profile";
-import AddRams from "./Pages/Products/addRams.jsx";
-import AddWeight from "./Pages/Products/addWeight.jsx";
-import AddSize from "./Pages/Products/addSize.jsx";
-import BannerV1List from "./Pages/Banners/bannerV1List.jsx";
-import BlogList from "./Pages/Blog/index.jsx";
-import BannerV2List from "./Pages/Banners/bannerV2List.jsx";
-import Factura from "./Pages/Orders/factura.jsx";
+
+const Dashboard = lazy(() => import("./Pages/Dashboard"));
+const Login = lazy(() => import("./Pages/Login"));
+const SignUp = lazy(() => import("./Pages/SignUp"));
+const Products = lazy(() => import("./Pages/Products"));
+const ProductDetails = lazy(() => import("./Pages/Products/productDetails.jsx"));
+const HomeSliderBanners = lazy(() => import("./Pages/HomeSliderBanners"));
+const CategoryList = lazy(() => import("./Pages/Category"));
+const SubCategoryList = lazy(() => import("./Pages/Category/subCatList.jsx"));
+const Users = lazy(() => import("./Pages/Users"));
+const Orders = lazy(() => import("./Pages/Orders"));
+const ForgotPassword = lazy(() => import("./Pages/ForgotPassword"));
+const VerifyAccount = lazy(() => import("./Pages/VerifyAccount"));
+const ChangePassword = lazy(() => import("./Pages/ChangePassword"));
+const Profile = lazy(() => import("./Pages/Profile"));
+const AddRams = lazy(() => import("./Pages/Products/addRams.jsx"));
+const AddWeight = lazy(() => import("./Pages/Products/addWeight.jsx"));
+const AddSize = lazy(() => import("./Pages/Products/addSize.jsx"));
+const BannerV1List = lazy(() => import("./Pages/Banners/bannerV1List.jsx"));
+const BlogList = lazy(() => import("./Pages/Blog/index.jsx"));
+const BannerV2List = lazy(() => import("./Pages/Banners/bannerV2List.jsx"));
+const Factura = lazy(() => import("./Pages/Orders/factura.jsx"));
 
 const MyContext = createContext();
 
@@ -50,6 +46,12 @@ function App() {
     id: "",
   });
 
+  const suspenseFallback = (
+    <div className="w-full h-screen flex items-center justify-center">
+      Cargando...
+    </div>
+  );
+
   useEffect(() => {
     if (windowWidth < 992) {
       setisSidebarOpen(false);
@@ -64,7 +66,7 @@ function App() {
       path: "/",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <section className="main">
             <Header />
             <div className="contentMain flex">
@@ -98,59 +100,59 @@ function App() {
               </div>
             </div>
           </section>
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/login",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <Login />
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/sign-up",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <SignUp />
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/forgot-password",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <ForgotPassword />
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/verify-account",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <VerifyAccount />
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/change-password",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <ChangePassword />
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/products",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <section className="main">
             <Header />
             <div className="contentMain flex">
@@ -170,14 +172,14 @@ function App() {
               </div>
             </div>
           </section>
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/homeSlider/list",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <section className="main">
             <Header />
             <div className="contentMain flex">
@@ -197,14 +199,14 @@ function App() {
               </div>
             </div>
           </section>
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/category/list",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <section className="main">
             <Header />
             <div className="contentMain flex">
@@ -224,14 +226,14 @@ function App() {
               </div>
             </div>
           </section>
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/subCategory/List",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <section className="main">
             <Header />
             <div className="contentMain flex">
@@ -251,14 +253,14 @@ function App() {
               </div>
             </div>
           </section>
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/users",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <section className="main">
             <Header />
             <div className="contentMain flex">
@@ -278,14 +280,14 @@ function App() {
               </div>
             </div>
           </section>
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/orders",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <section className="main">
             <Header />
             <div className="contentMain flex">
@@ -305,14 +307,14 @@ function App() {
               </div>
             </div>
           </section>
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/factura/:id",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <section className="main">
             <Header />
             <div className="contentMain flex">
@@ -332,14 +334,14 @@ function App() {
               </div>
             </div>
           </section>
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/profile",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <section className="main">
             <Header />
             <div className="contentMain flex">
@@ -359,14 +361,14 @@ function App() {
               </div>
             </div>
           </section>
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/product/:id",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <section className="main">
             <Header />
             <div className="contentMain flex">
@@ -386,14 +388,14 @@ function App() {
               </div>
             </div>
           </section>
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/product/addRams",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <section className="main">
             <Header />
             <div className="contentMain flex">
@@ -413,14 +415,14 @@ function App() {
               </div>
             </div>
           </section>
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/product/addWeight",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <section className="main">
             <Header />
             <div className="contentMain flex">
@@ -440,14 +442,14 @@ function App() {
               </div>
             </div>
           </section>
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/product/addSize",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <section className="main">
             <Header />
             <div className="contentMain flex">
@@ -467,14 +469,14 @@ function App() {
               </div>
             </div>
           </section>
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/bannerV1/list",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <section className="main">
             <Header />
             <div className="contentMain flex">
@@ -494,14 +496,14 @@ function App() {
               </div>
             </div>
           </section>
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/bannerV2/list",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <section className="main">
             <Header />
             <div className="contentMain flex">
@@ -521,14 +523,14 @@ function App() {
               </div>
             </div>
           </section>
-        </>
+        </Suspense>
       ),
     },
     {
       path: "/blog/list",
       exact: true,
       element: (
-        <>
+        <Suspense fallback={suspenseFallback}>
           <section className="main">
             <Header />
             <div className="contentMain flex">
@@ -548,7 +550,7 @@ function App() {
               </div>
             </div>
           </section>
-        </>
+        </Suspense>
       ),
     },
   ]);

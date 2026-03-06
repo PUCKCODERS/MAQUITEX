@@ -7,6 +7,10 @@ import { GoTriangleDown } from "react-icons/go";
 import Rating from "@mui/material/Rating";
 import { fetchDataFromApi, editData, deleteData } from "../../utils/api";
 import { MyContext } from "../../App";
+import {
+  getOptimizedUrl,
+  getTinyPlaceholder,
+} from "../../utils/cloudinaryHelper";
 
 const CartItems = (props) => {
   const context = useContext(MyContext);
@@ -172,8 +176,12 @@ const CartItems = (props) => {
       <div className="img w-[40%] sm:w-[30%] lg:w-[20%] rounded-md overflow-hidden shadow-[3px_3px_3px_#274a72] border-1 border-[#acb1b8]">
         <Link to={`/product/${props?.item?.productId}`} className="group">
           <img
-            src={props?.item?.image}
+            src={
+              getOptimizedUrl(props?.item?.image, 400) ||
+              getTinyPlaceholder(props?.item?.image)
+            }
             className="!w-full !h-[180px] group-hover:scale-105 transition-all"
+            loading="lazy"
           />
         </Link>
       </div>

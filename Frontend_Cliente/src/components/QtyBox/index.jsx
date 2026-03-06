@@ -22,25 +22,26 @@ const QtyBox = (props) => {
   };
 
   return (
-    <div className="qtyBox flex items-center relative ">
+    <div className="qtyBox flex items-center border border-[#7994b1] rounded-md overflow-hidden">
       <input
         type="number"
-        className="!w-full !h-[40px] !p-2 !pl-5 text-[15px] focus:outline-none border border-[#7994b1] rounded-md"
+        className="!w-full !h-[40px] text-center text-[15px] focus:outline-none"
         value={qtyVal}
+        readOnly
       />
 
-      <div className="flex items-center flex-col justify-between !h-[40px] absolute !top-0 !right-0 !-50 ">
+      <div className="flex items-center flex-col">
         <Button
-          className="!min-w-[25px] !w-[25px] !h-[20px] !text-[#274a72] !rounded-none !bg-[#274a72]"
+          className="!min-w-[25px] !w-[25px] !h-[20px] !rounded-none !bg-[#274a72] !text-white"
           onClick={plusQty}
         >
-          <FaAngleUp className="text-[14px] text-white" />
+          <FaAngleUp className="text-[14px]" />
         </Button>
         <Button
-          className="!min-w-[25px] !w-[25px] !h-[20px] !text-[#274a72] !rounded-none !bg-[#274a72]"
+          className="!min-w-[25px] !w-[25px] !h-[20px] !rounded-none !bg-[#274a72] !text-white"
           onClick={minusQty}
         >
-          <FaAngleDown className="text-[14px] text-white" />
+          <FaAngleDown className="text-[14px]" />
         </Button>
       </div>
     </div>

@@ -8,6 +8,10 @@ import { deleteData, postData } from "../../utils/api";
 import { BsFillBagCheckFill } from "react-icons/bs";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {
+  getOptimizedUrl,
+  getTinyPlaceholder,
+} from "../../utils/cloudinaryHelper";
 
 const VITE_APP_RAZORPAY_KEY_ID = import.meta.env.VITE_APP_RAZORPAY_KEY_ID;
 const VITE_APP_RAZORPAY_KEY_SECRET = import.meta.env
@@ -369,8 +373,12 @@ const Checkout = () => {
                         <div className="part1 flex items-center !gap-2">
                           <div className="img !w-[50px] sm:!w-[100px] md:!w-[50px] lg:!w-[50px] !h-[50px]  sm:!h-[100px] md:!h-[50px] lg:!h-[50px] object-cover overflow-hidden border-1 border-[#8998aa] rounded-md group cursor-pointer shadow-[2px_2px_3px_#082c55]">
                             <img
-                              src={item?.image}
+                              src={
+                                getOptimizedUrl(item?.image, 400) ||
+                                getTinyPlaceholder(item?.image)
+                              }
                               className="w-full !h-[50px] sm:!h-[100px] md:!h-[50px] lg:!h-[50px] group-hover:scale-105 overflow-hidden "
+                              loading="lazy"
                             />
                           </div>
                           <div className="info ">

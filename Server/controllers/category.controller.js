@@ -10,39 +10,40 @@ cloudinary.config({
   secure: true,
 });
 
-var imagesArr = [];
 export async function uploadImages(request, response) {
   try {
-    imagesArr = [];
-
     const image = request.files;
 
     const options = {
       use_filename: true,
       unique_filename: false,
       overwrite: false,
+      folder: "maquitex/categories",
+      format: "webp",
+      transformation: [
+        { width: 800, height: 600, crop: "fill" }, // Mantener proporciones
+        { quality: "auto" },
+        { fetch_format: "auto" },
+      ],
+      resource_type: "image",
     };
 
-    for (let i = 0; i < image?.length; i++) {
-      const img = await cloudinary.uploader.upload(
-        image[i].path,
-        options,
-        function (error, result) {
-          imagesArr.push(result.secure_url);
-          fs.unlinkSync(`uploads/${request.files[i].filename}`);
-        }
-      );
-    }
+    const uploadPromises = image.map(async (file) => {
+      try {
+        const result = await cloudinary.uploader.upload(file.path, options);
+        return result.secure_url;
+      } catch (error) {
+        console.error("Error subiendo imagen:", error);
+        return null;
+      }
+    });
 
-    return response.status(200).json({
-      images: imagesArr,
-    });
+    const results = await Promise.all(uploadPromises);
+    response.status(200).json({ success: true, results });
   } catch (error) {
-    return response.status(500).json({
-      message: error.message || error,
-      error: true,
-      success: false,
-    });
+    response
+      .status(500)
+      .json({ success: false, message: "Image upload failed", error });
   }
 }
 
@@ -50,7 +51,7 @@ export async function createCategory(request, response) {
   try {
     let category = new CategoryModel({
       name: request.body.name,
-      images: imagesArr,
+      images: request.body.images,
       parentId: request.body.parentId,
       parentCatName: request.body.parentCatName,
     });
@@ -64,8 +65,6 @@ export async function createCategory(request, response) {
     }
 
     category = await category.save();
-
-    imagesArr = [];
 
     return response.status(200).json({
       message: "CATEGORÍA CREADA",
@@ -194,15 +193,19 @@ export async function removeImageFromCloudinary(request, response) {
 
   console.log(imgUrl);
 
-  const urlArr = imgUrl.split("/");
-  const image = urlArr[urlArr.length - 1];
-
-  const imageName = image.split(".")[0];
+  let imageName = "";
+  if (imgUrl.includes("maquitex")) {
+    const parts = imgUrl.split("/maquitex/");
+    imageName = "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+  } else {
+    const urlArr = imgUrl.split("/");
+    imageName = urlArr[urlArr.length - 1].split(".")[0];
+  }
 
   if (imageName) {
     const res = await cloudinary.uploader.destroy(
       imageName,
-      (error, result) => {}
+      (error, result) => {},
     );
 
     if (res) {
@@ -216,68 +219,108 @@ export async function removeImageFromCloudinary(request, response) {
 }
 
 export async function deleteCategory(request, response) {
-  const category = await CategoryModel.findById(request.params.id);
-  const images = category.images;
-  let img = "";
-
-  for (img of images) {
-    const imgUrl = img;
-    const urlArr = imgUrl.split("/");
-    const image = urlArr[urlArr.length - 1];
-
-    const imageName = image.split(".")[0];
-
-    if (imageName) {
-      cloudinary.uploader.destroy(imageName, (error, result) => {});
+  try {
+    const category = await CategoryModel.findById(request.params.id);
+    if (!category) {
+      return response.status(404).json({
+        message: "CATEGORÍA NO ENCONTRADA",
+        success: false,
+        error: true,
+      });
     }
-  }
 
-  const subCategory = await CategoryModel.find({
-    parentId: request.params.id,
-  });
+    // 1. Recolectar TODAS las imágenes (Padre, Hijos, Nietos)
+    const allImagesToDelete = [];
+    if (category.images) allImagesToDelete.push(...category.images);
 
-  for (let i = 0; i < subCategory.length; i++) {
-    const thirdsubCategory = await CategoryModel.find({
-      parentId: subCategory[i]._id,
+    // Buscar subcategorías
+    const subCategories = await CategoryModel.find({
+      parentId: request.params.id,
+    });
+    const subCategoryIds = subCategories.map((cat) => cat._id);
+    subCategories.forEach((cat) => {
+      if (cat.images) allImagesToDelete.push(...cat.images);
     });
 
-    for (let i = 0; i < thirdsubCategory.length; i++) {
-      const deleteThirdSubCat = await CategoryModel.findByIdAndDelete(
-        thirdsubCategory[i]._id
-      );
-    }
+    // Buscar categorías de tercer nivel
+    const thirdCategories = await CategoryModel.find({
+      parentId: { $in: subCategoryIds },
+    });
+    const thirdCategoryIds = thirdCategories.map((cat) => cat._id);
+    thirdCategories.forEach((cat) => {
+      if (cat.images) allImagesToDelete.push(...cat.images);
+    });
 
-    const deletedSubCat = await CategoryModel.findByIdAndDelete(
-      subCategory[i]._id
-    );
-  }
+    // 2. Eliminar TODAS las imágenes en paralelo
+    const deleteImagePromises = allImagesToDelete.map(async (img) => {
+      let imageName = "";
+      if (img.includes("maquitex")) {
+        const parts = img.split("/maquitex/");
+        imageName =
+          "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+      } else {
+        const urlArr = img.split("/");
+        imageName = urlArr[urlArr.length - 1].split(".")[0];
+      }
+      if (imageName) {
+        return cloudinary.uploader.destroy(imageName).catch(() => {});
+      }
+    });
+    await Promise.all(deleteImagePromises);
 
-  const deletedCat = await CategoryModel.findByIdAndDelete(request.params.id);
-  if (!deletedCat) {
-    response.status(400).json({
-      message: "CATEGORÍA NO ENCONTRADA",
+    // 3. Eliminar documentos en la base de datos
+    await CategoryModel.deleteMany({ _id: { $in: thirdCategoryIds } });
+    await CategoryModel.deleteMany({ _id: { $in: subCategoryIds } });
+    await CategoryModel.findByIdAndDelete(request.params.id);
+
+    return response.status(200).json({
+      success: true,
+      error: false,
+      message: "CATEGORÍA BORRADA",
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
       success: false,
     });
   }
-
-  response.status(200).json({
-    success: true,
-    error: false,
-    message: "CATEGORÍA BORRADA",
-  });
 }
 
 export async function updatedCategory(request, response) {
+  // OPTIMIZACIÓN: Si hay nuevas imágenes subidas, borrar las anteriores de Cloudinary
+  const newImages = request.body.images;
+  if (newImages && newImages.length > 0) {
+    const oldCategory = await CategoryModel.findById(request.params.id);
+    if (oldCategory && oldCategory.images) {
+      const deletePromises = oldCategory.images.map(async (img) => {
+        let imageName = "";
+        if (img.includes("maquitex")) {
+          const parts = img.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = img.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
+        if (imageName) {
+          return cloudinary.uploader.destroy(imageName).catch(() => {});
+        }
+      });
+      await Promise.all(deletePromises);
+    }
+  }
+
   const category = await CategoryModel.findByIdAndUpdate(
     request.params.id,
     {
       name: request.body.name,
-      images: imagesArr.length > 0 ? imagesArr[0] : request.body.images,
+      images: request.body.images,
       color: request.body.color,
       parentId: request.body.parentId,
       parentCatName: request.body.parentCatName,
     },
-    { new: true }
+    { new: true },
   );
 
   if (!category) {
@@ -287,8 +330,6 @@ export async function updatedCategory(request, response) {
       error: true,
     });
   }
-
-  imagesArr = [];
 
   response.status(200).json({
     message: "CATEGORÍA ACTUALIZADA",

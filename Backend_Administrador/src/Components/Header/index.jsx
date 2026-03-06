@@ -222,7 +222,7 @@ const Header = () => {
             </div>
           ) : (
             <Link
-              className="btn-blue btn-sm !rounded-full !text-[14px] !font-bold !px-5 !py-2"
+              className="btn-blue btn-sm btn-responsive !rounded-full text-[10px] flex items-center justify-center lg:!text-[14px] !font-bold !px-6 !py-1 lg:!px-5 lg:!py-2"
               to="/login"
             >
               INICIAR SESION

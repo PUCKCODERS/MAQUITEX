@@ -140,7 +140,7 @@ const Sidebar = (props) => {
     <aside className="sidebar !-mt-3 lg:!-mt-0 !py-5 static lg:sticky top-[130px] z-[99] !pr-2 lg:!pr-0">
       <div className="max-h-[60vh] lg:!max-h-none overflow-auto lg:!overflow-visible !w-full">
         <div className="box">
-          <h3 className="!w-full !mb-3 text-[12px] font-[bold] font-bold flex items-center !pr-2 text-[#082c55]">
+          <h3 className="!w-full !mb-3 text-[15px] font-[bold] font-bold flex items-center !pr-2 text-[#082c55]">
             FILTRAR POR CATEGORIA
             <Button
               className="!w-[30px] !h-[30px] !min-w-[30px] !rounded-full !ml-auto !text-[#082c55]"
@@ -174,7 +174,7 @@ const Sidebar = (props) => {
         </div>
 
         <div className="box !mt-4">
-          <h3 className="w-full !mb-3 text-[15px] font-[bold] flex items-center !pr-5 text-[#556f8d]">
+          <h3 className="w-full !mb-3 text-[15px] font-[bold] flex items-center !pr-5 text-[#082c55]">
             FILTRAR POR PRECIO
           </h3>
 
@@ -187,16 +187,16 @@ const Sidebar = (props) => {
           />
           <div className="flex !pt-4 !pb-2 priceRange items-center justify-between">
             <span className=" text-[13px]  !gap-2">
-              From: <strong className="!text-dark">$: {price[0]}</strong>
+              DESDE: <strong className="!text-dark">$: {price[0]}</strong>
             </span>
             <span className=" text-[13px]  !gap-2 !mr-2">
-              From: <strong className="!text-dark">$: {price[1]}</strong>
+              HASTA: <strong className="!text-dark">$: {price[1]}</strong>
             </span>
           </div>
         </div>
 
         <div className="box !mt-4 !ml-1 lg:!ml-0">
-          <h3 className="w-full !mb-3 text-[13px] font-[bold] flex items-center !pr-5 text-[#556f8d]">
+          <h3 className="w-full !mb-3 text-[15px] font-[bold] flex items-center !pr-5 text-[#082c55]">
             FILTAR POR CALIFICACION
           </h3>
 

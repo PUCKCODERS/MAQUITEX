@@ -144,6 +144,23 @@
   .addressPanel .MuiPaper-root {
     width: 320px !important;
   }
+
+  .productDetailsModal .productDetailsModalContainer {
+    flex-direction: column !important;
+  }
+
+  .productDetailsModal .productDetailsModalContainer .col1,
+  .productDetailsModal .productDetailsModalContainer .col2 {
+    width: 100% !important;
+  }
+
+  .productDetailsModal .productDetailsModalContainer .col2 {
+    padding: 20px !important;
+  }
+
+  .productDetailsModal .MuiDialog-paper {
+    margin: 10px !important;
+  }
 }
 
 @media only screen and (min-width: 320px) and (max-width: 575px) {

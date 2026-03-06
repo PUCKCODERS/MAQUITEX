@@ -10,32 +10,71 @@ cloudinary.config({
   secure: true,
 });
 
-var imagesArr = [];
 export async function uploadImages(request, response) {
   try {
-    imagesArr = [];
-
     const image = request.files;
 
     const options = {
       use_filename: true,
       unique_filename: false,
       overwrite: false,
+      folder: "maquitex/banners_v1",
+      format: "webp",
+      transformation: [
+        { width: 1280, height: 720, crop: "fill" }, // Mantener proporciones
+        { quality: "auto" },
+        { fetch_format: "auto" },
+      ],
+      resource_type: "image",
     };
 
-    for (let i = 0; i < image?.length; i++) {
-      const img = await cloudinary.uploader.upload(
-        image[i].path,
-        options,
-        function (error, result) {
-          imagesArr.push(result.secure_url);
-          fs.unlinkSync(`uploads/${request.files[i].filename}`);
-        },
-      );
-    }
+    const uploadPromises = image.map(async (file) => {
+      try {
+        const result = await cloudinary.uploader.upload(file.path, options);
+        return result.secure_url;
+      } catch (error) {
+        console.error("Error subiendo imagen:", error);
+        return null;
+      }
+    });
+
+    const uploadedUrls = (await Promise.all(uploadPromises)).filter(
+      (url) => url !== null,
+    );
+
+    const lowResOptions = {
+      use_filename: true,
+      unique_filename: false,
+      overwrite: false,
+      folder: "maquitex/banners_v1/low_res",
+      format: "webp",
+      transformation: [
+        { width: 320, height: 180, crop: "fill" }, // Versión de baja resolución
+        { quality: "auto" },
+        { fetch_format: "auto" },
+      ],
+      resource_type: "image",
+    };
+
+    const lowResUploadPromises = image.map(async (file) => {
+      try {
+        const result = await cloudinary.uploader.upload(
+          file.path,
+          lowResOptions,
+        );
+        return result.secure_url;
+      } catch (error) {
+        console.error("Error subiendo imagen de baja resolución:", error);
+        return null;
+      }
+    });
+
+    await Promise.all(lowResUploadPromises);
 
     return response.status(200).json({
-      images: imagesArr,
+      images: uploadedUrls,
+      error: false,
+      success: true,
     });
   } catch (error) {
     return response.status(500).json({
@@ -50,7 +89,7 @@ export async function addBanner(request, response) {
   try {
     let banner = new BannerV1Model({
       bannerTitle: request.body.bannerTitle,
-      images: imagesArr,
+      images: request.body.images,
       catId: request.body.catId,
       subCatId: request.body.subCatId,
       thirdsubCatId: request.body.thirdsubCatId,
@@ -67,8 +106,6 @@ export async function addBanner(request, response) {
     }
 
     banner = await banner.save();
-
-    imagesArr = [];
 
     return response.status(200).json({
       message: "BANNER CREADA",
@@ -115,18 +152,25 @@ export async function deleteBanner(request, response) {
   const images = banner.images;
 
   let img = "";
-
-  for (img of images) {
-    const imgUrl = img;
-    const urlArr = imgUrl.split("/");
-    const image = urlArr[urlArr.length - 1];
-
-    const imageName = image.split(".")[0];
-
-    if (imageName) {
-      cloudinary.uploader.destroy(imageName, (error, result) => {});
+  const deletePromises = images.map(async (img) => {
+    let imageName = "";
+    if (img.includes("maquitex")) {
+      const parts = img.split("/maquitex/");
+      imageName =
+        "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+    } else {
+      const urlArr = img.split("/");
+      imageName = urlArr[urlArr.length - 1].split(".")[0];
     }
-  }
+    if (imageName) {
+      try {
+        await cloudinary.uploader.destroy(imageName);
+      } catch (error) {
+        console.error("Error eliminando imagen:", error);
+      }
+    }
+  });
+  await Promise.all(deletePromises);
 
   const deletedBanner = await BannerV1Model.findByIdAndDelete(
     request.params.id,
@@ -146,11 +190,38 @@ export async function deleteBanner(request, response) {
 }
 
 export async function updatedBanner(request, response) {
+  // OPTIMIZACIÓN: Si hay nuevas imágenes subidas, borrar las anteriores de Cloudinary
+  const newImages = request.body.images;
+  if (newImages && newImages.length > 0) {
+    const oldBanner = await BannerV1Model.findById(request.params.id);
+    if (oldBanner && oldBanner.images) {
+      const deletePromises = oldBanner.images.map(async (img) => {
+        let imageName = "";
+        if (img.includes("maquitex")) {
+          const parts = img.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = img.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
+        if (imageName) {
+          try {
+            await cloudinary.uploader.destroy(imageName);
+          } catch (error) {
+            console.error("Error eliminando imagen:", error);
+          }
+        }
+      });
+      await Promise.all(deletePromises);
+    }
+  }
+
   const banner = await BannerV1Model.findByIdAndUpdate(
     request.params.id,
     {
       bannerTitle: request.body.bannerTitle,
-      images: imagesArr.length > 0 ? imagesArr[0] : request.body.images,
+      images: request.body.images,
       catId: request.body.catId,
       subCatId: request.body.subCatId,
       thirdsubCatId: request.body.thirdsubCatId,
@@ -167,8 +238,6 @@ export async function updatedBanner(request, response) {
       error: true,
     });
   }
-
-  imagesArr = [];
 
   response.status(200).json({
     message: "BANNER ACTUALIZADA",

@@ -313,11 +313,8 @@ export async function logoutController(request, response) {
   }
 }
 
-var imagesArr = [];
 export async function userAvatarController(request, response) {
   try {
-    imagesArr = [];
-
     const userId = request.userId;
     const image = request.files;
 
@@ -334,10 +331,15 @@ export async function userAvatarController(request, response) {
 
     const imgUrl = user.avatar;
 
-    const urlArr = imgUrl.split("/");
-    const avatar_image = urlArr[urlArr.length - 1];
-
-    const imageName = avatar_image.split(".")[0];
+    let imageName = "";
+    if (imgUrl && imgUrl.includes("maquitex")) {
+      const parts = imgUrl.split("/maquitex/");
+      imageName =
+        "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+    } else if (imgUrl) {
+      const urlArr = imgUrl.split("/");
+      imageName = urlArr[urlArr.length - 1].split(".")[0];
+    }
 
     if (imageName) {
       const res = await cloudinary.uploader.destroy(
@@ -350,25 +352,37 @@ export async function userAvatarController(request, response) {
       use_filename: true,
       unique_filename: false,
       overwrite: false,
+      folder: "maquitex/avatars",
+      format: "webp",
+      transformation: [
+        { width: 300, crop: "limit", gravity: "face" }, // Enfoca la cara y reduce tamaño
+        { quality: "auto" },
+        { fetch_format: "auto" },
+      ],
+      resource_type: "image",
     };
 
-    for (let i = 0; i < image?.length; i++) {
-      const img = await cloudinary.uploader.upload(
-        image[i].path,
-        options,
-        function (error, result) {
-          imagesArr.push(result.secure_url);
-          fs.unlinkSync(`uploads/${request.files[i].filename}`);
-        },
-      );
-    }
+    // OPTIMIZACIÓN VERCEL: Subida en paralelo y limpieza de /tmp
+    const uploadPromises = image.map(async (file) => {
+      try {
+        const result = await cloudinary.uploader.upload(file.path, options);
+        try {
+          fs.unlinkSync(file.path);
+        } catch (e) {}
+        return result.secure_url;
+      } catch (error) {
+        return null;
+      }
+    });
 
-    user.avatar = imagesArr[0];
+    const uploadedUrls = await Promise.all(uploadPromises);
+
+    user.avatar = uploadedUrls[0];
     await user.save();
 
     return response.status(200).json({
       _id: userId,
-      avatar: imagesArr[0],
+      avatar: uploadedUrls[0],
     });
   } catch (error) {
     return response.status(500).json({
@@ -382,10 +396,14 @@ export async function userAvatarController(request, response) {
 export async function removeImageFromCloudinary(request, response) {
   const imgUrl = request.query.img;
 
-  const urlArr = imgUrl.split("/");
-  const image = urlArr[urlArr.length - 1];
-
-  const imageName = image.split(".")[0];
+  let imageName = "";
+  if (imgUrl.includes("maquitex")) {
+    const parts = imgUrl.split("/maquitex/");
+    imageName = "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+  } else {
+    const urlArr = imgUrl.split("/");
+    imageName = urlArr[urlArr.length - 1].split(".")[0];
+  }
 
   if (imageName) {
     const res = await cloudinary.uploader.destroy(
@@ -758,7 +776,7 @@ export async function getReviews(request, response) {
 
 export async function getAllReviews(request, response) {
   try {
-    const reviews = await UserModel.find();
+    const reviews = await ReviewModel.find();
 
     if (!reviews) {
       return response.status(400).json({
@@ -783,7 +801,10 @@ export async function getAllReviews(request, response) {
 
 export async function getAllUsers(request, response) {
   try {
-    const users = await UserModel.find();
+    // OPTIMIZACIÓN: No enviar contraseñas ni tokens al frontend para reducir peso y mejorar seguridad
+    const users = await UserModel.find().select(
+      "-password -refresh_token -access_token -otp -otpExpires",
+    );
 
     if (!users) {
       return response.status(400).json({
@@ -826,17 +847,24 @@ export async function deleteUser(request, response) {
       });
     }
 
-    const images = user.images || [];
-
-    for (const imgUrl of images) {
+    // CORRECCIÓN: Borrar avatar, no images
+    if (user.avatar) {
       try {
-        const urlArr = imgUrl.split("/");
-        const lastSeg = urlArr[urlArr.length - 1] || "";
-        const imageName = lastSeg.split(".")[0];
+        let imageName = "";
+        if (user.avatar.includes("maquitex")) {
+          const parts = user.avatar.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = user.avatar.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
         if (imageName) {
           await cloudinary.uploader.destroy(imageName).catch(() => {});
         }
-      } catch (err) {}
+      } catch (err) {
+        console.log("Error eliminando avatar de Cloudinary", err);
+      }
     }
 
     const deleteUser = await UserModel.findByIdAndDelete(request.params.id);
@@ -876,7 +904,7 @@ export async function deleteMultiple(request, response) {
   const originalIdsLength = ids.length;
 
   // Filter out the logged-in user's ID
-  ids = ids.filter(id => id !== loggedInUserId);
+  ids = ids.filter((id) => id !== loggedInUserId);
 
   if (ids.length === 0 && originalIdsLength > 0) {
     return response.status(403).json({
@@ -887,33 +915,84 @@ export async function deleteMultiple(request, response) {
   }
 
   try {
-    for (let i = 0; i < ids.length; i++) {
-      const user = await UserModel.findById(ids[i]);
-      if (!user) continue;
+    // OPTIMIZACIÓN: Buscar y eliminar en paralelo para evitar Timeouts en Vercel
+    const users = await UserModel.find({ _id: { $in: ids } });
 
-      const images = user.images || [];
-      for (const img of images) {
-        try {
-          const urlArr = img.split("/");
-          const image = urlArr[urlArr.length - 1];
-          const imageName = image.split(".")[0];
-          if (imageName) {
-            await cloudinary.uploader.destroy(imageName).catch(() => {});
-          }
-        } catch (err) {}
+    const deletePromises = users.map(async (user) => {
+      if (user.avatar) {
+        let imageName = "";
+        if (user.avatar.includes("maquitex")) {
+          const parts = user.avatar.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = user.avatar.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
+        if (imageName) {
+          return cloudinary.uploader.destroy(imageName).catch(() => {});
+        }
       }
-    }
+    });
+
+    await Promise.all(deletePromises);
     await UserModel.deleteMany({ _id: { $in: ids } });
 
     let message = "USUARIOS ELIMINADOS";
     if (originalIdsLength > ids.length) {
-      message = "Algunos usuarios fueron eliminados. El usuario logueado no puede ser eliminado.";
+      message =
+        "Algunos usuarios fueron eliminados. El usuario logueado no puede ser eliminado.";
     }
 
     return response.status(200).json({
       error: false,
       success: true,
       message: message,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function uploadUserAvatars(request, response) {
+  try {
+    const image = request.files;
+
+    const options = {
+      use_filename: true,
+      unique_filename: false,
+      overwrite: false,
+      folder: "maquitex/avatars",
+      format: "webp",
+      transformation: [
+        { width: 300, crop: "limit", gravity: "face" }, // Focus on face and reduce size
+        { quality: "auto" },
+        { fetch_format: "auto" },
+      ],
+      resource_type: "image",
+    };
+
+    const uploadPromises = image.map(async (file) => {
+      try {
+        const result = await cloudinary.uploader.upload(file.path, options);
+        return result.secure_url;
+      } catch (error) {
+        return null;
+      }
+    });
+
+    const uploadedUrls = (await Promise.all(uploadPromises)).filter(
+      (url) => url !== null,
+    );
+
+    return response.status(200).json({
+      images: uploadedUrls,
+      error: false,
+      success: true,
     });
   } catch (error) {
     return response.status(500).json({

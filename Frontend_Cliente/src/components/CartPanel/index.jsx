@@ -4,6 +4,10 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 import Button from "@mui/material/Button";
 import { MyContext } from "../../App";
 import { deleteData } from "../../utils/api";
+import {
+  getOptimizedUrl,
+  getTinyPlaceholder,
+} from "../../utils/cloudinaryHelper";
 
 const CartPanel = (props) => {
   const context = useContext(MyContext);
@@ -28,8 +32,12 @@ const CartPanel = (props) => {
                 >
                   <img
                     key={index}
-                    src={item?.image}
+                    src={
+                      getOptimizedUrl(item?.image, 400) ||
+                      getTinyPlaceholder(item?.image)
+                    }
                     className="w-full group-hover:scale-105 overflow-hidden !h-[100px]"
+                    loading="lazy"
                   />
                 </Link>
               </div>

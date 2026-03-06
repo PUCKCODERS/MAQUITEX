@@ -63,13 +63,10 @@ const VerifyAccount = () => {
   };
 
   return (
-    <section className="!bg-[#fff] !w-full ">
+    <section className="!bg-[#fff] !w-full h-[110vh] relative">
       <header className="w-full static lg:fixed top-0 left-0 !px-4 !py-3 flex items-center justify-center sm:justify-between z-50 bg-none">
         <Link to="/">
-          <img
-            src="../../../imagenes/logo1.png"
-            className="!w-full !h-[80px]"
-          />
+          <img src="/imagenes/logo1.png" className="!w-full !h-[80px]" />
         </Link>
 
         <div className="hidden sm:flex items-center !gap-2">
@@ -89,14 +86,14 @@ const VerifyAccount = () => {
         </div>
       </header>
       <img
-        src="../../../imagenes/Login/fondo8.jpg"
+        src="/imagenes/Login/fondo8.jpg"
         className="!w-full !h-full fixed !top-0 !left-0 opacity-5 "
       />
 
       <div className="loginBox card w-full md:w-[600px] !h-[auto] !pb-20 mx-auto !pt-0 lg:!pt-20 relative z-50 ">
         <div className="text-center">
           <img
-            src="../../../imagenes/verify.png "
+            src="/imagenes/verify.png"
             className="w-[75px] sm:w-[150px] lg:w-[100px] md:w-[100px] m-auto"
           />
         </div>

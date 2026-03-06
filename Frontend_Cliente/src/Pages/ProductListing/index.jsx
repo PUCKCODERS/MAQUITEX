@@ -192,8 +192,8 @@ const ProductListing = () => {
                 </Button>
 
                 <span className="text-[9px] sm:text-[11px] md:text-[13px] lg:text-[14px] hidden sm:block md:block lg:block font-[600] !pl-3 !text-[#082c55]">
-                  CONTINE{" "}
-                  {productsData?.length !== 0
+                  HAY{" "}
+                  {productsData?.products?.length !== 0
                     ? productsData?.products?.length
                     : 0}{" "}
                   PRODUCTOS

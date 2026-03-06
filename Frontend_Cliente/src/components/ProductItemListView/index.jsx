@@ -11,6 +11,10 @@ import AddToCartControl from "../AddToCartControl";
 import { MyContext } from "../../App"; // Adjust the import path as necessary
 import { postData } from "../../utils/api";
 import { useState } from "react";
+import {
+  getOptimizedUrl,
+  getTinyPlaceholder,
+} from "../../utils/cloudinaryHelper";
 
 const ProductItem = (props) => {
   const context = useContext(MyContext);
@@ -50,24 +54,31 @@ const ProductItem = (props) => {
 
   return (
     <div className="productItem bg-white !rounded-md !overflow-hidden !border-1 !border-[#b1cdee] shadow-[5px_5px_5px_#274a72] flex items-center flex-col lg:flex-row">
-      <div className="group imgWrapper !w-full lg:!w-[25%] !top-0 !overflow-hidden !rounded-md relative">
-        <div
-          className="img !overflow-hidden cursor-pointer pointer-events-auto"
-          onClick={() =>
-            (window.location.href = `/product/${props?.item?._id}`)
-          }
-        >
-          <img
-            src={props?.item?.images[0]}
-            className="!left-0 !top-0 !w-full   lg:!w-full !h-[200px] !rounded-md"
-          />
+      <div className="group imgWrapper !w-full lg:!w-[30%] !top-0 !overflow-hidden  relative">
+        <Link to={`/product/${props?.item?._id}`}>
+          <div className="img  !h-[250px] !overflow-hidden relative !border-r-0 lg:!border-r-1 !border-[#b1cdee]">
+            {/* 1. Placeholder ultraligero (carga instantánea) */}
+            <img
+              src={getTinyPlaceholder(props?.item?.images[0])}
+              className="!absolute !left-0 !top-0 !w-full !h-[250px]  object-cover"
+              alt=""
+            />
 
-          <img
-            src={props?.item?.images[1]}
-            className="!left-0 !top-0 !w-full  !h-[200px] transition-all duration-700 !rounded-md absolute opacity-0 group-hover:opacity-100 group-hover:scale-105"
-          />
-        </div>
-        <span className="discount flex items-center absolute !top-[0px] !left-[10px] !z-50 bg-[#e05e12] text-white !rounded-lg !p-1 text-[12px] font-[500]">
+            {/* 2. Imagen real optimizada a 400px (ahorra ~70% de ancho de banda) */}
+            <img
+              src={getOptimizedUrl(props?.item?.images[0], 400)}
+              className="!absolute !left-0 !top-0 !w-full !h-[250px]  object-cover z-10"
+              loading="lazy"
+            />
+
+            <img
+              src={getOptimizedUrl(props?.item?.images[1], 400)}
+              className="!left-0 !top-0 !w-full !h-[250px] transition-all duration-700  absolute opacity-0 group-hover:opacity-100 group-hover:scale-105 object-cover z-20"
+              loading="lazy"
+            />
+          </div>
+        </Link>
+        <span className="discount flex items-center absolute !top-[5px] !left-[5px] !z-50 bg-[#e05e12] text-white !rounded-lg !p-1 text-[12px] font-[500]">
           {props?.item?.discount}%
         </span>
 
@@ -98,7 +109,7 @@ const ProductItem = (props) => {
         </div>
       </div>
 
-      <div className="info !p-3 !py-4 !bg-white !px-3 lg:!px-8 !w-full lg:!w-[75%]">
+      <div className="info !p-3 !py-4 !bg-white !px-3 lg:!px-3 !w-full lg:!w-[70%]">
         <h6 className="text-[15px] !font-[500] text-[#556f8d]">
           <Link to="/" className="link transition-all">
             {/*{props?.item?.catName} / {props?.item?.subCat} /

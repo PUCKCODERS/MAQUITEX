@@ -24,3 +24,8 @@
 .range-slider .range-slider__range {
   background: #082c55 !important;
 }
+
+.priceRange span,
+.priceRange strong {
+  font-size: 14px !important;
+}

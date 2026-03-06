@@ -15,6 +15,12 @@ import { useEffect } from "react";
 import { deleteData, editData, postData } from "../../utils/api";
 import CircularProgress from "@mui/material/CircularProgress";
 import { GrClose } from "react-icons/gr";
+import {
+  getOptimizedUrl,
+  getTinyPlaceholder,
+} from "../../utils/cloudinaryHelper";
+
+import ProductModal from "./ProductModal";
 
 const ProductItem = (props) => {
   const [quantity, setQuantity] = useState(1);
@@ -30,8 +36,17 @@ const ProductItem = (props) => {
   const [selectedWeight, setSelectedWeight] = useState(null);
   const [selectedRam, setSelectedRam] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const context = useContext(MyContext);
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
 
   const addToCart = (product, userId, quantity) => {
     const productItem = {
@@ -200,194 +215,207 @@ const ProductItem = (props) => {
   };
 
   return (
-    <div className="productItem bg-white !rounded-md !overflow-hidden !border-1 !border-[#b1cdee] shadow-[5px_5px_5px_#274a72] ">
-      <div className="group imgWrapper !w-[100%] !overflow-hidden !rounded-md relative">
-        <Link to={`/product/${props?.item?._id}`}>
-          <div className="img !h-[200px] !overflow-hidden">
-            <img
-              src={props?.item?.images[0]}
-              className="!left-0 !top-0 !w-full !h-[200px] !rounded-md"
-            />
-
-            <img
-              src={props?.item?.images[1]}
-              className="!left-0 !top-0 !w-full !h-[200px] transition-all duration-700 !rounded-md absolute opacity-0 group-hover:opacity-100 group-hover:scale-105"
-            />
-          </div>
-        </Link>
-
-        {isShowTabs === true && (
-          <div className="flex flex-col items-center justify-center !absolute !text-[11px] top-0 left-0 w-full h-full !bg-[rgba(0,0,0,0.7)] !z-[60] !p-3 gap-4">
-            <Button
-              className="!absolute !top-[5px] !right-[5px] !min-w-[20px] !w-[30px] !h-[30px] !rounded-full !text-[#082c55]  !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] hover:!shadow-[0px_0px_0px_3px_#fff] cursor-pointer"
-              onClick={() => setIsShowTabs(false)}
-            >
-              <GrClose className="  z-[90] !text-[15px]" />
-            </Button>
-
-            {props?.item?.size?.length !== 0 && (
-              <div className="flex flex-wrap justify-center gap-2">
-                {props?.item?.size.map((item, index) => (
-                  <span
-                    key={index}
-                    className={`flex items-center justify-center !p-1 !px-1 text-[#000] bg-[#fff] hover:bg-[#b1cdee] !max-w-[45px] !h-[25px] rounded-sm cursor-pointer border-1 border-[#000] ${
-                      activeTabSize === index &&
-                      "!bg-[#082c55] !text-white border-1 border-[#fff]"
-                    }`}
-                    onClick={() => handleClickActiveTabSize(index, item)}
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            )}
-
-            {props?.item?.productWeight?.length !== 0 && (
-              <div className="flex flex-wrap justify-center gap-2">
-                {props?.item?.productWeight.map((item, index) => (
-                  <span
-                    key={index}
-                    className={`flex items-center justify-center !p-1 !px-1 text-[#000] bg-[#fff] hover:bg-[#b1cdee] !max-w-[45px] !h-[25px] rounded-sm cursor-pointer border-1 border-[#000] ${
-                      activeTabWeight === index &&
-                      "!bg-[#082c55] !text-white border-1 border-[#fff]"
-                    }`}
-                    onClick={() => handleClickActiveTabWeight(index, item)}
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            )}
-
-            {props?.item?.productRams?.length !== 0 && (
-              <div className="flex flex-wrap justify-center gap-2">
-                {props?.item?.productRams.map((item, index) => (
-                  <span
-                    key={index}
-                    className={`flex items-center justify-center !p-1 !px-2 text-[#000] bg-[#fff] hover:bg-[#b1cdee] !max-w-[55px] !h-[25px] rounded-sm cursor-pointer border-1 border-[#000] ${
-                      activeTabRam === index &&
-                      "!bg-[#082c55] !text-white border-1 border-[#fff]"
-                    }`}
-                    onClick={() => handleClickActiveTabRam(index, item)}
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        <span className="discount flex items-center absolute top-[0px] left-[0px] !z-50 bg-[#e05e12] text-white !rounded-lg !p-1 text-[12px] font-[500]">
-          {props?.item?.discount}%
-        </span>
-
-        <div className="actions absolute top-[-200px] right-[5px] z-50 flex items-center gap-2 flex-col !w-[30px] transition-all duration-300 group-hover:top-[15px] opacity-0 group-hover:opacity-100">
-          <Button
-            className={`!w-[35px] !h-[35px] !min-w-[35px] !text-[18px] !rounded-full !text-[#082c55] !bg-[#f10606] !border-1 !border-[#f3b8b8]  hover:!bg-white  hover:!text-[#f10606] group-hover:!text-[#082c55] group-hover:!bg-white group
-              `}
-            onClick={() => handleAddToMyList(props?.item)}
-          >
-            {isAddedInMyList === true ? (
-              <FaHeart className="text-[#f10606] bg-white " />
-            ) : (
-              <FaHeart className="" />
-            )}
-          </Button>
-
-          {/*<Button className="!w-[35px] !h-[35px] !min-w-[35px] !text-[18px] !rounded-full !text-white !bg-[#082c55] !border-1 !border-[#b1cdee] hover:!bg-white hover:!text-[#082c55]">
-            <IoGitCompare className="" />
-          </Button>*/}
-          <Button
-            className="!w-[35px] !h-[35px] !min-w-[35px] !text-[18px] !rounded-full !text-white !bg-[#082c55] !border-1 !border-[#b1cdee] hover:!bg-white hover:!text-[#082c55]"
-            onClick={() =>
-              context.handleOpenProductDetailsModal(true, props?.item)
-            }
-          >
-            <MdZoomOutMap className="" />
-          </Button>
-        </div>
-      </div>
-
-      <div className="info !p-3 !py-4 !bg-gray-100 relative !pb-[50px] !h-[210px]">
-        <h6 className="text-[11px] text-[#556f8d] font-[bold]">
-          <span className="link transition-all">{props?.item?.brand}</span>
-        </h6>
-        <h3 className="text-[12px] sm:text-[13px] md:text-[13px] lg:text-[13px] !title !mt-1 font-[500] !text-[#082c55] !mb-1">
-          <Link
-            to={`/product/${props?.item?._id}`}
-            className="link transition-all"
-          >
-            {props?.item?.name?.substr(0, 59)}
+    <>
+      <div className="productItem bg-white !rounded-md !overflow-hidden !border-1 !border-[#b1cdee] shadow-[5px_5px_5px_#274a72] ">
+        <div className="group imgWrapper !w-[100%] !overflow-hidden !rounded-md relative">
+          <Link to={`/product/${props?.item?._id}`}>
+            <div className="img !h-[200px] !overflow-hidden relative">
+              {/* Placeholder ultraligero */}
+              <img
+                src={getTinyPlaceholder(props?.item?.images[0])}
+                className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md object-cover"
+                alt=""
+              />
+              {/* Imagen optimizada */}
+              <img
+                src={getOptimizedUrl(props?.item?.images[0], 400)}
+                className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md object-cover z-10"
+                loading="lazy"
+              />
+              <img
+                src={getOptimizedUrl(props?.item?.images[1], 400)}
+                className="!left-0 !top-0 !w-full !h-[200px] transition-all duration-700 !rounded-md absolute opacity-0 group-hover:opacity-100 group-hover:scale-105 object-cover z-20"
+                loading="lazy"
+              />
+            </div>
           </Link>
-        </h3>
-        <Rating
-          name="size-small"
-          defaultValue={props?.item?.rating}
-          size="small"
-          readOnly
-        />
 
-        <div className="flex items-center justify-between !gap-3 ">
-          <span className="oldPrice line-through text-red-400 text-[10px]  sm:text-[13px] md:text-[13px] lg:text-[13px] font-[500]">
-            {props?.item?.oldPrice?.toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD",
-            })}
-          </span>
-          <span class="price text-[#082c55] text-[12px]  sm:text-[15px] md:text-[14px] lg:text-[15px] font-[600]">
-            {props?.item?.price?.toLocaleString("en-US", {
-              style: "currency",
-              currency: "USD",
-            })}
-          </span>
-        </div>
+          {isShowTabs === true && (
+            <div className="flex flex-col items-center justify-center !absolute !text-[11px] top-0 left-0 w-full h-full !bg-[rgba(0,0,0,0.7)] !z-[60] !p-3 gap-4">
+              <Button
+                className="!absolute !top-[5px] !right-[5px] !min-w-[20px] !w-[30px] !h-[30px] !rounded-full !text-[#082c55]  !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] hover:!shadow-[0px_0px_0px_3px_#fff] cursor-pointer"
+                onClick={() => setIsShowTabs(false)}
+              >
+                <GrClose className="  z-[90] !text-[15px]" />
+              </Button>
 
-        <div className="!absolute !bottom-[10px] !left-0 !pl-1 !pr-1 !w-full  ">
-          {isAdded === false ? (
-            <Button
-              className="btn-org addToCartBtn flex btn-sm gap-3 w-[100%] justify-center "
-              size="small"
-              onClick={() =>
-                addToCart(props?.item, context?.userData?._id, quantity)
-              }
-            >
-              AGREGAR
-              <FaShoppingCart className="!text-[20px] !scale-x-[-1]" />
-            </Button>
-          ) : (
-            <>
-              {isLoading === true ? (
-                <Button
-                  className="btn-org flex btn-sm gap-3 w-[100%] justify-center "
-                  size="small"
-                >
-                  <CircularProgress />
-                </Button>
-              ) : (
-                <div className="flex items-center justify-between overflow-hidden rounded-full border-1 border-[#082c55]">
-                  <Button
-                    className="!min-w-[30px] !w-[30px] !h-[30px] !bg-[#556f8d]  !text-white !rounded-none"
-                    onClick={minusQty}
-                  >
-                    <ImMinus />
-                  </Button>
-                  <span className="!text-[20px] !text-bold !text-[#082c55]">
-                    {quantity}
-                  </span>
-                  <Button
-                    className="!min-w-[30px] !w-[30px] !h-[30px] !bg-[#082c55] !text-white !rounded-none"
-                    onClick={addQty}
-                  >
-                    <ImPlus />
-                  </Button>
+              {props?.item?.size?.length !== 0 && (
+                <div className="flex flex-wrap justify-center gap-2">
+                  {props?.item?.size.map((item, index) => (
+                    <span
+                      key={index}
+                      className={`flex items-center justify-center !p-1 !px-1 text-[#000] bg-[#fff] hover:bg-[#b1cdee] !max-w-[45px] !h-[25px] rounded-sm cursor-pointer border-1 border-[#000] ${
+                        activeTabSize === index &&
+                        "!bg-[#082c55] !text-white border-1 border-[#fff]"
+                      }`}
+                      onClick={() => handleClickActiveTabSize(index, item)}
+                    >
+                      {item}
+                    </span>
+                  ))}
                 </div>
               )}
-            </>
+
+              {props?.item?.productWeight?.length !== 0 && (
+                <div className="flex flex-wrap justify-center gap-2">
+                  {props?.item?.productWeight.map((item, index) => (
+                    <span
+                      key={index}
+                      className={`flex items-center justify-center !p-1 !px-1 text-[#000] bg-[#fff] hover:bg-[#b1cdee] !max-w-[45px] !h-[25px] rounded-sm cursor-pointer border-1 border-[#000] ${
+                        activeTabWeight === index &&
+                        "!bg-[#082c55] !text-white border-1 border-[#fff]"
+                      }`}
+                      onClick={() => handleClickActiveTabWeight(index, item)}
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              {props?.item?.productRams?.length !== 0 && (
+                <div className="flex flex-wrap justify-center gap-2">
+                  {props?.item?.productRams.map((item, index) => (
+                    <span
+                      key={index}
+                      className={`flex items-center justify-center !p-1 !px-2 text-[#000] bg-[#fff] hover:bg-[#b1cdee] !max-w-[55px] !h-[25px] rounded-sm cursor-pointer border-1 border-[#000] ${
+                        activeTabRam === index &&
+                        "!bg-[#082c55] !text-white border-1 border-[#fff]"
+                      }`}
+                      onClick={() => handleClickActiveTabRam(index, item)}
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
           )}
+
+          <span className="discount flex items-center absolute top-[0px] left-[0px] !z-50 bg-[#e05e12] text-white !rounded-md !p-1 text-[12px] font-[500]">
+            {props?.item?.discount}%
+          </span>
+
+          <div className="actions absolute top-[-200px] right-[5px] z-50 flex items-center gap-2 flex-col !w-[30px] transition-all duration-300 group-hover:top-[15px] opacity-0 group-hover:opacity-100">
+            <Button
+              className={`!w-[35px] !h-[35px] !min-w-[35px] !text-[18px] !rounded-full !text-[#082c55] !bg-[#f10606] !border-1 !border-[#f3b8b8]  hover:!bg-white  hover:!text-[#f10606] group-hover:!text-[#082c55] group-hover:!bg-white group
+              `}
+              onClick={() => handleAddToMyList(props?.item)}
+            >
+              {isAddedInMyList === true ? (
+                <FaHeart className="text-[#f10606] bg-white " />
+              ) : (
+                <FaHeart className="" />
+              )}
+            </Button>
+
+            {/*<Button className="!w-[35px] !h-[35px] !min-w-[35px] !text-[18px] !rounded-full !text-white !bg-[#082c55] !border-1 !border-[#b1cdee] hover:!bg-white hover:!text-[#082c55]">
+            <IoGitCompare className="" />
+          </Button>*/}
+            <Button
+              className="!w-[35px] !h-[35px] !min-w-[35px] !text-[18px] !rounded-full !text-white !bg-[#082c55] !border-1 !border-[#b1cdee] hover:!bg-white hover:!text-[#082c55]"
+              onClick={handleOpenModal}
+            >
+              <MdZoomOutMap className="" />
+            </Button>
+          </div>
+        </div>
+
+        <div className="info !p-3 !py-4 !bg-gray-100 relative !pb-[50px] !h-[210px]">
+          <h6 className="text-[11px] text-[#556f8d] font-[bold]">
+            <span className="link transition-all">{props?.item?.brand}</span>
+          </h6>
+          <h3 className="text-[12px] sm:text-[13px] md:text-[13px] lg:text-[13px] !title !mt-1 font-[500] !text-[#082c55] !mb-1">
+            <Link
+              to={`/product/${props?.item?._id}`}
+              className="link transition-all"
+            >
+              {props?.item?.name?.substr(0, 59)}
+            </Link>
+          </h3>
+          <Rating
+            name="size-small"
+            defaultValue={props?.item?.rating}
+            size="small"
+            readOnly
+          />
+
+          <div className="flex items-center justify-between !gap-3 ">
+            <span className="oldPrice line-through text-red-400 text-[10px]  sm:text-[13px] md:text-[13px] lg:text-[13px] font-[500]">
+              {props?.item?.oldPrice?.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </span>
+            <span class="price text-[#082c55] text-[12px]  sm:text-[15px] md:text-[14px] lg:text-[15px] font-[600]">
+              {props?.item?.price?.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </span>
+          </div>
+
+          <div className="!absolute !bottom-[10px] !left-0 !pl-1 !pr-1 !w-full  ">
+            {isAdded === false ? (
+              <Button
+                className="btn-org addToCartBtn flex btn-sm gap-3 w-[100%] justify-center "
+                size="small"
+                onClick={() =>
+                  addToCart(props?.item, context?.userData?._id, quantity)
+                }
+              >
+                AGREGAR
+                <FaShoppingCart className="!text-[20px] !scale-x-[-1]" />
+              </Button>
+            ) : (
+              <>
+                {isLoading === true ? (
+                  <Button
+                    className="btn-org flex btn-sm gap-3 w-[100%] justify-center "
+                    size="small"
+                  >
+                    <CircularProgress />
+                  </Button>
+                ) : (
+                  <div className="flex items-center justify-between overflow-hidden rounded-full border-1 border-[#082c55]">
+                    <Button
+                      className="!min-w-[30px] !w-[30px] !h-[30px] !bg-[#556f8d]  !text-white !rounded-none"
+                      onClick={minusQty}
+                    >
+                      <ImMinus />
+                    </Button>
+                    <span className="!text-[20px] !text-bold !text-[#082c55]">
+                      {quantity}
+                    </span>
+                    <Button
+                      className="!min-w-[30px] !w-[30px] !h-[30px] !bg-[#082c55] !text-white !rounded-none"
+                      onClick={addQty}
+                    >
+                      <ImPlus />
+                    </Button>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+      <ProductModal
+        open={openModal}
+        handleClose={handleCloseModal}
+        item={props.item}
+      />
+    </>
   );
 };
 
