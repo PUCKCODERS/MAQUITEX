@@ -8,7 +8,7 @@ import { FaAnglesUp } from "react-icons/fa6";
 import { GrEdit } from "react-icons/gr";
 import { ImEye } from "react-icons/im";
 import { FaTrashAlt } from "react-icons/fa";
-import Badge from "../../components/Badge";
+import Badge from "../../Components/Badge";
 import { PiExportFill } from "react-icons/pi";
 
 import Checkbox from "@mui/material/Checkbox";
