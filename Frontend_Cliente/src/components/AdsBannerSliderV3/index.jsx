@@ -6,7 +6,7 @@ import "swiper/css/free-mode";
 
 import { Navigation, FreeMode } from "swiper/modules";
 import BannerBox from "../BannerBox";
-import BannerBoxV3 from "../bannerBoxV3";
+import BannerBoxV3 from "../BannerBoxV3";
 import { MyContext } from "../../App";
 
 const AdsBannerSliderV3 = (props) => {
