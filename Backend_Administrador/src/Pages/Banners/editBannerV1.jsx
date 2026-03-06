@@ -60,17 +60,32 @@ const EditBannerV1 = () => {
 
   const handleChangeProductCat = (event) => {
     setProductCat(event.target.value);
-    formFields.catId = event.target.value;
+    setProductSubCat("");
+    setProductThirdLavelCat("");
+    setFormFields((fields) => ({
+      ...fields,
+      catId: event.target.value,
+      subCatId: "",
+      thirdsubCatId: "",
+    }));
   };
 
   const handleChangeProductSubCat = (event) => {
     setProductSubCat(event.target.value);
-    formFields.subCatId = event.target.value;
+    setProductThirdLavelCat("");
+    setFormFields((fields) => ({
+      ...fields,
+      subCatId: event.target.value,
+      thirdsubCatId: "",
+    }));
   };
 
   const handleChangeProductThirdLavelSubCat = (event) => {
     setProductThirdLavelCat(event.target.value);
-    formFields.thirdsubCatId = event.target.value;
+    setFormFields((fields) => ({
+      ...fields,
+      thirdsubCatId: event.target.value,
+    }));
   };
 
   const setPreviewsFun = (previewsArr) => {
@@ -196,22 +211,19 @@ const EditBannerV1 = () => {
                 label="Sub Category"
                 onChange={handleChangeProductSubCat}
               >
-                {context?.catData?.map((cat) => {
-                  return (
-                    cat?.children?.length !== 0 &&
-                    cat?.children?.map((subCat, index) => {
-                      return (
-                        <MenuItem
-                          key={index}
-                          value={subCat?._id}
-                          className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                        >
-                          {subCat?.name}
-                        </MenuItem>
-                      );
-                    })
-                  );
-                })}
+                {context?.catData
+                  ?.find((cat) => cat._id === productCat)
+                  ?.children?.map((subCat, index) => {
+                    return (
+                      <MenuItem
+                        key={index}
+                        value={subCat?._id}
+                        className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                      >
+                        {subCat?.name}
+                      </MenuItem>
+                    );
+                  })}
               </Select>
             )}
           </div>
@@ -231,27 +243,20 @@ const EditBannerV1 = () => {
                 label="Sub Category"
                 onChange={handleChangeProductThirdLavelSubCat}
               >
-                {context?.catData?.map((cat) => {
-                  return (
-                    cat?.children?.length !== 0 &&
-                    cat?.children?.map((subCat) => {
-                      return (
-                        subCat?.children?.length !== 0 &&
-                        subCat?.children?.map((thirdLavelCat, index) => {
-                          return (
-                            <MenuItem
-                              value={thirdLavelCat?._id}
-                              key={index}
-                              className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                            >
-                              {thirdLavelCat?.name}
-                            </MenuItem>
-                          );
-                        })
-                      );
-                    })
-                  );
-                })}
+                {context?.catData
+                  ?.find((cat) => cat._id === productCat)
+                  ?.children?.find((subCat) => subCat._id === productSubCat)
+                  ?.children?.map((thirdLavelCat, index) => {
+                    return (
+                      <MenuItem
+                        value={thirdLavelCat?._id}
+                        key={index}
+                        className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                      >
+                        {thirdLavelCat?.name}
+                      </MenuItem>
+                    );
+                  })}
               </Select>
             )}
           </div>
