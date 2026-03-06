@@ -42,12 +42,20 @@ const AddBannerV2 = () => {
 
   const handleChangeProductCat = (event) => {
     setProductCat(event.target.value);
-    formFields.catId = event.target.value;
+    setProductSubCat("");
+    setFormFields((fields) => ({
+      ...fields,
+      catId: event.target.value,
+      subCatId: "",
+    }));
   };
 
   const handleChangeProductSubCat = (event) => {
     setProductSubCat(event.target.value);
-    formFields.subCatId = event.target.value;
+    setFormFields((fields) => ({
+      ...fields,
+      subCatId: event.target.value,
+    }));
   };
 
   {
@@ -192,22 +200,19 @@ const AddBannerV2 = () => {
                 label="Sub Category"
                 onChange={handleChangeProductSubCat}
               >
-                {context?.catData?.map((cat) => {
-                  return (
-                    cat?.children?.length !== 0 &&
-                    cat?.children?.map((subCat, index) => {
-                      return (
-                        <MenuItem
-                          key={index}
-                          value={subCat?._id}
-                          className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
-                        >
-                          {subCat?.name}
-                        </MenuItem>
-                      );
-                    })
-                  );
-                })}
+                {context?.catData
+                  ?.find((cat) => cat._id === productCat)
+                  ?.children?.map((subCat, index) => {
+                    return (
+                      <MenuItem
+                        key={index}
+                        value={subCat?._id}
+                        className="!font-bold !font-[bold] !text-[#082c55] !bg-[#fff] hover:!text-[#fff] hover:!bg-[#082c55] transition-all duration-300"
+                      >
+                        {subCat?.name}
+                      </MenuItem>
+                    );
+                  })}
               </Select>
             )}
           </div>
