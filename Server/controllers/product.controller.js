@@ -31,20 +31,6 @@ export async function uploadImages(request, response) {
       resource_type: "image",
     };
 
-    const lowResOptions = {
-      use_filename: true,
-      unique_filename: false,
-      overwrite: false,
-      folder: "maquitex/products/low_res",
-      format: "webp",
-      transformation: [
-        { width: 320, height: 240, crop: "fill" }, // Versión de baja resolución
-        { quality: "auto" },
-        { fetch_format: "auto" },
-      ],
-      resource_type: "image",
-    };
-
     // OPTIMIZACIÓN: Subida en paralelo
     const uploadPromises = files.map(async (file) => {
       try {
@@ -59,8 +45,6 @@ export async function uploadImages(request, response) {
     const uploadedUrls = (await Promise.all(uploadPromises)).filter(
       (url) => url !== null,
     );
-
-    await Promise.all(lowResUploadPromises);
 
     return response.status(200).json({
       images: uploadedUrls,
