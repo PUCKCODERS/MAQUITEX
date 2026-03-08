@@ -43,7 +43,7 @@ const UploadBox = (props) => {
       uploadImages(apiEndPoint, formdata).then((res) => {
         setUploading(false);
         //props.setPreviews(res?.data?.images);
-        props.setPreviewsFun(res?.data?.images);
+        props.setPreviewsFun(res?.data?.results);
       });
     } catch (error) {
       console.log(error);
