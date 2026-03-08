@@ -42,20 +42,26 @@ const UploadBox = (props) => {
 
       uploadImages(apiEndPoint, formdata).then((res) => {
         setUploading(false);
-        //props.setPreviews(res?.data?.images);
-        props.setPreviewsFun(res?.data?.images);
-        props.setPreviewsFun(res?.data?.results);
 
-        let images = res?.data?.results;
+        let images = res?.data?.images; // For products
+
+        if (!images) {
+          // For categories and blogs
+          images = res?.data?.results;
+        }
+
         if (
           images &&
           images.length > 0 &&
           typeof images[0] === "object" &&
           images[0] !== null
         ) {
-          images = images.map((img) => img.secure_url);
+          images = images.map((img) => img.secure_url); // For blogs
         }
-        props.setPreviewsFun(images);
+
+        if (images) {
+          props.setPreviewsFun(images);
+        }
       });
     } catch (error) {
       console.log(error);
