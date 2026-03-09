@@ -912,7 +912,11 @@ const Dashboard = () => {
                                   <LazyLoadImage
                                     alt={"image"}
                                     effect="blur"
-                                    src={product?.images[0]}
+                                    src={getCloudinaryOptimizedUrl(
+                                      product?.images[0],
+                                      170,
+                                      170,
+                                    )}
                                     className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
                                   />
                                 </Link>
@@ -1200,12 +1204,11 @@ const Dashboard = () => {
                               <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
                                 <Link to="/product/45745">
                                   <img
-                                    src={
-                                      user?.avatar !== "" &&
-                                      user?.avatar !== undefined
-                                        ? user?.avatar
-                                        : "/"
-                                    }
+                                    src={getCloudinaryOptimizedUrl(
+                                      user?.avatar,
+                                      90,
+                                      90,
+                                    )}
                                     className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
                                   />
                                 </Link>
@@ -1602,7 +1605,11 @@ const Dashboard = () => {
                                         </td>
                                         <td class="!px-6 !py-4 font-[500] ">
                                           <img
-                                            src={item?.image}
+                                            src={getCloudinaryOptimizedUrl(
+                                              item?.image,
+                                              80,
+                                              80,
+                                            )}
                                             className="w-[40px] h-[40px] object-cover rounded-md"
                                           />
                                         </td>
@@ -1742,3 +1749,15 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+const getCloudinaryOptimizedUrl = (url, width, height) => {
+  if (!url) {
+    return "";
+  }
+  const parts = url.split("/upload/");
+  if (parts.length !== 2) {
+    return url;
+  }
+  const transformations = `w_${width},h_${height},c_fill,q_auto,f_auto`;
+  return `${parts[0]}/upload/${transformations}/${parts[1]}`;
+};

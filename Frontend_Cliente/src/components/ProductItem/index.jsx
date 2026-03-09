@@ -228,12 +228,12 @@ const ProductItem = (props) => {
               />
               {/* Imagen optimizada */}
               <img
-                src={getOptimizedUrl(props?.item?.images[0], 400)}
+                src={getOptimizedUrl(props?.item?.images[0], "auto", 400)}
                 className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md object-cover z-10"
                 loading="lazy"
               />
               <img
-                src={getOptimizedUrl(props?.item?.images[1], 400)}
+                src={getOptimizedUrl(props?.item?.images[1], "auto", 400)}
                 className="!left-0 !top-0 !w-full !h-[200px] transition-all duration-700 !rounded-md absolute opacity-0 group-hover:opacity-100 group-hover:scale-105 object-cover z-20"
                 loading="lazy"
               />

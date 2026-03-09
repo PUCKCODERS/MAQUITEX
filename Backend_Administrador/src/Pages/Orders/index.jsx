@@ -369,7 +369,11 @@ const Orders = () => {
                                       </td>
                                       <td class="!px-6 !py-4 font-[500] ">
                                         <img
-                                          src={item?.image}
+                                          src={getCloudinaryOptimizedUrl(
+                                            item?.image,
+                                            80,
+                                            80,
+                                          )}
                                           className="w-[40px] h-[40px] object-cover rounded-md"
                                         />
                                       </td>
@@ -445,3 +449,15 @@ const Orders = () => {
 };
 
 export default Orders;
+
+const getCloudinaryOptimizedUrl = (url, width, height) => {
+  if (!url) {
+    return "";
+  }
+  const parts = url.split("/upload/");
+  if (parts.length !== 2) {
+    return url;
+  }
+  const transformations = `w_${width},h_${height},c_fill,q_auto,f_auto`;
+  return `${parts[0]}/upload/${transformations}/${parts[1]}`;
+};

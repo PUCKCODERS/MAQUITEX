@@ -6,6 +6,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 
 import { Navigation } from "swiper/modules";
+import { getOptimizedUrl } from "../../utils/cloudinaryHelper";
 import { MyContext } from "../../App";
 
 const ProductZoom = (props) => {
@@ -46,7 +47,7 @@ const ProductZoom = (props) => {
                     onClick={() => goto(index)}
                   >
                     <img
-                      src={item}
+                      src={getOptimizedUrl(item, "auto", 200)}
                       className="w-full transition-all group-hover:scale-105"
                     />
                   </div>
@@ -69,7 +70,7 @@ const ProductZoom = (props) => {
                   <InnerImageZoom
                     zoomType="hover"
                     zoomScale={1}
-                    src={item}
+                    src={getOptimizedUrl(item, "auto", 1000)}
                     className="!w-full !h-full !rounded-md !shadow-lg !border-1 border-[#737475]"
                   />
                 </SwiperSlide>

@@ -95,7 +95,10 @@ const AddHomeSlide = () => {
                     className="uploadBox !p-0 rounded-md overflow-hidden border border-[#082c55] h-[150px] w-[100%]
                            bg-gray-200 cursor-pointer hover:bg-gray-300 flex items-center justify-center flex-col "
                   >
-                    <img src={image} className="w-100" />
+                    <img
+                      src={getCloudinaryOptimizedUrl(image, 150, 150)}
+                      className="w-100"
+                    />
                   </div>
                 </div>
               );
@@ -128,3 +131,15 @@ const AddHomeSlide = () => {
 };
 
 export default AddHomeSlide;
+
+const getCloudinaryOptimizedUrl = (url, width, height) => {
+  if (!url) {
+    return "";
+  }
+  const parts = url.split("/upload/");
+  if (parts.length !== 2) {
+    return url;
+  }
+  const transformations = `w_${width},h_${height},c_fill,q_auto,f_auto`;
+  return `${parts[0]}/upload/${transformations}/${parts[1]}`;
+};

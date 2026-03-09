@@ -6,7 +6,7 @@ export const getOptimizedUrl = (url, width = "auto", height = "") => {
   const splitUrl = url.split("/upload/");
   if (splitUrl.length < 2) return url;
 
-  let transformations = ["f_auto", "q_auto", "c_limit"];
+  let transformations = ["f_auto", "q_auto", "c_fill"];
 
   if (width !== "auto") {
     transformations.push(`w_${width}`);
@@ -15,8 +15,6 @@ export const getOptimizedUrl = (url, width = "auto", height = "") => {
   if (height !== "") {
     transformations.push(`h_${height}`);
   }
-
-  transformations.push("e_blur:70"); // Placeholder borroso para carga diferida (valor reducido)
 
   return `${splitUrl[0]}/upload/${transformations.join(",")}/${splitUrl[1]}`;
 };

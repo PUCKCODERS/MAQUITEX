@@ -127,7 +127,11 @@ export const HomeSliderBanners = () => {
                         >
                           <div className="img w-full rounded-md overflow-hidden border border-[#fff] group">
                             <img
-                              src={item?.images[0]}
+                              src={getCloudinaryOptimizedUrl(
+                                item?.images[0],
+                                800,
+                                400,
+                              )}
                               className=" group-hover:scale-105 transition-all duration-300 !cursor-pointer w-[150px]  sm:w-[400px] h-[75px] sm:h-[200px]"
                             />
                           </div>
@@ -206,3 +210,15 @@ export const HomeSliderBanners = () => {
 };
 
 export default HomeSliderBanners;
+
+const getCloudinaryOptimizedUrl = (url, width, height) => {
+  if (!url) {
+    return "";
+  }
+  const parts = url.split("/upload/");
+  if (parts.length !== 2) {
+    return url;
+  }
+  const transformations = `w_${width},h_${height},c_fill,q_auto,f_auto`;
+  return `${parts[0]}/upload/${transformations}/${parts[1]}`;
+};

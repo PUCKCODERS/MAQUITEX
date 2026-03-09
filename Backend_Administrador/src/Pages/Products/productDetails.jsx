@@ -114,7 +114,7 @@ const ProductDetails = () => {
                               onClick={() => goto(index)}
                             >
                               <img
-                                src={item}
+                                src={getCloudinaryOptimizedUrl(item, 200, 200)}
                                 className="w-full h-full object-cover transition-all group-hover:scale-105"
                               />
                             </div>
@@ -137,7 +137,7 @@ const ProductDetails = () => {
                             <InnerImageZoom
                               zoomType="hover"
                               zoomScale={1}
-                              src={item}
+                              src={getCloudinaryOptimizedUrl(item, 500, 500)}
                               className="!w-full !h-full !rounded-md !shadow-lg !border-1 border-[#737475]"
                             />
                           </SwiperSlide>
@@ -335,3 +335,15 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+
+const getCloudinaryOptimizedUrl = (url, width, height) => {
+  if (!url) {
+    return "";
+  }
+  const parts = url.split("/upload/");
+  if (parts.length !== 2) {
+    return url;
+  }
+  const transformations = `w_${width},h_${height},c_fill,q_auto,f_auto`;
+  return `${parts[0]}/upload/${transformations}/${parts[1]}`;
+};

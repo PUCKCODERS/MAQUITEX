@@ -463,9 +463,10 @@ export const Products = () => {
                                   <LazyLoadImage
                                     alt={"image"}
                                     effect="blur"
-                                    src={getOptimizedUrl(
+                                    src={getCloudinaryOptimizedUrl(
                                       product?.images[0],
-                                      400,
+                                      170,
+                                      170,
                                     )}
                                     className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
                                   />
@@ -675,14 +676,14 @@ export const Products = () => {
 
 export default Products;
 
-function getOptimizedUrl(image, size) {
-  if (!image) return "";
-  const url = image;
-  const sizeMap = {
-    400: "w400",
-    600: "w600",
-    800: "w800",
-  };
-  const sizeKey = sizeMap[size];
-  return url.replace(/\/\d+\.\d+$/, `/${sizeKey}`);
-}
+const getCloudinaryOptimizedUrl = (url, width, height) => {
+  if (!url) {
+    return "";
+  }
+  const parts = url.split("/upload/");
+  if (parts.length !== 2) {
+    return url;
+  }
+  const transformations = `w_${width},h_${height},c_fill,q_auto,f_auto`;
+  return `${parts[0]}/upload/${transformations}/${parts[1]}`;
+};
