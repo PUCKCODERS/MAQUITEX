@@ -1,4 +1,4 @@
-// Frontend_Cliente/src/utils/cloudinaryHelper.js
+// Backend_Administrador/src/utils/cloudinaryHelper.js
 
 /**
  * Creates a very small, blurred placeholder URL for LQIP (Low-Quality Image Placeholder) effect.
@@ -62,24 +62,3 @@ export const getOptimizedCloudinaryUrl = (url, options = {}) => {
   
   return url;
 };
-
-
-/**
- * @deprecated Use getOptimizedCloudinaryUrl with an options object instead.
- * This function is maintained for backward compatibility.
- * 
- * Takes legacy arguments and converts them to the new options object format.
- * 
- * @param {string} url - The image URL.
- * @param {string} quality - The quality setting (e.g., 'auto').
- * @param {number} width - The image width.
- * @returns {string} - The optimized URL.
- */
-export const getOptimizedUrl = (url, quality, width) => {
-    // Assuming 'quality' is the second parameter and might not be used if we default to 'auto'
-    const options = {
-        width: width,
-        // height can be added if needed
-    };
-    return getOptimizedCloudinaryUrl(url, options);
-}

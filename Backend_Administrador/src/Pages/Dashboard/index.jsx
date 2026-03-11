@@ -51,6 +51,7 @@ import {
   Bar,
 } from "recharts";
 import { MyContext } from "../../App";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinary";
 import {
   fetchDataFromApi,
   deleteMultipleData,
@@ -912,10 +913,9 @@ const Dashboard = () => {
                                   <LazyLoadImage
                                     alt={"image"}
                                     effect="blur"
-                                    src={getCloudinaryOptimizedUrl(
+                                    src={getOptimizedCloudinaryUrl(
                                       product?.images[0],
-                                      170,
-                                      170,
+                                      { width: 170, height: 170 },
                                     )}
                                     className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
                                   />
@@ -1204,10 +1204,9 @@ const Dashboard = () => {
                               <div className="img w-[45px] h-[45px] rounded-md overflow-hidden group">
                                 <Link to="/product/45745">
                                   <img
-                                    src={getCloudinaryOptimizedUrl(
+                                    src={getOptimizedCloudinaryUrl(
                                       user?.avatar,
-                                      90,
-                                      90,
+                                      { width: 90, height: 90 },
                                     )}
                                     className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
                                   />
@@ -1605,10 +1604,9 @@ const Dashboard = () => {
                                         </td>
                                         <td class="!px-6 !py-4 font-[500] ">
                                           <img
-                                            src={getCloudinaryOptimizedUrl(
+                                            src={getOptimizedCloudinaryUrl(
                                               item?.image,
-                                              80,
-                                              80,
+                                              { width: 80, height: 80 },
                                             )}
                                             className="w-[40px] h-[40px] object-cover rounded-md"
                                           />
@@ -1749,15 +1747,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-const getCloudinaryOptimizedUrl = (url, width, height) => {
-  if (!url) {
-    return "";
-  }
-  const parts = url.split("/upload/");
-  if (parts.length !== 2) {
-    return url;
-  }
-  const transformations = `w_${width},h_${height},c_fill,q_auto,f_auto`;
-  return `${parts[0]}/upload/${transformations}/${parts[1]}`;
-};

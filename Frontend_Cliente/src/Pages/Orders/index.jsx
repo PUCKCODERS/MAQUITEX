@@ -3,6 +3,7 @@ import AccountSidebar from "../../components/AccountSidebar";
 import { Button } from "@mui/material";
 import { FaAnglesDown, FaAnglesUp, FaFileInvoice } from "react-icons/fa6";
 import Badge from "../../components/Badge";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
 import { fetchDataFromApi } from "../../utils/api";
 import { Link } from "react-router-dom";
 import Tooltip from "@mui/material/Tooltip";
@@ -273,7 +274,7 @@ const Orders = () => {
                                               </td>
                                               <td class="!px-6 !py-4 font-[500] ">
                                                 <img
-                                                  src={item?.image}
+                                                  src={getOptimizedCloudinaryUrl(item?.image, { width: 80, height: 80 })}
                                                   className="w-[40px] h-[40px] object-cover rounded-md"
                                                 />
                                               </td>

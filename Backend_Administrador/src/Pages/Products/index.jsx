@@ -23,6 +23,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import SearchBox from "../../Components/SearchBox";
 import { MyContext } from "../../App";
+import { getOptimizedCloudinaryUrl } from "../../../utils/cloudinaryHelper";
 import {
   deleteData,
   deleteMultipleData,
@@ -37,7 +38,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { FcDeleteDatabase } from "react-icons/fc";
 
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
-
 const columns = [
   { id: "product", label: "PRODUCTO", minWidth: 150 },
   { id: "category", label: "CATEGORIA", minWidth: 100 },
@@ -461,12 +461,11 @@ export const Products = () => {
                                   data-discover="true"
                                 >
                                   <LazyLoadImage
-                                    alt={"image"}
+                                    alt={product.name}
                                     effect="blur"
-                                    src={getCloudinaryOptimizedUrl(
+                                    src={getOptimizedCloudinaryUrl(
                                       product?.images[0],
-                                      170,
-                                      170,
+                                      { width: 170, height: 170 }
                                     )}
                                     className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
                                   />
@@ -676,14 +675,3 @@ export const Products = () => {
 
 export default Products;
 
-const getCloudinaryOptimizedUrl = (url, width, height) => {
-  if (!url) {
-    return "";
-  }
-  const parts = url.split("/upload/");
-  if (parts.length !== 2) {
-    return url;
-  }
-  const transformations = `w_${width},h_${height},c_fill,q_auto,f_auto`;
-  return `${parts[0]}/upload/${transformations}/${parts[1]}`;
-};

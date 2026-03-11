@@ -16,7 +16,7 @@ import { deleteData, editData, postData } from "../../utils/api";
 import CircularProgress from "@mui/material/CircularProgress";
 import { GrClose } from "react-icons/gr";
 import {
-  getOptimizedUrl,
+  getOptimizedCloudinaryUrl,
   getTinyPlaceholder,
 } from "../../utils/cloudinaryHelper";
 
@@ -224,18 +224,20 @@ const ProductItem = (props) => {
               <img
                 src={getTinyPlaceholder(props?.item?.images[0])}
                 className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md object-cover"
-                alt=""
+                alt={`${props?.item?.name} placeholder`}
               />
               {/* Imagen optimizada */}
               <img
-                src={getOptimizedUrl(props?.item?.images[0], "auto", 400)}
+                src={getOptimizedCloudinaryUrl(props?.item?.images[0], { width: 400, height: 400, crop: 'fill' })}
                 className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md object-cover z-10"
                 loading="lazy"
+                alt={props?.item?.name}
               />
               <img
-                src={getOptimizedUrl(props?.item?.images[1], "auto", 400)}
+                src={getOptimizedCloudinaryUrl(props?.item?.images[1], { width: 400, height: 400, crop: 'fill' })}
                 className="!left-0 !top-0 !w-full !h-[200px] transition-all duration-700 !rounded-md absolute opacity-0 group-hover:opacity-100 group-hover:scale-105 object-cover z-20"
                 loading="lazy"
+                alt={props?.item?.name}
               />
             </div>
           </Link>
