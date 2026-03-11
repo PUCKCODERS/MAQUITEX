@@ -23,7 +23,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import SearchBox from "../../Components/SearchBox";
 import { MyContext } from "../../App";
-import { getOptimizedCloudinaryUrl } from "../../../utils/cloudinaryHelper";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
 import {
   deleteData,
   deleteMultipleData,
@@ -465,7 +465,7 @@ export const Products = () => {
                                     effect="blur"
                                     src={getOptimizedCloudinaryUrl(
                                       product?.images[0],
-                                      { width: 170, height: 170 }
+                                      { width: 170, height: 170 },
                                     )}
                                     className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
                                   />
@@ -674,4 +674,3 @@ export const Products = () => {
 };
 
 export default Products;
-
