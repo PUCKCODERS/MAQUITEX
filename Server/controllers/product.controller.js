@@ -162,6 +162,33 @@ export async function createProduct(request, response) {
       product: product,
     });
   } catch (error) {
+    // OPTIMIZACIÓN CRÍTICA: Si falla la creación en BD, borrar las imágenes subidas para no dejar basura
+    const imagesToDelete = [];
+    if (Array.isArray(request.body.images)) {
+      imagesToDelete.push(...request.body.images);
+    }
+    if (Array.isArray(request.body.bannerimages)) {
+      imagesToDelete.push(...request.body.bannerimages);
+    }
+
+    if (imagesToDelete.length > 0) {
+      const deletePromises = imagesToDelete.map(async (img) => {
+        let imageName = "";
+        if (img.includes("maquitex")) {
+          const parts = img.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = img.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
+        if (imageName) {
+          return cloudinary.uploader.destroy(imageName).catch(() => {});
+        }
+      });
+      await Promise.all(deletePromises);
+    }
+
     return response.status(500).json({
       message: error.message || error,
       error: true,

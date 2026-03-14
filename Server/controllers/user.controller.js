@@ -124,7 +124,7 @@ export async function verifyEmailController(request, response) {
     return response.status(500).json({
       message: error.message || error,
       error: true,
-      success: true,
+      success: false,
     });
   }
 }
@@ -203,7 +203,7 @@ export async function authWithGoogle(request, response) {
     return response.status(500).json({
       message: error.message || error,
       error: true,
-      success: true,
+      success: false,
     });
   }
 }
@@ -215,7 +215,7 @@ export async function loginUserController(request, response) {
     const user = await UserModel.findOne({ email: email });
 
     if (!user) {
-      response.status(400).json({
+      return response.status(400).json({
         message: "USUARIO NO REGISTRADO",
         error: true,
         success: false,
@@ -318,36 +318,6 @@ export async function userAvatarController(request, response) {
     const userId = request.userId;
     const image = request.files;
 
-    const user = await UserModel.findOne({ _id: userId });
-    // Si falla quitar esto
-    if (!user) {
-      return response.status(500).json({
-        message: "USUARIO NO ENCONTRADO",
-        error: true,
-        success: false,
-      });
-    }
-    // hasta aqui
-
-    const imgUrl = user.avatar;
-
-    let imageName = "";
-    if (imgUrl && imgUrl.includes("maquitex")) {
-      const parts = imgUrl.split("/maquitex/");
-      imageName =
-        "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
-    } else if (imgUrl) {
-      const urlArr = imgUrl.split("/");
-      imageName = urlArr[urlArr.length - 1].split(".")[0];
-    }
-
-    if (imageName) {
-      const res = await cloudinary.uploader.destroy(
-        imageName,
-        (error, result) => {},
-      );
-    }
-
     const options = {
       use_filename: true,
       unique_filename: false,
@@ -355,14 +325,14 @@ export async function userAvatarController(request, response) {
       folder: "maquitex/avatars",
       format: "webp",
       transformation: [
-        { width: 300, crop: "limit", gravity: "face" }, // Enfoca la cara y reduce tamaño
+        { width: 300, height: 300, crop: "fill", gravity: "face" }, // Enfoca la cara y reduce tamaño
         { quality: "auto" },
         { fetch_format: "auto" },
       ],
       resource_type: "image",
     };
 
-    // OPTIMIZACIÓN VERCEL: Subida en paralelo y limpieza de /tmp
+    // 1. Subir la nueva imagen
     const uploadPromises = image.map(async (file) => {
       try {
         const result = await cloudinary.uploader.upload(file.path, options);
@@ -376,9 +346,33 @@ export async function userAvatarController(request, response) {
     });
 
     const uploadedUrls = await Promise.all(uploadPromises);
+    const newAvatarUrl = uploadedUrls[0];
 
-    user.avatar = uploadedUrls[0];
+    if (!newAvatarUrl) {
+      throw new Error("La subida de la nueva imagen falló.");
+    }
+
+    // 2. Actualizar la base de datos y obtener la URL antigua
+    const user = await UserModel.findById(userId);
+    const oldAvatarUrl = user.avatar;
+    user.avatar = newAvatarUrl;
     await user.save();
+
+    // 3. Si todo fue exitoso, borrar la imagen antigua de Cloudinary
+    if (oldAvatarUrl) {
+      let imageName = "";
+      if (oldAvatarUrl.includes("maquitex")) {
+        const parts = oldAvatarUrl.split("/maquitex/");
+        imageName =
+          "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+      } else {
+        const urlArr = oldAvatarUrl.split("/");
+        imageName = urlArr[urlArr.length - 1].split(".")[0];
+      }
+      if (imageName) {
+        await cloudinary.uploader.destroy(imageName).catch(() => {});
+      }
+    }
 
     return response.status(200).json({
       _id: userId,
@@ -435,15 +429,6 @@ export async function updateUserDetails(request, response) {
       },
       { new: true },
     );
-
-    if (email !== userExist.email) {
-      await sendEmailFun({
-        sendTo: email,
-        subject: "VERIFICAR CORREO ELECTRÓNICO DESDE LA APLICACIÓN MAQUITEXT",
-        text: "",
-        html: VerificationEmail(name, verifyCode),
-      });
-    }
 
     return response.json({
       message: "ACTUALIZACIÓN DE USUARIO EXITOSA",

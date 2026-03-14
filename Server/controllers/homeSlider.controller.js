@@ -127,6 +127,25 @@ export async function getSlide(request, response) {
       slide: slide,
     });
   } catch (error) {
+    // OPTIMIZACIÓN CRÍTICA: Rollback - Si falla la creación, borrar imágenes subidas
+    if (Array.isArray(request.body.images) && request.body.images.length > 0) {
+      const deletePromises = request.body.images.map(async (img) => {
+        let imageName = "";
+        if (img.includes("maquitex")) {
+          const parts = img.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = img.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
+        if (imageName) {
+          return cloudinary.uploader.destroy(imageName).catch(() => {});
+        }
+      });
+      await Promise.all(deletePromises);
+    }
+
     return response.status(500).json({
       message: error.message || error,
       error: true,
@@ -166,92 +185,116 @@ export async function removeImageFromCloudinary(request, response) {
 }
 
 export async function deleteSlide(request, response) {
-  const slide = await HomeSliderModel.findById(request.params.id);
-  if (!slide)
-    return response.status(404).json({ message: "Slide no encontrado" });
+  try {
+    const slide = await HomeSliderModel.findById(request.params.id);
+    if (!slide)
+      return response.status(404).json({ message: "Slide no encontrado" });
 
-  const images = slide.images;
-  let img = "";
+    const images = slide.images || [];
 
-  const deletePromises = images.map(async (img) => {
-    let imageName = "";
-    if (img.includes("maquitex")) {
-      const parts = img.split("/maquitex/");
-      imageName =
-        "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
-    } else {
-      const urlArr = img.split("/");
-      imageName = urlArr[urlArr.length - 1].split(".")[0];
+    const deletePromises = images.map(async (img) => {
+      let imageName = "";
+      if (img.includes("maquitex")) {
+        const parts = img.split("/maquitex/");
+        imageName =
+          "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+      } else {
+        const urlArr = img.split("/");
+        imageName = urlArr[urlArr.length - 1].split(".")[0];
+      }
+
+      if (imageName) {
+        return cloudinary.uploader.destroy(imageName).catch(() => {});
+      }
+    });
+    await Promise.all(deletePromises);
+
+    const deletedSlide = await HomeSliderModel.findByIdAndDelete(
+      request.params.id,
+    );
+    if (!deletedSlide) {
+      return response.status(400).json({
+        message: "DIAPOSITIVA NO ENCONTRADA",
+        success: false,
+      });
     }
 
-    if (imageName) {
-      return cloudinary.uploader.destroy(imageName).catch(() => {});
-    }
-  });
-  await Promise.all(deletePromises);
-
-  const deletedSlide = await HomeSliderModel.findByIdAndDelete(
-    request.params.id,
-  );
-  if (!deletedSlide) {
-    response.status(400).json({
-      message: "DIAPOSITIVA NO ENCONTRADA",
+    return response.status(200).json({
+      success: true,
+      error: false,
+      message: "DIAPOSITIVA BORRADA",
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
       success: false,
     });
   }
-
-  return response.status(200).json({
-    success: true,
-    error: false,
-    message: "DIAPOSITIVA BORRADA",
-  });
 }
 
 export async function updatedSlide(request, response) {
   // OPTIMIZACIÓN: Si hay nuevas imágenes subidas, borrar las anteriores de Cloudinary
   const newImages = request.body.images;
-  if (newImages && newImages.length > 0) {
-    const oldSlide = await HomeSliderModel.findById(request.params.id);
-    if (oldSlide && oldSlide.images) {
-      const deletePromises = oldSlide.images.map(async (img) => {
-        let imageName = "";
-        if (img.includes("maquitex")) {
-          const parts = img.split("/maquitex/");
-          imageName =
-            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
-        } else {
-          const urlArr = img.split("/");
-          imageName = urlArr[urlArr.length - 1].split(".")[0];
-        }
-        if (imageName) {
-          return cloudinary.uploader.destroy(imageName).catch(() => {});
-        }
-      });
-      await Promise.all(deletePromises);
+  if (Array.isArray(newImages)) {
+    try {
+      const oldSlide = await HomeSliderModel.findById(request.params.id);
+      if (oldSlide && oldSlide.images) {
+        // OPTIMIZACIÓN: Borrar solo las imágenes que ya no están en la nueva lista
+        const imagesToDelete = oldSlide.images.filter(
+          (img) => !newImages.includes(img),
+        );
+        const deletePromises = imagesToDelete.map(async (img) => {
+          let imageName = "";
+          if (img.includes("maquitex")) {
+            const parts = img.split("/maquitex/");
+            imageName =
+              "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+          } else {
+            const urlArr = img.split("/");
+            imageName = urlArr[urlArr.length - 1].split(".")[0];
+          }
+          if (imageName) {
+            return cloudinary.uploader.destroy(imageName).catch(() => {});
+          }
+        });
+        await Promise.all(deletePromises);
+      }
+    } catch (e) {
+      console.log("Error deleting old slider images from Cloudinary", e);
     }
   }
 
-  const slide = await HomeSliderModel.findByIdAndUpdate(
-    request.params.id,
-    {
-      images: request.body.images,
-    },
-    { new: true },
-  );
+  try {
+    const slide = await HomeSliderModel.findByIdAndUpdate(
+      request.params.id,
+      {
+        images: request.body.images,
+      },
+      { new: true },
+    );
 
-  if (!slide) {
+    if (!slide) {
+      return response.status(500).json({
+        message: "LA DIAPOSITIVA NO SE PUEDE ACTUALIZAR",
+        success: false,
+        error: true,
+      });
+    }
+
+    return response.status(200).json({
+      message: "DIAPOSITIVA ACTUALIZADA",
+      error: false,
+      success: true,
+      slide: slide,
+    });
+  } catch (error) {
     return response.status(500).json({
-      message: "LA DIAPOSITIVA NO SE PUEDE ACTUALIZAR",
-      success: false,
+      message: error.message || error,
       error: true,
+      success: false,
     });
   }
-
-  response.status(200).json({
-    message: "DIAPOSITIVA ACTUALIZADA",
-    error: false,
-    slide: slide,
-  });
 }
 
 export async function deleteMultipleSlides(request, response) {

@@ -88,6 +88,25 @@ export async function addBanner(request, response) {
       banner: banner,
     });
   } catch (error) {
+    // OPTIMIZACIÓN CRÍTICA: Rollback - Si falla la creación, borrar imágenes subidas
+    if (Array.isArray(request.body.images) && request.body.images.length > 0) {
+      const deletePromises = request.body.images.map(async (img) => {
+        let imageName = "";
+        if (img.includes("maquitex")) {
+          const parts = img.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = img.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
+        if (imageName) {
+          return cloudinary.uploader.destroy(imageName).catch(() => {});
+        }
+      });
+      await Promise.all(deletePromises);
+    }
+
     return response.status(500).json({
       message: error.message || error,
       error: true,
@@ -122,103 +141,125 @@ export async function getBanners(request, response) {
 }
 
 export async function deleteBanner(request, response) {
-  const banner = await BannerV1Model.findById(request.params.id);
-  const images = banner.images;
-
-  let img = "";
-  const deletePromises = images.map(async (img) => {
-    let imageName = "";
-    if (img.includes("maquitex")) {
-      const parts = img.split("/maquitex/");
-      imageName =
-        "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
-    } else {
-      const urlArr = img.split("/");
-      imageName = urlArr[urlArr.length - 1].split(".")[0];
+  try {
+    const banner = await BannerV1Model.findById(request.params.id);
+    if (!banner) {
+      return response.status(404).json({ message: "Banner no encontrado" });
     }
-    if (imageName) {
-      try {
-        await cloudinary.uploader.destroy(imageName);
-      } catch (error) {
-        console.error("Error eliminando imagen:", error);
+
+    const images = banner.images || [];
+
+    const deletePromises = images.map(async (img) => {
+      let imageName = "";
+      if (img.includes("maquitex")) {
+        const parts = img.split("/maquitex/");
+        imageName =
+          "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+      } else {
+        const urlArr = img.split("/");
+        imageName = urlArr[urlArr.length - 1].split(".")[0];
       }
-    }
-  });
-  await Promise.all(deletePromises);
+      if (imageName) {
+        try {
+          await cloudinary.uploader.destroy(imageName);
+        } catch (error) {
+          console.error("Error eliminando imagen:", error);
+        }
+      }
+    });
+    await Promise.all(deletePromises);
 
-  const deletedBanner = await BannerV1Model.findByIdAndDelete(
-    request.params.id,
-  );
-  if (!deletedBanner) {
-    response.status(400).json({
-      message: "BANNER NO ENCONTRADA",
+    const deletedBanner = await BannerV1Model.findByIdAndDelete(
+      request.params.id,
+    );
+    if (!deletedBanner) {
+      return response.status(400).json({
+        message: "BANNER NO ENCONTRADA",
+        success: false,
+      });
+    }
+
+    return response.status(200).json({
+      success: true,
+      error: false,
+      message: "BANNER BORRADA",
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
       success: false,
     });
   }
-
-  response.status(200).json({
-    success: true,
-    error: false,
-    message: "BANNER BORRADA",
-  });
 }
 
 export async function updatedBanner(request, response) {
   // OPTIMIZACIÓN: Si hay nuevas imágenes subidas, borrar las anteriores de Cloudinary
   const newImages = request.body.images;
-  if (newImages && newImages.length > 0) {
-    const oldBanner = await BannerV1Model.findById(request.params.id);
-    if (oldBanner && oldBanner.images) {
-      const deletePromises = oldBanner.images.map(async (img) => {
-        let imageName = "";
-        if (img.includes("maquitex")) {
-          const parts = img.split("/maquitex/");
-          imageName =
-            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
-        } else {
-          const urlArr = img.split("/");
-          imageName = urlArr[urlArr.length - 1].split(".")[0];
-        }
-        if (imageName) {
-          try {
-            await cloudinary.uploader.destroy(imageName);
-          } catch (error) {
-            console.error("Error eliminando imagen:", error);
+  if (Array.isArray(newImages)) {
+    try {
+      const oldBanner = await BannerV1Model.findById(request.params.id);
+      if (oldBanner && oldBanner.images) {
+        const imagesToDelete = oldBanner.images.filter(
+          (img) => !newImages.includes(img),
+        );
+        const deletePromises = imagesToDelete.map(async (img) => {
+          let imageName = "";
+          if (img.includes("maquitex")) {
+            const parts = img.split("/maquitex/");
+            imageName =
+              "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+          } else {
+            const urlArr = img.split("/");
+            imageName = urlArr[urlArr.length - 1].split(".")[0];
           }
-        }
-      });
-      await Promise.all(deletePromises);
+          if (imageName) {
+            return cloudinary.uploader.destroy(imageName).catch(() => {});
+          }
+        });
+        await Promise.all(deletePromises);
+      }
+    } catch (e) {
+      console.log("Error deleting old banner v1 images from Cloudinary", e);
     }
   }
 
-  const banner = await BannerV1Model.findByIdAndUpdate(
-    request.params.id,
-    {
-      bannerTitle: request.body.bannerTitle,
-      images: request.body.images,
-      catId: request.body.catId,
-      subCatId: request.body.subCatId,
-      thirdsubCatId: request.body.thirdsubCatId,
+  try {
+    const banner = await BannerV1Model.findByIdAndUpdate(
+      request.params.id,
+      {
+        bannerTitle: request.body.bannerTitle,
+        images: request.body.images,
+        catId: request.body.catId,
+        subCatId: request.body.subCatId,
+        thirdsubCatId: request.body.thirdsubCatId,
 
-      alignInfo: request.body.alignInfo,
-    },
-    { new: true },
-  );
+        alignInfo: request.body.alignInfo,
+      },
+      { new: true },
+    );
 
-  if (!banner) {
+    if (!banner) {
+      return response.status(404).json({
+        message: "EL BANNER NO SE PUEDE ACTUALIZAR",
+        success: false,
+        error: true,
+      });
+    }
+
+    return response.status(200).json({
+      message: "BANNER ACTUALIZADA",
+      error: false,
+      success: true,
+      banner: banner,
+    });
+  } catch (error) {
     return response.status(500).json({
-      message: "EL BANNER NO SE PUEDE ACTUALIZAR",
-      success: false,
+      message: error.message || error,
       error: true,
+      success: false,
     });
   }
-
-  response.status(200).json({
-    message: "BANNER ACTUALIZADA",
-    error: false,
-    success: true,
-    banner: banner,
-  });
 }
 
 export async function getBanner(request, response) {
@@ -226,7 +267,7 @@ export async function getBanner(request, response) {
     const banner = await BannerV1Model.findById(request.params.id);
 
     if (!banner) {
-      response.status(500).json({
+      return response.status(404).json({
         message: "NO SE ENCONTRÓ LA BANNER CON EL ID PROPORCIONADO",
         error: true,
         success: false,

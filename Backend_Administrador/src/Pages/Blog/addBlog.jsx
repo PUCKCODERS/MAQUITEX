@@ -28,12 +28,10 @@ const AddBlog = () => {
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    setFormFields(() => {
-      return {
-        ...formFields,
-        [name]: value,
-      };
-    });
+    setFormFields((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const setPreviewsFun = (previewsArr) => {
@@ -43,7 +41,7 @@ const AddBlog = () => {
   };
 
   const removeImg = (image, index) => {
-    deleteImages(`/api/category/deleteImage?img=${image}`).then(() => {
+    deleteImages(`/api/user/removeImage?img=${image}`).then(() => {
       const updatedImages = previews.filter((_, i) => i !== index);
       setPreviews(updatedImages);
       setFormFields((prev) => ({ ...prev, images: updatedImages }));
@@ -51,8 +49,9 @@ const AddBlog = () => {
   };
 
   const onChangeDescription = (e) => {
-    setHtml(e.target.value);
-    formFields.description = e.target.value;
+    const newDescription = e.target.value;
+    setHtml(newDescription);
+    setFormFields((prev) => ({ ...prev, description: newDescription }));
   };
 
   const handleSubmit = (e) => {
@@ -86,7 +85,6 @@ const AddBlog = () => {
           open: false,
         });
 
-        context?.getCat();
         history("/blog/list");
       }, 2000);
     });

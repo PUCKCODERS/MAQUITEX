@@ -32,17 +32,20 @@ export async function uploadImages(request, response) {
       try {
         const result = await cloudinary.uploader.upload(file.path, options);
         try {
-          fs.unlinkSync(file.path); // Limpiar archivo temporal
+          fs.unlinkSync(file.path);
         } catch (e) {}
-        return result;
+        return result.secure_url;
       } catch (error) {
         console.error("Error uploading image:", error);
-        throw error;
+        return null;
       }
     });
 
-    const results = await Promise.all(uploadPromises);
-    response.status(200).json({ success: true, results });
+    const uploadedUrls = (await Promise.all(uploadPromises)).filter(
+      (url) => url !== null,
+    );
+
+    response.status(200).json({ success: true, images: uploadedUrls });
   } catch (error) {
     response
       .status(500)
@@ -75,6 +78,25 @@ export async function addBlog(request, response) {
       blog: blog,
     });
   } catch (error) {
+    // OPTIMIZACIÓN CRÍTICA: Rollback - Si falla la creación, borrar imágenes subidas
+    if (Array.isArray(request.body.images) && request.body.images.length > 0) {
+      const deletePromises = request.body.images.map(async (img) => {
+        let imageName = "";
+        if (img.includes("maquitex")) {
+          const parts = img.split("/maquitex/");
+          imageName =
+            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+        } else {
+          const urlArr = img.split("/");
+          imageName = urlArr[urlArr.length - 1].split(".")[0];
+        }
+        if (imageName) {
+          return cloudinary.uploader.destroy(imageName).catch(() => {});
+        }
+      });
+      await Promise.all(deletePromises);
+    }
+
     return response.status(500).json({
       message: error.message || error,
       error: true,
@@ -132,7 +154,7 @@ export async function getBlog(request, response) {
     const blog = await BlogModel.findById(request.params.id);
 
     if (!blog) {
-      response.status(500).json({
+      return response.status(404).json({
         message: "NO SE ENCONTRÓ LA BLOG CON EL ID PROPORCIONADO",
         error: true,
         success: false,
@@ -154,99 +176,115 @@ export async function getBlog(request, response) {
 }
 
 export async function deleteBlog(request, response) {
-  const blog = await BlogModel.findById(request.params.id);
-  if (!blog)
-    return response.status(404).json({ message: "Blog no encontrado" });
+  try {
+    const blog = await BlogModel.findById(request.params.id);
+    if (!blog)
+      return response.status(404).json({ message: "Blog no encontrado" });
 
-  const images = blog.images;
+    const images = blog.images || [];
 
-  let img = "";
+    const deletePromises = images.map((img) => {
+      let imageName = "";
+      if (img.includes("maquitex")) {
+        const parts = img.split("/maquitex/");
+        imageName =
+          "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+      } else {
+        const urlArr = img.split("/");
+        imageName = urlArr[urlArr.length - 1].split(".")[0];
+      }
 
-  const deletePromises = images.map(async (img) => {
-    let imageName = "";
-    if (img.includes("maquitex")) {
-      const parts = img.split("/maquitex/");
-      imageName =
-        "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
-    } else {
-      const urlArr = img.split("/");
-      imageName = urlArr[urlArr.length - 1].split(".")[0];
+      if (imageName) {
+        return cloudinary.uploader.destroy(imageName).catch(() => {});
+      }
+    });
+    await Promise.all(deletePromises);
+
+    const deletedBlog = await BlogModel.findByIdAndDelete(request.params.id);
+    if (!deletedBlog) {
+      return response.status(400).json({
+        message: "BLOG NO ENCONTRADO",
+        success: false,
+        error: true,
+      });
     }
 
-    if (imageName) {
-      return cloudinary.uploader.destroy(imageName).catch(() => {});
-    }
-  });
-  await Promise.all(deletePromises);
-
-  const deletedBlog = await BlogModel.findByIdAndDelete(request.params.id);
-  if (!deletedBlog) {
-    response.status(400).json({
-      message: "BLOG NO ENCONTRADO",
+    return response.status(200).json({
+      success: true,
+      error: false,
+      message: "BLOG BORRADO",
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
       success: false,
     });
   }
-
-  response.status(200).json({
-    success: true,
-    error: false,
-    message: "BLOG BORRADO",
-  });
 }
 
 export async function updatedBlog(request, response) {
-  const newImages = Array.isArray(request.body.images)
-    ? request.body.images
-    : [];
-  if (newImages.length >= 0) {
-    // Siempre verificar cambios en imágenes
-    const oldBlog = await BlogModel.findById(request.params.id);
-    if (oldBlog && oldBlog.images) {
-      // Solo borrar las imágenes que estaban antes pero ya no están en la nueva lista
-      const imagesToDelete = oldBlog.images.filter(
-        (img) => !newImages.includes(img),
-      );
+  // OPTIMIZACIÓN: Eliminar imágenes antiguas de Cloudinary antes de actualizar
+  if (Array.isArray(request.body.images)) {
+    try {
+      const newImages = request.body.images;
+      const oldBlog = await BlogModel.findById(request.params.id);
+      if (oldBlog && oldBlog.images) {
+        const imagesToDelete = oldBlog.images.filter(
+          (img) => !newImages.includes(img),
+        );
 
-      const deletePromises = imagesToDelete.map(async (img) => {
-        let imageName = "";
-        if (img.includes("maquitex")) {
-          const parts = img.split("/maquitex/");
-          imageName =
-            "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
-        } else {
-          const urlArr = img.split("/");
-          imageName = urlArr[urlArr.length - 1].split(".")[0];
-        }
-        if (imageName) {
-          return cloudinary.uploader.destroy(imageName).catch(() => {});
-        }
-      });
-      await Promise.all(deletePromises);
+        const deletePromises = imagesToDelete.map((img) => {
+          let imageName = "";
+          if (img.includes("maquitex")) {
+            const parts = img.split("/maquitex/");
+            imageName =
+              "maquitex/" + parts[1].substring(0, parts[1].lastIndexOf("."));
+          } else {
+            const urlArr = img.split("/");
+            imageName = urlArr[urlArr.length - 1].split(".")[0];
+          }
+          if (imageName) {
+            return cloudinary.uploader.destroy(imageName).catch(() => {});
+          }
+        });
+        await Promise.all(deletePromises);
+      }
+    } catch (e) {
+      console.log("Error cleaning old blog images", e);
     }
   }
 
-  const blog = await BlogModel.findByIdAndUpdate(
-    request.params.id,
-    {
-      title: request.body.title,
-      images: request.body.images,
-      description: request.body.description,
-    },
-    { new: true },
-  );
+  try {
+    const blog = await BlogModel.findByIdAndUpdate(
+      request.params.id,
+      {
+        title: request.body.title,
+        images: request.body.images,
+        description: request.body.description,
+      },
+      { new: true },
+    );
 
-  if (!blog) {
+    if (!blog) {
+      return response.status(404).json({
+        message: "EL BLOG NO SE PUEDE ACTUALIZAR",
+        success: false,
+        error: true,
+      });
+    }
+
+    return response.status(200).json({
+      message: "BLOG ACTUALIZADO",
+      error: false,
+      success: true,
+      blog: blog,
+    });
+  } catch (error) {
     return response.status(500).json({
-      message: "EL BLOG NO SE PUEDE ACTUALIZAR",
-      success: false,
+      message: error.message || error,
       error: true,
+      success: false,
     });
   }
-
-  response.status(200).json({
-    message: "BLOG ACTUALIZADO",
-    error: false,
-    success: true,
-    blog: blog,
-  });
 }

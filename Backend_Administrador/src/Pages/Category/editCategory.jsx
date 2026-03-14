@@ -3,8 +3,7 @@ import UploadBox from "../../Components/UploadBox";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { IoClose } from "react-icons/io5";
 import Button from "@mui/material/Button";
-import { FaFileUpload } from "react-icons/fa";
-import { deleteImages, editData, fetchDataFromApi } from "../../utils/api";
+import { editData, fetchDataFromApi } from "../../utils/api";
 import { MyContext } from "../../App";
 import CircularProgress from "@mui/material/CircularProgress";
 import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper.js";
@@ -35,12 +34,10 @@ const EditCategory = () => {
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    setFormFields(() => {
-      return {
-        ...formFields,
-        [name]: value,
-      };
-    });
+    setFormFields((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const setPreviewsFun = (previewsArr) => {
@@ -50,11 +47,9 @@ const EditCategory = () => {
   };
 
   const removeImg = (image, index) => {
-    deleteImages(`/api/category/deleteImage?img=${image}`).then(() => {
-      const updatedImages = previews.filter((_, i) => i !== index);
-      setPreviews(updatedImages);
-      setFormFields((prev) => ({ ...prev, images: updatedImages }));
-    });
+    const updatedImages = previews.filter((_, i) => i !== index);
+    setPreviews(updatedImages);
+    setFormFields((prev) => ({ ...prev, images: updatedImages }));
   };
 
   const handleSubmit = (e) => {

@@ -4,7 +4,7 @@ import UploadBox from "../../Components/UploadBox";
 import { IoClose } from "react-icons/io5";
 import Button from "@mui/material/Button";
 
-import { deleteImages, editData, fetchDataFromApi } from "../../utils/api";
+import { editData, fetchDataFromApi } from "../../utils/api";
 import { MyContext } from "../../App";
 import CircularProgress from "@mui/material/CircularProgress";
 import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper.js";
@@ -30,22 +30,22 @@ const EditBlog = () => {
     const id = context?.isOpenFullScreenPanel?.id;
 
     fetchDataFromApi(`/api/blog/${id}`).then((res) => {
-      formFields.title = res?.blog?.title;
-      formFields.images = res?.blog?.images;
+      setFormFields({
+        title: res?.blog?.title,
+        images: res?.blog?.images,
+        description: res?.blog?.description,
+      });
       setPreviews(res?.blog?.images);
-      formFields.description = res?.blog?.description;
       setHtml(res?.blog?.description);
     });
   }, []);
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    setFormFields(() => {
-      return {
-        ...formFields,
-        [name]: value,
-      };
-    });
+    setFormFields((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const setPreviewsFun = (previewsArr) => {
@@ -55,16 +55,15 @@ const EditBlog = () => {
   };
 
   const removeImg = (image, index) => {
-    deleteImages(`/api/category/deleteImage?img=${image}`).then(() => {
-      const updatedImages = previews.filter((_, i) => i !== index);
-      setPreviews(updatedImages);
-      setFormFields((prev) => ({ ...prev, images: updatedImages }));
-    });
+    const updatedImages = previews.filter((_, i) => i !== index);
+    setPreviews(updatedImages);
+    setFormFields((prev) => ({ ...prev, images: updatedImages }));
   };
 
   const onChangeDescription = (e) => {
-    setHtml(e.target.value);
-    formFields.description = e.target.value;
+    const newDescription = e.target.value;
+    setHtml(newDescription);
+    setFormFields((prev) => ({ ...prev, description: newDescription }));
   };
 
   const handleSubmit = (e) => {
@@ -101,7 +100,6 @@ const EditBlog = () => {
           open: false,
         });
 
-        context?.getCat();
         history("/blog/list");
       }, 2000);
     });
@@ -186,7 +184,7 @@ const EditBlog = () => {
             ) : (
               <>
                 <GiSave className="text-[25px] text-white" />
-                CREAR Y PUBLICAR
+                GUARDAR CAMBIOS
               </>
             )}
           </Button>

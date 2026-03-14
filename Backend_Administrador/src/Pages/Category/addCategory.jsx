@@ -25,12 +25,10 @@ const AddCategory = () => {
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    setFormFields(() => {
-      return {
-        ...formFields,
-        [name]: value,
-      };
-    });
+    setFormFields((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const setPreviewsFun = (previewsArr) => {
@@ -76,7 +74,6 @@ const AddCategory = () => {
           open: false,
         });
 
-        context?.getCat();
         history("/category/list");
       }, 2000);
     });

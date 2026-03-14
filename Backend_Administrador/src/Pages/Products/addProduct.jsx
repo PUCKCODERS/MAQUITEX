@@ -86,72 +86,73 @@ const AddProduct = () => {
 
   const handleChangeProductCat = (event) => {
     setProductCat(event.target.value);
-    formFields.catId = event.target.value;
-    formFields.category = event.target.value;
+    setFormFields((prev) => ({
+      ...prev,
+      catId: event.target.value,
+      category: event.target.value,
+    }));
   };
 
   const selectCatByName = (name) => {
-    formFields.catName = name;
+    setFormFields((prev) => ({ ...prev, catName: name }));
   };
 
   const handleChangeProductSubCat = (event) => {
     setProductSubCat(event.target.value);
-    formFields.subCatId = event.target.value;
+    setFormFields((prev) => ({ ...prev, subCatId: event.target.value }));
   };
 
   const selectSubCatByName = (name) => {
-    formFields.subCat = name;
+    setFormFields((prev) => ({ ...prev, subCat: name }));
   };
 
   const handleChangeProductThirdLavelSubCat = (event) => {
     setProductThirdLavelCat(event.target.value);
-    formFields.thirdsubCatId = event.target.value;
+    setFormFields((prev) => ({ ...prev, thirdsubCatId: event.target.value }));
   };
 
   const selectSubCatByThirdLavel = (name) => {
-    formFields.thirdsubCat = name;
+    setFormFields((prev) => ({ ...prev, thirdsubCat: name }));
   };
 
   const handleChangeProductFeatured = (event) => {
     setProductFeatured(event.target.value);
-    formFields.isFeatured = event.target.value;
+    setFormFields((prev) => ({ ...prev, isFeatured: event.target.value }));
   };
 
   const handleChangeProductRams = (event) => {
     const {
       target: { value },
     } = event;
-    setProductRams(typeof value === "string" ? value.split(",") : value);
-
-    formFields.productRams = value;
+    const ramValue = typeof value === "string" ? value.split(",") : value;
+    setProductRams(ramValue);
+    setFormFields((prev) => ({ ...prev, productRams: ramValue }));
   };
 
   const handleChangeProductWeight = (event) => {
     const {
       target: { value },
     } = event;
-    setProductWeight(typeof value === "string" ? value.split(",") : value);
-
-    formFields.productWeight = value;
+    const weightValue = typeof value === "string" ? value.split(",") : value;
+    setProductWeight(weightValue);
+    setFormFields((prev) => ({ ...prev, productWeight: weightValue }));
   };
 
   const handleChangeProductSize = (event) => {
     const {
       target: { value },
     } = event;
-    setProductSize(typeof value === "string" ? value.split(",") : value);
-
-    formFields.size = value;
+    const sizeValue = typeof value === "string" ? value.split(",") : value;
+    setProductSize(sizeValue);
+    setFormFields((prev) => ({ ...prev, size: sizeValue }));
   };
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
-    setFormFields(() => {
-      return {
-        ...formFields,
-        [name]: value,
-      };
-    });
+    setFormFields((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const onChangeRating = (e) => {
@@ -203,7 +204,10 @@ const AddProduct = () => {
 
   const handleChangeSwitch = (event) => {
     setCheckedSwitch(event.target.checked);
-    formFields.isDisplayOnHomeBanner = event.target.checked;
+    setFormFields((prev) => ({
+      ...prev,
+      isDisplayOnHomeBanner: event.target.checked,
+    }));
   };
 
   const handleSubmitg = (e) => {
