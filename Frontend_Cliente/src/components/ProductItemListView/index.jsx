@@ -12,7 +12,8 @@ import { MyContext } from "../../App"; // Adjust the import path as necessary
 import { postData } from "../../utils/api";
 import { useState } from "react";
 import {
-  getOptimizedUrl,
+  getOptimizedCloudinaryUrl,
+  getCloudinarySrcSet,
   getTinyPlaceholder,
 } from "../../utils/cloudinaryHelper";
 
@@ -66,13 +67,21 @@ const ProductItem = (props) => {
 
             {/* 2. Imagen real optimizada a 400px (ahorra ~70% de ancho de banda) */}
             <img
-              src={getOptimizedUrl(props?.item?.images[0], 400)}
+              src={getOptimizedCloudinaryUrl(props?.item?.images[0], {
+                width: 300,
+              })}
+              srcSet={getCloudinarySrcSet(props?.item?.images[0], [300, 600])}
+              sizes="(max-width: 768px) 300px, 600px"
               className="!absolute !left-0 !top-0 !w-full !h-[250px]  object-cover z-10"
               loading="lazy"
             />
 
             <img
-              src={getOptimizedUrl(props?.item?.images[1], 400)}
+              src={getOptimizedCloudinaryUrl(props?.item?.images[1], {
+                width: 300,
+              })}
+              srcSet={getCloudinarySrcSet(props?.item?.images[1], [300, 600])}
+              sizes="(max-width: 768px) 300px, 600px"
               className="!left-0 !top-0 !w-full !h-[250px] transition-all duration-700  absolute opacity-0 group-hover:opacity-100 group-hover:scale-105 object-cover z-20"
               loading="lazy"
             />

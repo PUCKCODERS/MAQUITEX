@@ -1,12 +1,15 @@
 import React from "react";
 import "../BannerBoxV2/style.css";
 import { Link } from "react-router-dom";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
 
 const BannerBoxV2 = (props) => {
   return (
     <div className="bannerBoxV2 box bg-white w-full overflow-hidden  group relative !border-1 !border-[#b1cdee] shadow-[3px_3px_3px_#274a72]">
       <img
-        src={props?.image}
+        src={getOptimizedCloudinaryUrl(props?.image, {
+          width: 600, // Ancho optimizado para banners de este tipo
+        })}
         className={`!w-full ${
           props.imageClass
             ? props.imageClass

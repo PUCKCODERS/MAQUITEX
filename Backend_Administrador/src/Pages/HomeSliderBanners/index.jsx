@@ -21,7 +21,7 @@ import MenuItem from "@mui/material/MenuItem";
 import SearchBox from "../../Components/SearchBox";
 import { MyContext } from "../../App";
 import { deleteData, fetchDataFromApi } from "../../utils/api";
-import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper.js";
 import Dialog from "@mui/material/Dialog";
 import { FcDeleteDatabase } from "react-icons/fc";
 import DialogTitle from "@mui/material/DialogTitle";

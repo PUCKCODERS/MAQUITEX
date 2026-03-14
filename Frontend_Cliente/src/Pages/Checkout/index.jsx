@@ -9,7 +9,7 @@ import { BsFillBagCheckFill } from "react-icons/bs";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
-  getOptimizedUrl,
+  getOptimizedCloudinaryUrl,
   getTinyPlaceholder,
 } from "../../utils/cloudinaryHelper";
 
@@ -45,13 +45,19 @@ const Checkout = () => {
   }, [context.cartData]);
 
   useEffect(() => {
+    const scriptId = "paypal-sdk-script";
+    if (document.getElementById(scriptId)) return; // Evita duplicados
+
     const script = document.createElement("script");
+    script.id = scriptId;
     script.src = `https://www.paypal.com/sdk/js?client-id=${VITE_API_PAYPAL_CLIENT_ID}&disable-funding=card`;
     script.async = true;
     script.onload = () => {
+      if (!window.paypal) return;
       window.paypal
         .Buttons({
           createOrder: async () => {
+            // Optimización: Solo llamar a la API de conversión si es estrictamente necesario
             const resp = await fetch(
               "https://v6.exchangerate-api.com/v6/8f3b6f4d1d3c1f5e1f8b6c9e/pair/USD/USD",
             );
@@ -95,7 +101,7 @@ const Checkout = () => {
         .render("#paypal-button-container");
     };
     document.body.appendChild(script);
-  }, [context?.cartData, context?.userData, selectedAddress]);
+  }, []); // Solo cargar el SDK una vez al montar el componente
 
   const onApprovePayment = async (data) => {
     const user = context?.userData;
@@ -374,8 +380,10 @@ const Checkout = () => {
                           <div className="img !w-[50px] sm:!w-[100px] md:!w-[50px] lg:!w-[50px] !h-[50px]  sm:!h-[100px] md:!h-[50px] lg:!h-[50px] object-cover overflow-hidden border-1 border-[#8998aa] rounded-md group cursor-pointer shadow-[2px_2px_3px_#082c55]">
                             <img
                               src={
-                                getOptimizedUrl(item?.image, 400) ||
-                                getTinyPlaceholder(item?.image)
+                                getOptimizedCloudinaryUrl(item?.image, {
+                                  width: 100,
+                                  height: 100,
+                                }) || getTinyPlaceholder(item?.image)
                               }
                               className="w-full !h-[50px] sm:!h-[100px] md:!h-[50px] lg:!h-[50px] group-hover:scale-105 overflow-hidden "
                               loading="lazy"

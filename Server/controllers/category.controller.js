@@ -31,6 +31,9 @@ export async function uploadImages(request, response) {
     const uploadPromises = image.map(async (file) => {
       try {
         const result = await cloudinary.uploader.upload(file.path, options);
+        try {
+          fs.unlinkSync(file.path); // Limpiar archivo temporal
+        } catch (e) {}
         return result.secure_url;
       } catch (error) {
         console.error("Error subiendo imagen:", error);
@@ -38,8 +41,11 @@ export async function uploadImages(request, response) {
       }
     });
 
-    const results = await Promise.all(uploadPromises);
-    response.status(200).json({ success: true, results });
+    const results = (await Promise.all(uploadPromises)).filter(
+      (url) => url !== null,
+    );
+
+    response.status(200).json({ success: true, results, images: results });
   } catch (error) {
     response
       .status(500)

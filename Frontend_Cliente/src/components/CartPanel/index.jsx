@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import { MyContext } from "../../App";
 import { deleteData } from "../../utils/api";
 import {
-  getOptimizedUrl,
+  getOptimizedCloudinaryUrl,
   getTinyPlaceholder,
 } from "../../utils/cloudinaryHelper";
 
@@ -33,7 +33,11 @@ const CartPanel = (props) => {
                   <img
                     key={index}
                     src={
-                      getOptimizedUrl(item?.image, 400) ||
+                      getOptimizedCloudinaryUrl(item?.image, {
+                        width: 100,
+                        height: 100,
+                        crop: "fill",
+                      }) || // Pasa height y crop para un recorte preciso
                       getTinyPlaceholder(item?.image)
                     }
                     className="w-full group-hover:scale-105 overflow-hidden !h-[100px]"

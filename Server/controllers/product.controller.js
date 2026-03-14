@@ -35,6 +35,9 @@ export async function uploadImages(request, response) {
     const uploadPromises = files.map(async (file) => {
       try {
         const result = await cloudinary.uploader.upload(file.path, options);
+        try {
+          fs.unlinkSync(file.path); // Limpiar archivo temporal
+        } catch (e) {}
         return result.secure_url;
       } catch (error) {
         console.error("Error subiendo imagen:", error);

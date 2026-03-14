@@ -4,6 +4,7 @@ import Rating from "@mui/material/Rating";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { MyContext } from "../../App";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
 import { fetchDataFromApi, postData } from "../../utils/api";
 
 const Reviews = (props) => {
@@ -88,7 +89,11 @@ const Reviews = (props) => {
                 <div className="flex gap-3 sm:gap-4 w-full mb-3">
                   <div className="img w-[50px] min-w-[50px] h-[50px] sm:w-[80px] sm:min-w-[80px] sm:h-[80px] overflow-hidden rounded-full border-1 border-[#082c55]">
                     <img
-                      src={review?.image}
+                      src={getOptimizedCloudinaryUrl(review?.image, {
+                        // Pasa height y crop para un recorte preciso
+                        width: 100,
+                        height: 100,
+                      })}
                       className="w-full h-full object-cover"
                     />
                   </div>

@@ -8,6 +8,7 @@ import { Navigation, FreeMode } from "swiper/modules";
 import BannerBox from "../BannerBox";
 import BannerBoxV2 from "../BannerBoxV2";
 import { MyContext } from "../../App";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
 
 const AdsBannerSliderV2 = (props) => {
   const context = useContext(MyContext);
@@ -50,7 +51,9 @@ const AdsBannerSliderV2 = (props) => {
               <BannerBoxV2
                 info={item?.alignInfo}
                 item={item}
-                image={item?.images[0]}
+                image={getOptimizedCloudinaryUrl(item?.images[0], {
+                  width: 600,
+                })}
                 liink={"/"}
                 imageClass={props.imageClass}
               />

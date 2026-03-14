@@ -4,6 +4,7 @@ import Select from "@mui/material/Select";
 import { MyContext } from "../../App";
 import { deleteImages, editData, fetchDataFromApi } from "../../utils/api";
 import UploadBox from "../../Components/UploadBox";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper.js";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -316,7 +317,13 @@ const EditBannerV1 = () => {
                     className="uploadBox !p-0 rounded-md overflow-hidden border border-[#082c55] h-[150px] w-[100%]
                                    bg-gray-200 cursor-pointer hover:bg-gray-300 flex items-center justify-center flex-col "
                   >
-                    <img src={image} className="w-100" />
+                    <img
+                      src={getOptimizedCloudinaryUrl(image, {
+                        width: 150,
+                        height: 150,
+                      })}
+                      className="w-100"
+                    />
                   </div>
                 </div>
               );

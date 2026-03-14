@@ -17,10 +17,9 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { GrClose } from "react-icons/gr";
 import {
   getOptimizedCloudinaryUrl,
+  getCloudinarySrcSet,
   getTinyPlaceholder,
 } from "../../utils/cloudinaryHelper";
-
-import ProductModal from "./ProductModal";
 
 const ProductItem = (props) => {
   const [quantity, setQuantity] = useState(1);
@@ -36,17 +35,8 @@ const ProductItem = (props) => {
   const [selectedWeight, setSelectedWeight] = useState(null);
   const [selectedRam, setSelectedRam] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
 
   const context = useContext(MyContext);
-
-  const handleOpenModal = () => {
-    setOpenModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setOpenModal(false);
-  };
 
   const addToCart = (product, userId, quantity) => {
     const productItem = {
@@ -228,17 +218,39 @@ const ProductItem = (props) => {
               />
               {/* Imagen optimizada */}
               <img
-                src={getOptimizedCloudinaryUrl(props?.item?.images[0], { width: 400, height: 400, crop: 'fill' })}
+                src={getOptimizedCloudinaryUrl(props?.item?.images[0], {
+                  width: 300,
+                  height: 300,
+                  crop: "fill",
+                })}
+                srcSet={getCloudinarySrcSet(
+                  props?.item?.images[0],
+                  [150, 300, 450],
+                  { height: 300, crop: "fill" },
+                )}
+                sizes="(max-width: 640px) 150px, 300px"
                 className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md object-cover z-10"
                 loading="lazy"
                 alt={props?.item?.name}
               />
-              <img
-                src={getOptimizedCloudinaryUrl(props?.item?.images[1], { width: 400, height: 400, crop: 'fill' })}
-                className="!left-0 !top-0 !w-full !h-[200px] transition-all duration-700 !rounded-md absolute opacity-0 group-hover:opacity-100 group-hover:scale-105 object-cover z-20"
-                loading="lazy"
-                alt={props?.item?.name}
-              />
+              {props?.item?.images[1] && (
+                <img
+                  src={getOptimizedCloudinaryUrl(props?.item?.images[1], {
+                    width: 300,
+                    height: 300,
+                    crop: "fill",
+                  })}
+                  srcSet={getCloudinarySrcSet(
+                    props?.item?.images[1],
+                    [150, 300, 450],
+                    { height: 300, crop: "fill" },
+                  )}
+                  sizes="(max-width: 640px) 150px, 300px"
+                  className="!left-0 !top-0 !w-full !h-[200px] transition-all duration-700 !rounded-md absolute opacity-0 group-hover:opacity-100 group-hover:scale-105 object-cover z-20"
+                  loading="lazy"
+                  alt={props?.item?.name}
+                />
+              )}
             </div>
           </Link>
 
@@ -326,7 +338,9 @@ const ProductItem = (props) => {
           </Button>*/}
             <Button
               className="!w-[35px] !h-[35px] !min-w-[35px] !text-[18px] !rounded-full !text-white !bg-[#082c55] !border-1 !border-[#b1cdee] hover:!bg-white hover:!text-[#082c55]"
-              onClick={handleOpenModal}
+              onClick={() =>
+                context.handleOpenProductDetailsModal(true, props?.item)
+              }
             >
               <MdZoomOutMap className="" />
             </Button>
@@ -412,11 +426,6 @@ const ProductItem = (props) => {
           </div>
         </div>
       </div>
-      <ProductModal
-        open={openModal}
-        handleClose={handleCloseModal}
-        item={props.item}
-      />
     </>
   );
 };

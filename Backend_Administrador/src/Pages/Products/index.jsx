@@ -23,7 +23,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import SearchBox from "../../Components/SearchBox";
 import { MyContext } from "../../App";
-import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper.js";
 import {
   deleteData,
   deleteMultipleData,

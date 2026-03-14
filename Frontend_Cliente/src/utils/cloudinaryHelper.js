@@ -7,18 +7,17 @@
  * @returns {string} The URL for a tiny, blurred version of the image.
  */
 export const getTinyPlaceholder = (url) => {
-  if (!url || typeof url !== 'string' || !url.includes('res.cloudinary.com')) {
+  if (!url || typeof url !== "string" || !url.includes("res.cloudinary.com")) {
     return url;
   }
   // This creates a 20px wide image, blurred, with automatic quality.
-  const transformations = 'w_20,e_blur:100,q_auto,f_auto';
-  
-  if (url.includes('/upload/')) {
-      return url.replace(/\/upload\//, `/upload/${transformations}/`);
+  const transformations = "w_20,e_blur:100,q_auto,f_auto";
+
+  if (url.includes("/upload/")) {
+    return url.replace(/\/upload\//, `/upload/${transformations}/`);
   }
   return url;
 };
-
 
 /**
  * Optimizes a Cloudinary URL by adding or replacing transformations.
@@ -32,14 +31,14 @@ export const getTinyPlaceholder = (url) => {
  * @returns {string} The new, optimized image URL.
  */
 export const getOptimizedCloudinaryUrl = (url, options = {}) => {
-  if (!url || typeof url !== 'string' || !url.includes('res.cloudinary.com')) {
+  if (!url || typeof url !== "string" || !url.includes("res.cloudinary.com")) {
     return url;
   }
 
-  const { width, height, crop = 'fill' } = options;
+  const { width, height, crop = "fill" } = options;
 
   // Always apply automatic quality and format for optimization.
-  const transformations = ['f_auto', 'q_auto'];
+  const transformations = ["f_auto", "q_auto"];
 
   // Add sizing and cropping transformations if dimensions are provided.
   if (width) transformations.push(`w_${width}`);
@@ -48,38 +47,37 @@ export const getOptimizedCloudinaryUrl = (url, options = {}) => {
     transformations.push(`c_${crop}`);
   }
 
-  const transformationString = transformations.join(',');
+  const transformationString = transformations.join(",");
 
-  if (url.includes('/upload/')) {
+  if (url.includes("/upload/")) {
     // This regex replaces existing transformation segments to avoid conflicts.
     // It looks for /upload/...,.../ where the middle part is a transformation string.
     const regex = /upload\/[a-zA-Z0-9_,]+\//;
     if (regex.test(url)) {
-        return url.replace(regex, `upload/${transformationString}/`);
+      return url.replace(regex, `upload/${transformationString}/`);
     }
-    return url.replace('/upload/', `/upload/${transformationString}/`);
+    return url.replace("/upload/", `/upload/${transformationString}/`);
   }
-  
+
   return url;
 };
 
-
 /**
- * @deprecated Use getOptimizedCloudinaryUrl with an options object instead.
- * This function is maintained for backward compatibility.
- * 
- * Takes legacy arguments and converts them to the new options object format.
- * 
- * @param {string} url - The image URL.
- * @param {string} quality - The quality setting (e.g., 'auto').
- * @param {number} width - The image width.
- * @returns {string} - The optimized URL.
+ * Genera una cadena srcset para imágenes responsivas.
+ * Permite al navegador elegir el tamaño ideal según la densidad de pantalla.
  */
-export const getOptimizedUrl = (url, quality, width) => {
-    // Assuming 'quality' is the second parameter and might not be used if we default to 'auto'
-    const options = {
-        width: width,
-        // height can be added if needed
-    };
-    return getOptimizedCloudinaryUrl(url, options);
-}
+export const getCloudinarySrcSet = (
+  url,
+  widths = [300, 600, 900],
+  options = {},
+) => {
+  if (!url || typeof url !== "string" || !url.includes("res.cloudinary.com")) {
+    return null;
+  }
+  return widths
+    .map(
+      (w) =>
+        `${getOptimizedCloudinaryUrl(url, { ...options, width: w })} ${w}w`,
+    )
+    .join(", ");
+};

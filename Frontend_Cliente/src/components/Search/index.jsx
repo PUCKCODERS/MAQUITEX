@@ -5,6 +5,7 @@ import { FcSearch } from "react-icons/fc";
 import { MyContext } from "../../App";
 import { postData } from "../../utils/api";
 import { useNavigate, Link } from "react-router-dom";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const Search = () => {
@@ -113,9 +114,10 @@ const Search = () => {
               <div className="w-[60px] h-[60px] min-w-[60px] overflow-hidden  border border-gray-200/60 bg-white p-1 flex items-center justify-center group-hover:border-[#082c55]/50 transition-colors">
                 <img
                   src={
-                    item.images?.[0] ||
-                    item.image ||
-                    "https://via.placeholder.com/50"
+                    getOptimizedCloudinaryUrl(item.images?.[0] || item.image, {
+                      width: 120,
+                      height: 120,
+                    }) || "https://via.placeholder.com/50"
                   }
                   alt={item.name}
                   className="w-full h-full object-contain"

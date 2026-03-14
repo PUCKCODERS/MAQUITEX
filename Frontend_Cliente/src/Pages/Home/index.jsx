@@ -25,7 +25,7 @@ import { fetchDataFromApi } from "../../utils/api";
 import { useState } from "react";
 import { MyContext } from "../../App";
 import ProductLoading from "../../components/ProductLoading";
-import { getOptimizedUrl } from "../../utils/cloudinaryHelper";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
 
 const Home = () => {
   const [value, setValue] = useState(0);
@@ -272,13 +272,17 @@ const Home = () => {
               <BannerBoxV2
                 info="left"
                 item={bannerV1Data[0]}
-                image={getOptimizedUrl(bannerV1Data[0]?.images?.[0], 600)}
+                image={getOptimizedCloudinaryUrl(bannerV1Data[0]?.images?.[0], {
+                  width: 600,
+                })}
               />
 
               <BannerBoxV2
                 info="right"
                 item={bannerV1Data[1]}
-                image={getOptimizedUrl(bannerV1Data[1]?.images?.[0], 600)}
+                image={getOptimizedCloudinaryUrl(bannerV1Data[1]?.images?.[0], {
+                  width: 600,
+                })}
               />
             </div>
           )}

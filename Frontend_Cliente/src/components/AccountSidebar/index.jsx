@@ -10,6 +10,7 @@ import { Button } from "@mui/material";
 import { MyContext } from "../../App";
 import CircularProgress from "@mui/material/CircularProgress";
 import { fetchDataFromApi, uploadImage } from "../../utils/api";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
 import { MdMapsHomeWork } from "react-icons/md";
 
 const AccountSidebar = () => {
@@ -102,7 +103,10 @@ const AccountSidebar = () => {
                 previews?.map((img, index) => {
                   return (
                     <img
-                      src={img}
+                      src={getOptimizedCloudinaryUrl(img, {
+                        width: 150,
+                        height: 150,
+                      })}
                       key={index}
                       className="w-full h-full object-cover "
                       onError={() => setPreviews([])}

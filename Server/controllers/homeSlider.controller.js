@@ -31,6 +31,9 @@ export async function uploadImages(request, response) {
     const uploadPromises = image.map(async (file) => {
       try {
         const result = await cloudinary.uploader.upload(file.path, options);
+        try {
+          fs.unlinkSync(file.path); // Limpiar archivo temporal
+        } catch (e) {}
         return result.secure_url;
       } catch (e) {
         return null;

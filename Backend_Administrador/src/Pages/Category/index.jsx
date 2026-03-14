@@ -23,6 +23,7 @@ import { BiPlusMedical } from "react-icons/bi";
 
 import { MyContext } from "../../App";
 import { deleteData, fetchDataFromApi } from "../../utils/api";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper.js";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 
@@ -130,7 +131,10 @@ export const CategoryList = () => {
                                 alt={"image"}
                                 effect="blur"
                                 className=" group-hover:scale-105 transition-all duration-300 !cursor-pointer w-[60px] h-[45px] sm:w-[400px] sm:h-[200px]"
-                                src={item.images[0]}
+                                src={getOptimizedCloudinaryUrl(item.images[0], {
+                                  width: 400,
+                                  height: 200,
+                                })}
                               />
                             </Link>
                           </div>

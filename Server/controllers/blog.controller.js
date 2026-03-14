@@ -31,6 +31,9 @@ export async function uploadImages(request, response) {
     const uploadPromises = image.map(async (file) => {
       try {
         const result = await cloudinary.uploader.upload(file.path, options);
+        try {
+          fs.unlinkSync(file.path); // Limpiar archivo temporal
+        } catch (e) {}
         return result;
       } catch (error) {
         console.error("Error uploading image:", error);
@@ -189,12 +192,19 @@ export async function deleteBlog(request, response) {
 }
 
 export async function updatedBlog(request, response) {
-  // OPTIMIZACIÓN: Si hay nuevas imágenes subidas, borrar las anteriores de Cloudinary
-  const newImages = request.body.images;
-  if (newImages && newImages.length > 0) {
+  const newImages = Array.isArray(request.body.images)
+    ? request.body.images
+    : [];
+  if (newImages.length >= 0) {
+    // Siempre verificar cambios en imágenes
     const oldBlog = await BlogModel.findById(request.params.id);
     if (oldBlog && oldBlog.images) {
-      const deletePromises = oldBlog.images.map(async (img) => {
+      // Solo borrar las imágenes que estaban antes pero ya no están en la nueva lista
+      const imagesToDelete = oldBlog.images.filter(
+        (img) => !newImages.includes(img),
+      );
+
+      const deletePromises = imagesToDelete.map(async (img) => {
         let imageName = "";
         if (img.includes("maquitex")) {
           const parts = img.split("/maquitex/");

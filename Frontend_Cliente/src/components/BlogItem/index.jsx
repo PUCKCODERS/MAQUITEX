@@ -2,15 +2,19 @@ import React from "react";
 import { FcOvertime } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { BsBoxArrowUpRight } from "react-icons/bs";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
 
 const BlogItem = (props) => {
   return (
     <div className="blogItem group !mr-2">
       <div className="imgWrapper !w-full overflow-hidden rounded-md !border-1 !border-[#b1cdee] shadow-[3px_3px_3px_#274a72] cursor-pointer relative">
         <img
-          src={props?.item?.images[0]}
+          src={getOptimizedCloudinaryUrl(props?.item?.images[0], {
+            width: 450,
+          })}
           className="!w-full !h-[150px] transition-all group-hover:scale-105 group-hover:rotate-0"
           alt="blog image"
+          loading="lazy"
         />
 
         <span className="flex items-center justify-center text-white absolute bottom-[15px] right-[15px] !z-50 bg-[#556f8d] rounded-md !p-1 text-[15px] font-[500] gap-1">

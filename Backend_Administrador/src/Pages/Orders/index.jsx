@@ -6,6 +6,7 @@ import { editData, fetchDataFromApi } from "../../utils/api";
 import { useEffect } from "react";
 import { MenuItem, Pagination, Select, Tooltip } from "@mui/material";
 import { MyContext } from "../../App";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper.js";
 import { Link } from "react-router-dom";
 
 const Orders = () => {
@@ -369,10 +370,12 @@ const Orders = () => {
                                       </td>
                                       <td class="!px-6 !py-4 font-[500] ">
                                         <img
-                                          src={getCloudinaryOptimizedUrl(
+                                          src={getOptimizedCloudinaryUrl(
                                             item?.image,
-                                            80,
-                                            80,
+                                            {
+                                              width: 80,
+                                              height: 80,
+                                            },
                                           )}
                                           className="w-[40px] h-[40px] object-cover rounded-md"
                                         />
@@ -449,15 +452,3 @@ const Orders = () => {
 };
 
 export default Orders;
-
-const getCloudinaryOptimizedUrl = (url, width, height) => {
-  if (!url) {
-    return "";
-  }
-  const parts = url.split("/upload/");
-  if (parts.length !== 2) {
-    return url;
-  }
-  const transformations = `w_${width},h_${height},c_fill,q_auto,f_auto`;
-  return `${parts[0]}/upload/${transformations}/${parts[1]}`;
-};

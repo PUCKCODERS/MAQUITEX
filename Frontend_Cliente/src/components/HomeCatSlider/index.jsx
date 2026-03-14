@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { Navigation, FreeMode } from "swiper/modules";
 import { useContext } from "react";
 import { MyContext } from "../../App";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
 
 const HomeCatSlider = (props) => {
   const context = useContext(MyContext);
@@ -48,7 +49,10 @@ const HomeCatSlider = (props) => {
                 <Link to={`/productListing?catId=${cat?._id}`}>
                   <div className="item !py-3 !px-3 bg-white !text-[#556f8d] shadow-[3px_3px_3px_#556f8d] !border-1 !border-[#b1cdee] rounded-lg text-center flex items-center justify-center flex-col">
                     <img
-                      src={cat?.images[0]}
+                      src={getOptimizedCloudinaryUrl(cat?.images[0], {
+                        width: 150,
+                        height: 150,
+                      })}
                       className="!w-full !left-0 !top-0 h-[50px] sm:h-[80px] lg:h-[94px] transition-all !duration-500"
                     />
                     <h3 className="text-[9px] lg:text-[13px] font-bold font-[bold] !mt-3 !mb-0 lg:!mt-3 lg:!mb-0">

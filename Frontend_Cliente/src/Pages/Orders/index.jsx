@@ -138,7 +138,10 @@ const Orders = () => {
                                     ", " +
                                     order?.delivery_address?.state +
                                     ", " +
-                                    order?.delivery_address?.country}
+                                    order?.delivery_address?.country +
+                                    ", " +
+                                    "+" +
+                                    order?.delivery_address?.mobile}
                                 </span>
                               </td>
                               <td class="!px-6 !py-4 font-[500] ">
@@ -274,7 +277,14 @@ const Orders = () => {
                                               </td>
                                               <td class="!px-6 !py-4 font-[500] ">
                                                 <img
-                                                  src={getOptimizedCloudinaryUrl(item?.image, { width: 80, height: 80 })}
+                                                  src={getOptimizedCloudinaryUrl(
+                                                    item?.image,
+                                                    {
+                                                      width: 80,
+                                                      height: 80,
+                                                      crop: "fill",
+                                                    },
+                                                  )} // Optimizado para miniaturas de productos en pedidos
                                                   className="w-[40px] h-[40px] object-cover rounded-md"
                                                 />
                                               </td>

@@ -6,6 +6,7 @@ import "swiper/css/navigation";
 import { Navigation, Autoplay } from "swiper/modules";
 import { useContext } from "react";
 import { MyContext } from "../../App";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
 
 const HomeSlider = (props) => {
   const context = useContext(MyContext);
@@ -30,9 +31,13 @@ const HomeSlider = (props) => {
                 <SwiperSlide key={index}>
                   <div className="item rounded-[10px] overflow-hidden shadow-[3px_3px_3px_#082c55]">
                     <img
-                      src={item?.images[0]}
+                      src={getOptimizedCloudinaryUrl(item?.images[0], {
+                        width: 1280,
+                        crop: "limit",
+                      })}
                       alt="Banner slide"
                       className="!w-full !left-0 !top-0 h-[200px] sm:h-[300px] md:h-[300px] lg:h-[500px] "
+                      loading={index === 0 ? "eager" : "lazy"} // El primer banner carga al instante
                     />
                   </div>
                 </SwiperSlide>

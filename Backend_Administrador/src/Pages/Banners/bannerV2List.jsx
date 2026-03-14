@@ -15,6 +15,7 @@ import TableRow from "@mui/material/TableRow";
 
 import { MyContext } from "../../App";
 import { deleteData, fetchDataFromApi } from "../../utils/api";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper.js";
 import Dialog from "@mui/material/Dialog";
 import { FcDeleteDatabase } from "react-icons/fc";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -121,7 +122,10 @@ export const BannerV2List = () => {
                         >
                           <div className="img w-full bg-white rounded-md overflow-hidden border border-[#fff] group">
                             <img
-                              src={item?.images[0]}
+                              src={getOptimizedCloudinaryUrl(item?.images[0], {
+                                width: 400,
+                                height: 200,
+                              })}
                               className=" group-hover:scale-105 transition-all duration-300 !cursor-pointer w-[150px] sm:w-[400px] h-[75px] sm:h-[200px]"
                             />
                           </div>

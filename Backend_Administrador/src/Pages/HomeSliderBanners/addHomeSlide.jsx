@@ -9,6 +9,7 @@ import { MyContext } from "../../App";
 import { deleteImages, postData } from "../../utils/api";
 import CircularProgress from "@mui/material/CircularProgress";
 import { GiSave } from "react-icons/gi";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper.js";
 import { useNavigate } from "react-router-dom";
 
 const AddHomeSlide = () => {
@@ -96,7 +97,10 @@ const AddHomeSlide = () => {
                            bg-gray-200 cursor-pointer hover:bg-gray-300 flex items-center justify-center flex-col "
                   >
                     <img
-                      src={getCloudinaryOptimizedUrl(image, 150, 150)}
+                      src={getOptimizedCloudinaryUrl(image, {
+                        width: 150,
+                        height: 150,
+                      })}
                       className="w-100"
                     />
                   </div>
@@ -131,15 +135,3 @@ const AddHomeSlide = () => {
 };
 
 export default AddHomeSlide;
-
-const getCloudinaryOptimizedUrl = (url, width, height) => {
-  if (!url) {
-    return "";
-  }
-  const parts = url.split("/upload/");
-  if (parts.length !== 2) {
-    return url;
-  }
-  const transformations = `w_${width},h_${height},c_fill,q_auto,f_auto`;
-  return `${parts[0]}/upload/${transformations}/${parts[1]}`;
-};

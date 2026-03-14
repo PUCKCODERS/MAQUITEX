@@ -14,6 +14,7 @@ import { deleteData, fetchDataFromApi } from "../../utils/api";
 import Dialog from "@mui/material/Dialog";
 import { FcDeleteDatabase } from "react-icons/fc";
 import DialogTitle from "@mui/material/DialogTitle";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper.js";
 
 const columns = [
   { id: "image", label: "IMAGEN", minWidth: 250 },
@@ -117,7 +118,10 @@ export const BlogList = () => {
                         >
                           <div className="img w-full rounded-md overflow-hidden border border-[#fff] group">
                             <img
-                              src={item?.images[0]}
+                              src={getOptimizedCloudinaryUrl(item?.images[0], {
+                                width: 400,
+                                height: 200,
+                              })}
                               className=" group-hover:scale-105 transition-all duration-300 !cursor-pointer w-[150px]  sm:w-[400px] h-[75px] sm:h-[200px]"
                             />
                           </div>

@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import { deleteImages, postData } from "../../utils/api";
 import { MyContext } from "../../App";
 import CircularProgress from "@mui/material/CircularProgress";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper.js";
 import { GiSave } from "react-icons/gi";
 import { useNavigate } from "react-router-dom";
 import Editor from "react-simple-wysiwyg";
@@ -36,21 +37,16 @@ const AddBlog = () => {
   };
 
   const setPreviewsFun = (previewsArr) => {
-    setPreviews(previewsArr);
-    formFields.images = previewsArr;
+    const updatedImages = [...previews, ...previewsArr];
+    setPreviews(updatedImages);
+    setFormFields((prev) => ({ ...prev, images: updatedImages }));
   };
 
   const removeImg = (image, index) => {
-    var imageArr = [];
-    imageArr = previews;
     deleteImages(`/api/category/deleteImage?img=${image}`).then(() => {
-      imageArr.splice(index, 1);
-
-      setPreviews([]);
-      setTimeout(() => {
-        setPreviews(imageArr);
-        formFields.images = imageArr;
-      }, 100);
+      const updatedImages = previews.filter((_, i) => i !== index);
+      setPreviews(updatedImages);
+      setFormFields((prev) => ({ ...prev, images: updatedImages }));
     });
   };
 
@@ -147,7 +143,13 @@ const AddBlog = () => {
                     className="uploadBox !p-0 rounded-md overflow-hidden border border-[#082c55] h-[150px] w-[100%]
                            bg-gray-200 cursor-pointer hover:bg-gray-300 flex items-center justify-center flex-col "
                   >
-                    <img src={image} className="w-100" />
+                    <img
+                      src={getOptimizedCloudinaryUrl(image, {
+                        width: 150,
+                        height: 150,
+                      })}
+                      className="w-100"
+                    />
                   </div>
                 </div>
               );

@@ -51,7 +51,7 @@ import {
   Bar,
 } from "recharts";
 import { MyContext } from "../../App";
-import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper.js";
 import {
   fetchDataFromApi,
   deleteMultipleData,

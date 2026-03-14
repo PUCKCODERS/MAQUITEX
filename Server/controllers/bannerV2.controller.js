@@ -31,6 +31,9 @@ export async function uploadImages(request, response) {
     const uploadPromises = image.map(async (file) => {
       try {
         const result = await cloudinary.uploader.upload(file.path, options);
+        try {
+          fs.unlinkSync(file.path); // Limpiar archivo temporal tras la subida
+        } catch (e) {}
         return result.secure_url;
       } catch (error) {
         console.error("Error subiendo imagen:", error);
@@ -41,35 +44,6 @@ export async function uploadImages(request, response) {
     const uploadedUrls = (await Promise.all(uploadPromises)).filter(
       (url) => url !== null,
     );
-
-    const lowResOptions = {
-      use_filename: true,
-      unique_filename: false,
-      overwrite: false,
-      folder: "maquitex/banners_v2/low_res",
-      format: "webp",
-      transformation: [
-        { width: 320, height: 180, crop: "fill" }, // Versión de baja resolución
-        { quality: "auto" },
-        { fetch_format: "auto" },
-      ],
-      resource_type: "image",
-    };
-
-    const lowResUploadPromises = image.map(async (file) => {
-      try {
-        const result = await cloudinary.uploader.upload(
-          file.path,
-          lowResOptions,
-        );
-        return result.secure_url;
-      } catch (error) {
-        console.error("Error subiendo imagen de baja resolución:", error);
-        return null;
-      }
-    });
-
-    await Promise.all(lowResUploadPromises);
 
     return response.status(200).json({
       images: uploadedUrls,

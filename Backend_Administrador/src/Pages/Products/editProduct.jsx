@@ -14,6 +14,7 @@ import { MyContext } from "../../App";
 import { deleteImages, editData, fetchDataFromApi } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper.js";
 import { GiSave } from "react-icons/gi";
 import Switch from "@mui/material/Switch";
 
@@ -221,30 +222,24 @@ const EditProduct = () => {
   };
 
   const removeImg = (image, index) => {
-    var imageArr = [];
-    imageArr = previews;
     deleteImages(`/api/product/deleteImage?img=${image}`).then(() => {
-      imageArr.splice(index, 1);
-
-      setPreviews([]);
-      setTimeout(() => {
-        setPreviews(imageArr);
-        formFields.images = imageArr;
-      }, 100);
+      const updatedImages = previews.filter((_, i) => i !== index);
+      setPreviews(updatedImages);
+      setFormFields((prev) => ({
+        ...prev,
+        images: updatedImages,
+      }));
     });
   };
 
   const removeBannerImg = (image, index) => {
-    var imageArr = [];
-    imageArr = bannerPreviews;
     deleteImages(`/api/product/deleteImage?img=${image}`).then(() => {
-      imageArr.splice(index, 1);
-
-      setBannerPreviews([]);
-      setTimeout(() => {
-        setBannerPreviews(imageArr);
-        formFields.bannerimages = imageArr;
-      }, 100);
+      const updatedBannerImages = bannerPreviews.filter((_, i) => i !== index);
+      setBannerPreviews(updatedBannerImages);
+      setFormFields((prev) => ({
+        ...prev,
+        bannerimages: updatedBannerImages,
+      }));
     });
   };
 
@@ -254,7 +249,7 @@ const EditProduct = () => {
   };
 
   const handleSubmitg = (e) => {
-    e.preventDefault(0);
+    e.preventDefault();
 
     if (formFields.name === "") {
       context.alertBox("error", "POR FAVOR INGRESE EL NOMBRE DEL PRODUCTO");
@@ -700,224 +695,116 @@ const EditProduct = () => {
                       <IoClose className="text-[20px]" />
                     </span>
 
-                                          <div
-
-                                            className="uploadBox !p-0 rounded-md overflow-hidden border border-[#082c55] h-[150px] w-[100%]
+                    <div
+                      className="uploadBox !p-0 rounded-md overflow-hidden border border-[#082c55] h-[150px] w-[100%]
 
                                                bg-gray-200 cursor-pointer hover:bg-gray-300 flex items-center justify-center flex-col "
+                    >
+                      <img
+                        src={getOptimizedCloudinaryUrl(image, {
+                          width: 150,
+                          height: 150,
+                        })}
+                        className="w-100"
+                      />
+                    </div>
+                  </div>
+                );
+              })}
 
-                                          >
+            <UploadBox
+              multiple={true}
+              name="images"
+              url="/api/product/uploadImages"
+              setPreviewsFun={setPreviewsFun}
+            />
+          </div>
+        </div>
 
-                                            <img
+        <div className="col w-full !p-5 !px-0">
+          <div className="bg-white border-1 border-[#082c55] !shadow-[3px_3px_3px_#082c55] rounded-sm !p-4 w-full">
+            <div className="flex items-center justify-between">
+              <h3 className="font-bold text-[18px] text-[#082c55] !mb-3">
+                IMAGENES DE BANNER
+              </h3>
 
-                                              src={getCloudinaryOptimizedUrl(image, 150, 150)}
+              <Switch
+                {...label}
+                onChange={handleChangeSwitch}
+                checked={checkedSwitch}
+              />
+            </div>
 
-                                              className="w-100"
-
-                                            />
-
-                                          </div>
-
-                                        </div>
-
-                                      );
-
-                                    })}
-
-                    
-
-                                <UploadBox
-
-                                  multiple={true}
-
-                                  name="images"
-
-                                  url="/api/product/uploadImages"
-
-                                  setPreviewsFun={setPreviewsFun}
-
-                                />
-
-                              </div>
-
-                            </div>
-
-                    
-
-                            <div className="col w-full !p-5 !px-0">
-
-                              <div className="bg-white border-1 border-[#082c55] !shadow-[3px_3px_3px_#082c55] rounded-sm !p-4 w-full">
-
-                                <div className="flex items-center justify-between">
-
-                                  <h3 className="font-bold text-[18px] text-[#082c55] !mb-3">
-
-                                    IMAGENES DE BANNER
-
-                                  </h3>
-
-                                  <Switch
-
-                                    {...label}
-
-                                    onChange={handleChangeSwitch}
-
-                                    checked={checkedSwitch}
-
-                                  />
-
-                                </div>
-
-                                <div className="grid grid-cols-2 md:grid-cols-7 !gap-2">
-
-                                  {bannerPreviews?.length !== 0 &&
-
-                                    bannerPreviews?.map((image, index) => {
-
-                                      return (
-
-                                        <div className="uploadBoxWrapper relative" key={index}>
-
-                                          <span
-
-                                            className="!absolute w-[20px] h-[20px] rounded-full overflow-hidden !text-[#fff]  !bg-[#030712] hover:!text-[#030712] hover:!bg-[#fff] !shadow-[0px_0px_0px_3px_#6b6c6d] hover:!shadow-[0px_0px_0px_3px_#030712]
+            <div className="grid grid-cols-2 md:grid-cols-7 !gap-2">
+              {bannerPreviews?.length !== 0 &&
+                bannerPreviews?.map((image, index) => {
+                  return (
+                    <div className="uploadBoxWrapper relative" key={index}>
+                      <span
+                        className="!absolute w-[20px] h-[20px] rounded-full overflow-hidden !text-[#fff]  !bg-[#030712] hover:!text-[#030712] hover:!bg-[#fff] !shadow-[0px_0px_0px_3px_#6b6c6d] hover:!shadow-[0px_0px_0px_3px_#030712]
 
                                               -top-[0x] -right-[0px] flex items-center justify-center z-50 cursor-pointer"
+                        onClick={() => removeBannerImg(image, index)}
+                      >
+                        <IoClose className="text-[20px]" />
+                      </span>
 
-                                            onClick={() => removeBannerImg(image, index)}
-
-                                          >
-
-                                            <IoClose className="text-[20px]" />
-
-                                          </span>
-
-                    
-
-                                          <div
-
-                                            className="uploadBox !p-0 rounded-md overflow-hidden border border-[#082c55] h-[150px] w-[100%]
+                      <div
+                        className="uploadBox !p-0 rounded-md overflow-hidden border border-[#082c55] h-[150px] w-[100%]
 
                                                bg-gray-200 cursor-pointer hover:bg-gray-300 flex items-center justify-center flex-col "
+                      >
+                        <img
+                          src={getOptimizedCloudinaryUrl(image, {
+                            width: 150,
+                            height: 150,
+                          })}
+                          className="w-100"
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
 
-                                          >
+              <UploadBox
+                multiple={true}
+                name="bannerimages"
+                url="/api/product/uploadBannerImages"
+                setPreviewsFun={setBannerImagesFun}
+              />
+            </div>
 
-                                            <img
+            <h3 className="font-bold text-[18px] text-[#082c55] !mb-2 !mt-3">
+              TITULO DE BANNER
+            </h3>
 
-                                              src={getCloudinaryOptimizedUrl(image, 150, 150)}
+            <input
+              type="text"
+              className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+              name="bannerTitlename"
+              value={formFields.bannerTitlename}
+              onChange={onChangeInput}
+            />
+          </div>
+        </div>
 
-                                              className="w-100"
+        <hr className="text-gray-500" />
 
-                                            />
+        <br />
 
-                                          </div>
+        <Button type="submit" className="btn-blue btn-lg w-full !gap-2">
+          {isLoading === true ? (
+            <CircularProgress color="inherit" />
+          ) : (
+            <>
+              <GiSave className="text-[25px] text-white" />
+              PUBLICAR Y VER
+            </>
+          )}
+        </Button>
+      </form>
+    </section>
+  );
+};
 
-                                        </div>
-
-                                      );
-
-                                    })}
-
-                    
-
-                                  <UploadBox
-
-                                    multiple={true}
-
-                                    name="bannerimages"
-
-                                    url="/api/product/uploadBannerImages"
-
-                                    setPreviewsFun={setBannerImagesFun}
-
-                                  />
-
-                                </div>
-
-                                <h3 className="font-bold text-[18px] text-[#082c55] !mb-2 !mt-3">
-
-                                  TITULO DE BANNER
-
-                                </h3>
-
-                                <input
-
-                                  type="text"
-
-                                  className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
-
-                                  name="bannerTitlename"
-
-                                  value={formFields.bannerTitlename}
-
-                                  onChange={onChangeInput}
-
-                                />
-
-                              </div>
-
-                            </div>
-
-                    
-
-                            <hr className="text-gray-500" />
-
-                            <br />
-
-                            <Button type="submit" className="btn-blue btn-lg w-full !gap-2">
-
-                              {isLoading === true ? (
-
-                                <CircularProgress color="inherit" />
-
-                              ) : (
-
-                                <>
-
-                                  <GiSave className="text-[25px] text-white" />
-
-                                  PUBLICAR Y VER
-
-                                </>
-
-                              )}
-
-                            </Button>
-
-                          </form>
-
-                        </section>
-
-                      );
-
-                    };
-
-                    
-
-                    export default EditProduct;
-
-                    
-
-                    const getCloudinaryOptimizedUrl = (url, width, height) => {
-
-                      if (!url) {
-
-                        return "";
-
-                      }
-
-                      const parts = url.split("/upload/");
-
-                      if (parts.length !== 2) {
-
-                        return url;
-
-                      }
-
-                      const transformations = `w_${width},h_${height},c_fill,q_auto,f_auto`;
-
-                      return `${parts[0]}/upload/${transformations}/${parts[1]}`;
-
-                    };
-
-                    
+export default EditProduct;

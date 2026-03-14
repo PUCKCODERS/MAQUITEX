@@ -16,6 +16,7 @@ import { BiSolidMessageEdit } from "react-icons/bi";
 import { BsPatchCheckFill } from "react-icons/bs";
 import Rating from "@mui/material/Rating";
 import { GiMoneyStack } from "react-icons/gi";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper.js";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const ProductDetails = () => {
@@ -114,7 +115,10 @@ const ProductDetails = () => {
                               onClick={() => goto(index)}
                             >
                               <img
-                                src={getCloudinaryOptimizedUrl(item, 200, 200)}
+                                src={getOptimizedCloudinaryUrl(item, {
+                                  width: 200,
+                                  height: 200,
+                                })}
                                 className="w-full h-full object-cover transition-all group-hover:scale-105"
                               />
                             </div>
@@ -137,7 +141,10 @@ const ProductDetails = () => {
                             <InnerImageZoom
                               zoomType="hover"
                               zoomScale={1}
-                              src={getCloudinaryOptimizedUrl(item, 500, 500)}
+                              src={getOptimizedCloudinaryUrl(item, {
+                                width: 500,
+                                height: 500,
+                              })}
                               className="!w-full !h-full !rounded-md !shadow-lg !border-1 border-[#737475]"
                             />
                           </SwiperSlide>
@@ -292,7 +299,10 @@ const ProductDetails = () => {
                   <div className="flex gap-3 sm:gap-4 w-full mb-3">
                     <div className="img w-[50px] min-w-[50px] h-[50px] sm:w-[80px] sm:min-w-[80px] sm:h-[80px] overflow-hidden rounded-full border-1 border-[#082c55]">
                       <img
-                        src={review.image}
+                        src={getOptimizedCloudinaryUrl(review.image, {
+                          width: 100,
+                          height: 100,
+                        })}
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -335,15 +345,3 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
-
-const getCloudinaryOptimizedUrl = (url, width, height) => {
-  if (!url) {
-    return "";
-  }
-  const parts = url.split("/upload/");
-  if (parts.length !== 2) {
-    return url;
-  }
-  const transformations = `w_${width},h_${height},c_fill,q_auto,f_auto`;
-  return `${parts[0]}/upload/${transformations}/${parts[1]}`;
-};

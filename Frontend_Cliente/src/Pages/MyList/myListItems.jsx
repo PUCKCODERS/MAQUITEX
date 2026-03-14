@@ -8,7 +8,7 @@ import { Button } from "@mui/material";
 import { MyContext } from "../../App";
 import { deleteData } from "../../utils/api";
 import {
-  getOptimizedUrl,
+  getOptimizedCloudinaryUrl,
   getTinyPlaceholder,
 } from "../../utils/cloudinaryHelper";
 
@@ -28,8 +28,11 @@ const MyListItems = (props) => {
         <Link to={`/product/${props?.item?.productId}`} className="group">
           <img
             src={
-              getOptimizedUrl(props?.item?.image, 400) ||
-              getTinyPlaceholder(props?.item?.image)
+              getOptimizedCloudinaryUrl(props?.item?.image, {
+                // Pasa height para un recorte preciso
+                width: 100,
+                height: 100,
+              }) || getTinyPlaceholder(props?.item?.image)
             }
             className="!w-full !h-[180px] group-hover:scale-105 transition-all"
             loading="lazy"

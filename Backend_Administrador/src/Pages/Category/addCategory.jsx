@@ -8,6 +8,7 @@ import { deleteImages, postData } from "../../utils/api";
 import { MyContext } from "../../App";
 import CircularProgress from "@mui/material/CircularProgress";
 import { GiSave } from "react-icons/gi";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper.js";
 import { useNavigate } from "react-router-dom";
 
 const AddCategory = () => {
@@ -127,7 +128,13 @@ const AddCategory = () => {
                     className="uploadBox !p-0 rounded-md overflow-hidden border border-[#082c55] h-[150px] w-[100%]
                            bg-gray-200 cursor-pointer hover:bg-gray-300 flex items-center justify-center flex-col "
                   >
-                    <img src={image} className="w-100" />
+                    <img
+                      src={getOptimizedCloudinaryUrl(image, {
+                        width: 150,
+                        height: 150,
+                      })}
+                      className="w-100"
+                    />
                   </div>
                 </div>
               );

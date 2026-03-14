@@ -930,7 +930,7 @@ export async function deleteMultiple(request, response) {
           imageName = urlArr[urlArr.length - 1].split(".")[0];
         }
         if (imageName) {
-          return cloudinary.uploader.destroy(imageName).catch(() => {});
+          return await cloudinary.uploader.destroy(imageName).catch(() => {});
         }
       }
     });
@@ -979,6 +979,9 @@ export async function uploadUserAvatars(request, response) {
     const uploadPromises = image.map(async (file) => {
       try {
         const result = await cloudinary.uploader.upload(file.path, options);
+        try {
+          fs.unlinkSync(file.path); // Limpiar archivo temporal
+        } catch (e) {}
         return result.secure_url;
       } catch (error) {
         return null;
