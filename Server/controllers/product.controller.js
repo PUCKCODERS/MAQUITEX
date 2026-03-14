@@ -82,6 +82,9 @@ export async function uploadBannerImages(request, response) {
     const uploadPromises = files.map(async (file) => {
       try {
         const result = await cloudinary.uploader.upload(file.path, options);
+        try {
+          fs.unlinkSync(file.path); // Limpiar archivo temporal tras la subida
+        } catch (e) {}
         return result.secure_url;
       } catch (e) {
         return null;

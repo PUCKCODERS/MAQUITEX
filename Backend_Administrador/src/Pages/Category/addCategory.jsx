@@ -34,21 +34,16 @@ const AddCategory = () => {
   };
 
   const setPreviewsFun = (previewsArr) => {
-    setPreviews(previewsArr);
-    formFields.images = previewsArr;
+    const updatedImages = [...previews, ...previewsArr];
+    setPreviews(updatedImages);
+    setFormFields((prev) => ({ ...prev, images: updatedImages }));
   };
 
   const removeImg = (image, index) => {
-    var imageArr = [];
-    imageArr = previews;
     deleteImages(`/api/category/deleteImage?img=${image}`).then(() => {
-      imageArr.splice(index, 1);
-
-      setPreviews([]);
-      setTimeout(() => {
-        setPreviews(imageArr);
-        formFields.images = imageArr;
-      }, 100);
+      const updatedImages = previews.filter((_, i) => i !== index);
+      setPreviews(updatedImages);
+      setFormFields((prev) => ({ ...prev, images: updatedImages }));
     });
   };
 

@@ -155,6 +155,9 @@ export async function getBlog(request, response) {
 
 export async function deleteBlog(request, response) {
   const blog = await BlogModel.findById(request.params.id);
+  if (!blog)
+    return response.status(404).json({ message: "Blog no encontrado" });
+
   const images = blog.images;
 
   let img = "";

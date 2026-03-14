@@ -167,6 +167,9 @@ export async function removeImageFromCloudinary(request, response) {
 
 export async function deleteSlide(request, response) {
   const slide = await HomeSliderModel.findById(request.params.id);
+  if (!slide)
+    return response.status(404).json({ message: "Slide no encontrado" });
+
   const images = slide.images;
   let img = "";
 
