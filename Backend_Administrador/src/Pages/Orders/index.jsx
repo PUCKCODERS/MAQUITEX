@@ -375,9 +375,10 @@ const Orders = () => {
                                             {
                                               width: 80,
                                               height: 80,
+                                              crop: "limit",
                                             },
                                           )}
-                                          className="w-[40px] h-[40px] object-cover rounded-md"
+                                          className="w-[40px] h-[40px] object-contain rounded-md bg-white"
                                         />
                                       </td>
                                       {order?.products?.some((p) => p.ram) && (

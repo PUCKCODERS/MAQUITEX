@@ -465,9 +465,13 @@ export const Products = () => {
                                     effect="blur"
                                     src={getOptimizedCloudinaryUrl(
                                       product?.images[0],
-                                      { width: 170, height: 170 },
+                                      {
+                                        width: 170,
+                                        height: 170,
+                                        crop: "limit",
+                                      },
                                     )}
-                                    className="w-full group-hover:scale-105 transition-all duration-300 !cursor-pointer"
+                                    className="w-full h-full object-contain group-hover:scale-105 transition-all duration-300 !cursor-pointer p-1"
                                   />
                                 </Link>
                               </div>

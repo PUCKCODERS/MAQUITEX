@@ -213,7 +213,7 @@ const ProductItem = (props) => {
               {/* Placeholder ultraligero */}
               <img
                 src={getTinyPlaceholder(props?.item?.images[0])}
-                className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md object-cover"
+                className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md object-contain"
                 alt={`${props?.item?.name} placeholder`}
               />
               {/* Imagen optimizada */}
@@ -221,15 +221,15 @@ const ProductItem = (props) => {
                 src={getOptimizedCloudinaryUrl(props?.item?.images[0], {
                   width: 300,
                   height: 300,
-                  crop: "fill",
+                  crop: "limit",
                 })}
                 srcSet={getCloudinarySrcSet(
                   props?.item?.images[0],
                   [150, 300, 450],
-                  { height: 300, crop: "fill" },
+                  { height: 300, crop: "limit" },
                 )}
                 sizes="(max-width: 640px) 150px, 300px"
-                className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md object-cover z-10"
+                className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md object-contain z-10 p-2"
                 loading="lazy"
                 alt={props?.item?.name}
               />
@@ -238,15 +238,15 @@ const ProductItem = (props) => {
                   src={getOptimizedCloudinaryUrl(props?.item?.images[1], {
                     width: 300,
                     height: 300,
-                    crop: "fill",
+                    crop: "limit",
                   })}
                   srcSet={getCloudinarySrcSet(
                     props?.item?.images[1],
                     [150, 300, 450],
-                    { height: 300, crop: "fill" },
+                    { height: 300, crop: "limit" },
                   )}
                   sizes="(max-width: 640px) 150px, 300px"
-                  className="!left-0 !top-0 !w-full !h-[200px] transition-all duration-700 !rounded-md absolute opacity-0 group-hover:opacity-100 group-hover:scale-105 object-cover z-20"
+                  className="!left-0 !top-0 !w-full !h-[200px] transition-all duration-700 !rounded-md absolute opacity-0 group-hover:opacity-100 group-hover:scale-105 object-contain z-20 p-2"
                   loading="lazy"
                   alt={props?.item?.name}
                 />
