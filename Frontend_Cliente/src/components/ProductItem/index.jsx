@@ -206,14 +206,14 @@ const ProductItem = (props) => {
 
   return (
     <>
-      <div className="productItem bg-white !rounded-md !overflow-hidden !border-1 !border-[#b1cdee] shadow-[5px_5px_5px_#274a72] ">
+      <div className="productItem !bg-white !rounded-md !overflow-hidden !border-1 !border-[#b1cdee] shadow-[5px_5px_5px_#274a72] ">
         <div className="group imgWrapper !w-[100%] !overflow-hidden !rounded-md relative">
           <Link to={`/product/${props?.item?._id}`}>
             <div className="img !h-[200px] !overflow-hidden relative">
               {/* Placeholder ultraligero */}
               <img
                 src={getTinyPlaceholder(props?.item?.images[0])}
-                className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md object-contain"
+                className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md !bg-white"
                 alt={`${props?.item?.name} placeholder`}
               />
               {/* Imagen optimizada */}
@@ -229,7 +229,7 @@ const ProductItem = (props) => {
                   { height: 300, crop: "limit" },
                 )}
                 sizes="(max-width: 640px) 150px, 300px"
-                className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md object-contain z-10 p-2"
+                className="!absolute !left-0 !top-0 !w-full !h-[200px] !rounded-md !bg-white"
                 loading="lazy"
                 alt={props?.item?.name}
               />
@@ -246,7 +246,7 @@ const ProductItem = (props) => {
                     { height: 300, crop: "limit" },
                   )}
                   sizes="(max-width: 640px) 150px, 300px"
-                  className="!left-0 !top-0 !w-full !h-[200px] transition-all duration-700 !rounded-md absolute opacity-0 group-hover:opacity-100 group-hover:scale-105 object-contain z-20 p-2"
+                  className="!left-0 !top-0 !w-full !h-[200px] transition-all duration-700 !rounded-md !bg-white absolute opacity-0 group-hover:opacity-100 group-hover:scale-105 "
                   loading="lazy"
                   alt={props?.item?.name}
                 />
