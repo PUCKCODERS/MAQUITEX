@@ -662,10 +662,7 @@ const AddProduct = () => {
                                                bg-gray-200 cursor-pointer hover:bg-gray-300 flex items-center justify-center flex-col "
                     >
                       <img
-                        src={getOptimizedCloudinaryUrl(image, {
-                          width: 150,
-                          height: 150,
-                        })}
+                        src={getOptimizedCloudinaryUrl(image)}
                         className="w-100"
                       />
                     </div>
