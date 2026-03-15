@@ -35,7 +35,7 @@ export const getOptimizedCloudinaryUrl = (url, options = {}) => {
     return url;
   }
 
-  const { width, height, crop = "fill" } = options;
+  const { width, height, crop = "limit" } = options;
 
   // Always apply automatic quality and format for optimization.
   const transformations = ["f_auto", "q_auto"];

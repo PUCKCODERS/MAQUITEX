@@ -124,8 +124,9 @@ const AddCategory = () => {
                       src={getOptimizedCloudinaryUrl(image, {
                         width: 150,
                         height: 150,
+                        crop: "limit",
                       })}
-                      className="w-100"
+                      className="w-full h-full object-contain p-2"
                     />
                   </div>
                 </div>
