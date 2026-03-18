@@ -15,10 +15,6 @@ const blogSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
-    extenalLink: {
-      type: String,
-      default: "",
-    },
   },
   {
     timestamps: true,
