@@ -501,16 +501,7 @@ const Home = () => {
               {blogData?.map((item, index) => {
                 return (
                   <SwiperSlide key={index}>
-                    <BlogItem
-                      item={item}
-                      link={
-                        index === 0
-                          ? "/blog/firstblog"
-                          : index === 1
-                            ? "/blog/secondblog"
-                            : "/"
-                      }
-                    />
+                    <BlogItem item={item} />
                   </SwiperSlide>
                 );
               })}
