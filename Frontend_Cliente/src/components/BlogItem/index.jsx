@@ -5,6 +5,44 @@ import { BsBoxArrowUpRight } from "react-icons/bs";
 import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
 
 const BlogItem = (props) => {
+  const hasExternalLink =
+    props?.item?.externalLink && props.item.externalLink.trim() !== "";
+
+  const TitleLink = ({ children }) =>
+    hasExternalLink ? (
+      <a
+        href={props.item.externalLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="link"
+      >
+        {children}
+      </a>
+    ) : (
+      <Link to={props.link || "/"} className="link">
+        {children}
+      </Link>
+    );
+
+  const ReadMoreLink = ({ children }) =>
+    hasExternalLink ? (
+      <a
+        href={props.item.externalLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="link font-bold text-[12px] flex items-center !gap-2"
+      >
+        {children}
+      </a>
+    ) : (
+      <Link
+        to={props.link || "/"}
+        className="link font-bold text-[12px] flex items-center !gap-2"
+      >
+        {children}
+      </Link>
+    );
+
   return (
     <div className="blogItem group !mr-2">
       <div className="imgWrapper !w-full overflow-hidden rounded-md !border-1 !border-[#b1cdee] shadow-[3px_3px_3px_#274a72] cursor-pointer relative">
@@ -25,9 +63,7 @@ const BlogItem = (props) => {
 
       <div className="info !py-4">
         <h2 className="text-[13px] lg:text-[15px] font-bold  !mb-1 whitespace-normal break-words">
-          <Link to={props.link || "/"} className="link">
-            {props?.item?.title}
-          </Link>
+          <TitleLink>{props?.item?.title}</TitleLink>
         </h2>
 
         <div
@@ -37,12 +73,9 @@ const BlogItem = (props) => {
           }}
         ></div>
 
-        <Link
-          to={props.link || "/"}
-          className="link font-bold text-[12px] flex items-center !gap-2"
-        >
+        <ReadMoreLink>
           SEGUIR LEYENDO <BsBoxArrowUpRight className="text-[14px]" />
-        </Link>
+        </ReadMoreLink>
       </div>
     </div>
   );

@@ -17,6 +17,7 @@ const AddBlog = () => {
     title: "",
     images: [],
     description: "",
+    externalLink: "",
   });
 
   const [previews, setPreviews] = useState([]);
@@ -103,6 +104,18 @@ const AddBlog = () => {
               className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
               name="title"
               value={formFields.title}
+              onChange={onChangeInput}
+            />
+          </div>
+          <div className="col w-[100%] !mb-4">
+            <h3 className="text-[#082c55] font-bold text-[14px] !mb-2">
+              LINK EXTERNO (OPCIONAL)
+            </h3>
+            <input
+              type="text"
+              className="w-full h-[40px] border border-gray-400 focus:outline-none focus:border-[#082c55] rounded-sm !p-3 text-sm shadow-[3px_3px_3px_#082c55] !bg-[#f1f1f1]"
+              name="externalLink"
+              value={formFields.externalLink}
               onChange={onChangeInput}
             />
           </div>
