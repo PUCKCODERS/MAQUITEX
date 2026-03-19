@@ -1,23 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button } from "@mui/material";
-import { IoBagCheck } from "react-icons/io5";
 import { MyContext } from "../../App";
 import { FaPlus } from "react-icons/fa";
 import Radio from "@mui/material/Radio";
 import { deleteData, postData } from "../../utils/api";
 import { BsFillBagCheckFill } from "react-icons/bs";
-import axios from "axios";
+
 import { useNavigate } from "react-router-dom";
 import {
   getOptimizedCloudinaryUrl,
   getTinyPlaceholder,
 } from "../../utils/cloudinaryHelper";
 
-const VITE_APP_RAZORPAY_KEY_ID = import.meta.env.VITE_APP_RAZORPAY_KEY_ID;
-const VITE_APP_RAZORPAY_KEY_SECRET = import.meta.env
-  .VITE_APP_RAZORPAY_KEY_SECRET;
-
-const VITE_API_PAYPAL_CLIENT_ID = import.meta.env.VITE_API_PAYPAL_CLIENT_ID;
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 const Checkout = () => {
@@ -44,111 +38,6 @@ const Checkout = () => {
     )?.toLocaleString("en-US", { style: "currency", currency: "USD" });
   }, [context.cartData]);
 
-  useEffect(() => {
-    const scriptId = "paypal-sdk-script";
-    if (document.getElementById(scriptId)) return; // Evita duplicados
-
-    const script = document.createElement("script");
-    script.id = scriptId;
-    script.src = `https://www.paypal.com/sdk/js?client-id=${VITE_API_PAYPAL_CLIENT_ID}&disable-funding=card`;
-    script.async = true;
-    script.onload = () => {
-      if (!window.paypal) return;
-      window.paypal
-        .Buttons({
-          createOrder: async () => {
-            // Optimización: Solo llamar a la API de conversión si es estrictamente necesario
-            const resp = await fetch(
-              "https://v6.exchangerate-api.com/v6/8f3b6f4d1d3c1f5e1f8b6c9e/pair/USD/USD",
-            );
-
-            const respData = await resp.json();
-            var convertedAmount = 0;
-
-            if (respData.result === "success") {
-              const usdToInrRate = respData.conversion_rates.USD;
-              convertedAmount = (totalAmount * usdToInrRate).toFixed(2);
-            }
-
-            const headers = {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-              "Content-Type": "application/json",
-            };
-
-            const data = {
-              userId: context?.userData?._id,
-              totalAmount: convertedAmount,
-            };
-
-            const response = await axios.get(
-              VITE_API_URL +
-                `/api/order/create-order-paypal?userId=${data?.userId}&
-                totalAmount=${data?.totalAmount}`,
-              { headers },
-            );
-
-            return response?.data?.id;
-          },
-
-          onApprove: async (data) => {
-            onApprovePayment(data);
-          },
-          onError: (err) => {
-            history("/order/failed");
-            console.error("ERROR DE PAGO", err);
-          },
-        })
-        .render("#paypal-button-container");
-    };
-    document.body.appendChild(script);
-  }, []); // Solo cargar el SDK una vez al montar el componente
-
-  const onApprovePayment = async (data) => {
-    const user = context?.userData;
-
-    const info = {
-      userId: user?._id,
-      products: context?.cartData,
-      payment_status: "COMPLETADO",
-      delivery_address: selectedAddress,
-      totalAmount: totalAmount,
-      date: new Date().toLocaleString("en-US", {
-        month: "short",
-        day: "2-digit",
-        year: "numeric",
-      }),
-    };
-
-    const headers = {
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      "Content-type": "application/json",
-    };
-
-    const response = await axios
-      .post(
-        VITE_API_URL + "/api/order/capture-order-paypal",
-        {
-          ...info,
-          paymentId: data.orderID,
-        },
-        { headers },
-      )
-      .then((res) => {
-        context.alertBox("success", res?.data?.message);
-        history("/order/success");
-        deleteData(`/api/cart/emptyCart/${user?._id}`).then(() => {
-          context?.getCartItems();
-        });
-      });
-
-    if (response.data.success) {
-      context.alertBox(
-        "success",
-        "ORDEN REALIZADA Y GUARDADA EN BASE DE DATOS",
-      );
-    }
-  };
-
   const editAddress = (id) => {
     context?.setOpenAddressPanel(true);
     context?.setAddressMode("edit");
@@ -159,62 +48,6 @@ const Checkout = () => {
     if (e.target.checked) {
       setIsChecked(index);
       setSelectedAddress(e.target.value);
-    }
-  };
-
-  const checkout = (e) => {
-    e.preventDefault();
-
-    if (userData?.address_details?.length !== 0) {
-      var options = {
-        key: VITE_APP_RAZORPAY_KEY_ID,
-        key_secret: VITE_APP_RAZORPAY_KEY_SECRET,
-        amount: parseInt(totalAmount * 100),
-        currency: "USD",
-        order_receipt: context?.userData?.name,
-        name: "MAQUITEXT",
-        description: "PARA FINES DE PRUEBA",
-        handler: function (response) {
-          console.log(response);
-
-          const paymentId = response.razorpay_payment_id;
-          const user = context?.userData;
-          const payLoad = {
-            userId: user?._id,
-            products: context?.cartData,
-            paymentId: paymentId,
-            payment_status: "COMPLETADO",
-            delivery_address: selectedAddress,
-            totalAmt: totalAmount,
-            date: new Date().toLocaleString("en-US", {
-              month: "short",
-              day: "2-digit",
-              year: "numeric",
-            }),
-          };
-
-          postData(`/api/order/create`, payLoad).then((res) => {
-            context.alertBox("success", res?.message);
-            if (res?.error === false) {
-              deleteData(`/api/cart/emptyCart/${user?._id}`).then(() => {
-                context?.getCartItems();
-              });
-              history("/order/success");
-            } else {
-              history("/order/failed");
-              context.alertBox("error", res?.message);
-            }
-          });
-        },
-        theme: {
-          color: "#082c55",
-        },
-      };
-
-      var pay = new window.Razorpay(options);
-      pay.open();
-    } else {
-      context.alertBox("error", "¡POR FAVOR AGREGE UNA DIRECCIÓN DE ENTREGA!");
     }
   };
 
@@ -254,7 +87,7 @@ const Checkout = () => {
 
   return (
     <section className="!py-3 lg:!py-5 !px-1">
-      <form onSubmit={checkout}>
+      <form onSubmit={(e) => e.preventDefault()}>
         <div className="w-full lg:w-[70%] !m-auto flex flex-col md:flex-row lg:flex-row !gap-5">
           <div className="leftCol w-full md:w-[60%] lg:w-[60%]">
             <div className="card bg-white shadow-md !p-5 rounded-md w-full">
@@ -425,16 +258,6 @@ const Checkout = () => {
               </div>
 
               <div className="flex items-center flex-col !gap-3 !mb-2">
-                {/*<Button
-                  type="submit"
-                  className="btn-org btn-lg w-full flex !gap-2 items-center !mt-3"
-                >
-                  <IoBagCheck className="text-[25px]" />
-                  CONFIRMAR
-                </Button>
-
-                <div id="paypal-button-container" className={`${userData?.address_details?.length === 0 ? 'pointer-events-none': ''}`}></div>*/}
-
                 <Button
                   type="button"
                   className="btn-org btn-lg w-full flex !gap-2 items-center !mt-3"
