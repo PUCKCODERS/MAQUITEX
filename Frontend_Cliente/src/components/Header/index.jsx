@@ -18,6 +18,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Divider from "@mui/material/Divider";
 import { fetchDataFromApi } from "../../utils/api";
+import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
 import { ImMenu } from "react-icons/im";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -34,6 +35,7 @@ const Header = () => {
   const open = Boolean(anchorEl);
 
   const [isOpenCatPanel, setIsOpenCatPanel] = useState(false);
+  const [isAvatarError, setIsAvatarError] = useState(false);
 
   const context = useContext(MyContext);
   const navigate = useNavigate();
@@ -44,6 +46,10 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  React.useEffect(() => {
+    setIsAvatarError(false);
+  }, [context?.userData]);
 
   const logout = () => {
     setAnchorEl(null);
@@ -157,11 +163,25 @@ const Header = () => {
                         onClick={handleClick}
                       >
                         <Button
-                          className="!w-[30px] !h-[30px] !min-w-[30px] !rounded-full !text-[#274a72] hover:!text-[#fff] !bg-[#fff] hover:!bg-[#274a72] !shadow-[0px_0px_0px_3px_#7994b1] transition-all duration-300"
+                          className="!w-[30px] !h-[30px] !min-w-[30px] !rounded-full !text-[#274a72] hover:!text-[#fff] !bg-[#fff] hover:!bg-[#274a72] !shadow-[0px_0px_0px_3px_#7994b1] transition-all duration-300 !p-0 overflow-hidden"
                           title="MI CUENTA"
                           placement="top"
                         >
-                          <FaUser className="text-[20px]" />
+                          {context?.userData?.avatar &&
+                          context?.userData?.avatar !== "null" &&
+                          !isAvatarError ? (
+                            <img
+                              src={getOptimizedCloudinaryUrl(
+                                context?.userData?.avatar,
+                                { width: 50, height: 50 },
+                              )}
+                              alt="Avatar"
+                              className="w-full h-full object-cover"
+                              onError={() => setIsAvatarError(true)}
+                            />
+                          ) : (
+                            <FaUser className="text-[20px]" />
+                          )}
                         </Button>
 
                         {context?.windowWidth > 992 && (
