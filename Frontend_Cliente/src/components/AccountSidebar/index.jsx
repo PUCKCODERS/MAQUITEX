@@ -9,13 +9,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
 import { MyContext } from "../../App";
 import CircularProgress from "@mui/material/CircularProgress";
-import { fetchDataFromApi, uploadImage } from "../../utils/api";
+import { fetchDataFromApi /*, uploadImage*/ } from "../../utils/api";
 import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
 import { MdMapsHomeWork } from "react-icons/md";
 
 const AccountSidebar = () => {
   const [previews, setPreviews] = useState([]);
-  const [uploading, setUploading] = useState(false);
+  const [uploading /*, setUploading*/] = useState(false);
 
   const context = useContext(MyContext);
   const navigate = useNavigate();
@@ -29,47 +29,47 @@ const AccountSidebar = () => {
     setPreviews(userAvatar);
   }, [context?.userData]);
 
-  let selectedImages = [];
+  /* TODO LO QUE ESTA COMETADO SE PUEDE ARREGLAR  */
 
-  const formdata = new FormData();
+  //let selectedImages = [];
 
-  const onChangeFile = async (e /*apiEndPoint*/) => {
-    try {
-      setPreviews([]);
-      const files = e.target.files;
-      setUploading(true);
+  // const formdata = new FormData();
 
-      for (var i = 0; i < files.length; i++) {
-        if (
-          (files[i] &&
-            (files[i].type === "image/jpeg" ||
-              files[i].type === "image/png" ||
-              files[i].type === "image/jpg")) ||
-          files[i].type === "image/webp"
-        ) {
-          const file = files[i];
-          selectedImages.push(file);
-          formdata.append(`avatar`, file);
-        } else {
-          context.alertBox(
-            "error",
-            "Por favor, seleccione un archivo de imagen válido en formato JPG, JPEG, WEBP o PNG.",
-          );
-          setUploading(false);
-          return false;
-        }
-      }
-
-      uploadImage("/api/user/user-avatar", formdata).then((res) => {
-        setUploading(false);
-        let avatar = [];
-        avatar.push(res?.data?.avatar);
-        setPreviews(avatar);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //const onChangeFile = async (e /*apiEndPoint*/) => {
+  // try {
+  //   setPreviews([]);
+  //   const files = e.target.files;
+  //   setUploading(true);
+  //   for (var i = 0; i < files.length; i++) {
+  //     if (
+  //       (files[i] &&
+  //         (files[i].type === "image/jpeg" ||
+  //           files[i].type === "image/png" ||
+  //           files[i].type === "image/jpg")) ||
+  //       files[i].type === "image/webp"
+  //     ) {
+  //       const file = files[i];
+  //       selectedImages.push(file);
+  //       formdata.append(`avatar`, file);
+  //     } else {
+  //       context.alertBox(
+  //         "error",
+  //         "Por favor, seleccione un archivo de imagen válido en formato JPG, JPEG, WEBP o PNG.",
+  //       );
+  //       setUploading(false);
+  //       return false;
+  //     }
+  //   }
+  //   uploadImage("/api/user/user-avatar", formdata).then((res) => {
+  //     setUploading(false);
+  //     let avatar = [];
+  //     avatar.push(res?.data?.avatar);
+  //     setPreviews(avatar);
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  // }
+  //};
 
   const logout = () => {
     fetchDataFromApi(
@@ -119,7 +119,7 @@ const AccountSidebar = () => {
             </>
           )}
 
-          <div
+          {/* <div
             className="overlay w-[100%] h-[100%] absolute top-0 left-0 z-150 bg-[rgba(0,0,0,0.7)] flex items-center justify-center cursor-pointer
                 opacity-0 transition-all duration-300 group-hover:opacity-100"
           >
@@ -131,7 +131,7 @@ const AccountSidebar = () => {
               onChange={(e) => onChangeFile(e, "/api/user/user-avatar")}
               name="avatar"
             />
-          </div>
+          </div> */}
         </div>
         <h3 className="font-bold font-[bold] text-[15px]">
           {context?.userData?.name}

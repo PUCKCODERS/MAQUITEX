@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MyContext } from "../../App";
-import { RiFileUploadFill } from "react-icons/ri";
+//import { RiFileUploadFill } from "react-icons/ri";
 import CircularProgress from "@mui/material/CircularProgress";
 import {
   editData,
   fetchDataFromApi,
-  postData,
-  uploadImage,
+  postData /*,
+  uploadImage*/,
 } from "../../utils/api";
 import { useNavigate } from "react-router-dom";
 import { Button, Radio, TextField } from "@mui/material";
@@ -19,7 +19,7 @@ const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
 const Profile = () => {
   const [previews, setPreviews] = useState([]);
-  const [uploading, setUploading] = useState(false);
+  const [uploading /*, setUploading*/] = useState(false);
   const [address, setAddress] = useState([]);
 
   const [phone, setPhone] = useState("");
@@ -215,49 +215,47 @@ const Profile = () => {
     setPreviews(userAvatar);
   }, [context?.userData]);
 
-  let selectedImages = [];
+  //let selectedImages = [];
 
-  const formdata = new FormData();
+  //const formdata = new FormData();
 
-  const onChangeFile = async (e /*apiEndPoint*/) => {
-    try {
-      setPreviews([]);
-      const files = e.target.files;
-      setUploading(true);
-
-      for (var i = 0; i < files.length; i++) {
-        if (
-          (files[i] &&
-            (files[i].type === "image/jpeg" ||
-              files[i].type === "image/png" ||
-              files[i].type === "image/jpg")) ||
-          files[i].type === "image/webp"
-        ) {
-          const file = files[i];
-          selectedImages.push(file);
-          formdata.append(`avatar`, file);
-        } else {
-          context.alertBox(
-            "error",
-            "Por favor, seleccione un archivo de imagen válido en formato JPG, JPEG, WEBP o PNG.",
-          );
-          setUploading(false);
-          return false;
-        }
-      }
-
-      uploadImage("/api/user/user-avatar", formdata).then((res) => {
-        setUploading(false);
-        if (res?.data?.avatar) {
-          let avatar = [];
-          avatar.push(res?.data?.avatar);
-          setPreviews(avatar);
-        }
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const onChangeFile = async (e /*apiEndPoint*/) => {
+  // try {
+  //   setPreviews([]);
+  //   const files = e.target.files;
+  //   setUploading(true);
+  //   for (var i = 0; i < files.length; i++) {
+  //     if (
+  //       (files[i] &&
+  //         (files[i].type === "image/jpeg" ||
+  //           files[i].type === "image/png" ||
+  //           files[i].type === "image/jpg")) ||
+  //       files[i].type === "image/webp"
+  //     ) {
+  //       const file = files[i];
+  //       selectedImages.push(file);
+  //       formdata.append(`avatar`, file);
+  //     } else {
+  //       context.alertBox(
+  //         "error",
+  //         "Por favor, seleccione un archivo de imagen válido en formato JPG, JPEG, WEBP o PNG.",
+  //       );
+  //       setUploading(false);
+  //       return false;
+  //     }
+  //   }
+  //   uploadImage("/api/user/user-avatar", formdata).then((res) => {
+  //     setUploading(false);
+  //     if (res?.data?.avatar) {
+  //       let avatar = [];
+  //       avatar.push(res?.data?.avatar);
+  //       setPreviews(avatar);
+  //     }
+  //   });
+  // } catch (error) {
+  //   console.log(error);
+  // }
+  //};
 
   return (
     <>
@@ -304,7 +302,7 @@ const Profile = () => {
             </>
           )}
 
-          <div
+          {/* <div
             className="overlay w-[100%] h-[100%] absolute top-0 left-0 z-150 bg-[rgba(0,0,0,0.7)] flex items-center justify-center cursor-pointer
                         opacity-0 transition-all duration-300 group-hover:opacity-100"
           >
@@ -316,7 +314,7 @@ const Profile = () => {
               onChange={(e) => onChangeFile(e, "/api/user/user-avatar")}
               name="avatar"
             />
-          </div>
+          </div> */}
         </div>
 
         <form className="form !mt-8" onSubmit={handleSubmit}>
