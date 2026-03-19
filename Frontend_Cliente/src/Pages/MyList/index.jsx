@@ -50,13 +50,6 @@ const MyList = () => {
 
                 <div className="!mt-6 !mb-6 text-sm ">
                   <a
-                    href="/my-list"
-                    className="text-blue-600 hover:text-blue-800 !mx-2"
-                  >
-                    IR A MIS FAVORITOS
-                  </a>
-                  <span className="text-gray-400">|</span>
-                  <a
                     href="/productListing"
                     className="text-blue-600 hover:text-blue-800 !mx-1"
                   >
