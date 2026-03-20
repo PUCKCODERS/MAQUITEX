@@ -32,6 +32,10 @@ const ServicioTecnico = lazy(() => import("./Pages/S.Tecnico"));
 const Nosotros = lazy(() => import("./Pages/Nosotros"));
 const Contacto = lazy(() => import("./Pages/Contacto"));
 const Factura = lazy(() => import("./Pages/Orders/factura"));
+const FirstBlog = lazy(() => import("./components/BlogItem/Blogs/FirstBlog"));
+const SecondBlog = lazy(() => import("./components/BlogItem/Blogs/SecondBlog"));
+const ThirdBlog = lazy(() => import("./components/BlogItem/Blogs/ThirdBlog"));
+const FourthBlog = lazy(() => import("./components/BlogItem/Blogs/Fourthblog"));
 
 const MyContext = createContext();
 
@@ -366,6 +370,26 @@ function App() {
                     <Factura />
                   </ProtectedRoute>
                 }
+              />
+              <Route
+                path={"/blog/firstblog"}
+                exact={true}
+                element={<FirstBlog />}
+              />
+              <Route
+                path={"/blog/secondblog"}
+                exact={true}
+                element={<SecondBlog />}
+              />
+              <Route
+                path={"/blog/thirdblog"}
+                exact={true}
+                element={<ThirdBlog />}
+              />
+              <Route
+                path={"/blog/fourthblog"}
+                exact={true}
+                element={<FourthBlog />}
               />
             </Routes>
           </Suspense>
