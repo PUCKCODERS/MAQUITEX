@@ -15,6 +15,7 @@ import { editData, fetchDataFromApi, postData } from "../../utils/api";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const AddAddress = () => {
+  window.scrollTo(0, 0);
   const context = useContext(MyContext);
 
   const [phone, setPhone] = useState("");
@@ -149,7 +150,7 @@ const AddAddress = () => {
         withCredentials: true,
       }).then(() => {
         fetchDataFromApi(
-          `/api/address/get?userId=${context?.userData?._id}`
+          `/api/address/get?userId=${context?.userData?._id}`,
         ).then((res) => {
           setTimeout(() => {
             setIsLoading(false);

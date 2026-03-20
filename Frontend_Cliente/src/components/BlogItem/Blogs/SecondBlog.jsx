@@ -37,6 +37,7 @@ const projects = [
 ];
 
 const SecondBlog = () => {
+  window.scrollTo(0, 0);
   return (
     <div className="blog-page bg-white">
       {/* Section 1: Introduction */}

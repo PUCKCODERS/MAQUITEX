@@ -10,6 +10,7 @@ import { FaSlidersH } from "react-icons/fa";
 import { MyContext } from "../../../App";
 
 const MobileNav = () => {
+  window.scrollTo(0, 0);
   const location = useLocation();
 
   const context = useContext(MyContext);

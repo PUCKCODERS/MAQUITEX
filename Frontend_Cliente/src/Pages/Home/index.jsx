@@ -28,6 +28,7 @@ import ProductLoading from "../../components/ProductLoading";
 import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
 
 const Home = () => {
+  window.scrollTo(0, 0);
   const [value, setValue] = useState(0);
   const [homeSlidesData, setHomeSlidesData] = useState([]);
   const [popularProductsData, setPopularProductsData] = useState([]);

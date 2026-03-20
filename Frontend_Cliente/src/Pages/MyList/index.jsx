@@ -5,6 +5,7 @@ import { MyContext } from "../../App";
 import { Button } from "@mui/material";
 
 const MyList = () => {
+  window.scrollTo(0, 0);
   const context = useContext(MyContext);
 
   return (

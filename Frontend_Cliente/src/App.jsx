@@ -11,6 +11,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { fetchDataFromApi, postData } from "./utils/api";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ProductModal from "./components/ProductItem/ProductModal";
+import ScrollToTop from "./components/ScrollToTop";
 
 const Home = lazy(() => import("./Pages/Home"));
 const ProductListing = lazy(() => import("./Pages/ProductListing"));
@@ -282,6 +283,7 @@ function App() {
     <>
       <BrowserRouter>
         <MyContext.Provider value={values}>
+          <ScrollToTop />
           <Header />
           <Suspense
             fallback={
