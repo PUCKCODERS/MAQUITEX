@@ -9,7 +9,7 @@ const OrderSuccess = () => {
   const [order, setOrder] = useState(location.state?.order || null);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    //
     // Si no tenemos la orden (p. ej. al recargar la página), buscamos la última orden del usuario
     if (!order) {
       fetchDataFromApi("/api/order/order-list").then((res) => {

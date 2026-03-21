@@ -37,7 +37,7 @@ const projects = [
 ];
 
 const ThirdBlog = () => {
-  window.scrollTo(0, 0);
+  //
   return (
     <div className="blog-page bg-white">
       {/* Section 1: Introduction */}

@@ -11,7 +11,7 @@ import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 
 const MyAccount = () => {
-  window.scrollTo(0, 0);
+  //
   const [isLoading, setIsLoading] = useState(false);
   const [isLoading2, setIsLoading2] = useState(false);
   const [userId, setUserId] = useState("");

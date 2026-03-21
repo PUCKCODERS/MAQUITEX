@@ -107,7 +107,7 @@ const ProductDetails = () => {
         }, 700);
       }
     });
-    window.scrollTo(0, 0);
+    //
   }, [id]);
 
   const gotoReviews = () => {

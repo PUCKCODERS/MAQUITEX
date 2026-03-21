@@ -329,6 +329,10 @@ export async function userAvatarController(request, response) {
         { quality: "auto" },
         { fetch_format: "auto" },
       ],
+      eager: [
+        { width: 50, height: 50, crop: "fill", gravity: "face" },
+        { width: 300, height: 300, crop: "fill", gravity: "face" },
+      ],
       resource_type: "image",
     };
 
@@ -957,6 +961,10 @@ export async function uploadUserAvatars(request, response) {
         { width: 300, crop: "limit", gravity: "face" }, // Focus on face and reduce size
         { quality: "auto" },
         { fetch_format: "auto" },
+      ],
+      eager: [
+        { width: 50, height: 50, crop: "fill", gravity: "face" },
+        { width: 300, height: 300, crop: "fill", gravity: "face" },
       ],
       resource_type: "image",
     };

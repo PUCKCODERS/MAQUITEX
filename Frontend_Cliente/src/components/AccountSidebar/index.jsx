@@ -14,7 +14,7 @@ import { getOptimizedCloudinaryUrl } from "../../utils/cloudinaryHelper";
 import { MdMapsHomeWork } from "react-icons/md";
 
 const AccountSidebar = () => {
-  window.scrollTo(0, 0);
+  //
   const [previews, setPreviews] = useState([]);
   const [uploading, setUploading] = useState(false);
 

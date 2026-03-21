@@ -15,7 +15,7 @@ import {
 const VITE_API_URL = import.meta.env.VITE_API_URL;
 
 const Checkout = () => {
-  window.scrollTo(0, 0);
+  //
   const [userData, setUserData] = useState(null);
   const [isChecked, setIsChecked] = useState(0);
   const [selectedAddress, setSelectedAddress] = useState("");

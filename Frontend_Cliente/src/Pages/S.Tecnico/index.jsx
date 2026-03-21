@@ -17,7 +17,7 @@ import service2 from "./images/image2.png";
 import service3 from "./images/image3.png";
 
 export default function ServicioTecnico() {
-  window.scrollTo(0, 0);
+  //
   const carouselRef = useRef(null);
   const listRef = useRef(null);
   const thumbnailRef = useRef(null);
@@ -100,7 +100,7 @@ export default function ServicioTecnico() {
   ];
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    //
     const nextDom = nextRef.current;
     const prevDom = prevRef.current;
     const carouselDom = carouselRef.current;

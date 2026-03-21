@@ -27,7 +27,7 @@ const Login = () => {
   const history = useNavigate();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    //
   }, []);
 
   const forgotPassword = () => {

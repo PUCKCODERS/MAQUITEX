@@ -15,7 +15,7 @@ import { editData, fetchDataFromApi, postData } from "../../utils/api";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const AddAddress = () => {
-  window.scrollTo(0, 0);
+  //
   const context = useContext(MyContext);
 
   const [phone, setPhone] = useState("");

@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const OrderFailed = () => {
-  window.scrollTo(0, 0);
+  //
   return (
     <section className="w-full !p-10 !py-5 sm:!py-10 md:!py-15 lg:!py-20 flex items-center justify-center flex-col !gap-2">
       <img src="../../../imagenes/orderFalied.png" width="200" />

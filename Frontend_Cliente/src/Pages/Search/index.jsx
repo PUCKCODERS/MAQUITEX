@@ -17,7 +17,7 @@ import { MyContext } from "../../App";
 import { useLocation } from "react-router-dom";
 
 const SearchPage = () => {
-  window.scrollTo(0, 0);
+  //
   const [itemView, setItemView] = useState("grid");
   const [anchorEl, setAnchorEl] = React.useState(null);
 

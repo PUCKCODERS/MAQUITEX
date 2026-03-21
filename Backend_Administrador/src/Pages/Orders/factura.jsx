@@ -39,7 +39,7 @@ const Factura = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    //
 
     if (location.state?.order) {
       setOrder(location.state.order);

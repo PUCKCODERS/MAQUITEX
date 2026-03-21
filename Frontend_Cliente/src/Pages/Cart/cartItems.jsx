@@ -13,7 +13,7 @@ import {
 } from "../../utils/cloudinaryHelper";
 
 const CartItems = (props) => {
-  window.scrollTo(0, 0);
+  //
   const context = useContext(MyContext);
 
   const [sizeanchorEl, setSizeAnchorEl] = useState(null);

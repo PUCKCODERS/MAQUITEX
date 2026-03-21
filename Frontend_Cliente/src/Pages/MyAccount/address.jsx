@@ -15,7 +15,7 @@ import AddressBox from "./addressBox";
 //const label = { inputProps: { "aria-label": "Radio demo" } };
 
 const Address = () => {
-  window.scrollTo(0, 0);
+  //
   const context = useContext(MyContext);
   const [address, setAddress] = useState([]);
   {

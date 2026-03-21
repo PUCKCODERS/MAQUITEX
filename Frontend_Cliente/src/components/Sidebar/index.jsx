@@ -112,13 +112,13 @@ const Sidebar = (props) => {
       props.setProductsData(context?.searchData);
       props.setIsLoading(false);
       props.setTotalPages(context?.searchData?.totalPages);
-      window.scrollTo(0, 0);
+      //
     } else {
       postData(`/api/product/filters`, filters).then((res) => {
         props.setProductsData(res);
         props.setIsLoading(false);
         props.setTotalPages(res?.totalPages);
-        window.scrollTo(0, 0);
+        //
       });
     }
   };

@@ -28,6 +28,11 @@ export async function uploadImages(request, response) {
         { quality: "auto" },
         { fetch_format: "auto" },
       ],
+      eager: [
+        { width: 150, height: 150, crop: "fill", gravity: "auto" },
+        { width: 400, height: 400, crop: "fill", gravity: "auto" },
+        { width: 800, crop: "limit" },
+      ],
       resource_type: "image",
     };
 
@@ -75,6 +80,11 @@ export async function uploadBannerImages(request, response) {
       transformation: [
         { width: 1280, crop: "limit" }, // Reduce width to 1280px for banners
         { quality: "auto" },
+      ],
+      eager: [
+        { width: 400, crop: "limit" },
+        { width: 800, crop: "limit" },
+        { width: 1280, crop: "limit" },
       ],
     };
 

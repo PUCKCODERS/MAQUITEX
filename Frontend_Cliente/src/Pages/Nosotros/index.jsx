@@ -28,11 +28,11 @@ import { FcApproval } from "react-icons/fc";
 import { PiCertificateFill } from "react-icons/pi";
 
 const Nosotros = () => {
-  window.scrollTo(0, 0);
+  //
   const [currentSlidePos, setCurrentSlidePos] = useState(0);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    //
     const interval = setInterval(() => {
       setCurrentSlidePos((prev) => (prev + 1) % 3);
     }, 7000);

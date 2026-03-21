@@ -12,7 +12,7 @@ import { MyContext } from "../../../App";
 import MobileNav from "./mobileNav";
 
 const Navigation = (props) => {
-  window.scrollTo(0, 0);
+  //
   const [isOpenCatPanel, setIsOpenCatPanel] = useState(false);
   const [catData, setCatData] = useState([]);
 

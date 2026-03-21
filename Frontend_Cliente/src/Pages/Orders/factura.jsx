@@ -21,7 +21,7 @@ const Factura = () => {
       return Promise.resolve();
     }
 
-    window.scrollTo(0, 0);
+    //
 
     return html2canvas(input, {
       scale: 2,
@@ -92,7 +92,7 @@ const Factura = () => {
   };
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    //
 
     if (location.state?.order) {
       setOrder(location.state.order);

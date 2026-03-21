@@ -7,7 +7,7 @@ const ScrollToTop = () => {
 
   useEffect(() => {
     if (action !== "POP") {
-      window.scrollTo(0, 0);
+      //
     }
   }, [pathname, action]);
 

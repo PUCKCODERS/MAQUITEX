@@ -25,6 +25,11 @@ export async function uploadImages(request, response) {
         { quality: "auto" },
         { fetch_format: "auto" },
       ],
+      eager: [
+        { width: 480, height: 270, crop: "fill" },
+        { width: 800, height: 450, crop: "fill" },
+        { width: 1280, height: 720, crop: "fill" },
+      ],
       resource_type: "image",
     };
 
